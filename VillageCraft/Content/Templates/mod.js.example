@@ -1,0 +1,12 @@
+// Copy to Content/Scripts/my_mod.js. No registration means eST_Mod.
+function onInit() {
+    world.queueSpawnMonster("blaze", 10, 12, "demo boss");
+}
+function onMonsterSpawned(monster) {
+    if (monster.hasTag("demo")) world.log("Monster #" + monster.id + " spawned");
+}
+function onBuildingDamaged(building, damage, source) {
+    if (building.health <= 20 && building.hasTag("disposable")) world.queueDelete(building);
+}
+function onUpdate(dt) {}
+function onShutdown() {}

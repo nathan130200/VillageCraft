@@ -1,0 +1,51 @@
+# TIPO: UpgradeFile: lista Upgrades com Id, Name, Kind, Level, Effect e Cost.
+# Guia: Content/README.md. Carregado uma vez na inicialização.
+# VillageCraft content. Read once at startup; restart after editing.
+
+[[Upgrades]]
+Cost = { "Leather" = 12, "Emeralds" = 80, "Iron" = 16, "Tools" = 4 }
+Effect = 0.15
+Id = "iron_armor"
+Kind = "Armor"
+Level = 1
+Name = "Iron armor"
+
+[[Upgrades]]
+Cost = { "Leather" = 18, "Diamonds" = 8, "Emeralds" = 150, "Gold" = 10 }
+Effect = 0.2
+Id = "diamond_armor"
+Kind = "Armor"
+Level = 2
+Name = "Diamond armor"
+
+[[Upgrades]]
+Cost = { "Leather" = 24, "AncientDebris" = 6, "Diamonds" = 4, "Emeralds" = 250, "Gold" = 16 }
+Effect = 0.25
+Id = "netherite_armor"
+Kind = "Armor"
+Level = 3
+Name = "Netherite armor"
+
+[[Upgrades]]
+Cost = { "Emeralds" = 60, "Iron" = 12, "Tools" = 6 }
+Effect = 0.15
+Id = "iron_tools"
+Kind = "Tools"
+Level = 1
+Name = "Tempered tools"
+
+[[Upgrades]]
+Cost = { "Diamonds" = 6, "Emeralds" = 120, "Gold" = 6 }
+Effect = 0.25
+Id = "diamond_tools"
+Kind = "Tools"
+Level = 2
+Name = "Diamond tools"
+
+[[Upgrades]]
+Cost = { "AncientDebris" = 4, "Emeralds" = 200, "Gold" = 12, "Tools" = 8 }
+Effect = 0.35
+Id = "netherite_tools"
+Kind = "Tools"
+Level = 3
+Name = "Netherite tools"

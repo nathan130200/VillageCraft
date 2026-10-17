@@ -1,0 +1,154 @@
+# TIPO: ModelFile: geometria feita de cuboides. Não define custo, vagas ou profissão.
+# Carregado uma vez na inicialização. Guia completo: Content/README.md.
+# ID único do modelo, referenciado por prefabs, profissões e unidades.
+Id = "iron_golem"
+
+# Nova peça/cuboide.
+[[Parts]]
+# Centro [x,y,z] em terrenos. +Y = cima; +Z = frente.
+Position = [0, 0.68, 0]
+# Dimensões [largura,altura,profundidade], todas positivas.
+Size = [0.42, 0.5, 0.25]
+# Cor hexadecimal de fallback #RRGGBB.
+Color = "#FFFFFF"
+# Nome lógico de textura resolvido pelo caminho externo de assets.
+Texture = "entity/iron_golem/iron_golem.png"
+# Origem [u,v] em pixels na skin; [] = textura repetida.
+UvOrigin = [0, 40]
+# Dimensões [largura,altura,profundidade] em pixels da skin; [] = repetição.
+UvSize = [18, 12, 11]
+
+# Nova peça/cuboide.
+[[Parts]]
+# Centro [x,y,z] em terrenos. +Y = cima; +Z = frente.
+Position = [0, 1.04, 0]
+# Dimensões [largura,altura,profundidade], todas positivas.
+Size = [0.23, 0.27, 0.23]
+# Cor hexadecimal de fallback #RRGGBB.
+Color = "#FFFFFF"
+# Nome lógico de textura resolvido pelo caminho externo de assets.
+Texture = "entity/iron_golem/iron_golem.png"
+# Origem [u,v] em pixels na skin; [] = textura repetida.
+UvOrigin = [0, 0]
+# Dimensões [largura,altura,profundidade] em pixels da skin; [] = repetição.
+UvSize = [8, 10, 8]
+
+# Nova peça/cuboide.
+[[Parts]]
+# Centro [x,y,z] em terrenos. +Y = cima; +Z = frente.
+Position = [-0.34, 0.59, 0]
+# Dimensões [largura,altura,profundidade], todas positivas.
+Size = [0.15, 0.7, 0.16]
+# Cor hexadecimal de fallback #RRGGBB.
+Color = "#FFFFFF"
+# Nome lógico de textura resolvido pelo caminho externo de assets.
+Texture = "entity/iron_golem/iron_golem.png"
+# Origem [u,v] em pixels na skin; [] = textura repetida.
+UvOrigin = [60, 21]
+# Dimensões [largura,altura,profundidade] em pixels da skin; [] = repetição.
+UvSize = [4, 30, 6]
+
+# Nova peça/cuboide.
+[[Parts]]
+# Centro [x,y,z] em terrenos. +Y = cima; +Z = frente.
+Position = [0.34, 0.59, 0]
+# Dimensões [largura,altura,profundidade], todas positivas.
+Size = [0.15, 0.7, 0.16]
+# Cor hexadecimal de fallback #RRGGBB.
+Color = "#FFFFFF"
+# Nome lógico de textura resolvido pelo caminho externo de assets.
+Texture = "entity/iron_golem/iron_golem.png"
+# Origem [u,v] em pixels na skin; [] = textura repetida.
+UvOrigin = [60, 21]
+# Dimensões [largura,altura,profundidade] em pixels da skin; [] = repetição.
+UvSize = [4, 30, 6]
+
+# Nova peça/cuboide.
+[[Parts]]
+# Centro [x,y,z] em terrenos. +Y = cima; +Z = frente.
+Position = [-0.13, 0.21, 0]
+# Dimensões [largura,altura,profundidade], todas positivas.
+Size = [0.15, 0.42, 0.18]
+# Cor hexadecimal de fallback #RRGGBB.
+Color = "#FFFFFF"
+# Nome lógico de textura resolvido pelo caminho externo de assets.
+Texture = "entity/iron_golem/iron_golem.png"
+# Origem [u,v] em pixels na skin; [] = textura repetida.
+UvOrigin = [37, 0]
+# Dimensões [largura,altura,profundidade] em pixels da skin; [] = repetição.
+UvSize = [6, 16, 5]
+
+# Nova peça/cuboide.
+[[Parts]]
+# Centro [x,y,z] em terrenos. +Y = cima; +Z = frente.
+Position = [0.13, 0.21, 0]
+# Dimensões [largura,altura,profundidade], todas positivas.
+Size = [0.15, 0.42, 0.18]
+# Cor hexadecimal de fallback #RRGGBB.
+Color = "#FFFFFF"
+# Nome lógico de textura resolvido pelo caminho externo de assets.
+Texture = "entity/iron_golem/iron_golem.png"
+# Origem [u,v] em pixels na skin; [] = textura repetida.
+UvOrigin = [37, 0]
+# Dimensões [largura,altura,profundidade] em pixels da skin; [] = repetição.
+UvSize = [6, 16, 5]
+
+# Nova peça/cuboide.
+[[Parts]]
+# Centro [x,y,z] em terrenos. +Y = cima; +Z = frente.
+Position = [0, 1, 0.16]
+# Dimensões [largura,altura,profundidade], todas positivas.
+Size = [0.07, 0.14, 0.12]
+# Cor hexadecimal de fallback #RRGGBB.
+Color = "#FFFFFF"
+# Nome lógico de textura resolvido pelo caminho externo de assets.
+Texture = "entity/iron_golem/iron_golem.png"
+# Origem [u,v] em pixels na skin; [] = textura repetida.
+UvOrigin = [37, 0]
+# Dimensões [largura,altura,profundidade] em pixels da skin; [] = repetição.
+UvSize = [6, 16, 5]
+
+# Nova peça/cuboide.
+[[Parts]]
+# Centro [x,y,z] em terrenos. +Y = cima; +Z = frente.
+Position = [-0.06, 1.08, 0.12]
+# Dimensões [largura,altura,profundidade], todas positivas.
+Size = [0.05, 0.025, 0.015]
+# Cor hexadecimal de fallback #RRGGBB.
+Color = "#FFFFFF"
+# Nome lógico de textura resolvido pelo caminho externo de assets.
+Texture = "entity/iron_golem/iron_golem.png"
+# Origem [u,v] em pixels na skin; [] = textura repetida.
+UvOrigin = [37, 0]
+# Dimensões [largura,altura,profundidade] em pixels da skin; [] = repetição.
+UvSize = [6, 16, 5]
+
+# Nova peça/cuboide.
+[[Parts]]
+# Centro [x,y,z] em terrenos. +Y = cima; +Z = frente.
+Position = [0.06, 1.08, 0.12]
+# Dimensões [largura,altura,profundidade], todas positivas.
+Size = [0.05, 0.025, 0.015]
+# Cor hexadecimal de fallback #RRGGBB.
+Color = "#FFFFFF"
+# Nome lógico de textura resolvido pelo caminho externo de assets.
+Texture = "entity/iron_golem/iron_golem.png"
+# Origem [u,v] em pixels na skin; [] = textura repetida.
+UvOrigin = [37, 0]
+# Dimensões [largura,altura,profundidade] em pixels da skin; [] = repetição.
+UvSize = [6, 16, 5]
+
+# Nova peça/cuboide.
+[[Parts]]
+# Centro [x,y,z] em terrenos. +Y = cima; +Z = frente.
+Position = [-0.12, 0.7, 0.135]
+# Dimensões [largura,altura,profundidade], todas positivas.
+Size = [0.05, 0.35, 0.02]
+# Cor hexadecimal de fallback #RRGGBB.
+Color = "#FFFFFF"
+# Nome lógico de textura resolvido pelo caminho externo de assets.
+Texture = "entity/iron_golem/iron_golem.png"
+# Origem [u,v] em pixels na skin; [] = textura repetida.
+UvOrigin = [37, 0]
+# Dimensões [largura,altura,profundidade] em pixels da skin; [] = repetição.
+UvSize = [6, 16, 5]

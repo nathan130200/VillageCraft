@@ -1,0 +1,16 @@
+# TIPO: ProfessionPlan: profissão de aldeão. Copie Templates/profession.toml.example.
+# Carregado uma vez na inicialização. Guia completo: Content/README.md.
+# ID único, estável e sem tradução. Após adicionar, aparece em Moradores.
+Id = "citizen"
+# Nome de fallback. Tradução: profession.<Id> em Locales/<idioma>.toml.
+Name = "Citizen"
+# ID existente em Models; determina a aparência dos aldeões desta profissão.
+Model = "villager"
+# Atividades internas aceitas, correspondentes ao campo Job dos prefabs.
+Jobs = []
+# Multiplicador de trabalho/combate. Cidadão = 0.5; especialista típico = 1.
+Efficiency = 0.5
+# Recursos retirados do estoque ao treinar esta profissão.
+TrainingCost = {  }
+# Multiplicador de produção por recurso. Recurso ausente usa 1.
+ResourceBonus = {  }

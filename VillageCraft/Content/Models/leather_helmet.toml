@@ -1,0 +1,8 @@
+Id = "leather_helmet"
+[[Parts]]
+Position = [0, 0.83, 0]
+Size = [0.255, 0.285, 0.255]
+Color = "#A7794C"
+Texture = "models/armor/leather_layer_1.png"
+UvOrigin = [0, 0]
+UvSize = [8, 8, 8]

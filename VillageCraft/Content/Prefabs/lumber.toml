@@ -1,0 +1,64 @@
+﻿# TIPO: Plan: construÃ§Ã£o/caminho colocÃ¡vel. Um arquivo por prefab.
+# Carregado uma vez na inicializaÃ§Ã£o. Guia completo: Content/README.md.
+# ID Ãºnico e estÃ¡vel; usado por saves, scripts e traduÃ§Ãµes. NÃ£o traduzir.
+Id = "lumber"
+# Nome de fallback; traduÃ§Ã£o: prefab.<Id>.name em Locales/<idioma>.toml.
+Name = "Lumber camp"
+# Categoria interna do menu. Use um ID existente ou crie uma categoria e sua traduÃ§Ã£o.
+Category = "Production"
+# DescriÃ§Ã£o de fallback; traduÃ§Ã£o: prefab.<Id>.description.
+Description = "Lumberjacks chop and stack renewable timber."
+# ID de um arquivo de Models. NÃ£o Ã© o nome de uma textura.
+Model = "lumber"
+# ID interno da atividade. Deve coincidir com Jobs de uma profissÃ£o. NÃ£o traduzir.
+Job = "Woodcutting"
+# Modelo de trabalhador de fallback. A aparÃªncia individual vem da profissÃ£o.
+WorkerModel = "woodcutter"
+# NÃºmero de vagas nesta construÃ§Ã£o (0 = sem trabalho).
+Jobs = 3
+# Capacidade de moradores.
+Homes = 0
+# Moradores abastecidos com Ã¡gua quando conectada e ativada.
+Water = 0
+# BÃ´nus de felicidade da vila.
+Joy = 0
+# Custo diÃ¡rio em esmeraldas.
+Upkeep = 3
+# Vida mÃ¡xima da construÃ§Ã£o.
+Health = 120
+# true = caminho que faz parte da rede viÃ¡ria.
+Path = false
+# Exige que a entrada esteja voltada para um caminho conectado.
+NeedsPath = true
+# Bloqueia passagem e visÃ£o dos invasores.
+BlocksRaiders = false
+# Custo para construir. Chaves sÃ£o IDs de recursos de resources.toml.
+Cost = { "Emeralds" = 75, "Stone" = 2, "Wood" = 8 }
+# Recursos consumidos por ciclo de produÃ§Ã£o bem-sucedido.
+Input = {  }
+# Recursos produzidos por ciclo, multiplicados pelo bÃ´nus da profissÃ£o.
+Output = { "Wood" = 3 }
+# ID do modelo animal criado pelo cercado; vazio desativa.
+Animal = ""
+# ID da unidade de defesa treinada/criada nesta construÃ§Ã£o.
+Defender = ""
+# true cria guardiÃµes; false faz o trabalhador lutar como Defender.
+CreatesGuardian = false
+# Multiplicador de movimento ao pisar neste caminho.
+MoveSpeed = 1
+# Multiplicadores extras por atividade/profissÃ£o/unidade; IDs internos.
+JobSpeed = {  }
+# ProfissÃµes explicitamente aceitas, alÃ©m das que possuem Job em Jobs.
+Professions = []
+# Autoriza melhorias de equipamento quando conectada e com trabalhador.
+UpgradeStation = false
+
+# Componente de construÃ§Ã£o padrÃ£o (arquivo .js sem extensÃ£o). Pode ser substituÃ­do por set_script_type(eST_Building, Id).
+Script = ""
+
+# Harvest living trees in this radius; Output is not produced without harvesting.
+HarvestSource = "oak_tree"
+HarvestRadius = 7
+
+# A roof or canopy blocks direct sunlight on this tile.
+SheltersFromSun = true

@@ -1,0 +1,15 @@
+# TIPO: ProfessionPlan. Exemplo NÃO carregado.
+# Copie para Content/Professions/herbalist.toml e reinicie.
+Id = "herbalist"
+# Fallback se não existir profession.herbalist nos arquivos de idioma.
+Name = "Herbalist"
+# Reutiliza um modelo existente; criar profissão não cria modelo.
+Model = "farmer"
+# Atividade interna do prefab; não traduza.
+Jobs = ["Farming"]
+# Velocidade de trabalho (cidadão usa 0.5).
+Efficiency = 1.1
+# Retirado do estoque ao treinar.
+TrainingCost = { Emeralds = 15, Tools = 2 }
+# Bônus aplicado à saída do trabalho para cada recurso.
+ResourceBonus = { Food = 1.2 }

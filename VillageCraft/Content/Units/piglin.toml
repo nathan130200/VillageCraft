@@ -1,0 +1,19 @@
+# TIPO: UnitFile / UnitPlan: estatísticas de combate. Não é uma profissão.
+# Carregado uma vez na inicialização. Guia completo: Content/README.md.
+# ID único da unidade; referências em Defender ou ctx.game.spawnMob.
+Id = "piglin"
+# ID de Models usado para renderizar esta unidade.
+Model = "piglin"
+# Vida inicial/máxima da unidade.
+Health = 75
+# Dano de um ataque ou explosão.
+Damage = 9
+# Alcance do ataque em terrenos.
+Range = 0.8
+# Velocidade base em terrenos por segundo de simulação.
+Speed = 0.95
+# Intervalo entre ataques, em segundos de simulação.
+Cooldown = 1
+
+# Componente de IA padrão (arquivo .js sem extensão). Pode ser substituído por set_script_type(eST_AI, Id).
+Behavior = "melee"

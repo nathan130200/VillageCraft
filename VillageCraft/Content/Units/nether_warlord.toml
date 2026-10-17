@@ -1,0 +1,18 @@
+# TIPO: UnitFile / UnitPlan: estatísticas de combate. Não é uma profissão.
+# Carregado uma vez na inicialização. Guia completo: Content/README.md.
+# ID único da unidade; referências em Defender ou ctx.game.spawnMob.
+Id = "nether_warlord"
+# ID de Models usado para renderizar esta unidade.
+Model = "nether_warlord"
+# Vida inicial/máxima da unidade.
+Health = 400
+# Dano de um ataque ou explosão.
+Damage = 25
+# Alcance do ataque em terrenos.
+Range = 1.2
+# Velocidade base em terrenos por segundo de simulação.
+Speed = 0.75
+# Intervalo entre ataques, em segundos de simulação.
+Cooldown = 1.4
+# Componente de IA padrão (arquivo .js sem extensão). Pode ser substituído por set_script_type(eST_AI, Id).
+Behavior = "melee"

@@ -1,0 +1,4 @@
+# TYPE: NamePool. Lists used once when each villager is created or an old save is imported.
+# Names are saved permanently and do not change when switching language.
+FirstNames = ["Ana", "Bruno", "Carla", "Diego", "Elisa", "Felipe", "Gabriela", "Henrique", "Isabela", "João", "Julia", "Lucas", "Marina", "Nathan", "Olivia", "Pedro", "Rafaela", "Rafael", "Sofia", "Tiago", "Vitória", "Yuri", "Clara", "Miguel", "Alice", "Davi", "Helena", "Bento", "Lia", "Caio"]
+Surnames = ["Silva", "Santos", "Oliveira", "Souza", "Lima", "Costa", "Ferreira", "Almeida", "Ribeiro", "Pereira", "Carvalho", "Gomes", "Martins", "Rocha", "Barbosa", "Teixeira", "Mendes", "Azevedo", "Monteiro", "Cardoso", "Vieira", "Nunes", "Moura", "Castro"]

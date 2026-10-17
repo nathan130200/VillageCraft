@@ -1,0 +1,188 @@
+﻿# TIPO: ModelFile: geometria feita de cuboides. Não define custo, vagas ou profissão.
+# Carregado uma vez na inicialização. Guia completo: Content/README.md.
+# ID único do modelo, referenciado por prefabs, profissões e unidades.
+Id = "quarry"
+
+# Nova peça/cuboide.
+[[Parts]]
+# Centro [x,y,z] em terrenos. +Y = cima; +Z = frente.
+Position = [0, 0.02, 0]
+# Dimensões [largura,altura,profundidade], todas positivas.
+Size = [0.94, 0.06, 0.94]
+# Cor hexadecimal de fallback #RRGGBB.
+Color = "#696E6E"
+# Nome lógico de textura resolvido pelo caminho externo de assets.
+Texture = "block/stone.png"
+# Origem [u,v] em pixels na skin; [] = textura repetida.
+UvOrigin = []
+# Dimensões [largura,altura,profundidade] em pixels da skin; [] = repetição.
+UvSize = []
+
+# Nova peça/cuboide.
+[[Parts]]
+# Fit a full block face instead of cutting a tiny repeated UV region.
+TextureMode = "stretch"
+
+# Centro [x,y,z] em terrenos. +Y = cima; +Z = frente.
+Position = [-0.36, 0.12, -0.1]
+# Dimensões [largura,altura,profundidade], todas positivas.
+Size = [0.17, 0.2, 0.55]
+# Cor hexadecimal de fallback #RRGGBB.
+Color = "#92968E"
+# Nome lógico de textura resolvido pelo caminho externo de assets.
+Texture = "block/iron_ore.png"
+# Origem [u,v] em pixels na skin; [] = textura repetida.
+UvOrigin = []
+# Dimensões [largura,altura,profundidade] em pixels da skin; [] = repetição.
+UvSize = []
+
+# Nova peça/cuboide.
+[[Parts]]
+# Fit a full block face instead of cutting a tiny repeated UV region.
+TextureMode = "stretch"
+
+# Centro [x,y,z] em terrenos. +Y = cima; +Z = frente.
+Position = [-0.18999999999999997, 0.18, -0.1]
+# Dimensões [largura,altura,profundidade], todas positivas.
+Size = [0.17, 0.32, 0.55]
+# Cor hexadecimal de fallback #RRGGBB.
+Color = "#92968E"
+# Nome lógico de textura resolvido pelo caminho externo de assets.
+Texture = "block/iron_ore.png"
+# Origem [u,v] em pixels na skin; [] = textura repetida.
+UvOrigin = []
+# Dimensões [largura,altura,profundidade] em pixels da skin; [] = repetição.
+UvSize = []
+
+# Nova peça/cuboide.
+[[Parts]]
+# Fit a full block face instead of cutting a tiny repeated UV region.
+TextureMode = "stretch"
+
+# Centro [x,y,z] em terrenos. +Y = cima; +Z = frente.
+Position = [-0.019999999999999962, 0.24, -0.1]
+# Dimensões [largura,altura,profundidade], todas positivas.
+Size = [0.17, 0.44, 0.55]
+# Cor hexadecimal de fallback #RRGGBB.
+Color = "#92968E"
+# Nome lógico de textura resolvido pelo caminho externo de assets.
+Texture = "block/iron_ore.png"
+# Origem [u,v] em pixels na skin; [] = textura repetida.
+UvOrigin = []
+# Dimensões [largura,altura,profundidade] em pixels da skin; [] = repetição.
+UvSize = []
+
+# Nova peça/cuboide.
+[[Parts]]
+# Fit a full block face instead of cutting a tiny repeated UV region.
+TextureMode = "stretch"
+
+# Centro [x,y,z] em terrenos. +Y = cima; +Z = frente.
+Position = [0.15000000000000002, 0.3, -0.1]
+# Dimensões [largura,altura,profundidade], todas positivas.
+Size = [0.17, 0.56, 0.55]
+# Cor hexadecimal de fallback #RRGGBB.
+Color = "#92968E"
+# Nome lógico de textura resolvido pelo caminho externo de assets.
+Texture = "block/iron_ore.png"
+# Origem [u,v] em pixels na skin; [] = textura repetida.
+UvOrigin = []
+# Dimensões [largura,altura,profundidade] em pixels da skin; [] = repetição.
+UvSize = []
+
+# Nova peça/cuboide.
+[[Parts]]
+# Fit a full block face instead of cutting a tiny repeated UV region.
+TextureMode = "stretch"
+
+# Centro [x,y,z] em terrenos. +Y = cima; +Z = frente.
+Position = [0.32000000000000006, 0.36, -0.1]
+# Dimensões [largura,altura,profundidade], todas positivas.
+Size = [0.17, 0.6799999999999999, 0.55]
+# Cor hexadecimal de fallback #RRGGBB.
+Color = "#92968E"
+# Nome lógico de textura resolvido pelo caminho externo de assets.
+Texture = "block/iron_ore.png"
+# Origem [u,v] em pixels na skin; [] = textura repetida.
+UvOrigin = []
+# Dimensões [largura,altura,profundidade] em pixels da skin; [] = repetição.
+UvSize = []
+
+# Nova peça/cuboide.
+[[Parts]]
+# Centro [x,y,z] em terrenos. +Y = cima; +Z = frente.
+Position = [-0.3, 0.55, 0.25]
+# Dimensões [largura,altura,profundidade], todas positivas.
+Size = [0.07, 0.9, 0.07]
+# Cor hexadecimal de fallback #RRGGBB.
+Color = "#65492D"
+# Nome lógico de textura resolvido pelo caminho externo de assets.
+Texture = "block/oak_log.png"
+# Origem [u,v] em pixels na skin; [] = textura repetida.
+UvOrigin = []
+# Dimensões [largura,altura,profundidade] em pixels da skin; [] = repetição.
+UvSize = []
+
+# Nova peça/cuboide.
+[[Parts]]
+# Centro [x,y,z] em terrenos. +Y = cima; +Z = frente.
+Position = [0.3, 0.55, 0.25]
+# Dimensões [largura,altura,profundidade], todas positivas.
+Size = [0.07, 0.9, 0.07]
+# Cor hexadecimal de fallback #RRGGBB.
+Color = "#65492D"
+# Nome lógico de textura resolvido pelo caminho externo de assets.
+Texture = "block/oak_log.png"
+# Origem [u,v] em pixels na skin; [] = textura repetida.
+UvOrigin = []
+# Dimensões [largura,altura,profundidade] em pixels da skin; [] = repetição.
+UvSize = []
+
+# Nova peça/cuboide.
+[[Parts]]
+# Centro [x,y,z] em terrenos. +Y = cima; +Z = frente.
+Position = [0, 0.95, 0.25]
+# Dimensões [largura,altura,profundidade], todas positivas.
+Size = [0.75, 0.08, 0.08]
+# Cor hexadecimal de fallback #RRGGBB.
+Color = "#65492D"
+# Nome lógico de textura resolvido pelo caminho externo de assets.
+Texture = "block/oak_log.png"
+# Origem [u,v] em pixels na skin; [] = textura repetida.
+UvOrigin = []
+# Dimensões [largura,altura,profundidade] em pixels da skin; [] = repetição.
+UvSize = []
+
+# Nova peça/cuboide.
+[[Parts]]
+TextureMode = "stretch"
+
+# Centro [x,y,z] em terrenos. +Y = cima; +Z = frente.
+Position = [0, 0.6, 0.25]
+# Dimensões [largura,altura,profundidade], todas positivas.
+Size = [0.02, 0.55, 0.02]
+# Cor hexadecimal de fallback #RRGGBB.
+Color = "#C4B59B"
+# Nome lógico de textura resolvido pelo caminho externo de assets.
+Texture = "block/iron_block.png"
+# Origem [u,v] em pixels na skin; [] = textura repetida.
+UvOrigin = []
+# Dimensões [largura,altura,profundidade] em pixels da skin; [] = repetição.
+UvSize = []
+
+# Nova peça/cuboide.
+[[Parts]]
+TextureMode = "stretch"
+
+# Centro [x,y,z] em terrenos. +Y = cima; +Z = frente.
+Position = [0, 0.31, 0.25]
+# Dimensões [largura,altura,profundidade], todas positivas.
+Size = [0.18, 0.16, 0.2]
+# Cor hexadecimal de fallback #RRGGBB.
+Color = "#5E6263"
+# Nome lógico de textura resolvido pelo caminho externo de assets.
+Texture = "block/iron_block.png"
+# Origem [u,v] em pixels na skin; [] = textura repetida.
+UvOrigin = []
+# Dimensões [largura,altura,profundidade] em pixels da skin; [] = repetição.
+UvSize = []

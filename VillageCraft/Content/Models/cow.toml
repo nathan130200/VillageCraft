@@ -1,0 +1,50 @@
+Id = "cow"
+
+[[Parts]]
+Position = [0, 0.45, 0]
+Size = [0.3, 0.45, 0.25]
+Pitch = 90
+Color = "#FFFFFF"
+Texture = "entity/cow/cow.png"
+UvOrigin = [18, 4]
+UvSize = [12, 18, 10]
+
+[[Parts]]
+Position = [0, 0.52, 0.26]
+Size = [0.2, 0.2, 0.15]
+Color = "#FFFFFF"
+Texture = "entity/cow/cow.png"
+UvOrigin = [0, 0]
+UvSize = [8, 8, 6]
+
+[[Parts]]
+Position = [-0.1, 0.15, -0.14]
+Size = [0.1, 0.3, 0.1]
+Color = "#FFFFFF"
+Texture = "entity/cow/cow.png"
+UvOrigin = [0, 16]
+UvSize = [4, 12, 4]
+
+[[Parts]]
+Position = [-0.1, 0.15, 0.14]
+Size = [0.1, 0.3, 0.1]
+Color = "#FFFFFF"
+Texture = "entity/cow/cow.png"
+UvOrigin = [0, 16]
+UvSize = [4, 12, 4]
+
+[[Parts]]
+Position = [0.1, 0.15, -0.14]
+Size = [0.1, 0.3, 0.1]
+Color = "#FFFFFF"
+Texture = "entity/cow/cow.png"
+UvOrigin = [0, 16]
+UvSize = [4, 12, 4]
+
+[[Parts]]
+Position = [0.1, 0.15, 0.14]
+Size = [0.1, 0.3, 0.1]
+Color = "#FFFFFF"
+Texture = "entity/cow/cow.png"
+UvOrigin = [0, 16]
+UvSize = [4, 12, 4]

@@ -1,0 +1,10 @@
+# Crossed two-sided plant planes, with no opaque cuboid edges.
+Id = "wild_flower"
+
+[[Parts]]
+Shape = "cross"
+Position = [0, 0.12, 0]
+Size = [0.22, 0.24, 0.22]
+Color = "#79A846"
+Texture = "block/poppy.png"
+TextureMode = "stretch"

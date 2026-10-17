@@ -1,0 +1,19 @@
+# TIPO: UnitFile / UnitPlan: estatísticas de combate. Não é uma profissão.
+# Carregado uma vez na inicialização. Guia completo: Content/README.md.
+# ID único da unidade; referências em Defender ou ctx.game.spawnMob.
+Id = "warrior"
+# ID de Models usado para renderizar esta unidade.
+Model = "warrior"
+# Vida inicial/máxima da unidade.
+Health = 50
+# Dano de um ataque ou explosão.
+Damage = 14
+# Alcance do ataque em terrenos.
+Range = 0.9
+# Velocidade base em terrenos por segundo de simulação.
+Speed = 0.9
+# Intervalo entre ataques, em segundos de simulação.
+Cooldown = 0.8
+
+# Componente de IA padrão (arquivo .js sem extensão). Pode ser substituído por set_script_type(eST_AI, Id).
+Behavior = "melee"

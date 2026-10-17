@@ -1,0 +1,94 @@
+# TIPO: ModelFile: geometria feita de cuboides. Não define custo, vagas ou profissão.
+# Carregado uma vez na inicialização. Guia completo: Content/README.md.
+# ID único do modelo, referenciado por prefabs, profissões e unidades.
+Id = "creeper"
+
+# Nova peça/cuboide.
+[[Parts]]
+# Centro [x,y,z] em terrenos. +Y = cima; +Z = frente.
+Position = [0, 0.7, 0]
+# Dimensões [largura,altura,profundidade], todas positivas.
+Size = [0.26, 0.26, 0.26]
+# Cor hexadecimal de fallback #RRGGBB.
+Color = "#FFFFFF"
+# Nome lógico de textura resolvido pelo caminho externo de assets.
+Texture = "entity/creeper/creeper.png"
+# Origem [u,v] em pixels na skin; [] = textura repetida.
+UvOrigin = [0, 0]
+# Dimensões [largura,altura,profundidade] em pixels da skin; [] = repetição.
+UvSize = [8, 8, 8]
+
+# Nova peça/cuboide.
+[[Parts]]
+# Centro [x,y,z] em terrenos. +Y = cima; +Z = frente.
+Position = [0, 0.4, 0]
+# Dimensões [largura,altura,profundidade], todas positivas.
+Size = [0.24, 0.36, 0.15]
+# Cor hexadecimal de fallback #RRGGBB.
+Color = "#FFFFFF"
+# Nome lógico de textura resolvido pelo caminho externo de assets.
+Texture = "entity/creeper/creeper.png"
+# Origem [u,v] em pixels na skin; [] = textura repetida.
+UvOrigin = [16, 16]
+# Dimensões [largura,altura,profundidade] em pixels da skin; [] = repetição.
+UvSize = [8, 12, 4]
+
+# Nova peça/cuboide.
+[[Parts]]
+# Centro [x,y,z] em terrenos. +Y = cima; +Z = frente.
+Position = [-0.08, 0.1, -0.08]
+# Dimensões [largura,altura,profundidade], todas positivas.
+Size = [0.11, 0.2, 0.11]
+# Cor hexadecimal de fallback #RRGGBB.
+Color = "#FFFFFF"
+# Nome lógico de textura resolvido pelo caminho externo de assets.
+Texture = "entity/creeper/creeper.png"
+# Origem [u,v] em pixels na skin; [] = textura repetida.
+UvOrigin = [0, 16]
+# Dimensões [largura,altura,profundidade] em pixels da skin; [] = repetição.
+UvSize = [4, 6, 4]
+
+# Nova peça/cuboide.
+[[Parts]]
+# Centro [x,y,z] em terrenos. +Y = cima; +Z = frente.
+Position = [-0.08, 0.1, 0.08]
+# Dimensões [largura,altura,profundidade], todas positivas.
+Size = [0.11, 0.2, 0.11]
+# Cor hexadecimal de fallback #RRGGBB.
+Color = "#FFFFFF"
+# Nome lógico de textura resolvido pelo caminho externo de assets.
+Texture = "entity/creeper/creeper.png"
+# Origem [u,v] em pixels na skin; [] = textura repetida.
+UvOrigin = [0, 16]
+# Dimensões [largura,altura,profundidade] em pixels da skin; [] = repetição.
+UvSize = [4, 6, 4]
+
+# Nova peça/cuboide.
+[[Parts]]
+# Centro [x,y,z] em terrenos. +Y = cima; +Z = frente.
+Position = [0.08, 0.1, -0.08]
+# Dimensões [largura,altura,profundidade], todas positivas.
+Size = [0.11, 0.2, 0.11]
+# Cor hexadecimal de fallback #RRGGBB.
+Color = "#FFFFFF"
+# Nome lógico de textura resolvido pelo caminho externo de assets.
+Texture = "entity/creeper/creeper.png"
+# Origem [u,v] em pixels na skin; [] = textura repetida.
+UvOrigin = [0, 16]
+# Dimensões [largura,altura,profundidade] em pixels da skin; [] = repetição.
+UvSize = [4, 6, 4]
+
+# Nova peça/cuboide.
+[[Parts]]
+# Centro [x,y,z] em terrenos. +Y = cima; +Z = frente.
+Position = [0.08, 0.1, 0.08]
+# Dimensões [largura,altura,profundidade], todas positivas.
+Size = [0.11, 0.2, 0.11]
+# Cor hexadecimal de fallback #RRGGBB.
+Color = "#FFFFFF"
+# Nome lógico de textura resolvido pelo caminho externo de assets.
+Texture = "entity/creeper/creeper.png"
+# Origem [u,v] em pixels na skin; [] = textura repetida.
+UvOrigin = [0, 16]
+# Dimensões [largura,altura,profundidade] em pixels da skin; [] = repetição.
+UvSize = [4, 6, 4]

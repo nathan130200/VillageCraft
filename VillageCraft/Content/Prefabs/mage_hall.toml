@@ -1,0 +1,60 @@
+﻿# TIPO: Plan: construção/caminho colocável. Um arquivo por prefab.
+# Carregado uma vez na inicialização. Guia completo: Content/README.md.
+# ID único e estável; usado por saves, scripts e traduções. Não traduzir.
+Id = "mage_hall"
+# Nome de fallback; tradução: prefab.<Id>.name em Locales/<idioma>.toml.
+Name = "Enchanter hall"
+# Categoria interna do menu. Use um ID existente ou crie uma categoria e sua tradução.
+Category = "Defense"
+# Descrição de fallback; tradução: prefab.<Id>.description.
+Description = "Magic villagers launch powerful violet bolts."
+# ID de um arquivo de Models. Não é o nome de uma textura.
+Model = "mage"
+# ID interno da atividade. Deve coincidir com Jobs de uma profissão. Não traduzir.
+Job = "Spellcasting"
+# Modelo de trabalhador de fallback. A aparência individual vem da profissão.
+WorkerModel = "mage_worker"
+# Número de vagas nesta construção (0 = sem trabalho).
+Jobs = 2
+# Capacidade de moradores.
+Homes = 0
+# Moradores abastecidos com água quando conectada e ativada.
+Water = 0
+# Bônus de felicidade da vila.
+Joy = 0
+# Custo diário em esmeraldas.
+Upkeep = 2
+# Vida máxima da construção.
+Health = 120
+# true = caminho que faz parte da rede viária.
+Path = false
+# Exige que a entrada esteja voltada para um caminho conectado.
+NeedsPath = true
+# Bloqueia passagem e visão dos invasores.
+BlocksRaiders = false
+# Custo para construir. Chaves são IDs de recursos de resources.toml.
+Cost = { "Emeralds" = 180, "Iron" = 5, "Stone" = 25, "Wood" = 18 }
+# Recursos consumidos por ciclo de produção bem-sucedido.
+Input = {  }
+# Recursos produzidos por ciclo, multiplicados pelo bônus da profissão.
+Output = {  }
+# ID do modelo animal criado pelo cercado; vazio desativa.
+Animal = ""
+# ID da unidade de defesa treinada/criada nesta construção.
+Defender = "mage"
+# true cria guardiões; false faz o trabalhador lutar como Defender.
+CreatesGuardian = false
+# Multiplicador de movimento ao pisar neste caminho.
+MoveSpeed = 1
+# Multiplicadores extras por atividade/profissão/unidade; IDs internos.
+JobSpeed = {  }
+# Profissões explicitamente aceitas, além das que possuem Job em Jobs.
+Professions = []
+# Autoriza melhorias de equipamento quando conectada e com trabalhador.
+UpgradeStation = false
+
+# Componente de construção padrão (arquivo .js sem extensão). Pode ser substituído por set_script_type(eST_Building, Id).
+Script = ""
+
+# A roof or canopy blocks direct sunlight on this tile.
+SheltersFromSun = true

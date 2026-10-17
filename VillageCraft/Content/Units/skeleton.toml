@@ -1,0 +1,20 @@
+﻿# TIPO: UnitFile / UnitPlan: estatísticas de combate. Não é uma profissão.
+# Carregado uma vez na inicialização. Guia completo: Content/README.md.
+# ID único da unidade; referências em Defender ou ctx.game.spawnMob.
+Id = "skeleton"
+# ID de Models usado para renderizar esta unidade.
+Model = "skeleton"
+# Vida inicial/máxima da unidade.
+Health = 40
+# Dano de um ataque ou explosão.
+Damage = 7
+# Alcance do ataque em terrenos.
+Range = 3.5
+# Velocidade base em terrenos por segundo de simulação.
+Speed = 0.85
+# Intervalo entre ataques, em segundos de simulação.
+Cooldown = 1.8
+# Componente de IA padrão (arquivo .js sem extensão). Pode ser substituído por set_script_type(eST_AI, Id).
+Behavior = "ranged"
+
+BurnsInSun = true

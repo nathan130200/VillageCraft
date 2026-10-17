@@ -1,0 +1,60 @@
+﻿# TIPO: Plan: construção/caminho colocável. Um arquivo por prefab.
+# Carregado uma vez na inicialização. Guia completo: Content/README.md.
+# ID único e estável; usado por saves, scripts e traduções. Não traduzir.
+Id = "cave"
+# Nome de fallback; tradução: prefab.<Id>.name em Locales/<idioma>.toml.
+Name = "Cave entrance"
+# Categoria interna do menu. Use um ID existente ou crie uma categoria e sua tradução.
+Category = "Production"
+# Descrição de fallback; tradução: prefab.<Id>.description.
+Description = "Miners and explorers search underground for gold, diamonds and ancient debris. Citizens can assist at half efficiency."
+# ID de um arquivo de Models. Não é o nome de uma textura.
+Model = "cave"
+# ID interno da atividade. Deve coincidir com Jobs de uma profissão. Não traduzir.
+Job = "Expedition"
+# Modelo de trabalhador de fallback. A aparência individual vem da profissão.
+WorkerModel = "miner"
+# Número de vagas nesta construção (0 = sem trabalho).
+Jobs = 4
+# Capacidade de moradores.
+Homes = 0
+# Moradores abastecidos com água quando conectada e ativada.
+Water = 0
+# Bônus de felicidade da vila.
+Joy = 0
+# Custo diário em esmeraldas.
+Upkeep = 4
+# Vida máxima da construção.
+Health = 240
+# true = caminho que faz parte da rede viária.
+Path = false
+# Exige que a entrada esteja voltada para um caminho conectado.
+NeedsPath = true
+# Bloqueia passagem e visão dos invasores.
+BlocksRaiders = false
+# Custo para construir. Chaves são IDs de recursos de resources.toml.
+Cost = { "Emeralds" = 180, "Stone" = 32, "Tools" = 4, "Wood" = 16 }
+# Recursos consumidos por ciclo de produção bem-sucedido.
+Input = { "Food" = 0.25, "Tools" = 0.1 }
+# Recursos produzidos por ciclo, multiplicados pelo bônus da profissão.
+Output = { "AncientDebris" = 0.04, "Diamonds" = 0.15, "Gold" = 0.4, "Iron" = 1 }
+# ID do modelo animal criado pelo cercado; vazio desativa.
+Animal = ""
+# ID da unidade de defesa treinada/criada nesta construção.
+Defender = ""
+# true cria guardiões; false faz o trabalhador lutar como Defender.
+CreatesGuardian = false
+# Multiplicador de movimento ao pisar neste caminho.
+MoveSpeed = 1
+# Multiplicadores extras por atividade/profissão/unidade; IDs internos.
+JobSpeed = {  }
+# Profissões explicitamente aceitas, além das que possuem Job em Jobs.
+Professions = ["miner", "explorer"]
+# Autoriza melhorias de equipamento quando conectada e com trabalhador.
+UpgradeStation = false
+
+# Componente de construção padrão (arquivo .js sem extensão). Pode ser substituído por set_script_type(eST_Building, Id).
+Script = ""
+
+# A roof or canopy blocks direct sunlight on this tile.
+SheltersFromSun = true

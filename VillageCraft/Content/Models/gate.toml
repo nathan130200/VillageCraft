@@ -1,0 +1,179 @@
+﻿# TIPO: ModelFile: geometria feita de cuboides. Não define custo, vagas ou profissão.
+# Carregado uma vez na inicialização. Guia completo: Content/README.md.
+# ID único do modelo, referenciado por prefabs, profissões e unidades.
+Id = "gate"
+
+# Nova peça/cuboide.
+[[Parts]]
+# Centro [x,y,z] em terrenos. +Y = cima; +Z = frente.
+Position = [0, 0.012, 0]
+# Dimensões [largura,altura,profundidade], todas positivas.
+Size = [1, 0.025, 1]
+# Cor hexadecimal de fallback #RRGGBB.
+Color = "#B9A170"
+# Nome lógico de textura resolvido pelo caminho externo de assets.
+Texture = "block/dirt_path.png"
+# Origem [u,v] em pixels na skin; [] = textura repetida.
+UvOrigin = []
+# Dimensões [largura,altura,profundidade] em pixels da skin; [] = repetição.
+UvSize = []
+
+# Nova peça/cuboide.
+[[Parts]]
+# Centro [x,y,z] em terrenos. +Y = cima; +Z = frente.
+Position = [-0.25, 0.03, 0.15]
+# Dimensões [largura,altura,profundidade], todas positivas.
+Size = [0.21, 0.012, 0.18]
+# Cor hexadecimal de fallback #RRGGBB.
+Color = "#D0B984"
+# Nome lógico de textura resolvido pelo caminho externo de assets.
+Texture = "block/dirt_path.png"
+# Origem [u,v] em pixels na skin; [] = textura repetida.
+UvOrigin = []
+# Dimensões [largura,altura,profundidade] em pixels da skin; [] = repetição.
+UvSize = []
+
+# Nova peça/cuboide.
+[[Parts]]
+# Centro [x,y,z] em terrenos. +Y = cima; +Z = frente.
+Position = [0.24, 0.03, -0.25]
+# Dimensões [largura,altura,profundidade], todas positivas.
+Size = [0.27, 0.012, 0.16]
+# Cor hexadecimal de fallback #RRGGBB.
+Color = "#A99163"
+# Nome lógico de textura resolvido pelo caminho externo de assets.
+Texture = "block/dirt_path.png"
+# Origem [u,v] em pixels na skin; [] = textura repetida.
+UvOrigin = []
+# Dimensões [largura,altura,profundidade] em pixels da skin; [] = repetição.
+UvSize = []
+
+# Nova peça/cuboide.
+[[Parts]]
+# Centro [x,y,z] em terrenos. +Y = cima; +Z = frente.
+Position = [-0.37, 0.65, 0]
+# Dimensões [largura,altura,profundidade], todas positivas.
+Size = [0.22, 1.3, 0.35]
+# Cor hexadecimal de fallback #RRGGBB.
+Color = "#858784"
+# Nome lógico de textura resolvido pelo caminho externo de assets.
+Texture = "block/cobblestone.png"
+# Origem [u,v] em pixels na skin; [] = textura repetida.
+UvOrigin = []
+# Dimensões [largura,altura,profundidade] em pixels da skin; [] = repetição.
+UvSize = []
+
+# Nova peça/cuboide.
+[[Parts]]
+# Centro [x,y,z] em terrenos. +Y = cima; +Z = frente.
+Position = [0.37, 0.65, 0]
+# Dimensões [largura,altura,profundidade], todas positivas.
+Size = [0.22, 1.3, 0.35]
+# Cor hexadecimal de fallback #RRGGBB.
+Color = "#858784"
+# Nome lógico de textura resolvido pelo caminho externo de assets.
+Texture = "block/cobblestone.png"
+# Origem [u,v] em pixels na skin; [] = textura repetida.
+UvOrigin = []
+# Dimensões [largura,altura,profundidade] em pixels da skin; [] = repetição.
+UvSize = []
+
+# Nova peça/cuboide.
+[[Parts]]
+# Centro [x,y,z] em terrenos. +Y = cima; +Z = frente.
+Position = [0, 1.27, 0]
+# Dimensões [largura,altura,profundidade], todas positivas.
+Size = [0.98, 0.22, 0.35]
+# Cor hexadecimal de fallback #RRGGBB.
+Color = "#858784"
+# Nome lógico de textura resolvido pelo caminho externo de assets.
+Texture = "block/cobblestone.png"
+# Origem [u,v] em pixels na skin; [] = textura repetida.
+UvOrigin = []
+# Dimensões [largura,altura,profundidade] em pixels da skin; [] = repetição.
+UvSize = []
+
+# Nova peça/cuboide.
+[[Parts]]
+TextureMode = "stretch"
+
+# Centro [x,y,z] em terrenos. +Y = cima; +Z = frente.
+Position = [-0.2, 0.5, 0]
+# Dimensões [largura,altura,profundidade], todas positivas.
+Size = [0.04, 0.95, 0.08]
+# Cor hexadecimal de fallback #RRGGBB.
+Color = "#715735"
+# Nome lógico de textura resolvido pelo caminho externo de assets.
+Texture = "block/oak_planks.png"
+# Origem [u,v] em pixels na skin; [] = textura repetida.
+UvOrigin = []
+# Dimensões [largura,altura,profundidade] em pixels da skin; [] = repetição.
+UvSize = []
+
+# Nova peça/cuboide.
+[[Parts]]
+TextureMode = "stretch"
+
+# Centro [x,y,z] em terrenos. +Y = cima; +Z = frente.
+Position = [-0.1, 0.5, 0]
+# Dimensões [largura,altura,profundidade], todas positivas.
+Size = [0.04, 0.95, 0.08]
+# Cor hexadecimal de fallback #RRGGBB.
+Color = "#715735"
+# Nome lógico de textura resolvido pelo caminho externo de assets.
+Texture = "block/oak_planks.png"
+# Origem [u,v] em pixels na skin; [] = textura repetida.
+UvOrigin = []
+# Dimensões [largura,altura,profundidade] em pixels da skin; [] = repetição.
+UvSize = []
+
+# Nova peça/cuboide.
+[[Parts]]
+TextureMode = "stretch"
+
+# Centro [x,y,z] em terrenos. +Y = cima; +Z = frente.
+Position = [0, 0.5, 0]
+# Dimensões [largura,altura,profundidade], todas positivas.
+Size = [0.04, 0.95, 0.08]
+# Cor hexadecimal de fallback #RRGGBB.
+Color = "#715735"
+# Nome lógico de textura resolvido pelo caminho externo de assets.
+Texture = "block/oak_planks.png"
+# Origem [u,v] em pixels na skin; [] = textura repetida.
+UvOrigin = []
+# Dimensões [largura,altura,profundidade] em pixels da skin; [] = repetição.
+UvSize = []
+
+# Nova peça/cuboide.
+[[Parts]]
+TextureMode = "stretch"
+
+# Centro [x,y,z] em terrenos. +Y = cima; +Z = frente.
+Position = [0.1, 0.5, 0]
+# Dimensões [largura,altura,profundidade], todas positivas.
+Size = [0.04, 0.95, 0.08]
+# Cor hexadecimal de fallback #RRGGBB.
+Color = "#715735"
+# Nome lógico de textura resolvido pelo caminho externo de assets.
+Texture = "block/oak_planks.png"
+# Origem [u,v] em pixels na skin; [] = textura repetida.
+UvOrigin = []
+# Dimensões [largura,altura,profundidade] em pixels da skin; [] = repetição.
+UvSize = []
+
+# Nova peça/cuboide.
+[[Parts]]
+TextureMode = "stretch"
+
+# Centro [x,y,z] em terrenos. +Y = cima; +Z = frente.
+Position = [0.2, 0.5, 0]
+# Dimensões [largura,altura,profundidade], todas positivas.
+Size = [0.04, 0.95, 0.08]
+# Cor hexadecimal de fallback #RRGGBB.
+Color = "#715735"
+# Nome lógico de textura resolvido pelo caminho externo de assets.
+Texture = "block/oak_planks.png"
+# Origem [u,v] em pixels na skin; [] = textura repetida.
+UvOrigin = []
+# Dimensões [largura,altura,profundidade] em pixels da skin; [] = repetição.
+UvSize = []

@@ -1,0 +1,21 @@
+# TIPO: RenderingSettings: AlphaCutoff (0..1) e fragment shader GLSL CutoutFragment.
+# Guia: Content/README.md. Carregado uma vez na inicialização.
+# Cutout pixels must be discarded before they can update the depth buffer.
+AlphaCutoff = 0.1
+CutoutFragment = """
+#version 330
+in vec2 fragTexCoord;
+in vec4 fragColor;
+uniform sampler2D texture0;
+uniform vec4 colDiffuse;
+uniform float alphaCutoff;
+out vec4 finalColor;
+void main()
+{
+    vec4 texel = texture(texture0, fragTexCoord);
+    if (texel.a < alphaCutoff) discard;
+    // Texture alpha is coverage, rather than glass-like translucency.
+    // Keep preview/tint alpha separate so placement ghosts still blend.
+    finalColor = vec4(texel.rgb, 1.0) * colDiffuse * fragColor;
+}
+"""

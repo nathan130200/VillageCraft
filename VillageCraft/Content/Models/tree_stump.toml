@@ -1,0 +1,14 @@
+# TIPO: ModelFile. Positions/sizes in village tiles. One block = 0.25 tiles.
+Id = "tree_stump"
+
+[[Parts]]
+Position = [0, 0.08, 0]
+Size = [0.2, 0.16, 0.2]
+Texture = "block/oak_log.png"
+Color = "#A0784C"
+
+[[Parts]]
+Position = [0, 0.165, 0]
+Size = [0.2, 0.01, 0.2]
+Texture = "block/oak_log_top.png"
+Color = "#B38954"

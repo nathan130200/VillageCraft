@@ -1,0 +1,93 @@
+# TIPO: ResourceFile: lista Resources com Id, Icon, BuyPrice e SellPrice.
+# Guia: Content/README.md. Carregado uma vez na inicialização.
+# Resource names, UI icons, and prices per twenty items.
+
+[[Resources]]
+Id = "Emeralds"
+Icon = "item/emerald.png"
+BuyPrice = 30
+SellPrice = 21
+
+[[Resources]]
+Id = "Food"
+Icon = "item/wheat.png"
+BuyPrice = 30
+SellPrice = 21
+
+[[Resources]]
+Id = "Wood"
+Icon = "block/oak_log.png"
+BuyPrice = 30
+SellPrice = 21
+
+[[Resources]]
+Id = "Stone"
+Icon = "block/cobblestone.png"
+BuyPrice = 30
+SellPrice = 21
+
+[[Resources]]
+Id = "Iron"
+Icon = "item/iron_ingot.png"
+BuyPrice = 60
+SellPrice = 42
+
+[[Resources]]
+Id = "Tools"
+Icon = "item/iron_pickaxe.png"
+BuyPrice = 60
+SellPrice = 42
+
+[[Resources]]
+Id = "Wool"
+Icon = "block/white_wool.png"
+BuyPrice = 30
+SellPrice = 21
+
+[[Resources]]
+Id = "Eggs"
+Icon = "item/egg.png"
+BuyPrice = 30
+SellPrice = 21
+
+[[Resources]]
+Id = "Gold"
+Icon = "item/gold_ingot.png"
+BuyPrice = 120
+SellPrice = 84
+
+[[Resources]]
+Id = "Diamonds"
+Icon = "item/diamond.png"
+BuyPrice = 240
+SellPrice = 168
+
+[[Resources]]
+Id = "AncientDebris"
+Icon = "block/obsidian.png"
+BuyPrice = 360
+SellPrice = 251.99999999999997
+
+[[Resources]]
+Id = "Goods"
+Icon = "item/paper.png"
+BuyPrice = 1
+SellPrice = 0.0
+
+[[Resources]]
+Id = "Torches"
+Icon = "block/torch.png"
+BuyPrice = 15
+SellPrice = 10.5
+
+[[Resources]]
+Id = "Leather"
+Icon = "item/leather.png"
+BuyPrice = 50
+SellPrice = 35.0
+
+[[Resources]]
+Id = "Milk"
+Icon = "item/milk_bucket.png"
+BuyPrice = 40
+SellPrice = 28.0

@@ -1,0 +1,12 @@
+# Plan: Torch, 1.0.5-beta.
+Id = "torch"
+Name = "Torch"
+Description = "Torch"
+Category = "Infrastructure"
+Model = "torch"
+Cost = { Torches = 1 }
+Indestructible = false
+LightRadius = 4.0
+NeedsPath = false
+StorageCapacity = 0
+Health = 20

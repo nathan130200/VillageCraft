@@ -1,0 +1,9 @@
+set_script_type(eST_AI, "blaze");
+function onInit() {}
+function onMonsterSpawned(monster) { monster.tags += " scripted"; }
+function onMonsterUpdate(ctx, dt) {
+    if (ctx.visible && ctx.distance <= ctx.range) ctx.attack();
+    else ctx.move();
+}
+function onUpdate(dt) {}
+function onShutdown() {}

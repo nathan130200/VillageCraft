@@ -1,0 +1,284 @@
+# Dedicated storage depot model; open loading bays, pallets and stacked crates.
+Id = "large_warehouse"
+
+[[Parts]]
+Position = [0, 0.07, 0]
+Size = [1, 0.14, 0.96]
+Color = "#FFFFFF"
+Texture = "block/stone_bricks.png"
+
+[[Parts]]
+Position = [0, 0.18, 0.37]
+Size = [0.94, 0.09, 0.3]
+Color = "#FFFFFF"
+Texture = "block/oak_planks.png"
+
+[[Parts]]
+Position = [0, 0.58, -0.4]
+Size = [0.94, 0.96, 0.08]
+Color = "#FFFFFF"
+Texture = "block/stone_bricks.png"
+
+[[Parts]]
+Position = [-0.43, 0.58, 0]
+Size = [0.08, 0.96, 0.8]
+Color = "#FFFFFF"
+Texture = "block/stone_bricks.png"
+
+[[Parts]]
+Position = [0.43, 0.58, 0]
+Size = [0.08, 0.96, 0.8]
+Color = "#FFFFFF"
+Texture = "block/stone_bricks.png"
+
+[[Parts]]
+Position = [0, 1.09, 0]
+Size = [1.06, 0.1, 1.02]
+Color = "#FFFFFF"
+Texture = "block/iron_block.png"
+
+[[Parts]]
+Position = [0, 1.19, -0.08]
+Size = [0.68, 0.12, 0.74]
+Color = "#FFFFFF"
+Texture = "block/stone_bricks.png"
+
+[[Parts]]
+Position = [0, 1.28, -0.08]
+Size = [0.74, 0.06, 0.8]
+Color = "#FFFFFF"
+Texture = "block/iron_block.png"
+
+[[Parts]]
+Position = [0, 1.19, 0.301]
+Size = [0.57, 0.08, 0.02]
+Color = "#FFFFFF"
+Texture = "block/glass.png"
+
+[[Parts]]
+Position = [0, 0.96, 0.42]
+Size = [0.94, 0.16, 0.08]
+Color = "#FFFFFF"
+Texture = "block/oak_log.png"
+
+[[Parts]]
+Position = [0, 0.57, 0.42]
+Size = [0.065, 0.75, 0.065]
+Color = "#FFFFFF"
+Texture = "block/stone_bricks.png"
+
+[[Parts]]
+Position = [-0.43, 0.57, 0.42]
+Size = [0.1, 0.94, 0.1]
+Color = "#FFFFFF"
+Texture = "block/stone_bricks.png"
+
+[[Parts]]
+Position = [0.43, 0.57, 0.42]
+Size = [0.1, 0.94, 0.1]
+Color = "#FFFFFF"
+Texture = "block/stone_bricks.png"
+
+[[Parts]]
+Position = [-0.27, 0.28, -0.23]
+Size = [0.22, 0.22, 0.22]
+Color = "#FFFFFF"
+Texture = "block/oak_planks.png"
+
+[[Parts]]
+Position = [-0.27, 0.28, -0.23]
+Size = [0.235, 0.025, 0.235]
+Color = "#FFFFFF"
+Texture = "block/dark_oak_planks.png"
+
+[[Parts]]
+Position = [-0.27, 0.28, -0.23]
+Size = [0.025, 0.232, 0.232]
+Color = "#FFFFFF"
+Texture = "block/dark_oak_planks.png"
+
+[[Parts]]
+Position = [-0.27, 0.52, -0.23]
+Size = [0.22, 0.22, 0.22]
+Color = "#FFFFFF"
+Texture = "block/oak_planks.png"
+
+[[Parts]]
+Position = [-0.27, 0.52, -0.23]
+Size = [0.235, 0.025, 0.235]
+Color = "#FFFFFF"
+Texture = "block/dark_oak_planks.png"
+
+[[Parts]]
+Position = [-0.27, 0.52, -0.23]
+Size = [0.025, 0.232, 0.232]
+Color = "#FFFFFF"
+Texture = "block/dark_oak_planks.png"
+
+[[Parts]]
+Position = [-0.27, 0.76, -0.23]
+Size = [0.22, 0.22, 0.22]
+Color = "#FFFFFF"
+Texture = "block/oak_planks.png"
+
+[[Parts]]
+Position = [-0.27, 0.76, -0.23]
+Size = [0.235, 0.025, 0.235]
+Color = "#FFFFFF"
+Texture = "block/dark_oak_planks.png"
+
+[[Parts]]
+Position = [-0.27, 0.76, -0.23]
+Size = [0.025, 0.232, 0.232]
+Color = "#FFFFFF"
+Texture = "block/dark_oak_planks.png"
+
+[[Parts]]
+Position = [0.01, 0.28, -0.23]
+Size = [0.22, 0.22, 0.22]
+Color = "#FFFFFF"
+Texture = "block/oak_planks.png"
+
+[[Parts]]
+Position = [0.01, 0.28, -0.23]
+Size = [0.235, 0.025, 0.235]
+Color = "#FFFFFF"
+Texture = "block/dark_oak_planks.png"
+
+[[Parts]]
+Position = [0.01, 0.28, -0.23]
+Size = [0.025, 0.232, 0.232]
+Color = "#FFFFFF"
+Texture = "block/dark_oak_planks.png"
+
+[[Parts]]
+Position = [0.01, 0.52, -0.23]
+Size = [0.22, 0.22, 0.22]
+Color = "#FFFFFF"
+Texture = "block/oak_planks.png"
+
+[[Parts]]
+Position = [0.01, 0.52, -0.23]
+Size = [0.235, 0.025, 0.235]
+Color = "#FFFFFF"
+Texture = "block/dark_oak_planks.png"
+
+[[Parts]]
+Position = [0.01, 0.52, -0.23]
+Size = [0.025, 0.232, 0.232]
+Color = "#FFFFFF"
+Texture = "block/dark_oak_planks.png"
+
+[[Parts]]
+Position = [0.01, 0.76, -0.23]
+Size = [0.22, 0.22, 0.22]
+Color = "#FFFFFF"
+Texture = "block/oak_planks.png"
+
+[[Parts]]
+Position = [0.01, 0.76, -0.23]
+Size = [0.235, 0.025, 0.235]
+Color = "#FFFFFF"
+Texture = "block/dark_oak_planks.png"
+
+[[Parts]]
+Position = [0.01, 0.76, -0.23]
+Size = [0.025, 0.232, 0.232]
+Color = "#FFFFFF"
+Texture = "block/dark_oak_planks.png"
+
+[[Parts]]
+Position = [0.27, 0.28, -0.23]
+Size = [0.22, 0.22, 0.22]
+Color = "#FFFFFF"
+Texture = "block/oak_planks.png"
+
+[[Parts]]
+Position = [0.27, 0.28, -0.23]
+Size = [0.235, 0.025, 0.235]
+Color = "#FFFFFF"
+Texture = "block/dark_oak_planks.png"
+
+[[Parts]]
+Position = [0.27, 0.28, -0.23]
+Size = [0.025, 0.232, 0.232]
+Color = "#FFFFFF"
+Texture = "block/dark_oak_planks.png"
+
+[[Parts]]
+Position = [0.27, 0.52, -0.23]
+Size = [0.22, 0.22, 0.22]
+Color = "#FFFFFF"
+Texture = "block/oak_planks.png"
+
+[[Parts]]
+Position = [0.27, 0.52, -0.23]
+Size = [0.235, 0.025, 0.235]
+Color = "#FFFFFF"
+Texture = "block/dark_oak_planks.png"
+
+[[Parts]]
+Position = [0.27, 0.52, -0.23]
+Size = [0.025, 0.232, 0.232]
+Color = "#FFFFFF"
+Texture = "block/dark_oak_planks.png"
+
+[[Parts]]
+Position = [0.27, 0.76, -0.23]
+Size = [0.22, 0.22, 0.22]
+Color = "#FFFFFF"
+Texture = "block/oak_planks.png"
+
+[[Parts]]
+Position = [0.27, 0.76, -0.23]
+Size = [0.235, 0.025, 0.235]
+Color = "#FFFFFF"
+Texture = "block/dark_oak_planks.png"
+
+[[Parts]]
+Position = [0.27, 0.76, -0.23]
+Size = [0.025, 0.232, 0.232]
+Color = "#FFFFFF"
+Texture = "block/dark_oak_planks.png"
+
+[[Parts]]
+Position = [-0.26, 0.3, 0.18]
+Size = [0.23, 0.23, 0.23]
+Color = "#FFFFFF"
+Texture = "block/oak_planks.png"
+
+[[Parts]]
+Position = [-0.26, 0.3, 0.18]
+Size = [0.245, 0.025, 0.245]
+Color = "#FFFFFF"
+Texture = "block/dark_oak_planks.png"
+
+[[Parts]]
+Position = [-0.26, 0.3, 0.18]
+Size = [0.025, 0.24200000000000002, 0.24200000000000002]
+Color = "#FFFFFF"
+Texture = "block/dark_oak_planks.png"
+
+[[Parts]]
+Position = [0.25, 0.3, 0.18]
+Size = [0.23, 0.23, 0.23]
+Color = "#FFFFFF"
+Texture = "block/oak_planks.png"
+
+[[Parts]]
+Position = [0.25, 0.3, 0.18]
+Size = [0.245, 0.025, 0.245]
+Color = "#FFFFFF"
+Texture = "block/dark_oak_planks.png"
+
+[[Parts]]
+Position = [0.25, 0.3, 0.18]
+Size = [0.025, 0.24200000000000002, 0.24200000000000002]
+Color = "#FFFFFF"
+Texture = "block/dark_oak_planks.png"
+
+[[Parts]]
+Position = [0.27, 0.55, 0.18]
+Size = [0.23, 0.23, 0.23]
+Color = "#FFFFFF"
+Texture = "block/hay_block_side.png"

@@ -1,0 +1,124 @@
+# TIPO: ModelFile: geometria feita de cuboides. Não define custo, vagas ou profissão.
+# Carregado uma vez na inicialização. Guia completo: Content/README.md.
+# ID único do modelo, referenciado por prefabs, profissões e unidades.
+Id = "chicken"
+
+# Nova peça/cuboide.
+[[Parts]]
+# Centro [x,y,z] em terrenos. +Y = cima; +Z = frente.
+Position = [0, 0.12, 0]
+# Dimensões [largura,altura,profundidade], todas positivas.
+Size = [0.096, 0.096, 0.128]
+# Cor hexadecimal de fallback #RRGGBB.
+Color = "#FFFFFF"
+# Nome lógico de textura resolvido pelo caminho externo de assets.
+Texture = "entity/chicken.png"
+# Origem [u,v] em pixels na skin; [] = textura repetida.
+UvOrigin = [0, 9]
+# Dimensões [largura,altura,profundidade] em pixels da skin; [] = repetição.
+UvSize = [6, 8, 6]
+
+# Nova peça/cuboide.
+[[Parts]]
+# Centro [x,y,z] em terrenos. +Y = cima; +Z = frente.
+Position = [0, 0.208, 0.092]
+# Dimensões [largura,altura,profundidade], todas positivas.
+Size = [0.064, 0.096, 0.048]
+# Cor hexadecimal de fallback #RRGGBB.
+Color = "#FFFFFF"
+# Nome lógico de textura resolvido pelo caminho externo de assets.
+Texture = "entity/chicken.png"
+# Origem [u,v] em pixels na skin; [] = textura repetida.
+UvOrigin = [0, 0]
+# Dimensões [largura,altura,profundidade] em pixels da skin; [] = repetição.
+UvSize = [4, 6, 3]
+
+# Nova peça/cuboide.
+[[Parts]]
+# Centro [x,y,z] em terrenos. +Y = cima; +Z = frente.
+Position = [0, 0.192, 0.132]
+# Dimensões [largura,altura,profundidade], todas positivas.
+Size = [0.064, 0.032, 0.032]
+# Cor hexadecimal de fallback #RRGGBB.
+Color = "#FFFFFF"
+# Nome lógico de textura resolvido pelo caminho externo de assets.
+Texture = "entity/chicken.png"
+# Origem [u,v] em pixels na skin; [] = textura repetida.
+UvOrigin = [14, 0]
+# Dimensões [largura,altura,profundidade] em pixels da skin; [] = repetição.
+UvSize = [4, 2, 2]
+
+# Nova peça/cuboide.
+[[Parts]]
+# Centro [x,y,z] em terrenos. +Y = cima; +Z = frente.
+Position = [0, 0.16, 0.116]
+# Dimensões [largura,altura,profundidade], todas positivas.
+Size = [0.032, 0.032, 0.032]
+# Cor hexadecimal de fallback #RRGGBB.
+Color = "#FFFFFF"
+# Nome lógico de textura resolvido pelo caminho externo de assets.
+Texture = "entity/chicken.png"
+# Origem [u,v] em pixels na skin; [] = textura repetida.
+UvOrigin = [14, 4]
+# Dimensões [largura,altura,profundidade] em pixels da skin; [] = repetição.
+UvSize = [2, 2, 2]
+
+# Nova peça/cuboide.
+[[Parts]]
+# Centro [x,y,z] em terrenos. +Y = cima; +Z = frente.
+Position = [-0.032, 0.04, 0.016]
+# Dimensões [largura,altura,profundidade], todas positivas.
+Size = [0.048, 0.08, 0.048]
+# Cor hexadecimal de fallback #RRGGBB.
+Color = "#FFFFFF"
+# Nome lógico de textura resolvido pelo caminho externo de assets.
+Texture = "entity/chicken.png"
+# Origem [u,v] em pixels na skin; [] = textura repetida.
+UvOrigin = [26, 0]
+# Dimensões [largura,altura,profundidade] em pixels da skin; [] = repetição.
+UvSize = [3, 5, 3]
+
+# Nova peça/cuboide.
+[[Parts]]
+# Centro [x,y,z] em terrenos. +Y = cima; +Z = frente.
+Position = [0.032, 0.04, 0.016]
+# Dimensões [largura,altura,profundidade], todas positivas.
+Size = [0.048, 0.08, 0.048]
+# Cor hexadecimal de fallback #RRGGBB.
+Color = "#FFFFFF"
+# Nome lógico de textura resolvido pelo caminho externo de assets.
+Texture = "entity/chicken.png"
+# Origem [u,v] em pixels na skin; [] = textura repetida.
+UvOrigin = [26, 0]
+# Dimensões [largura,altura,profundidade] em pixels da skin; [] = repetição.
+UvSize = [3, 5, 3]
+
+# Nova peça/cuboide.
+[[Parts]]
+# Centro [x,y,z] em terrenos. +Y = cima; +Z = frente.
+Position = [-0.056, 0.128, 0]
+# Dimensões [largura,altura,profundidade], todas positivas.
+Size = [0.016, 0.064, 0.096]
+# Cor hexadecimal de fallback #RRGGBB.
+Color = "#FFFFFF"
+# Nome lógico de textura resolvido pelo caminho externo de assets.
+Texture = "entity/chicken.png"
+# Origem [u,v] em pixels na skin; [] = textura repetida.
+UvOrigin = [24, 13]
+# Dimensões [largura,altura,profundidade] em pixels da skin; [] = repetição.
+UvSize = [1, 4, 6]
+
+# Nova peça/cuboide.
+[[Parts]]
+# Centro [x,y,z] em terrenos. +Y = cima; +Z = frente.
+Position = [0.056, 0.128, 0]
+# Dimensões [largura,altura,profundidade], todas positivas.
+Size = [0.016, 0.064, 0.096]
+# Cor hexadecimal de fallback #RRGGBB.
+Color = "#FFFFFF"
+# Nome lógico de textura resolvido pelo caminho externo de assets.
+Texture = "entity/chicken.png"
+# Origem [u,v] em pixels na skin; [] = textura repetida.
+UvOrigin = [24, 13]
+# Dimensões [largura,altura,profundidade] em pixels da skin; [] = repetição.
+UvSize = [1, 4, 6]

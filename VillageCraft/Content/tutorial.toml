@@ -1,0 +1,36 @@
+# TIPO: TutorialFile. Ordered guided goals; translations use tutorial.<Id>.title/description.
+[[Stages]]
+Id = "inspect"
+Title = "Meet your villagers"
+Description = "Left-click a villager or building to inspect it. The pin keeps a panel open."
+Goal = "inspect"
+
+[[Stages]]
+Id = "road"
+Title = "Connect the village"
+Description = "Open Roads in the hotbar and place a dirt path next to the connected road network. R rotates building entrances."
+Goal = "road"
+
+[[Stages]]
+Id = "trees"
+Title = "Harvest real timber"
+Description = "Watch a woodcutter walk to a natural oak and chop it. Each oak gives wood once, then regrows over three days."
+Goal = "trees"
+
+[[Stages]]
+Id = "water"
+Title = "Keep everyone supplied"
+Description = "Inspect the well and check water capacity. Keep enough connected wells for every resident."
+Goal = "water"
+
+[[Stages]]
+Id = "homes"
+Title = "Leave room to grow"
+Description = "Keep four spare beds for newcomers. New homes need an entrance facing a connected path."
+Goal = "homes"
+
+[[Stages]]
+Id = "defense"
+Title = "Prepare your defenses"
+Description = "Build and staff a barracks, archery range or mage hall. Nights 1–5 are safe; common monsters begin on night 6."
+Goal = "defense"

@@ -1,0 +1,17 @@
+﻿# Plan: Cow shed, 1.0.5-beta.
+Id = "cow_shed"
+Name = "Cow shed"
+Description = "Cow shed"
+Category = "Animals"
+Model = "cow_shed"
+Cost = { Emeralds = 85, Wood = 22, Stone = 8 }
+Job = "Cattle keeping"
+Jobs = 2
+Professions = ["keeper"]
+Animal = "cow"
+Input = { Food = 0.2 }
+Output = { Leather = 0.2, Milk = 0.5 }
+Health = 180
+
+# A roof or canopy blocks direct sunlight on this tile.
+SheltersFromSun = true

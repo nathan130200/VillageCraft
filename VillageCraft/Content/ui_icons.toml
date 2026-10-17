@@ -1,0 +1,558 @@
+# TIPO: UiIconFile. Original Minecraft-style 16x16 pixel icons. Dot = transparent.
+[Palette]
+W = "#F2F2E9"
+D = "#202020"
+S = "#646464"
+G = "#79B74B"
+Y = "#F2C94C"
+R = "#E34B44"
+B = "#559DE5"
+T = "#98643B"
+O = "#D6A06C"
+P = "#B38BDD"
+
+[[Icons]]
+Id = "play"
+Pixels = [
+  "................",
+  "................",
+  "....W...........",
+  "....WWW.........",
+  "....WWWW........",
+  "....WWWWWW......",
+  "....WWWWWWW.....",
+  "....WWWWWWWW....",
+  "....WWWWWWWW....",
+  "....WWWWWWW.....",
+  "....WWWWWW......",
+  "....WWWW........",
+  "....WWW.........",
+  "....W...........",
+  "................",
+  "................"
+]
+
+[[Icons]]
+Id = "speed1"
+Pixels = [
+  "................",
+  "................",
+  "................",
+  "..W.............",
+  "..WW............",
+  "..WWW...........",
+  "..WWWW..........",
+  "..WWWWW.........",
+  "..WWWWW.........",
+  "..WWWW..........",
+  "..WWW...........",
+  "..WW............",
+  "..W.............",
+  "................",
+  "................",
+  "................"
+]
+
+[[Icons]]
+Id = "speed2"
+Pixels = [
+  "................",
+  "................",
+  "................",
+  "..Y...Y.........",
+  "..YY..YY........",
+  "..YYY.YYY.......",
+  "..YYYYYYYY......",
+  "..YYYYYYYYY.....",
+  "..YYYYYYYYY.....",
+  "..YYYYYYYY......",
+  "..YYY.YYY.......",
+  "..YY..YY........",
+  "..Y...Y.........",
+  "................",
+  "................",
+  "................"
+]
+
+[[Icons]]
+Id = "speed4"
+Pixels = [
+  "................",
+  "................",
+  "................",
+  "..Y...Y...Y.....",
+  "..YY..YY..YY....",
+  "..YYY.YYY.YYY...",
+  "..YYYYYYYYYYYY..",
+  "..YYYYYYYYYYYYY.",
+  "..YYYYYYYYYYYYY.",
+  "..YYYYYYYYYYYY..",
+  "..YYY.YYY.YYY...",
+  "..YY..YY..YY....",
+  "..Y...Y...Y.....",
+  "................",
+  "................",
+  "................"
+]
+
+[[Icons]]
+Id = "pause"
+Pixels = [
+  "................",
+  "................",
+  "...WWWW...WWWW..",
+  "...WWWW...WWWW..",
+  "...WWWW...WWWW..",
+  "...WWWW...WWWW..",
+  "...WWWW...WWWW..",
+  "...WWWW...WWWW..",
+  "...WWWW...WWWW..",
+  "...WWWW...WWWW..",
+  "...WWWW...WWWW..",
+  "...WWWW...WWWW..",
+  "...WWWW...WWWW..",
+  "...WWWW...WWWW..",
+  "................",
+  "................"
+]
+
+[[Icons]]
+Id = "menu"
+Pixels = [
+  "................",
+  "................",
+  "................",
+  "..WWWWWWWWWWWW..",
+  "..WWWWWWWWWWWW..",
+  "................",
+  "................",
+  "..WWWWWWWWWWWW..",
+  "..WWWWWWWWWWWW..",
+  "................",
+  "................",
+  "..WWWWWWWWWWWW..",
+  "..WWWWWWWWWWWW..",
+  "................",
+  "................",
+  "................"
+]
+
+[[Icons]]
+Id = "close"
+Pixels = [
+  "................",
+  "................",
+  "................",
+  "...R.......RR...",
+  "...RR.....RR....",
+  "....RR...RR.....",
+  ".....RR.RR......",
+  "......RRR.......",
+  "......RRR.......",
+  ".....RR.RR......",
+  "....RR...RR.....",
+  "...RR.....RR....",
+  "...R.......RR...",
+  "................",
+  "................",
+  "................"
+]
+
+[[Icons]]
+Id = "pin"
+Pixels = [
+  "................",
+  ".....YYYYYYY....",
+  ".....YYYYYYY....",
+  ".....YYYYYYY....",
+  ".......YYY......",
+  ".......YYY......",
+  ".......YYY......",
+  ".......YYY......",
+  "....YYYYYYYYY...",
+  "....YYYYYYYYY...",
+  "....YYYYWYYYY...",
+  "........W.......",
+  "........W.......",
+  "........W.......",
+  "........W.......",
+  "........W......."
+]
+
+[[Icons]]
+Id = "inspect"
+Pixels = [
+  "................",
+  "................",
+  "..WWWWWWWW......",
+  "..WWWWWWWW......",
+  "..WWDDDDWW......",
+  "..WWDDDDWW......",
+  "..WWDDDDWW......",
+  "..WWDDDDWW......",
+  "..WWWWWWWW......",
+  "..WWWWWWWWW.....",
+  "..........WW....",
+  "...........WW...",
+  "............WW..",
+  ".............WW.",
+  "..............W.",
+  "................"
+]
+
+[[Icons]]
+Id = "people"
+Pixels = [
+  "................",
+  "................",
+  ".........TTTTT..",
+  "..TTTTTT.TTTTT..",
+  "..TTTTTT.OOOOO..",
+  "..OOOOOO.OOOOO..",
+  "..OGOOGO.OOOOO..",
+  "..OOTTOO.OOOOO..",
+  "..OOTTOO.OOOOO..",
+  "..OOTTOO........",
+  "....TT...GGGGGG.",
+  ".TTTTTTT.GGGGGG.",
+  ".TTTTTTT.GGGGGG.",
+  ".TTTTTTT.GGGGGG.",
+  ".TTTTTTT.GGGGGG.",
+  "................"
+]
+
+[[Icons]]
+Id = "happy"
+Pixels = [
+  "................",
+  "................",
+  "..GGGGGGGGGGGG..",
+  "..GGGGGGGGGGGG..",
+  "..GGGGGGGGGGGG..",
+  "..GGDDGGGGDDGG..",
+  "..GGDDGGGGDDGG..",
+  "..GGGGGGGGGGGG..",
+  "..GGGGGGGGGGGG..",
+  "..GDDGGGGGGDDG..",
+  "..GDDDDDDDDDDG..",
+  "..GGDDDDDDDDGG..",
+  "..GGGGGGGGGGGG..",
+  "..GGGGGGGGGGGG..",
+  "................",
+  "................"
+]
+
+[[Icons]]
+Id = "heart"
+Pixels = [
+  "................",
+  "................",
+  "................",
+  "..RRRRR..RRRRR..",
+  "..RWWRRRRRRRRR..",
+  "..RWWRRRRRRRRR..",
+  "..RRRRRRRRRRRR..",
+  "..RRRRRRRRRRRR..",
+  "...RRRRRRRRRR...",
+  "....RRRRRRRR....",
+  ".....RRRRRR.....",
+  "......RRRR......",
+  ".......RR.......",
+  "................",
+  "................",
+  "................"
+]
+
+[[Icons]]
+Id = "water"
+Pixels = [
+  "................",
+  "................",
+  ".......BB.......",
+  "......BBBB......",
+  ".....BBBBBB.....",
+  "....BBBBBBBB....",
+  "...BBBBBBBBBB...",
+  "..BBBBBBBBBBBB..",
+  "..BBWWBBBBBBBB..",
+  "..BBWWBBBBBBBB..",
+  "...BWWBBBBBBB...",
+  "....BBBBBBBB....",
+  ".....BBBBBB.....",
+  "................",
+  "................",
+  "................"
+]
+
+[[Icons]]
+Id = "raid"
+Pixels = [
+  "................",
+  "................",
+  "...GGGGGGGGGG...",
+  "...GSSSSSSSSG...",
+  "...GSSSSSSSSG...",
+  "...GGGGGGGGGG...",
+  "...GDDGGGGDDG...",
+  "...GDDGGGGDDG...",
+  "...GGGGGGGGGG...",
+  "...GGGGGGGGGG...",
+  "...GGGGDDDGGG...",
+  "...GGGGDDDGGG...",
+  "...GGGGGGGGGG...",
+  "..PPPPPPPPPPPP..",
+  "..PPPPPPPPPPPP..",
+  "................"
+]
+
+[[Icons]]
+Id = "map"
+Pixels = [
+  "................",
+  "................",
+  ".YYYYYYYYYYYYYY.",
+  ".YYYYYYYYYYYYYY.",
+  ".YYGGGGGGGGGGYY.",
+  ".YYGTGGGGGGGGYY.",
+  ".YYBGTTGGGGGGYY.",
+  ".YYGBBGTGGGGGYY.",
+  ".YYGGGBBTTGGGYY.",
+  ".YYGGGGGBBTGGYY.",
+  ".YYGGGGGGGBBGYY.",
+  ".YYGGGGGGGGGBYY.",
+  ".YYYYYYYYYYYYYY.",
+  ".YYYYYYYYYYYYYY.",
+  "................",
+  "................"
+]
+
+[[Icons]]
+Id = "rotate"
+Pixels = [
+  "................",
+  "................",
+  "................",
+  "...WWWWWWWWWW...",
+  "...WWWWWWWWWW...",
+  "...WW...........",
+  "...WW...........",
+  "...WW...........",
+  "...WW.....Y.....",
+  "...WW.....YY....",
+  "...WWWWWWWYYYY..",
+  "...WWWWWWWYYYYY.",
+  "..........YYYY..",
+  "..........YY....",
+  "..........Y.....",
+  "................"
+]
+
+[[Icons]]
+Id = "build"
+Pixels = [
+  "................",
+  "................",
+  "...WWWWWWWWWW...",
+  "...WWWWWWWWWW...",
+  "...WWWWWWWWWWW..",
+  ".........TTWWW..",
+  ".........TTWWW..",
+  "........TT.WWW..",
+  ".......TT.......",
+  "......TT........",
+  ".....TT.........",
+  ".....TT.........",
+  "....TT..........",
+  "...TT...........",
+  "................",
+  "................"
+]
+
+[[Icons]]
+Id = "home"
+Pixels = [
+  "................",
+  "................",
+  ".......YY.......",
+  "......YYYY......",
+  ".....YYYYYY.....",
+  "....YYYYYYYY....",
+  "...YYYYYYYYYY...",
+  "..YYYYYYYYYYYY..",
+  "....TTTTTTTT....",
+  "....TTTTTTTT....",
+  "....TTTDDDTT....",
+  "....TTTDDDTT....",
+  "....TTTDDDTT....",
+  "....TTTDDDTT....",
+  "................",
+  "................"
+]
+
+[[Icons]]
+Id = "book"
+Pixels = [
+  "................",
+  "................",
+  "..TTTTTTTTTTTT..",
+  "..TTWWWWWWWRRT..",
+  "..TTWWWWWWWRRT..",
+  "..TTWSSSSSWRRT..",
+  "..TTWWWWWWWRRT..",
+  "..TTWWWWWWWRRT..",
+  "..TTWSSSSSWRRT..",
+  "..TTWWWWWWWRRT..",
+  "..TTWWWWWWWRRT..",
+  "..TTWSSSSSWRRT..",
+  "..TTWWWWWWWRRT..",
+  "..TTTTTTTTTTTT..",
+  "................",
+  "................"
+]
+
+[[Icons]]
+Id = "shield"
+Pixels = [
+  "................",
+  "................",
+  "...WWWWWWWWWW...",
+  "...WWWBBBBWWW...",
+  "...WWWBBBBWWW...",
+  "...WWWBBBBWWW...",
+  "...WWWBBBBWWW...",
+  "...WWWBBBBWWW...",
+  "...WWWBBBBWWW...",
+  "...WWWBBBBWWW...",
+  "...WWWBBBBWWW...",
+  ".....WWWWWW.....",
+  ".....WWWWWW.....",
+  ".......WW.......",
+  "................",
+  "................"
+]
+
+[[Icons]]
+Id = "economy"
+Pixels = [
+  "................",
+  ".....GGGGGG.....",
+  ".....GGGGGG.....",
+  "...GGWWGGGGGG...",
+  "...GGWWGGGGGG...",
+  "...GGWWGGGGGG...",
+  "...GGWWGGGGGG...",
+  "...GGWWGGGGGG...",
+  "...GGWWGGGGGG...",
+  "...GGGGGGGGGG...",
+  "...GGGGGGGGGG...",
+  "...GGGGGGGGGG...",
+  ".....GGGGGG.....",
+  ".....GGGGGG.....",
+  ".....GGGGGG.....",
+  "................"
+]
+
+[[Icons]]
+Id = "animals"
+Pixels = [
+  "................",
+  "................",
+  ".....WWWWWWW....",
+  ".....WWWWWWW....",
+  ".....WWWWDWW....",
+  "....WWWWWWWW....",
+  "....WWWWWWYYYYY.",
+  "....WWWWWWYYYYY.",
+  "....WWWWRRWW....",
+  "....WWWWRRWW....",
+  "....WWWWRRWW....",
+  "....WWWWWWWW....",
+  "....WWWWWWWW....",
+  "....WWWWWWWW....",
+  ".....YY...YY....",
+  ".....YY...YY...."
+]
+
+[[Icons]]
+Id = "road"
+Pixels = [
+  "...S..TTTTT..S..",
+  "...S..TTTTT..S..",
+  "...S..TTTTT..S..",
+  "...S..TTTTT..S..",
+  "...S..TTTTT..S..",
+  "...S..TTTTT..S..",
+  "...S..TTTTT..S..",
+  "...S..TTTTT..S..",
+  "...S..TTTTT..S..",
+  "...S..TTTTT..S..",
+  "...S..TTTTT..S..",
+  "...S..TTTTT..S..",
+  "...S..TTTTT..S..",
+  "...S..TTTTT..S..",
+  "...S..TTTTT..S..",
+  "...S..TTTTT..S.."
+]
+
+[[Icons]]
+Id = "production"
+Pixels = [
+  "................",
+  "................",
+  "................",
+  "..WWWWWWWWWWWW..",
+  "..SSSSSSSSSSSS..",
+  "..SSSSSSSSSSSS..",
+  "..SSSSSSSSSSSS..",
+  "..SSSSSSSSSSSS..",
+  ".....SSSSSS.....",
+  ".....SSSSSS.....",
+  ".....SSSSSS.....",
+  "...SSSSSSSSSS...",
+  "...SSSSSSSSSS...",
+  "...SSSSSSSSSS...",
+  "................",
+  "................"
+]
+
+[[Icons]]
+Id = "services"
+Pixels = [
+  "................",
+  "................",
+  "................",
+  "..TTTTTTTTTTTT..",
+  "..TTTTTTTTTTTT..",
+  "..TTTTTTTTTTTT..",
+  "...TT......TT...",
+  "...TT......TT...",
+  "...TT......TT...",
+  "...TT......TT...",
+  "...TTBBBBBBTT...",
+  "...SSBBBBBBSS...",
+  "...SSBBBBBBSS...",
+  "...SSSSSSSSSS...",
+  "...SSSSSSSSSS...",
+  "................"
+]
+
+[[Icons]]
+Id = "speed16"
+Pixels = [
+ "................",
+ "..Y..Y..Y..Y....",
+ "..YY.YY.YY.YY...",
+ "..YYYYYYYYYYYY..",
+ "..YYYYYYYYYYYYY.",
+ "..YYYYYYYYYYYY..",
+ "..YY.YY.YY.YY...",
+ "..Y..Y..Y..Y....",
+ "................",
+ "....WW...WWW....",
+ "...WWW..WW......",
+ "....WW..WW......",
+ "....WW..WWWW....",
+ "....WW..WW.WW...",
+ "...WWWW..WWW....",
+ "................"
+]

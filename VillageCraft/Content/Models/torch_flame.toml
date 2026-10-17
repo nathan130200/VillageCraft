@@ -1,0 +1,8 @@
+Id = "torch_flame"
+[[Parts]]
+Shape = "cross"
+Position = [0, 0.1, 0]
+Size = [0.15, 0.2, 0.15]
+Color = "#FFB845"
+Texture = "block/fire_0.png"
+TextureMode = "stretch"

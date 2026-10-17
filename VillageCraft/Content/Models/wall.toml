@@ -1,0 +1,94 @@
+# TIPO: ModelFile: geometria feita de cuboides. Não define custo, vagas ou profissão.
+# Carregado uma vez na inicialização. Guia completo: Content/README.md.
+# ID único do modelo, referenciado por prefabs, profissões e unidades.
+Id = "wall"
+
+# Nova peça/cuboide.
+[[Parts]]
+# Centro [x,y,z] em terrenos. +Y = cima; +Z = frente.
+Position = [0, 0.5, 0]
+# Dimensões [largura,altura,profundidade], todas positivas.
+Size = [0.98, 1, 0.28]
+# Cor hexadecimal de fallback #RRGGBB.
+Color = "#858784"
+# Nome lógico de textura resolvido pelo caminho externo de assets.
+Texture = "block/cobblestone.png"
+# Origem [u,v] em pixels na skin; [] = textura repetida.
+UvOrigin = []
+# Dimensões [largura,altura,profundidade] em pixels da skin; [] = repetição.
+UvSize = []
+
+# Nova peça/cuboide.
+[[Parts]]
+# Centro [x,y,z] em terrenos. +Y = cima; +Z = frente.
+Position = [-0.4, 1.08, 0]
+# Dimensões [largura,altura,profundidade], todas positivas.
+Size = [0.12, 0.2, 0.3]
+# Cor hexadecimal de fallback #RRGGBB.
+Color = "#969A93"
+# Nome lógico de textura resolvido pelo caminho externo de assets.
+Texture = "block/stone_bricks.png"
+# Origem [u,v] em pixels na skin; [] = textura repetida.
+UvOrigin = []
+# Dimensões [largura,altura,profundidade] em pixels da skin; [] = repetição.
+UvSize = []
+
+# Nova peça/cuboide.
+[[Parts]]
+# Centro [x,y,z] em terrenos. +Y = cima; +Z = frente.
+Position = [-0.2, 1.08, 0]
+# Dimensões [largura,altura,profundidade], todas positivas.
+Size = [0.12, 0.2, 0.3]
+# Cor hexadecimal de fallback #RRGGBB.
+Color = "#969A93"
+# Nome lógico de textura resolvido pelo caminho externo de assets.
+Texture = "block/stone_bricks.png"
+# Origem [u,v] em pixels na skin; [] = textura repetida.
+UvOrigin = []
+# Dimensões [largura,altura,profundidade] em pixels da skin; [] = repetição.
+UvSize = []
+
+# Nova peça/cuboide.
+[[Parts]]
+# Centro [x,y,z] em terrenos. +Y = cima; +Z = frente.
+Position = [0, 1.08, 0]
+# Dimensões [largura,altura,profundidade], todas positivas.
+Size = [0.12, 0.2, 0.3]
+# Cor hexadecimal de fallback #RRGGBB.
+Color = "#969A93"
+# Nome lógico de textura resolvido pelo caminho externo de assets.
+Texture = "block/stone_bricks.png"
+# Origem [u,v] em pixels na skin; [] = textura repetida.
+UvOrigin = []
+# Dimensões [largura,altura,profundidade] em pixels da skin; [] = repetição.
+UvSize = []
+
+# Nova peça/cuboide.
+[[Parts]]
+# Centro [x,y,z] em terrenos. +Y = cima; +Z = frente.
+Position = [0.2, 1.08, 0]
+# Dimensões [largura,altura,profundidade], todas positivas.
+Size = [0.12, 0.2, 0.3]
+# Cor hexadecimal de fallback #RRGGBB.
+Color = "#969A93"
+# Nome lógico de textura resolvido pelo caminho externo de assets.
+Texture = "block/stone_bricks.png"
+# Origem [u,v] em pixels na skin; [] = textura repetida.
+UvOrigin = []
+# Dimensões [largura,altura,profundidade] em pixels da skin; [] = repetição.
+UvSize = []
+
+# Nova peça/cuboide.
+[[Parts]]
+# Centro [x,y,z] em terrenos. +Y = cima; +Z = frente.
+Position = [0.4, 1.08, 0]
+# Dimensões [largura,altura,profundidade], todas positivas.
+Size = [0.12, 0.2, 0.3]
+# Cor hexadecimal de fallback #RRGGBB.
+Color = "#969A93"
+# Nome lógico de textura resolvido pelo caminho externo de assets.
+Texture = "block/stone_bricks.png"
+# Origem [u,v] em pixels na skin; [] = textura repetida.
+UvOrigin = []
+# Dimensões [largura,altura,profundidade] em pixels da skin; [] = repetição.
+UvSize = []

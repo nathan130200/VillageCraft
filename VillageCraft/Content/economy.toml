@@ -1,0 +1,10 @@
+# 1.0.5-beta economy and physical logistics, read once at startup.
+GoodsPerWorkCycle = 0.5
+GoodsPerKill = 3.0
+EmeraldsPerGood = 1.0
+DeliveryCapacity = 12.0
+InputBufferCycles = 20.0
+MilkHealing = 12.0
+EnchantmentProtection = 0.1
+EnchantmentDamage = 0.15
+EnchantmentCost = { Emeralds = 75, Leather = 12, Gold = 4 }

@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "dependencies": {
+    "net10.0": {
+      "Jint": {
+        "type": "Direct",
+        "requested": "[4.17.0, )",
+        "resolved": "4.17.0",
+        "contentHash": "9jdpLQQYsWTjOn2THpiR8zRJ34ksV6ofW0gJvZxJW/fIGK+A+TkpWonhuuLDRwqLDjP+9WsxYt2MEge6lWjk2A==",
+        "dependencies": {
+          "Acornima": "1.7.0"
+        }
+      },
+      "rlImgui-cs": {
+        "type": "Direct",
+        "requested": "[3.2.0, )",
+        "resolved": "3.2.0",
+        "contentHash": "FmVDFI+5PRWyQCIOMo3KQuEiwjiUxDcQmSY8YgBhxqdhT+MiW1lUZXDYdYG2Vla/nTbm546U8eqfUSOWnG5QIg==",
+        "dependencies": {
+          "ImGui.NET": "1.91.6.1",
+          "Raylib-cs": "7.0.1"
+        }
+      },
+      "Tomlyn": {
+        "type": "Direct",
+        "requested": "[2.10.1, )",
+        "resolved": "2.10.1",
+        "contentHash": "ykjOY3IpYmC4SpPcAZRTl/w2jTmhPMDydHq8xcV7tTBAQ22nKBsOkPqauIrZlMjHm03cmKfV23UOPscKp+J4Og=="
+      },
+      "Acornima": {
+        "type": "Transitive",
+        "resolved": "1.7.0",
+        "contentHash": "a2I4O4qkuAdB0oSaGz6/k0n/bXxMbGcLBra5dNTTVSLmTwM7uORA8ebpOrNMmDfFWOMwvuaRL6gPprRV4HTV0w=="
+      },
+      "ImGui.NET": {
+        "type": "Transitive",
+        "resolved": "1.91.6.1",
+        "contentHash": "Ph3j8pO6UM28PPJWP+5LEJSPVPkd8ivpVS8tRyY9b0IHn1HDIrMZ2o/FdiXaYW6YhNxMHmbevw6Jcfs+IDKi0Q=="
+      },
+      "Raylib-cs": {
+        "type": "Transitive",
+        "resolved": "7.0.1",
+        "contentHash": "Ub764yPExCago40qjPpTQqtYhhA0/aIEderv5XjB5peOXFs7A4YLyyARsfBv0JzCt4C+QvuqH0CrjAJIzgzjKA=="
+      }
+    }
+  }
+}

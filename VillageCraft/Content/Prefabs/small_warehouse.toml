@@ -1,0 +1,16 @@
+﻿# Plan: Small warehouse, 1.0.5-beta.
+Id = "small_warehouse"
+Name = "Small warehouse"
+Description = "Small warehouse"
+Category = "Infrastructure"
+Model = "warehouse"
+Cost = { Emeralds = 80, Wood = 20, Stone = 12 }
+Warehouse = true
+StorageCapacity = 2000
+Job = "Delivery"
+Jobs = 2
+Professions = ["deliveryman"]
+Health = 240
+
+# A roof or canopy blocks direct sunlight on this tile.
+SheltersFromSun = true

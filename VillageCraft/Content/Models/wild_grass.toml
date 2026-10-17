@@ -1,0 +1,10 @@
+# Crossed two-sided plant planes, with no opaque cuboid edges.
+Id = "wild_grass"
+
+[[Parts]]
+Shape = "cross"
+Position = [0, 0.11, 0]
+Size = [0.22, 0.22, 0.22]
+Color = "#79A846"
+Texture = "block/grass.png"
+TextureMode = "stretch"

@@ -1,0 +1,16 @@
+﻿# Plan: Large warehouse, 1.0.5-beta.
+Id = "large_warehouse"
+Name = "Large warehouse"
+Description = "Large warehouse"
+Category = "Infrastructure"
+Model = "large_warehouse"
+Cost = { Emeralds = 200, Wood = 45, Stone = 35, Iron = 8 }
+Warehouse = true
+StorageCapacity = 10000
+Job = "Delivery"
+Jobs = 5
+Professions = ["deliveryman"]
+Health = 400
+
+# A roof or canopy blocks direct sunlight on this tile.
+SheltersFromSun = true

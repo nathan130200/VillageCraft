@@ -1,0 +1,4 @@
+# Probability 0..1 for ordinary sunlight-sensitive monsters; bosses guarantee protection.
+RegularHelmetChance = 0.65
+# Damage per simulated second for exposed, unprotected monsters.
+DamagePerSecond = 4.0

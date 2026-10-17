@@ -1,0 +1,7 @@
+set_script_type(eST_Building, "well");
+function onInit() {}
+function onBuildingPlaced(building) { building.tags = "service water"; }
+function onBuildingDay(building) { building.repair(2); }
+function onBuildingUpdate(building, dt) {}
+function onUpdate(dt) {}
+function onShutdown() {}

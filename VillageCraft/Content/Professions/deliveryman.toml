@@ -1,0 +1,8 @@
+# Profession: carries physical resources between sources, warehouses and workplaces.
+Id = "deliveryman"
+Name = "Resource deliveryman"
+Model = "deliveryman"
+Jobs = ["Delivery"]
+Efficiency = 1.0
+TrainingCost = { Emeralds = 5 }
+ResourceBonus = {}

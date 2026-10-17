@@ -1,0 +1,18 @@
+# TIPO: UnitFile / UnitPlan: estatísticas de combate. Não é uma profissão.
+# Carregado uma vez na inicialização. Guia completo: Content/README.md.
+# ID único da unidade; referências em Defender ou ctx.game.spawnMob.
+Id = "zombified_piglin"
+# ID de Models usado para renderizar esta unidade.
+Model = "zombified_piglin"
+# Vida inicial/máxima da unidade.
+Health = 80
+# Dano de um ataque ou explosão.
+Damage = 10
+# Alcance do ataque em terrenos.
+Range = 0.8
+# Velocidade base em terrenos por segundo de simulação.
+Speed = 0.85
+# Intervalo entre ataques, em segundos de simulação.
+Cooldown = 1.2
+# Componente de IA padrão (arquivo .js sem extensão). Pode ser substituído por set_script_type(eST_AI, Id).
+Behavior = "melee"

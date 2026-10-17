@@ -1,0 +1,18 @@
+# TIPO: UnitFile / UnitPlan: estatísticas de combate. Não é uma profissão.
+# Carregado uma vez na inicialização. Guia completo: Content/README.md.
+# ID único da unidade; referências em Defender ou ctx.game.spawnMob.
+Id = "creeper"
+# ID de Models usado para renderizar esta unidade.
+Model = "creeper"
+# Vida inicial/máxima da unidade.
+Health = 35
+# Dano de um ataque ou explosão.
+Damage = 38
+# Alcance do ataque em terrenos.
+Range = 1.4
+# Velocidade base em terrenos por segundo de simulação.
+Speed = 1
+# Intervalo entre ataques, em segundos de simulação.
+Cooldown = 1
+# Componente de IA padrão (arquivo .js sem extensão). Pode ser substituído por set_script_type(eST_AI, Id).
+Behavior = "creeper"

@@ -1,0 +1,383 @@
+﻿# TIPO: GameDefaults: configurações globais, Rules e lista Starter.
+# Guia: Content/README.md. Carregado uma vez na inicialização.
+# VillageCraft content. Read once at startup; restart after editing.
+FormatVersion = 1
+Categories = ["Roads", "Housing", "Production", "Infrastructure", "Economy", "Animals", "Defense"]
+DefaultMapWidth = 32
+DefaultMapHeight = 32
+GroundTexture = "block/grass_block_top.png"
+GroundTint = "#92B968"
+DirtTexture = "block/dirt.png"
+MigrationThreshold = 3
+CitizenGrowthSupport = 0.2
+ImmigrationProfessions = ["citizen", "farmer", "miner", "citizen", "explorer", "keeper", "smith", "woodcutter", "citizen", "warrior", "archer", "mage"]
+InitialStock = { "Torches" = 12, "Leather" = 8, "Milk" = 4, "Goods" = 0, "AncientDebris" = 0, "Diamonds" = 0, "Eggs" = 0, "Emeralds" = 1100, "Food" = 160, "Gold" = 0, "Iron" = 45, "Stone" = 160, "Tools" = 15, "Wood" = 200, "Wool" = 0 }
+Rules = { "NightMonsters" = true, "NightCount" = 3, "AnimalsPerPen" = 8, "DayLength" = 600, "GolemsPerWorkshop" = 2, "MaxPopulation" = 256, "MaxRaiders" = 100, "ProductionCycle" = 2, "RaidInterval" = 30, "RaidsEnabled" = true, "WaveBase" = 6, "WaveGrowth" = 3 }
+
+[[Starter]]
+Industry = false
+Prefab = "path"
+Residents = []
+Rotation = 0
+X = -8
+Z = 0
+
+[[Starter]]
+Industry = false
+Prefab = "path"
+Residents = []
+Rotation = 0
+X = -7
+Z = 0
+
+[[Starter]]
+Industry = false
+Prefab = "path"
+Residents = []
+Rotation = 0
+X = -6
+Z = 0
+
+[[Starter]]
+Industry = false
+Prefab = "path"
+Residents = []
+Rotation = 0
+X = -5
+Z = 0
+
+[[Starter]]
+Industry = false
+Prefab = "path"
+Residents = []
+Rotation = 0
+X = -4
+Z = 0
+
+[[Starter]]
+Industry = false
+Prefab = "path"
+Residents = []
+Rotation = 0
+X = -3
+Z = 0
+
+[[Starter]]
+Industry = false
+Prefab = "path"
+Residents = []
+Rotation = 0
+X = -2
+Z = 0
+
+[[Starter]]
+Industry = false
+Prefab = "path"
+Residents = []
+Rotation = 0
+X = -1
+Z = 0
+
+[[Starter]]
+Industry = false
+Prefab = "path"
+Residents = []
+Rotation = 0
+X = 0
+Z = 0
+
+[[Starter]]
+Industry = false
+Prefab = "path"
+Residents = []
+Rotation = 0
+X = 1
+Z = 0
+
+[[Starter]]
+Industry = false
+Prefab = "path"
+Residents = []
+Rotation = 0
+X = 2
+Z = 0
+
+[[Starter]]
+Industry = false
+Prefab = "path"
+Residents = []
+Rotation = 0
+X = 3
+Z = 0
+
+[[Starter]]
+Industry = false
+Prefab = "path"
+Residents = []
+Rotation = 0
+X = 4
+Z = 0
+
+[[Starter]]
+Industry = false
+Prefab = "path"
+Residents = []
+Rotation = 0
+X = 5
+Z = 0
+
+[[Starter]]
+Industry = false
+Prefab = "path"
+Residents = []
+Rotation = 0
+X = 6
+Z = 0
+
+[[Starter]]
+Industry = false
+Prefab = "path"
+Residents = []
+Rotation = 0
+X = 7
+Z = 0
+
+[[Starter]]
+Industry = false
+Prefab = "path"
+Residents = []
+Rotation = 0
+X = 0
+Z = -9
+
+[[Starter]]
+Industry = false
+Prefab = "path"
+Residents = []
+Rotation = 0
+X = 0
+Z = -8
+
+[[Starter]]
+Industry = false
+Prefab = "path"
+Residents = []
+Rotation = 0
+X = 0
+Z = -7
+
+[[Starter]]
+Industry = false
+Prefab = "path"
+Residents = []
+Rotation = 0
+X = 0
+Z = -6
+
+[[Starter]]
+Industry = false
+Prefab = "path"
+Residents = []
+Rotation = 0
+X = 0
+Z = -5
+
+[[Starter]]
+Industry = false
+Prefab = "path"
+Residents = []
+Rotation = 0
+X = 0
+Z = -4
+
+[[Starter]]
+Industry = false
+Prefab = "path"
+Residents = []
+Rotation = 0
+X = 0
+Z = -3
+
+[[Starter]]
+Industry = false
+Prefab = "path"
+Residents = []
+Rotation = 0
+X = 0
+Z = -2
+
+[[Starter]]
+Industry = false
+Prefab = "path"
+Residents = []
+Rotation = 0
+X = 0
+Z = -1
+
+[[Starter]]
+Industry = false
+Prefab = "path"
+Residents = []
+Rotation = 0
+X = 0
+Z = 1
+
+[[Starter]]
+Industry = false
+Prefab = "path"
+Residents = []
+Rotation = 0
+X = 0
+Z = 2
+
+[[Starter]]
+Industry = false
+Prefab = "path"
+Residents = []
+Rotation = 0
+X = 0
+Z = 3
+
+[[Starter]]
+Industry = false
+Prefab = "path"
+Residents = []
+Rotation = 0
+X = 0
+Z = 4
+
+[[Starter]]
+Industry = false
+Prefab = "path"
+Residents = []
+Rotation = 0
+X = 0
+Z = 5
+
+[[Starter]]
+Industry = false
+Prefab = "path"
+Residents = []
+Rotation = 0
+X = 0
+Z = 6
+
+[[Starter]]
+Industry = false
+Prefab = "path"
+Residents = []
+Rotation = 0
+X = 0
+Z = 7
+
+[[Starter]]
+Industry = false
+Prefab = "path"
+Residents = []
+Rotation = 0
+X = 0
+Z = 8
+
+[[Starter]]
+Industry = false
+Prefab = "path"
+Residents = []
+Rotation = 0
+X = 0
+Z = 9
+
+[[Starter]]
+Industry = false
+Prefab = "cottage"
+Residents = ["farmer", "woodcutter", "citizen"]
+Rotation = 0
+X = -4
+Z = -1
+
+[[Starter]]
+Industry = false
+Prefab = "cottage"
+Residents = ["miner", "keeper", "citizen"]
+Rotation = 2
+X = -2
+Z = 1
+
+[[Starter]]
+Industry = false
+Prefab = "cottage"
+Residents = ["farmer", "smith", "explorer"]
+Rotation = 0
+X = 2
+Z = -1
+
+[[Starter]]
+Industry = false
+Prefab = "cottage"
+Residents = ["keeper", "deliveryman", "deliveryman"]
+Rotation = 2
+X = 4
+Z = 1
+
+[[Starter]]
+Industry = true
+Prefab = "farm"
+Residents = []
+Rotation = 0
+X = -7
+Z = -1
+
+[[Starter]]
+Industry = true
+Prefab = "well"
+Residents = []
+Rotation = 2
+X = -6
+Z = 1
+
+[[Starter]]
+Industry = true
+Prefab = "lumber"
+Residents = []
+Rotation = 0
+X = -5
+Z = -1
+
+[[Starter]]
+Industry = true
+Prefab = "quarry"
+Residents = []
+Rotation = 3
+X = -1
+Z = -7
+
+[[Starter]]
+Industry = true
+Prefab = "sheep_pen"
+Residents = []
+Rotation = 1
+X = 1
+Z = -7
+
+[[Starter]]
+Industry = true
+Prefab = "pig_pen"
+Residents = []
+Rotation = 1
+X = 1
+Z = -5
+
+[[Starter]]
+Industry = true
+Prefab = "chicken_coop"
+Residents = []
+Rotation = 3
+X = -1
+Z = -5
+
+[[Starter]]
+Industry = false
+Prefab = "small_warehouse"
+Residents = []
+Rotation = 2
+X = 2
+Z = 1

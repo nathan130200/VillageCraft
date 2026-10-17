@@ -1,0 +1,10 @@
+# TIPO: TerrainSettings. Seeded lakes, mountains and natural vegetation for new worlds.
+# Adjacent heights differ by no more than one Minecraft block (0.25 village tiles).
+MaxMountainHeight = 7
+LakeRadius = 3
+TreeDensity = 0.065
+GrassDensity = 0.14
+# Reserve the initial village as flat, dry, unobstructed land.
+StarterHalfWidth = 9
+StarterHalfDepth = 10
+TreePrefab = "oak_tree"

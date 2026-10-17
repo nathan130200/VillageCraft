@@ -1,0 +1,169 @@
+# TIPO: ModelFile: geometria feita de cuboides. Não define custo, vagas ou profissão.
+# Carregado uma vez na inicialização. Guia completo: Content/README.md.
+# ID único do modelo, referenciado por prefabs, profissões e unidades.
+Id = "blaze"
+
+# Nova peça/cuboide.
+[[Parts]]
+# Centro [x,y,z] em terrenos. +Y = cima; +Z = frente.
+Position = [0, 0.72, 0]
+# Dimensões [largura,altura,profundidade], todas positivas.
+Size = [0.26, 0.26, 0.26]
+# Cor hexadecimal de fallback #RRGGBB.
+Color = "#FFFFFF"
+# Nome lógico de textura resolvido pelo caminho externo de assets.
+Texture = "entity/blaze.png"
+# Origem [u,v] em pixels na skin; [] = textura repetida.
+UvOrigin = [0, 0]
+# Dimensões [largura,altura,profundidade] em pixels da skin; [] = repetição.
+UvSize = [8, 8, 8]
+
+# Nova peça/cuboide.
+[[Parts]]
+# Centro [x,y,z] em terrenos. +Y = cima; +Z = frente.
+Position = [-0.06, 0.75, 0.14]
+# Dimensões [largura,altura,profundidade], todas positivas.
+Size = [0.04, 0.035, 0.015]
+# Cor hexadecimal de fallback #RRGGBB.
+Color = "#FFFFFF"
+# Nome lógico de textura resolvido pelo caminho externo de assets.
+Texture = "entity/blaze.png"
+# Origem [u,v] em pixels na skin; [] = textura repetida.
+UvOrigin = [0, 16]
+# Dimensões [largura,altura,profundidade] em pixels da skin; [] = repetição.
+UvSize = [2, 8, 2]
+
+# Nova peça/cuboide.
+[[Parts]]
+# Centro [x,y,z] em terrenos. +Y = cima; +Z = frente.
+Position = [0.06, 0.75, 0.14]
+# Dimensões [largura,altura,profundidade], todas positivas.
+Size = [0.04, 0.035, 0.015]
+# Cor hexadecimal de fallback #RRGGBB.
+Color = "#FFFFFF"
+# Nome lógico de textura resolvido pelo caminho externo de assets.
+Texture = "entity/blaze.png"
+# Origem [u,v] em pixels na skin; [] = textura repetida.
+UvOrigin = [0, 16]
+# Dimensões [largura,altura,profundidade] em pixels da skin; [] = repetição.
+UvSize = [2, 8, 2]
+
+# Nova peça/cuboide.
+[[Parts]]
+# Centro [x,y,z] em terrenos. +Y = cima; +Z = frente.
+Position = [0.25, 0.2, 0]
+# Dimensões [largura,altura,profundidade], todas positivas.
+Size = [0.055, 0.3, 0.055]
+# Cor hexadecimal de fallback #RRGGBB.
+Color = "#FFFFFF"
+# Nome lógico de textura resolvido pelo caminho externo de assets.
+Texture = "entity/blaze.png"
+# Origem [u,v] em pixels na skin; [] = textura repetida.
+UvOrigin = [0, 16]
+# Dimensões [largura,altura,profundidade] em pixels da skin; [] = repetição.
+UvSize = [2, 8, 2]
+
+# Nova peça/cuboide.
+[[Parts]]
+# Centro [x,y,z] em terrenos. +Y = cima; +Z = frente.
+Position = [0.1767766952966369, 0.36, 0.1767766952966369]
+# Dimensões [largura,altura,profundidade], todas positivas.
+Size = [0.055, 0.3, 0.055]
+# Cor hexadecimal de fallback #RRGGBB.
+Color = "#FFFFFF"
+# Nome lógico de textura resolvido pelo caminho externo de assets.
+Texture = "entity/blaze.png"
+# Origem [u,v] em pixels na skin; [] = textura repetida.
+UvOrigin = [0, 16]
+# Dimensões [largura,altura,profundidade] em pixels da skin; [] = repetição.
+UvSize = [2, 8, 2]
+
+# Nova peça/cuboide.
+[[Parts]]
+# Centro [x,y,z] em terrenos. +Y = cima; +Z = frente.
+Position = [1.5308084989341915E-17, 0.52, 0.25]
+# Dimensões [largura,altura,profundidade], todas positivas.
+Size = [0.055, 0.3, 0.055]
+# Cor hexadecimal de fallback #RRGGBB.
+Color = "#FFFFFF"
+# Nome lógico de textura resolvido pelo caminho externo de assets.
+Texture = "entity/blaze.png"
+# Origem [u,v] em pixels na skin; [] = textura repetida.
+UvOrigin = [0, 16]
+# Dimensões [largura,altura,profundidade] em pixels da skin; [] = repetição.
+UvSize = [2, 8, 2]
+
+# Nova peça/cuboide.
+[[Parts]]
+# Centro [x,y,z] em terrenos. +Y = cima; +Z = frente.
+Position = [-0.17677669529663687, 0.2, 0.1767766952966369]
+# Dimensões [largura,altura,profundidade], todas positivas.
+Size = [0.055, 0.3, 0.055]
+# Cor hexadecimal de fallback #RRGGBB.
+Color = "#FFFFFF"
+# Nome lógico de textura resolvido pelo caminho externo de assets.
+Texture = "entity/blaze.png"
+# Origem [u,v] em pixels na skin; [] = textura repetida.
+UvOrigin = [0, 16]
+# Dimensões [largura,altura,profundidade] em pixels da skin; [] = repetição.
+UvSize = [2, 8, 2]
+
+# Nova peça/cuboide.
+[[Parts]]
+# Centro [x,y,z] em terrenos. +Y = cima; +Z = frente.
+Position = [-0.25, 0.36, 3.061616997868383E-17]
+# Dimensões [largura,altura,profundidade], todas positivas.
+Size = [0.055, 0.3, 0.055]
+# Cor hexadecimal de fallback #RRGGBB.
+Color = "#FFFFFF"
+# Nome lógico de textura resolvido pelo caminho externo de assets.
+Texture = "entity/blaze.png"
+# Origem [u,v] em pixels na skin; [] = textura repetida.
+UvOrigin = [0, 16]
+# Dimensões [largura,altura,profundidade] em pixels da skin; [] = repetição.
+UvSize = [2, 8, 2]
+
+# Nova peça/cuboide.
+[[Parts]]
+# Centro [x,y,z] em terrenos. +Y = cima; +Z = frente.
+Position = [-0.17677669529663692, 0.52, -0.17677669529663687]
+# Dimensões [largura,altura,profundidade], todas positivas.
+Size = [0.055, 0.3, 0.055]
+# Cor hexadecimal de fallback #RRGGBB.
+Color = "#FFFFFF"
+# Nome lógico de textura resolvido pelo caminho externo de assets.
+Texture = "entity/blaze.png"
+# Origem [u,v] em pixels na skin; [] = textura repetida.
+UvOrigin = [0, 16]
+# Dimensões [largura,altura,profundidade] em pixels da skin; [] = repetição.
+UvSize = [2, 8, 2]
+
+# Nova peça/cuboide.
+[[Parts]]
+# Centro [x,y,z] em terrenos. +Y = cima; +Z = frente.
+Position = [-4.592425496802574E-17, 0.2, -0.25]
+# Dimensões [largura,altura,profundidade], todas positivas.
+Size = [0.055, 0.3, 0.055]
+# Cor hexadecimal de fallback #RRGGBB.
+Color = "#FFFFFF"
+# Nome lógico de textura resolvido pelo caminho externo de assets.
+Texture = "entity/blaze.png"
+# Origem [u,v] em pixels na skin; [] = textura repetida.
+UvOrigin = [0, 16]
+# Dimensões [largura,altura,profundidade] em pixels da skin; [] = repetição.
+UvSize = [2, 8, 2]
+
+# Nova peça/cuboide.
+[[Parts]]
+# Centro [x,y,z] em terrenos. +Y = cima; +Z = frente.
+Position = [0.17677669529663684, 0.36, -0.17677669529663692]
+# Dimensões [largura,altura,profundidade], todas positivas.
+Size = [0.055, 0.3, 0.055]
+# Cor hexadecimal de fallback #RRGGBB.
+Color = "#FFFFFF"
+# Nome lógico de textura resolvido pelo caminho externo de assets.
+Texture = "entity/blaze.png"
+# Origem [u,v] em pixels na skin; [] = textura repetida.
+UvOrigin = [0, 16]
+# Dimensões [largura,altura,profundidade] em pixels da skin; [] = repetição.
+UvSize = [2, 8, 2]
