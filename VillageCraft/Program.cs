@@ -1,4 +1,4 @@
-﻿using System.Numerics;
+using System.Numerics;
 using ImGuiNET;
 using Raylib_cs;
 using rlImGui_cs;
@@ -135,12 +135,12 @@ try
             if(!valid){Console.Error.WriteLine("Display mode transition failed: "+mode);Environment.ExitCode=1;}
             Console.WriteLine($"Display mode {mode}: {Raylib.GetScreenWidth()}x{Raylib.GetScreenHeight()}");
         }
-        if(clockSmoke&&frames==33)Raylib.TakeScreenshot(Path.Combine(Environment.CurrentDirectory,"clock-noon.png"));
-        if(clockSmoke&&frames==1)Raylib.TakeScreenshot(Path.Combine(Environment.CurrentDirectory,"clock-first.png"));
-        if(uiSmoke&&frames==29)Raylib.TakeScreenshot(Path.Combine(Environment.CurrentDirectory,"ui-near-smoke.png"));
+        if(clockSmoke&&frames==33)Raylib.TakeScreenshot(Path.Combine(Directory.CreateDirectory(Path.Combine(Environment.CurrentDirectory,"screenshots")).FullName,"clock-noon.png"));
+        if(clockSmoke&&frames==1)Raylib.TakeScreenshot(Path.Combine(Directory.CreateDirectory(Path.Combine(Environment.CurrentDirectory,"screenshots")).FullName,"clock-first.png"));
+        if(uiSmoke&&frames==29)Raylib.TakeScreenshot(Path.Combine(Directory.CreateDirectory(Path.Combine(Environment.CurrentDirectory,"screenshots")).FullName,"ui-near-smoke.png"));
         if((smoke||raidSmoke||menuSmoke||optionsSmoke||uiSmoke||caveSmoke||newMapSmoke)&&++frames>=60)
         {
-            Raylib.TakeScreenshot(Path.Combine(Environment.CurrentDirectory,gameOverSmoke?"gameover-smoke.png":beta105Smoke?"beta105-smoke.png":raidSmoke?"raid-smoke.png":menuSmoke?"menu-smoke.png":optionsSmoke?"options-smoke.png":uiSmoke?"ui-smoke.png":caveSmoke?"cave-smoke.png":newMapSmoke?"newmap-smoke.png":citizenSmoke?"citizen-smoke.png":panelsSmoke?"panels-smoke.png":clockSmoke?"clock-smoke.png":compactSmoke?"compact-smoke.png":terrainSmoke?"terrain-smoke.png":englishSmoke?"english-smoke.png":"smoke-test.png"));
+            Raylib.TakeScreenshot(Path.Combine(Directory.CreateDirectory(Path.Combine(Environment.CurrentDirectory,"screenshots")).FullName,gameOverSmoke?"gameover-smoke.png":beta105Smoke?"beta105-smoke.png":raidSmoke?"raid-smoke.png":menuSmoke?"menu-smoke.png":optionsSmoke?"options-smoke.png":uiSmoke?"ui-smoke.png":caveSmoke?"cave-smoke.png":newMapSmoke?"newmap-smoke.png":citizenSmoke?"citizen-smoke.png":panelsSmoke?"panels-smoke.png":clockSmoke?"clock-smoke.png":compactSmoke?"compact-smoke.png":terrainSmoke?"terrain-smoke.png":englishSmoke?"english-smoke.png":"smoke-test.png"));
             if(uiSmoke&&ui.TestActivationCount!=12){Console.Error.WriteLine("UI activation count mismatch: "+ui.TestActivationCount);Environment.ExitCode=1;}
             Console.WriteLine($"PASS: rendered {frames} frames, loaded {Assets.TextureCount} textures"+(uiSmoke?", activated construction cards 12 times across two zoom levels.":"."));break;
         }

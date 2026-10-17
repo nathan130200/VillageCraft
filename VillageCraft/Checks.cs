@@ -41,7 +41,7 @@ static class Checks
         foreach(var (model,color) in new[]{("market","#C6A04E"),("market","#A24C35"),("market","#5C9048"),("pen","#A88840"),("pen","#D7C46A"),("coop","#A88840"),("coop","#D7C46A"),("quarry","#5E6263")})
         {
             var material=Catalog.Data.Models[model].First(p=>p.Color==color);
-            Check(material.Texture!=""&&Assets.Read(material.Texture) is {Length:>8},model+" detail has a resolvable texture");
+            Check(material.Texture!=string.Empty&&Assets.Read(material.Texture) is {Length:>8},model+" detail has a resolvable texture");
         }
         var chicken=Catalog.Data.Models["chicken"];var skin=Assets.Read("entity/chicken.png")!;
         int skinWidth=System.Buffers.Binary.BinaryPrimitives.ReadInt32BigEndian(skin.AsSpan(16,4)),skinHeight=System.Buffers.Binary.BinaryPrimitives.ReadInt32BigEndian(skin.AsSpan(20,4));
@@ -95,7 +95,7 @@ static class Checks
         float villageGold=identity.Stock["Gold"];Check(identity.Give(carried,"Gold",2)&&carried.Inventory["Gold"]==2&&identity.Stock["Gold"]==villageGold-2,"inventory transfer conserves stock");
         Check(!identity.Give(carried,"Gold",float.NaN)&&!identity.Give(carried,"unknown",1),"inventory rejects invalid transfers");
         var inspectUi=new GameUi();inspectUi.InspectAt(identity,carried.Position);Check(inspectUi.InspectedCitizen>=0&&inspectUi.Inspected==-1,"villager inspection takes priority over home tile");
-        var toolsUi=new GameUi();Check(toolsUi.InspectMode&&!toolsUi.IsBuilding&&toolsUi.Selected=="","empty inspect tool is default");
+        var toolsUi=new GameUi();Check(toolsUi.InspectMode&&!toolsUi.IsBuilding&&toolsUi.Selected==string.Empty,"empty inspect tool is default");
         toolsUi.SelectPrefab("farm");Check(toolsUi.IsBuilding,"selecting prefab activates build tool");
         toolsUi.InspectAt(identity,carried.Position);toolsUi.PinCurrent();
         toolsUi.InspectAt(identity,new(30,30));Check(!toolsUi.IsBuilding&&toolsUi.InspectedCitizen==-1&&toolsUi.PinnedCount==1,"world click closes transient panels and preserves pins");
@@ -136,10 +136,10 @@ static class Checks
         Check(night.IsNight&&night.Enemies.Count==3&&night.Enemies.All(e=>e.NightSpawn),"one nighttime encounter");
         night.Update(.01f);Check(night.Enemies.Count==3,"no repeated spawn");
         night.DayTime=night.Rules.DayLength-.01f;night.Update(.02f);Check(night.IsNight&&night.Enemies.Count>0,"night continues after midnight");night.DayTime=night.Rules.DayLength*.25f;night.Update(.01f);Check(!night.IsNight&&night.Enemies.Count>0,"night monsters remain after dawn for sunlight mechanics");
-        var scriptCity=Rich();var scriptMob=new Creature{Type="creeper",Health=35,BrainTime=.8f};string scriptAction="";
+        var scriptCity=Rich();var scriptMob=new Creature{Type="creeper",Health=35,BrainTime=.8f};string scriptAction=string.Empty;
         scriptCity.Scripting.UpdateMonster(scriptMob,new MobScriptContext(scriptCity,scriptMob,.2f,1,true,null,null,a=>scriptAction=a),.2f);
         Check(scriptAction=="explode"&&scriptMob.BrainTime>=.99f,"direct JavaScript creeper binding");
-        scriptMob.Type="skeleton";scriptAction="";
+        scriptMob.Type="skeleton";scriptAction=string.Empty;
         scriptCity.Scripting.UpdateMonster(scriptMob,new MobScriptContext(scriptCity,scriptMob,.2f,2,true,null,null,a=>scriptAction=a),.2f);
         Check(scriptAction=="attack","direct JavaScript ranged binding");
         var blast=Rich();blast.Citizens.Clear();var victimBlast=blast.Buildings.First(b=>!b.Plan.Path);
@@ -155,13 +155,13 @@ static class Checks
         {
             var patrol=Worker(profession,building);patrol.Rules.NightMonsters=false;patrol.DayTime=patrol.Rules.DayLength*.75f;
             var guard=patrol.Citizens[0];guard.HasWorked=true;var patrolStart=guard.Position;
-            Advance(patrol,2);Check(guard.Task=="Night patrol"&&guard.Position!=patrolStart,profession+" night patrol");
+            Advance(patrol,2);Check(guard.Task==TaskId.NightPatrol&&guard.Position!=patrolStart,profession+" night patrol");
             patrol.Enemies.Add(new(){Id=patrol.NextId++,Type="zombie",X=guard.X+.1f,Z=guard.Z,Health=1});
             Advance(patrol,.1f);Check(patrol.Kills==1,profession+" engages enemies during night patrol");
         }
         var destruction=Rich();destruction.Citizens.Clear();var victim=destruction.At(12,15)!;victim.Health=1;destruction.Enemies.Add(new(){Type="zombie",X=12,Z=14.6f,Health=55});destruction.Update(.1f);Check(!destruction.Buildings.Contains(victim),"building destruction");
         foreach(string icon in Assets.Icons.Values)Check(Assets.Read(icon) is {Length:>8},"resource icon "+icon);
-        foreach(string invalid in new[]{"../escape","..\\escape","CON","options","","trailing."}){bool rejected=false;try{SaveStore.PathFor(invalid);}catch(ArgumentException){rejected=true;}Check(rejected,"save filename boundary");}
+        foreach(string invalid in new[]{"../escape","..\\escape","CON","options",string.Empty,"trailing."}){bool rejected=false;try{SaveStore.PathFor(invalid);}catch(ArgumentException){rejected=true;}Check(rejected,"save filename boundary");}
         var ui=new GameUi();ui.SetSpeed(3);ui.Escape();Check(ui.MenuOpen&&ui.Speed==4&&!ui.ExitRequested,"menu and speed state");
         ui.SetSpeed(4);Check(ui.Speed==16&&!ui.Paused,"fourth speed is four times third");
         var scaleOptions=new GraphicsOptions();Check(scaleOptions.UiScale==1,"default UI scale");scaleOptions.UiScale=float.NaN;scaleOptions.Validate();Check(scaleOptions.UiScale==1,"invalid UI scale fallback");
@@ -202,7 +202,7 @@ static class Checks
             {
                 writer.Write("VCTY"u8);writer.Write((ushort)5);writer.Write(payload5.Length);writer.Write(System.Security.Cryptography.SHA256.HashData(payload5));writer.Write(payload5);File.WriteAllBytes(save,old5File.ToArray());
             }
-            var old5=City.Load(save);Check(old5.Citizens[0].FullName=="Ana Silva"&&old5.Enemies[0].Tags==""&&old5.Enemies[0].Id>0,"v5 saves gain entity IDs and empty tags");
+            var old5=City.Load(save);Check(old5.Citizens[0].FullName=="Ana Silva"&&old5.Enemies[0].Tags==string.Empty&&old5.Enemies[0].Id>0,"v5 saves gain entity IDs and empty tags");
             int extension=9+saved.Enemies.Count*5+saved.Citizens.Sum(v=>4+System.Text.Encoding.UTF8.GetByteCount(v.FirstName)+4+System.Text.Encoding.UTF8.GetByteCount(v.Surname)+4+v.Inventory.Sum(e=>4+System.Text.Encoding.UTF8.GetByteCount(e.Key)+4));
             int identityBytes=extension-9-saved.Enemies.Count*5;
             byte[] version4Payload=v5Bytes[42..^identityBytes];

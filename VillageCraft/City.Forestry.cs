@@ -28,17 +28,17 @@ public partial class City
                 tree=candidate;v.Route=route;v.ResourceTarget=tree.Id;v.RouteTarget=tree.Id;break;
             }
         }
-        if(tree==null){v.Task="Waiting for trees to regrow";v.HasWorked=true;return;}
+        if(tree==null){v.Task=TaskId.WaitingTreeRegrowth;v.HasWorked=true;return;}
         var target=new Vector2(tree.X,tree.Z+.24f);float distance=Vector2.Distance(v.Position,target);
         if(distance>.15f)
         {
-            v.Task="Going to trees";
+            v.Task=TaskId.GoingToTrees;
             if(v.Route.Count==0)v.Route=Route(v.Position,target,false);
             if(v.Route.Count>0){Move(v,Toward(v.Position,v.Route[0],dt*.85f*TravelSpeed(v.Position,"Woodcutting")));if(Vector2.Distance(v.Position,v.Route[0])<.005f)v.Route.RemoveAt(0);}
             else if(distance<.7f)Move(v,Toward(v.Position,target,dt*.85f));
             return;
         }
-        v.Task="Chopping tree";v.WorkTime+=dt*Efficiency(v)*ToolEfficiency;
+        v.Task=TaskId.ChoppingTree;v.WorkTime+=dt*Efficiency(v)*ToolEfficiency;
         camp.Attendance+=dt;camp.WorkEffort+=dt*Efficiency(v)*ToolEfficiency;
         if(v.WorkTime<Rules.ProductionCycle)return;
         v.WorkTime-=Rules.ProductionCycle;

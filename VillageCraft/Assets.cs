@@ -51,7 +51,7 @@ static class Assets
                         if(value.TryGetProperty("path",out var path))file=FindPath(root,path.GetString()!)??FindPath(Path.GetDirectoryName(indexPath)!,path.GetString()!);
                         else if(value.TryGetProperty("hash",out var hash))
                         {
-                            string h=hash.GetString()??"";if(h.Length==40&&h.All(Uri.IsHexDigit))file=FindPath(root,"objects/"+h[..2]+"/"+h)??FindPath(root,"assets/objects/"+h[..2]+"/"+h);
+                            string h=hash.GetString()??string.Empty;if(h.Length==40&&h.All(Uri.IsHexDigit))file=FindPath(root,"objects/"+h[..2]+"/"+h)??FindPath(root,"assets/objects/"+h[..2]+"/"+h);
                         }
                     }
                     if(file==null)continue;indexed.TryAdd(entry.Name,file);

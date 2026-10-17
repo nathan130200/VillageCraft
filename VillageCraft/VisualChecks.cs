@@ -26,7 +26,7 @@ static class VisualChecks
                 }
                 Raylib.EndDrawing();
             }
-            Raylib.TakeScreenshot(Path.Combine(Environment.CurrentDirectory,"sunlight-models.png"));
+            Raylib.TakeScreenshot(Path.Combine(Directory.CreateDirectory(Path.Combine(Environment.CurrentDirectory,"screenshots")).FullName,"sunlight-models.png"));
             Console.WriteLine("PASS: burning and helmet-protected zombies/skeletons rendered.");
         }
         finally{Raylib.UnloadRenderTexture(target);}
@@ -59,7 +59,7 @@ static class VisualChecks
                     }
                     Raylib.EndDrawing();
                 }
-                Raylib.TakeScreenshot(Path.Combine(Environment.CurrentDirectory,beta?(light==1?"beta105-models-day.png":"beta105-models-night.png"):(light==1?"materials-day.png":"materials-night.png")));
+                Raylib.TakeScreenshot(Path.Combine(Directory.CreateDirectory(Path.Combine(Environment.CurrentDirectory,"screenshots")).FullName,beta?(light==1?"beta105-models-day.png":"beta105-models-night.png"):(light==1?"materials-day.png":"materials-night.png")));
             }
             Console.WriteLine(beta?"PASS: warehouses, cow shed, cow skin, deliveryman and torch rendered in daylight and at night.":"PASS: market, troughs, mine and crossed plants rendered in daylight and at night.");
         }
@@ -89,7 +89,7 @@ static class VisualChecks
                 }
                 Raylib.EndDrawing();
             }
-            Raylib.TakeScreenshot(Path.Combine(Environment.CurrentDirectory,"models-smoke.png"));Console.WriteLine("PASS: chicken rendered from four directions; lumber foliage rendered from both sides.");
+            Raylib.TakeScreenshot(Path.Combine(Directory.CreateDirectory(Path.Combine(Environment.CurrentDirectory,"screenshots")).FullName,"models-smoke.png"));Console.WriteLine("PASS: chicken rendered from four directions; lumber foliage rendered from both sides.");
         }
         finally{foreach(var t in targets)Raylib.UnloadRenderTexture(t);}
     }

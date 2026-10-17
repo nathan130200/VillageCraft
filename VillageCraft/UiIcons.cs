@@ -10,7 +10,7 @@ public sealed class UiIconFile
 }
 public sealed class UiIcon
 {
-    public string Id {get;set;}="";
+    public string Id {get;set;}=string.Empty;
     public string[] Pixels {get;set;}=[];
 }
 static class UiIcons

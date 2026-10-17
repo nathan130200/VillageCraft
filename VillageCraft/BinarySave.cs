@@ -28,7 +28,7 @@ public static class BinarySave
         {
             w.Write(c.Width);w.Write(c.Height);w.Write(c.Day);w.Write(c.DayTime);w.Write(c.Tax);w.Write(c.Happiness);w.Write(c.Balance);w.Write(c.NextId);w.Write(c.Waves);w.Write(c.Kills);w.Write(c.ArmorLevel);w.Write(c.ToolLevel);w.Write(c.Growth);Text(w,c.Message);Rules(w,c.Rules);Map(w,c.Stock);
             w.Write(c.Buildings.Count);foreach(var b in c.Buildings){w.Write(b.Id);Text(w,b.Prefab);w.Write(b.X);w.Write(b.Z);w.Write(b.Rotation);w.Write(b.Health);w.Write(b.Priority);w.Write(b.Enabled);w.Write(b.Worked);w.Write(b.WorkEffort);w.Write(b.Attendance);w.Write(b.ServiceCredit);}
-            w.Write(c.Citizens.Count);foreach(var v in c.Citizens){w.Write(v.Id);w.Write(v.Home);w.Write(v.Work);w.Write(v.X);w.Write(v.Z);w.Write(v.Health);Text(w,v.Task);w.Write(v.Cooldown);w.Write(v.WorkTime);w.Write(v.HasWorked);Text(w,v.Profession);w.Write(v.Facing);}
+            w.Write(c.Citizens.Count);foreach(var v in c.Citizens){w.Write(v.Id);w.Write(v.Home);w.Write(v.Work);w.Write(v.X);w.Write(v.Z);w.Write(v.Health);Text(w,Tasks.Label(v.Task));w.Write(v.Cooldown);w.Write(v.WorkTime);w.Write(v.HasWorked);Text(w,v.Profession);w.Write(v.Facing);}
             Creatures(w,c.Animals);Creatures(w,c.Defenders);Creatures(w,c.Enemies);w.Write(c.Events.Count);foreach(var e in c.Events)Text(w,e);
             w.Write(c.LastNight);w.Write(c.Rules.NightMonsters);w.Write(c.Rules.NightCount);
             foreach(var e in c.Enemies){w.Write(e.NightSpawn);w.Write(e.BrainTime);}
@@ -68,7 +68,7 @@ public static class BinarySave
             using var payload=new MemoryStream(bytes,false);using var r=new BinaryReader(payload,Utf8);
             var c=new City{PeaceDays=0,Version=3,Width=r.ReadInt32(),Height=r.ReadInt32(),Day=r.ReadInt32(),DayTime=r.ReadSingle(),Tax=r.ReadSingle(),Happiness=r.ReadSingle(),Balance=r.ReadSingle(),NextId=r.ReadInt32(),Waves=r.ReadInt32(),Kills=r.ReadInt32(),ArmorLevel=r.ReadInt32(),ToolLevel=r.ReadInt32(),Growth=r.ReadSingle(),Message=Text(r),Rules=Rules(r),Stock=Map(r)};
             int n=Count(r,512*512);for(int i=0;i<n;i++)c.Buildings.Add(new(){Id=r.ReadInt32(),Prefab=Text(r),X=r.ReadInt32(),Z=r.ReadInt32(),Rotation=r.ReadInt32(),Health=r.ReadSingle(),Priority=r.ReadInt32(),Enabled=r.ReadBoolean(),Worked=r.ReadBoolean(),WorkEffort=r.ReadSingle(),Attendance=r.ReadSingle(),ServiceCredit=r.ReadSingle()});
-            n=Count(r,4096);for(int i=0;i<n;i++)c.Citizens.Add(new(){Id=r.ReadInt32(),Home=r.ReadInt32(),Work=r.ReadInt32(),X=r.ReadSingle(),Z=r.ReadSingle(),Health=r.ReadSingle(),Task=Text(r),Cooldown=r.ReadSingle(),WorkTime=r.ReadSingle(),HasWorked=r.ReadBoolean(),Profession=Text(r),Facing=r.ReadSingle()});
+            n=Count(r,4096);for(int i=0;i<n;i++)c.Citizens.Add(new(){Id=r.ReadInt32(),Home=r.ReadInt32(),Work=r.ReadInt32(),X=r.ReadSingle(),Z=r.ReadSingle(),Health=r.ReadSingle(),Task=Tasks.Parse(Text(r)),Cooldown=r.ReadSingle(),WorkTime=r.ReadSingle(),HasWorked=r.ReadBoolean(),Profession=Text(r),Facing=r.ReadSingle()});
             c.Animals=Creatures(r,32768);c.Defenders=Creatures(r,8192);c.Enemies=Creatures(r,4096);n=Count(r,512);for(int i=0;i<n;i++)c.Events.Add(Text(r));
             if(format>=4){c.LastNight=r.ReadInt32();c.Rules.NightMonsters=r.ReadBoolean();c.Rules.NightCount=r.ReadInt32();foreach(var e in c.Enemies){e.NightSpawn=r.ReadBoolean();e.BrainTime=r.ReadSingle();}}
             else c.LastNight=c.IsNight?c.Day:0;

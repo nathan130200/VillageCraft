@@ -86,10 +86,10 @@ partial class GameUi
         Bevel(min,max,selected);UiIcons.Draw(icon,min+new Vector2((size-16)/2));
         Tooltip(hint);ImGui.PopID();return clicked;
     }
-    static void Stat(string icon,string value,string hint,string texture="")
+    static void Stat(string icon,string value,string hint,string texture=string.Empty)
     {
         var point=ImGui.GetCursorScreenPos();ImGui.Dummy(new(18,18));
-        if(texture!="")
+        if(texture!=string.Empty)
         {
             var asset=Assets.Get(texture);
             if(asset.Id!=0)ImGui.GetWindowDrawList().AddImage((IntPtr)asset.Id,point,point+new Vector2(18));
@@ -138,7 +138,7 @@ partial class GameUi
         Stat("people",$"{city.Citizens.Count}/{city.Capacity}",L.T("Residents"));
         Stat("happy",$"{city.Happiness:0}%",L.T("Happiness"));
         Stat("water",$"{city.Water}/{city.Citizens.Count}",L.T("Water"));
-        Stat("raid",city.Enemies.Count>0?city.Enemies.Count.ToString():city.RaidIn<0?"-":city.RaidIn.ToString(),city.Enemies.Count>0?L.T("Hostiles"):L.T("Days until raid")+(city.Day<=city.PeaceDays?"\n"+L.F("Night monsters begin on day {0}",city.PeaceDays+1):""));
+        Stat("raid",city.Enemies.Count>0?city.Enemies.Count.ToString():city.RaidIn<0?"-":city.RaidIn.ToString(),city.Enemies.Count>0?L.T("Hostiles"):L.T("Days until raid")+(city.Day<=city.PeaceDays?"\n"+L.F("Night monsters begin on day {0}",city.PeaceDays+1):string.Empty));
         Stat("map",$"{city.Width}x{city.Height}",L.T("Map size"));
         ImGui.SetCursorScreenPos(new(w-176,32+(rows-1)*22+(separateMenus?26:0)));
         foreach(var (tab,icon) in new[]{("People","people"),("Economy","economy"),("Defense","shield"),("Journal","book")})
@@ -150,7 +150,7 @@ partial class GameUi
         ImGui.End();
     }
     internal void ShowBuildCategory(string id){category=id;buildOpen=true;}
-    public void UseInspectTool(){InspectMode=true;Selected="";buildOpen=false;}
+    public void UseInspectTool(){InspectMode=true;Selected=string.Empty;buildOpen=false;}
     public void ToggleTool(){if(IsBuilding)UseInspectTool();else buildOpen=!buildOpen;}
     void CloseTransientPanels(){page="Build";Inspected=InspectedCitizen=InspectedMonster=-1;}
     public void ResetPanels(){CloseTransientPanels();pinned.Clear();pinnedManagement.Clear();UseInspectTool();}
@@ -228,14 +228,14 @@ partial class GameUi
         if(monster.LeatherHelmet)Hint("Leather helmet / sunlight protection");
         if(monster.BurningInSun)Hint("Burning in sunlight");
         if(monster.BossWave)Hint("Boss wave");
-        ImGui.TextUnformatted(L.F("Health {0:0}/{1:0}",monster.Health,max));ImGui.ProgressBar(monster.Health/max,new(-1,8),"");
+        ImGui.TextUnformatted(L.F("Health {0:0}/{1:0}",monster.Health,max));ImGui.ProgressBar(monster.Health/max,new(-1,8),string.Empty);
         if(unit!=null)
         {
             ImGui.TextUnformatted(L.F("Damage {0:0} / Range {1:0.0}",unit.Damage,unit.Range));
             ImGui.TextUnformatted(L.F("Speed {0:0.00} / Cooldown {1:0.0}s",unit.Speed,monster.Cooldown));
         }
         Hint(city.Enemies.Contains(monster)?L.T("Hostile"):L.T("Friendly"));
-        if(monster.Tags!="")Wrapped(monster.Tags);
+        if(monster.Tags!=string.Empty)Wrapped(monster.Tags);
     }
     void DrawHotbar(City city,int w,int h)
     {
@@ -246,7 +246,7 @@ partial class GameUi
             ImGui.SetNextItemWidth(160);ImGui.InputTextWithHint("##search",L.T("Search..."),ref search,80);
             ImGui.SameLine();Hint(IsBuilding?L.Name(Catalog.Get(Selected)):L.T("Select a building"));
             ImGui.BeginChild("Prefab slots",new(width-245,66),ImGuiChildFlags.None,ImGuiWindowFlags.HorizontalScrollbar);
-            foreach(var p in Catalog.Data.Prefabs.Where(p=>(search!=""||p.Category==category)&&L.Name(p).Contains(search,StringComparison.OrdinalIgnoreCase)).OrderBy(p=>p.Cost.GetValueOrDefault("Emeralds")))
+            foreach(var p in Catalog.Data.Prefabs.Where(p=>(search!=string.Empty||p.Category==category)&&L.Name(p).Contains(search,StringComparison.OrdinalIgnoreCase)).OrderBy(p=>p.Cost.GetValueOrDefault("Emeralds")))
             {
                 ImGui.PushID(p.Id);ImGui.BeginGroup();
                 bool selected=IsBuilding&&Selected==p.Id;
@@ -273,7 +273,7 @@ partial class GameUi
         foreach(string c in Catalog.Data.Game.Categories.Concat(Catalog.Data.Prefabs.Select(p=>p.Category)).Distinct())
         {
             if(IconButton("category_"+c,categories.GetValueOrDefault(c,"build"),L.T(c),buildOpen&&category==c))
-            {if(buildOpen&&category==c)buildOpen=false;else{buildOpen=true;category=c;}InspectMode=true;Selected="";}
+            {if(buildOpen&&category==c)buildOpen=false;else{buildOpen=true;category=c;}InspectMode=true;Selected=string.Empty;}
             ImGui.SameLine(0,4);
         }
         ImGui.Dummy(new(10,0));ImGui.SameLine(0,4);

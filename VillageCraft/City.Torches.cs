@@ -50,7 +50,7 @@ public partial class City
         // A path can disappear while the villager is travelling (e.g. a new wall).
         if(v.Route.Count==0&&(MathF.Round(v.X)!=torch.X||MathF.Round(v.Z)!=torch.Z)&&Route(v.Position,new(torch.X,torch.Z),false).Count==0)
         {ReleaseTorchDuty(v);return false;}
-        v.Task=light?"Lighting torches":"Extinguishing torches";
+        v.Task=light?TaskId.LightingTorches:TaskId.ExtinguishingTorches;
         if(WalkTo(v,torch,dt,tolerance:.4f)){SetTorch(torch,light);ReleaseTorchDuty(v);}
         return true;
     }

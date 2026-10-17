@@ -13,7 +13,7 @@ static class ScriptChecks
         string folder=Path.Combine(Path.GetTempPath(),"villagecraft-events-"+Guid.NewGuid());Directory.CreateDirectory(folder);
         try
         {
-            File.WriteAllText(Path.Combine(folder,"mod.js"),"""
+            File.WriteAllText(Path.Combine(folder,"mod.js"),string.Empty"
                 // No registration: regular mod.
                 let updates = 0;
                 function onInit() {
@@ -49,8 +49,8 @@ static class ScriptChecks
                     if (++updates === 1) world.addResource("Wool", 5);
                 }
                 function onShutdown() { world.addResource("Gold", 7); }
-                """);
-            File.WriteAllText(Path.Combine(folder,"ai.js"),"""
+                string.Empty");
+            File.WriteAllText(Path.Combine(folder,"ai.js"),string.Empty"
                 set_script_type(eST_AI, "blaze");
                 set_script_type(eST_Mod); // The first registration wins.
                 function onInit() { world.addResource("Eggs", 1); }
@@ -60,17 +60,17 @@ static class ScriptChecks
                     ctx.self.tags = "scenario boss override";
                     ctx.moveTo(ctx.x + 1, ctx.z);
                 }
-                """);
-            File.WriteAllText(Path.Combine(folder,"building.js"),"""
+                string.Empty");
+            File.WriteAllText(Path.Combine(folder,"building.js"),string.Empty"
                 set_script_type(eST_Building, "well");
                 function onInit() { world.addResource("Eggs", 1); }
                 function onUpdate(dt) { world.addResource("Eggs", 1); }
                 function onBuildingDamaged(b, amount) { world.addResource("Iron", 9); }
-                """);
-            File.WriteAllText(Path.Combine(folder,"villager.js"),"""
+                string.Empty");
+            File.WriteAllText(Path.Combine(folder,"villager.js"),string.Empty"
                 set_script_type(eST_AI, "citizen");
                 function onVillagerUpdate(v, dt) { v.tags = "custom_ai"; v.moveTo(v.x + 1, v.z, dt); }
-                """);
+                string.Empty");
             Scripts.Load(folder);
             using var city=World();var runtime=city.Scripting;
             Check(city.Enemies.Count==0&&runtime.PendingCount>0,"onInit queues mutations");

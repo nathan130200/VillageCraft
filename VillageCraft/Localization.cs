@@ -3,8 +3,8 @@ namespace VillageCraft;
 
 public sealed class LanguageFile
 {
-    public string Id {get;set;}="";
-    public string Name {get;set;}="";
+    public string Id {get;set;}=string.Empty;
+    public string Name {get;set;}=string.Empty;
     public Dictionary<string,string> Text {get;set;}=[];
 }
 public static class L
@@ -48,15 +48,11 @@ public static class L
         Plan p=>Get("prefab."+p.Id+".name",p.Name),
         ProfessionPlan p=>Get("profession."+p.Id,p.Name),
         UpgradePlan u=>Get("upgrade."+u.Id,u.Name),
-        _=>T(value.ToString()??"")
+        _=>T(value.ToString()??string.Empty)
     };
     public static string Description(Plan p)=>Get("prefab."+p.Id+".description",p.Description);
     public static string Entity(string id)=>Get("entity."+id,T(id.Replace('_',' ')));
     public static string Resource(string id)=>Get("resource."+id,id);
     public static string Activity(string id)=>Catalog.Data.Professions.TryGetValue(id,out var p)?Name(p):Catalog.Data.Units.ContainsKey(id)?Entity(id):T(id);
-    public static string Task(string task)
-    {
-        foreach(string prefix in new[]{"Going to ","Assisting: "})if(task.StartsWith(prefix))return T(prefix)+T(task[prefix.Length..]);
-        return T(task);
-    }
+    public static string Task(TaskId task)=>T(Tasks.Label(task));
 }

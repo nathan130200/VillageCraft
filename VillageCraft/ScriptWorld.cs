@@ -19,7 +19,7 @@ public sealed class ScriptWorld:ScriptGame
         if(filter is Jint.Native.Function.Function)return TypeConverter.ToBoolean(engine.Invoke(filter,entity));
         if(filter.IsNumber())return id==filter.AsNumber();
         if(!filter.IsString())return false;
-        string text=filter.AsString();if(text==""||text=="*")return true;
+        string text=filter.AsString();if(text==string.Empty||text=="*")return true;
         if(text.StartsWith("tag:"))return EntityTags.Has(tags,text[4..]);
         if(text.StartsWith("id:"))return int.TryParse(text[3..],out int value)&&value==id;
         if(text.StartsWith("type:"))return key==text[5..];
@@ -32,13 +32,13 @@ public sealed class ScriptWorld:ScriptGame
     public ScriptBuilding[] getBuildings(JsValue? filter=null)=>city.Buildings.ToArray().Select(b=>new ScriptBuilding(city,b)).Where(b=>Match(filter,b,b.id,b.tags,b.prefab)).ToArray();
     // Alias for the spelling in the original API request.
     public ScriptBuilding[] gerBuildings(JsValue? filter=null)=>getBuildings(filter);
-    public bool queueSpawnMonster(string type,float x,float z,string tags="")
+    public bool queueSpawnMonster(string type,float x,float z,string tags=string.Empty)
     {
         EntityTags.Validate(tags);
         if(!Catalog.Data.Units.ContainsKey(type)||!float.IsFinite(x)||!float.IsFinite(z)||x<0||z<0||x>=city.Width||z>=city.Height)return false;
         return runtime.Queue(()=>{if(city.SpawnMonster(type,x,z,tags)==null)city.Notify(new("onCommandFailed",Reason:"Monster limit reached"));});
     }
-    public bool queueSpawnBuilding(string prefab,int x,int z,int rotation=0,string tags="")
+    public bool queueSpawnBuilding(string prefab,int x,int z,int rotation=0,string tags=string.Empty)
     {
         EntityTags.Validate(tags);
         if(!Catalog.Data.Prefabs.Any(p=>p.Id==prefab)||!city.Land(x,z)||rotation is <0 or >3)return false;
@@ -48,7 +48,7 @@ public sealed class ScriptWorld:ScriptGame
             else city.Notify(new("onCommandFailed",Reason:city.Message));
         });
     }
-    public bool queueSpawnVillager(string profession,int home,string tags="")
+    public bool queueSpawnVillager(string profession,int home,string tags=string.Empty)
     {
         EntityTags.Validate(tags);
         if(!Catalog.Data.Professions.ContainsKey(profession))return false;

@@ -1,203 +1,265 @@
-# VillageCraft 1.0.5-beta
-
-This release adds Goods (labor/combat rewards converted to emeralds daily at 06:00), physical production storage and deliverymen, small/large warehouses, villager-operated torches, leather and milk, cow sheds, milk recovery, armor enchanting and persistent tutorial dismissal. Use Options > Reset tutorial to enable it again. Content and balance settings are documented in `VillageCraft/Content/README.md`.
-
-New villages include a stocked small warehouse and two deliverymen. Connect new workplaces to roads and train additional deliverymen in People as the city grows. Production requires delivered local inputs; inspect a building to see its storage. Sell requests in Economy arrange delivery to the trading hall; complete the exchange once its stock reaches 20 units. Emeralds and Goods stay in the treasury.
-
 # VillageCraft — The Living Overworld
 
-A C# 3D village builder using Raylib and ImGui.NET. Place complete textured prefabs, manage specialists and citizens, breed animals, explore caves, upgrade equipment, and survive raids. The supplied Minecraft textures are mapped onto original voxel geometry.
+A 3D village management game written in C#, inspired by Minecraft villages and city builders such as Cities: Skylines. Build with complete prefabs, organize workers and supplies, and protect a growing settlement.
 
-## Run
+> **Unofficial fan-made project.** VillageCraft is not affiliated with, endorsed by, or an official product of Mojang Studios or Microsoft. Minecraft and its associated assets belong to their respective owners.
 
-Install the .NET 10 SDK and use a graphical desktop with OpenGL 3.3 support:
+## Development collaboration
 
-```sh
+**GPT 6.1 Sol works on the game code and logic.** The repository owner acts as QA, guiding development through prompts and testing and validating all code changes. This project is developed through that Human and AI collaboration.
+
+## Contents
+
+- [About the game](#about-the-game)
+- [Requirements and platforms](#requirements-and-platforms)
+- [Minecraft 1.16 assets](#minecraft-116-assets)
+- [Build and run](#build-and-run)
+- [Getting started](#getting-started)
+- [Controls](#controls)
+- [Economy and logistics](#economy-and-logistics)
+- [Villagers and professions](#villagers-and-professions)
+- [World, daylight and defense](#world-daylight-and-defense)
+- [Interface and options](#interface-and-options)
+- [Saving and loading](#saving-and-loading)
+- [Content and modding](#content-and-modding)
+- [Project structure](#project-structure)
+- [Publishing](#publishing)
+- [Credits and asset ownership](#credits-and-asset-ownership)
+
+## About the game
+
+VillageCraft focuses on managing a living village rather than placing individual blocks. Roads connect homes, farms, workshops, warehouses and defenses. Villagers travel to work, deliverymen transport supplies, and production depends on staffed buildings with the right inputs.
+
+The game includes farming, forestry, mining, cave expeditions, animal husbandry, trade, equipment upgrades, guardians and hostile encounters. Building definitions, models, professions and balance settings are external TOML files; JavaScript components provide custom behavior.
+
+The project is under active development. Features and save formats may evolve; back up important saves before updating. The project file is the source of truth for the current build version.
+
+## Requirements and platforms
+
+- **.NET 10 SDK** to build and run from source.
+- A graphical desktop and graphics hardware supporting **OpenGL 3.3**.
+- A separately supplied local asset directory, described below.
+
+Windows is tested locally. Linux and macOS are targets through the native dependencies, but still require platform validation. Linux may require additional system packages for OpenGL, GLFW and X11.
+
+The main libraries are Raylib-cs for rendering, ImGui.NET through rlImgui-cs for the interface, Tomlyn for content, and Jint for JavaScript scripting.
+
+## Minecraft 1.16 assets
+
+**Minecraft textures and other proprietary game assets are not included in this repository.** The development setup uses assets from **Minecraft 1.16**. Obtain the assets separately from your own installation or another source you are authorized to use. This project does not provide an asset download or grant redistribution rights.
+
+Set `VILLAGECRAFT_ASSETS` to your local asset directory. Assets are read directly from that location and are **not copied on every build or publish**.
+
+### Indexed assets
+
+The resolver accepts `assets_index.json` with name-to-path entries or Minecraft-style `objects` entries containing hashes. Keep the referenced files in the corresponding locations:
+
+```text
+MinecraftAssets/
+├── assets_index.json
+├── objects/
+│   └── <first two hash characters>/
+│       └── <full hash>
+└── assets/                         # Optional loose texture overrides
+    └── minecraft/
+        └── textures/
+            ├── block/
+            ├── entity/
+            └── item/
+```
+
+Indexed ZIP resource packs are also supported. Their textures must use the expected `assets/minecraft/textures/...` layout. An index alone does not contain the textures: its referenced objects or resource packs must also be present. A standard asset index may not contain every required block or entity texture; loose textures can supply missing files.
+
+### Loose textures and overrides
+
+You can instead supply extracted PNG textures beneath `assets/minecraft/textures/`. For example:
+
+```text
+MinecraftAssets/assets/minecraft/textures/block/oak_planks.png
+MinecraftAssets/assets/minecraft/textures/entity/villager/villager.png
+```
+
+Loose textures take priority over indexed textures. Preserve logical paths to avoid ambiguous filenames. Missing textures fall back to model colors. Restart the game after changing assets.
+
+The interface looks for `mojangles.ttf` at the repository root when building and copies it to `Content/Fonts/` in the output. Supply that font locally if it is absent; its ownership and redistribution rights remain separate from this project's code.
+
+## Build and run
+
+From the repository root, configure assets and launch the game.
+
+**PowerShell:**
+
+```powershell
+$env:VILLAGECRAFT_ASSETS = 'C:\MinecraftAssets'
 dotnet run --project VillageCraft -c Release
 ```
 
-Windows graphics and simulation are tested locally. Linux x64 and macOS desktop remain targets through the included native dependencies but require validation on those systems. Linux may need distribution-specific OpenGL/GLFW/X11 libraries. Ship the entire publish directory, including native libraries, `Content`, and `assets`.
+The included helper preserves an existing asset setting, or defaults it to the repository root:
 
-## Maps and controls
-
-New villages default to **32x32 tiles**, starting in bright morning daylight. New Game allows dimensions from **32 through 512**, a terrain seed, and an optional guided tutorial. Maps include lakes, stepped mountains, grass and natural oak trees, with a level starter area. Neighboring elevations differ by at most one Minecraft block; villagers follow dry, traversable routes. Normal nighttime monsters begin on day six; Options allows changing this grace period. The skippable tutorial covers inspection, roads, forestry, water, housing and defense.
-
-Woodcutters harvest individual tree buildings once, then wait for regrowth (three days by default). Trees can also be planted. Configure terrain in `Content/terrain.toml` and tutorial stages in `Content/tutorial.toml`.
-
-| Input | Action |
-|---|---|
-| Left click | Build selected prefab, or inspect in Inspect mode |
-| Right click | Inspect building |
-| R | Rotate prefab 90 degrees |
-| Tab | Toggle Build / Inspect |
-| WASD | Pan camera |
-| Q / E | Orbit camera (hold Shift for 3x speed) |
-| Wheel | Zoom; maximum range scales with map size |
-| Top-row 1 / 2 / 3 | Resume at 1x / 2x / 4x / 16x (not numpad) |
-| Space | Pause / resume |
-| Escape | Open/close paused game menu |
-
-The bottom dock contains category tabs, search, prefab thumbnails, icon costs, and rotation controls. The top bar shows resource icons with names on hover. People, Economy, Defense, and Journal open management panels. Inspect buildings to change priorities, disable work, repair damage, or demolish. Occupied homes and the central square cannot be demolished manually.
-
-Escape offers New Game, Load Game, Save Game, Save Game As, Options, Exit and Resume. Creating a new map replaces the current unsaved session, while saved villages remain available. Save As confirms replacement of an existing binary save. Closing the menu restores the prior pause state.
-
-## Villagers and growth
-
-Villagers face their actual walking direction, including corners and combat movement. Their final orientation is retained when they stop. Workers at a building face its entrance, and animal/guardian movement also updates facing.
-
-**Citizen** is the generic profession. Citizens without a job help families attract residents: each idle citizen adds the support amount from `game.toml` to daily immigration progress. They contribute Goods and consume food like other residents. Citizens may assist **any workplace at 50% specialist efficiency**, retaining their citizen identity and plain appearance. Production cycles take twice as long, combat damage is halved, and husbandry/guardian service progress is also reduced. Tool upgrades affect both citizens and specialists, preserving their relative efficiency.
-
-Specialists fill matching jobs before citizens fill vacancies, with one worker per workplace before extra slots. Farmers, woodcutters, miners, explorers, smiths, animal keepers, traders, warriors, archers and magic villagers have separate TOML definitions and appearance. Use a villager's profession dropdown in **People** to train them; costs are shown on hover and read from profession data. Specialists do not automatically work unrelated jobs. Train them as citizens if you need generic helpers.
-
-Workers must travel along connected paths and reach the workplace before producing. A building entrance must face an adjacent path connected by edges to the central square. Its preview highlights that tile. At rotation 0 the front is +Z; 90° is -X, 180° is -Z, and 270° is +X. Removing a road can disconnect buildings. Long commuters finish a work cycle before heading home.
-
-Food, water, parks and taxes affect happiness. Fed, watered, happy villages gain immigration progress when housing and population limits permit. Default days last ten real minutes, with ordinary villagers sleeping at night; production cycles default to two seconds. These values and raid/animal/population limits are adjustable under Options and saved per village.
-
-## Caves and equipment
-
-Place **Production → Cave entrance** beside a connected path. Miners and explorers work there; citizens can help at half efficiency. Expeditions consume food and tools, producing iron, gold, diamonds and ancient debris. Miners have bonuses for iron/gold, while explorers get more diamonds/debris. Resource yields, inputs and profession bonuses are defined in TOML. Supplies are renewable production, not finite terrain deposits or a playable underground world.
-
-Build and staff a **Blacksmith forge**, then use **Economy → Equipment** to buy upgrades in order:
-
-- Iron, diamond and netherite armor reduce incoming damage to villagers and guardians.
-- Tempered, diamond and netherite tools increase workplace efficiency.
-
-Recipes, levels and effects are in `Content/upgrades.toml`. Upgrades apply village-wide and are stored in the save. The ancient-debris resource uses the supplied pack's obsidian icon as a fallback representation; loose assets and resource definitions can replace it.
-
-## Roads, animals and raids
-
-Six road types share the same path network. Click an ordinary path with another road selected to resurface it; upgrades charge positive differences in resource costs, preserve identity, and retain entrance connectivity. Gates cannot be resurfaced as ordinary roads. Routing chooses the shortest route rather than optimizing travel time.
-
-| Surface | Base speed | Profession multiplier (in addition to base) |
-|---|---|---|
-| Dirt | 1.00x | None |
-| Cobblestone | 1.15x | Stonecutters 1.35x, smiths 1.25x, farmers 0.80x |
-| Gravel | 1.05x | Woodcutters 1.40x, warriors 0.75x |
-| Boardwalk | 1.15x | Animal keepers 1.30x, stonecutters 0.70x |
-| Packed ice | 0.80x | Snow golems 2.80x, archers 1.40x |
-| Soul sand | 0.65x | Magic villagers 2.80x, iron golems 0.60x |
-
-Keepers breed sheep, pigs and chickens, using food and respecting pen limits. Babies mature over time; adults supply wool, food or eggs. Guardians require a staffed workshop, materials and accumulated service work. Citizen helpers accumulate that work more slowly.
-
-By default, zombies, piglins and blazes attack every 30 days from a frontier near the starter village. Waves grow and respect the concurrent hostile cap. Warriors intercept, ranged professions shoot, and golems patrol. Walls and gates block routes and line of sight. Raiders can kill residents and destroy buildings. Repair with wood and stone. Blazes currently use ground routing; flying siege AI is not implemented.
-
-## TOML content
-
-All game-owned definition/configuration files are **TOML**. The game reads and validates content **once at startup**, then retains indexed definitions in memory. Restart after edits. Syntax/reference errors identify the offending file or definition. The old monolithic `prefabs.json` is no longer read.
-
-| Path under `VillageCraft/Content` | Contents |
-|---|---|
-| `game.toml` | Default map dimensions, category order, ground materials, initial stock, starter layout/professions, immigration and initial rules |
-| `Prefabs/<id>.toml` | One complete building/road definition per file, including costs, jobs, recipes, homes, upkeep, health, entrance rules, profession access, model, and road effects |
-| `Models/<id>.toml` | One model per file, with `[[Parts]]` box geometry, colors, textures and skin UV coordinates |
-| `Professions/<id>.toml` | Appearance, eligible jobs, efficiency, training costs and resource bonuses |
-| `Units/<id>.toml` | Combat model, health, speed, range, damage and cooldown |
-| `resources.toml` | `[[Resources]]` IDs, icons and trade prices |
-| `upgrades.toml` | `[[Upgrades]]` levels, recipes and armor/tool effects |
-| `rendering.toml` | Alpha-cutout shader and discard threshold for foliage and entity skins |
-
-The shipped catalog has **27 prefabs** and **11 villager professions**. Every prefab property is explicitly included in its file, even when empty or zero. Add another complete TOML prefab file with a unique `Id`, existing model and valid resource references to add a building without C# changes. New simulation mechanics still require code. IDs referenced by existing saves should remain stable.
-
-Example recipe syntax:
-
-```toml
-Cost = { Emeralds = 180, Wood = 16, Stone = 32, Tools = 4 }
-Input = { Food = 0.25, Tools = 0.1 }
-Output = { Iron = 1.0, Gold = 0.4, Diamonds = 0.15, AncientDebris = 0.04 }
-Professions = ["miner", "explorer"]
+```powershell
+./run.ps1
 ```
 
-Model positions/sizes use tile units (four world metres per tile), +Y is up and +Z is the front. `Texture` names a logical asset such as `block/oak_planks.png`. `UvOrigin` and `UvSize` use pixels for skinned cuboids; empty arrays mean ordinary repeated block UVs. Geometry and entrances rotate together. Footprints remain one tile.
+**Linux / macOS shell:**
 
-`tools/New-Catalog.ps1` is an optional authoring utility that regenerates the shipped TOML files. Running it **overwrites manual edits** to those definitions. The game never invokes it.
+```sh
+export VILLAGECRAFT_ASSETS="$HOME/MinecraftAssets"
+dotnet run --project VillageCraft -c Release
+```
 
-## Assets and graphics
-
-The third-party **Minecraft `assets_index.json` remains in its original JSON format** as an input asset index, together with hashed `objects`; it is not a game configuration file. The resolver uses its local programmer-art archive for block/entity textures and item icons. Assets are external and are never copied by build/publish.
-
-Loose PNGs in project/executable `assets` override indexed textures. Prefer logical paths such as `assets/minecraft/textures/block/oak_planks.png` or `assets/minecraft/textures/entity/villager/farmer.png`; simple filenames are also recognized. Set VILLAGECRAFT_ASSETS to the directory containing assets_index.json, objects, and/or assets. The configured directory takes precedence; development falls back to the project root. Restart to reload. Missing textures use the model part's fallback color.
-
-Block/entity textures use mipmaps at every quality level, nearest-pixel magnification up close, and blended mip levels at distance. Medium adds 4x anisotropy and High 8x. MSAA covers geometry edges. Options exposes texture/shadow/water toggles, quality and 30/60/120/unlimited FPS. Generated lakes have animated water when enabled. Graphics preferences are written to executable-relative **`UserData/options.toml`**.
-
-Models use two-sided alpha cutouts: empty skin/foliage pixels are discarded before writing depth, so objects behind them remain visible regardless of draw order. Placement tint alpha remains independent for ghost previews. Chicken parts use separate anatomical atlas regions, including the skin's cutout legs, and lumber-camp foliage uses the oak-leaf texture.
-
-## Binary saves and compatibility
-
-New saves use **`<executable directory>/UserData/<name>.vcs`**. When running with `dotnet run`, this is in the build output, e.g. `VillageCraft/bin/Release/net10.0/UserData`. The folder is created on save.
-
-The format contains a `VCTY` header, version, payload length, SHA-256 checksum and explicit little-endian binary records. It is genuine binary serialization, not compressed or disguised JSON, and does not use `BinaryFormatter`. Length/count limits, integrity checks and semantic validation reject damaged or unsupported saves. Map size, professions, facing, equipment, growth, service work, rules, resources and living entities persist. Cached routes are rebuilt after loading.
-
-Load Game also discovers existing v2 `.json` saves. Loading imports them as 32×32 flat villages without changing their files; the next Save writes a `.vcs` beside the original. Original v1 saves are unsupported. Imported villagers without a profession become citizens. Changing content IDs referenced by a save can prevent loading; keep a backup before editing those IDs.
-
-## Verification and packaging
+To build without launching:
 
 ```sh
 dotnet build VillageCraft -c Release
-dotnet run --project VillageCraft -c Release -- --self-test
-dotnet run --project VillageCraft -c Release -- --ui-smoke
-dotnet run --project VillageCraft -c Release -- --cave-smoke
-dotnet run --project VillageCraft -c Release -- --newmap-smoke
-dotnet run --project VillageCraft -c Release -- --models-smoke
-dotnet run --project VillageCraft -c Release -- --demo
+```
+
+Without the environment variable, development discovery checks parent directories for `assets_index.json` and the current working directory. An explicit asset path is recommended for distributed builds.
+
+## Getting started
+
+1. Start a new village. The default map is **32 × 32**; map size, terrain seed and tutorial can be selected when creating it.
+2. Connect building entrances to the road network leading to the central square. Rotate previews so entrances face a road.
+3. Inspect the starting warehouse, homes and workplaces to check workers and supplies.
+4. Maintain food, water and housing, and keep deliverymen available to move production inputs.
+5. Expand production, trade surplus, and prepare defenders before hostile encounters begin.
+
+The guided tutorial introduces inspection, roads, forestry, water, housing and defense. Skipping it is remembered across new games. Use **Options → Reset tutorial** to enable it again.
+
+## Controls
+
+| Input | Action |
+|---|---|
+| Left click | Inspect, or place the selected prefab |
+| Right click | Inspect and cancel construction |
+| Tab | Cancel building or toggle the building inventory |
+| R | Rotate the selected prefab by 90° |
+| WASD | Pan the camera |
+| Q / E | Rotate the camera |
+| Shift + Q / E | Rotate the camera faster |
+| Mouse wheel | Zoom |
+| Top-row 1 / 2 / 3 / 4 | Select 1× / 2× / 4× / 16× simulation speed |
+| Space | Pause or resume |
+| Escape | Open or close the game menu |
+
+Number-pad keys are not used for simulation speed. The fourth speed is four times faster than the third.
+
+## Economy and logistics
+
+- **Emeralds** are the city currency. Trade and daily settlement provide income; construction, training, upkeep and upgrades spend it.
+- **Goods** represent contributions from labor and combat. They convert to emeralds at **06:00**, with upkeep accounted for during settlement.
+- **Physical resources** remain in building storage until transported. Deliverymen bring inputs to workplaces and move production into warehouses.
+- **Small and large warehouses** store resources and provide delivery jobs. Emeralds and Goods remain in the treasury.
+- **Trade** uses the market's local stock. A sale request arranges deliveries; complete the sale when enough stock has arrived.
+
+Inspect buildings to see their inventory and missing inputs. A connected, staffed workplace still needs its supplies before it can produce.
+
+Cave expeditions produce valuable materials for equipment upgrades. A staffed forge unlocks armor and tool improvements. Leather supports armor production, and wizards can enchant armor. Cow sheds produce leather and milk; milk helps injured villagers recover and removes negative effects.
+
+## Villagers and professions
+
+Villagers have persistent names, professions, health, homes, workplaces and personal inventories. Inspect them directly or use the People panel to review their status and train professions.
+
+Specialists include farmers, woodcutters, miners, explorers, smiths, animal keepers, traders, deliverymen and defenders. **Citizens** are general helpers who can assist workplaces at half specialist efficiency.
+
+Workers travel to connected workplaces. Ordinary villagers return home at night, while defenders patrol and engage threats. Food, water, services and taxes affect village happiness.
+
+## World, daylight and defense
+
+Maps contain water, stepped terrain, grass and natural trees. Adjacent terrain heights differ by at most one block. Woodcutters harvest tree buildings, which must regrow before another harvest.
+
+The clock uses a 24-hour day with continuously advancing minutes: **00:00 is midnight**, **06:00 sunrise**, **12:00 noon**, and **18:00 sunset**. By default, a full day lasts ten real minutes at 1× speed.
+
+New villages receive five peaceful days before regular nighttime monsters begin. Boss waves default to every **30 days**. These rules can be adjusted in Options; existing saves retain their configured values.
+
+Zombies and skeletons burn in exposed daylight unless protected by a helmet or shelter. Regular spawns can wear leather helmets; susceptible boss-wave enemies always do. Walls, gates, combat villagers and golems help defend the village. Torches provide light and villagers manage them around dusk and dawn; torches can be destroyed.
+
+When all villagers are lost, the game pauses on a statistics screen. Reload a living save to retry, start a new village, or delete the selected save using the red confirmation flow. Defeat does not automatically overwrite your previous save.
+
+## Interface and options
+
+The interface uses pixel icons, a Minecraft-inspired hotbar and the locally supplied Mojangles font. Hover over icons for labels and help. The building inventory groups prefabs by category and supports search.
+
+Inspection is the default mouse tool. Selecting another object closes unpinned panels; pinned panels remain open. Management and inspector panels can be moved and resized.
+
+Options include language, UI scale, quality, shadows, water, frame limit, resolution and display mode. Windowed, fullscreen and borderless fullscreen modes are available. **Brazilian Portuguese is the default language**, with English included and additional languages supported through TOML files.
+
+## Saving and loading
+
+Saves and preferences live beside the executable:
+
+```text
+<executable directory>/UserData/
+├── options.toml
+└── <save name>.vcs
+```
+
+When using `dotnet run`, this is normally `VillageCraft/bin/Release/net10.0/UserData/`. The executable directory must be writable.
+
+Use **Escape → Save Game**, **Save Game As**, or **Load Game**. Save As lets you choose a different name and confirms replacing an existing save.
+
+Saves use versioned binary records with a `VCTY` header and SHA-256 integrity checks. They do not use `BinaryFormatter`. Supported older saves are migrated on load; keep backups before updating. Game definitions and preferences use TOML, while the external Minecraft asset index retains its original JSON format.
+
+## Content and modding
+
+Definitions are loaded and validated once at startup. Restart after editing. Keep IDs stable because models, scripts and saves refer to them.
+
+| Location under `VillageCraft/Content/` | Purpose |
+|---|---|
+| `Prefabs/` | Buildings and roads: costs, jobs, inputs, outputs and entrance rules |
+| `Models/` | Model parts, geometry, materials and texture UVs |
+| `Professions/` | Worker appearance, eligible jobs, training and efficiency |
+| `Units/` | Combat unit models and statistics |
+| `Locales/` | Interface and content translations |
+| `Scripts/` | JavaScript behavior and mod components |
+| `Templates/` | Authoring examples; `.example` files are not active content |
+| `game.toml` | New-game defaults, initial layout and simulation rules |
+| `resources.toml`, `economy.toml` | Resources, prices and economic settings |
+| `upgrades.toml` | Equipment recipes and effects |
+| `terrain.toml`, `tutorial.toml` | Terrain and guided tutorial settings |
+| `sunlight.toml`, `rendering.toml` | Sunlight damage and rendering configuration |
+| `names.toml`, `ui_icons.toml` | Villager name pools and pixel interface icons |
+
+JavaScript runs through **Jint**, with direct bindings to game objects. Scripts support lifecycle callbacks, world events, queries, queued spawning/deletion and per-instance tags. AI and building components can override behavior for specific types.
+
+See the [content authoring guide](VillageCraft/Content/README.md), [JavaScript API](VillageCraft/Content/SCRIPTING.md), and [profession template](VillageCraft/Content/Templates/profession.toml.example).
+
+`tools/New-Catalog.ps1` is an optional authoring utility. It regenerates definitions and **overwrites manual changes** to those files; the game does not run it automatically.
+
+## Project structure
+
+```text
+VillageCraft/
+├── VillageCraft.csproj
+├── Program.cs
+├── City*.cs                 # Simulation and world systems
+├── GameUi*.cs               # Interface and menus
+├── Scene.cs                 # World rendering
+├── Assets.cs                # External asset discovery
+├── BinarySave.cs            # Binary save format
+├── Script*.cs               # JavaScript runtime and bindings
+└── Content/                 # TOML definitions, scripts and guides
+run.ps1                      # Development launcher
+README.md
+```
+
+External asset directories and generated build outputs are separate from the source content.
+
+## Publishing
+
+For example, publish a self-contained Windows x64 build:
+
+```sh
 dotnet publish VillageCraft -c Release -r win-x64 --self-contained true -o dist/win-x64
 ```
 
-Checks cover TOML parsing and cached lookup, custom prefabs, map sizes/large-map A*, walking direction, exact citizen half-output, growth, training, cave yields, equipment effects, service efficiency, roads, animals, combat, binary integrity, named saves and read-only legacy import. Graphics smoke tests use the real renderer; `--ui-smoke` repeatedly changes cards at near/far zoom to guard against the previous ImGui style-stack assertion.
+Use an appropriate runtime identifier for other platforms and validate the result there. Distribute the **entire publish directory**, including native libraries and `Content/`.
 
-The map surface uses constant-count draws instead of one draw per tile; building/path lookups are cached, routes use A*, and creatures cache routes. This is still a city-builder foundation without item-carrying logistics, traffic simulation, multiplayer, generated terrain, skeletal animations or multi-tile prefabs.
+**Minecraft assets are not bundled by publishing.** Each user must configure `VILLAGECRAFT_ASSETS` to their separately supplied asset directory. Review font and other third-party asset permissions before distributing a build.
 
+## Credits and asset ownership
 
-## Daylight and JavaScript
+VillageCraft is an independent fan-made project inspired by Minecraft and city management games. Minecraft textures used during development come from **version 1.16** and remain the property of their respective owners. They are not included in this repository.
 
-Daylight changes terrain, model lighting and the sky. Three common monsters arrive per night by default: zombies, skeletons and creepers. Night monsters remain after dawn; exposed undead burn unless protected by a helmet or shade. Every 30th day (configurable), a Nether warlord leads common monsters, piglins, brutes, zombified piglins and blazes. The hostile cap applies to both encounters. Escape > Options controls nighttime encounters, count, day length and raid interval.
-
-Jint 4.17 binds JavaScript directly to live game APIs, without JSON conversion. Behaviors call ctx.move(), ctx.attack() and ctx.explode(); building scripts can repair structures, inspect villagers, transfer inventory and manipulate resources through ctx.game. See [the scripting API](VillageCraft/Content/SCRIPTING.md).
-
-Binary format v9 stores enemy helmets, defeat state and lifetime statistics alongside physical storage, cargo, effects and 06:00 settlement state as well as terrain, seed, tree regrowth and tutorial progress alongside entity IDs, tags, behavior attachments, villager identities and inventories alongside night and AI state. Older v3/v4/v5/v6/v7/v8 binary and v2 legacy JSON saves remain readable.
-
-PowerShell: set $env:VILLAGECRAFT_ASSETS to the directory containing assets_index.json and objects, then run dotnet run --project VillageCraft -c Release. Or run ./run.ps1, which defaults the process asset path to this repository. Distributed builds need the variable pointing to a separate asset directory.
-
-The default day/night cycle lasts 10 real minutes at 1x (Options: 1�60 minutes). Old saves using the former 12-second default migrate to 10 minutes while preserving clock phase. Hold either Shift with Q/E for 3x camera rotation speed. Monster movement and villager pursuit now cover the village instead of requiring immediate melee proximity.
+The game's C# systems, prefab geometry, configuration and scripting are maintained separately from those assets. Third-party libraries retain their own licenses. No permission to redistribute Minecraft textures, sounds or fonts is implied by this repository.
 
 
-## Portugu�s, conte�do e alde�es
-
-Portugu�s brasileiro � o idioma padr�o; Op��es > Idioma permite mudar para ingl�s ou um idioma adicionado em Content/Locales. Nomes de conte�do s�o traduzidos sem alterar IDs. Alde�es recebem nome e sobrenome persistidos e um invent�rio pr�prio com comida e ferramentas retiradas do estoque. Clique direito em um alde�o ou selecione-o em Moradores para inspecionar vida, estat�sticas, profiss�o, moradia, trabalho e invent�rio.
-
-[Guia de tipos TOML e cria��o de profiss�es](VillageCraft/Content/README.md) � [API JavaScript direta](VillageCraft/Content/SCRIPTING.md) � [Modelo de nova profiss�o](VillageCraft/Content/Templates/profession.toml.example)
-
-
-## Event-based script components
-
-Each world owns a standalone ScriptRuntime with an engine per script. Scripts register once with set_script_type(eST_AI, "blaze"), set_script_type(eST_Building, "well"), or eST_Mod (also the default). All types support onInit, onUpdate(dt), and onShutdown; mods receive world events, while AI/building components receive callbacks for their instances.
-
-The global world API supports queued spawn/delete/damage, live queries by JavaScript predicate, ID, type or tag, and persisted per-instance tags and behavior attachment. See Content/SCRIPTING.md and the non-active *.js.example templates under Content/Templates. Default queued building placement follows normal cost/path rules.
-
-
-## Compact Minecraft UI
-
-The game uses the provided mojangles.ttf at 16px, pixel icons, square beveled controls, a compact hotbar and an icon HUD. The clock uses all 64 Minecraft clock textures and follows simulation time (including pause and speed changes). Labels and help are available on hover.
-
-The default mouse tool is inspection. Left-click an object, villager, monster, guardian or animal to inspect; empty terrain clears unpinned panels. Right-click also inspects and cancels construction. Category buttons open the prefab inventory; selecting a prefab activates construction. The magnifying-glass button returns to the empty tool. Tab cancels an active build or toggles the inventory while inspecting.
-
-Inspector and management windows can be moved/resized and pinned with the pushpin icon. Pinned windows survive later selections; close their window or unpin them to dismiss them. Pin state is session UI state and resets when changing worlds.
-
-Custom control/status icons are editable 16x16 pixel grids in VillageCraft/Content/ui_icons.toml. A dot is transparent; the palette maps characters to colors. UI tooltips wrap at viewport-safe widths and use unformatted text so percent signs and accented text display correctly. The interface supports windows down to 1024x640.
-
-The HUD clock displays HH:MM: all 1,440 in-game minutes advance continuously over the configured day length. Daylight also follows continuous day progress, rather than discrete hourly ticks. At the default 10-minute day, each in-game minute lasts about 0.42 real seconds at 1x. Options shows this conversion; pause freezes the simulation clock and its clock sprite.
-
-Options > Display provides resolution, Windowed, Fullscreen, and Borderless fullscreen. Apply display settings applies and saves the selection in UserData/options.toml. Borderless uses desktop resolution. Windowed startup and mode changes fit and center the client area with room for desktop panels and window decorations, keeping the title bar reachable.
-
-Older saves retain their original flat terrain and do not restart the new-game peaceful-night period.
-
-UI scale is available in Escape > Options (1.0x default, up to 2.0x) and saved automatically in UserData/options.toml. Speed keys 1/2/3/4 select 1x/2x/4x/16x; the fourth speed is four times the third. Defender villagers patrol outside at night and engage enemies on sight.
-
-In existing saves, supplies migrate into a warehouse. Train deliverymen in People to keep workplaces supplied after upgrading to 1.0.5-beta.
-
-Warehouses use distinct loading-depot models with pallets and stacked crates. The digital 24-hour clock, Minecraft clock icon, lighting, monster spawns and defender patrols agree: midnight is 00:00, sunrise 06:00, noon 12:00 and sunset 18:00. Ordinary workers finish at 17:00; torches are lit from dusk until dawn.
-
-New games default to boss waves every 30 days. Existing saves retain their configured interval; change it in Options if desired. Torches are omitted from the resource HUD.
-
-Zombies and skeletons burn in exposed daylight. Regular spawns have a 65% leather-helmet chance; boss-wave versions always have helmets. Helmets prevent sunlight burning, and roof/canopy shade provides shelter. Night monsters stay after dawn. Configure unit susceptibility in Units TOML and rates in sunlight.toml.
-
-Losing every villager opens a frozen game-over statistics screen. Reload a living save to retry, start a new village, or use the red Delete save button (with confirmation). The last saved snapshot is not overwritten by defeat. Binary v9 preserves helmets, boss flags, defeat state and statistics, with v3-v8 compatibility.

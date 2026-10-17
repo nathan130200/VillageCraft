@@ -9,7 +9,7 @@ public class Part
     public float[] Position { get; set; } = [0,0,0];
     public float[] Size { get; set; } = [1,1,1];
     public string Color { get; set; } = "#FFFFFF";
-    public string Texture {get;set;}="";
+    public string Texture {get;set;}=string.Empty;
     public float[]? UvOrigin {get;set;}
     public float[]? UvSize {get;set;}
 }
@@ -23,15 +23,15 @@ public class Plan
     public bool Natural {get;set;}
     public Dictionary<string,float> Harvest {get;set;}=[];
     public int RegrowDays {get;set;}=3;
-    public string HarvestSource {get;set;}="";
+    public string HarvestSource {get;set;}=string.Empty;
     public int HarvestRadius {get;set;}=7;
-    public string Script {get;set;}="";
-    public string Id { get; set; } = "";
-    public string Name { get; set; } = "";
-    public string Category { get; set; } = "";
-    public string Description { get; set; } = "";
-    public string Model { get; set; } = "";
-    public string Job { get; set; } = "";
+    public string Script {get;set;}=string.Empty;
+    public string Id { get; set; } = string.Empty;
+    public string Name { get; set; } = string.Empty;
+    public string Category { get; set; } = string.Empty;
+    public string Description { get; set; } = string.Empty;
+    public string Model { get; set; } = string.Empty;
+    public string Job { get; set; } = string.Empty;
     public string WorkerModel { get; set; } = "villager";
     public int Jobs { get; set; }
     public int Homes { get; set; }
@@ -45,8 +45,8 @@ public class Plan
     public Dictionary<string,float> Cost { get; set; } = [];
     public Dictionary<string,float> Input { get; set; } = [];
     public Dictionary<string,float> Output { get; set; } = [];
-    public string Animal { get; set; } = "";
-    public string Defender { get; set; } = "";
+    public string Animal { get; set; } = string.Empty;
+    public string Defender { get; set; } = string.Empty;
     public bool CreatesGuardian { get; set; }
     public float MoveSpeed {get;set;}=1;
     public Dictionary<string,float> JobSpeed {get;set;}=[];
@@ -57,7 +57,7 @@ public class UnitPlan
 {
     public bool BurnsInSun {get;set;}
     public string Behavior {get;set;}="melee";
-    public string Model { get; set; } = "";
+    public string Model { get; set; } = string.Empty;
     public float Health { get; set; } = 50;
     public float Damage { get; set; } = 8;
     public float Range { get; set; } = 1;
@@ -122,8 +122,8 @@ public class Catalog
             Require(p.Jobs>=0&&p.Homes>=0&&p.Water>=0&&p.Health>0&&float.IsFinite(p.Health)&&p.Upkeep>=0,"invalid prefab values");
             foreach(var map in new[]{p.Cost,p.Input,p.Output,p.Harvest})Require(map.All(e=>resourceIds.Contains(e.Key)&&float.IsFinite(e.Value)&&e.Value>=0),"unknown resource or negative amount");
             Require(p.Input.Where(e=>!City.Currency(e.Key)).Sum(e=>e.Value)<=p.StorageCapacity&&p.Output.Where(e=>!City.Currency(e.Key)).Sum(e=>e.Value)<=p.StorageCapacity,"storage is smaller than a production cycle");
-            Require(p.Defender==""||data.Units.ContainsKey(p.Defender),"unknown defender");
-            Require(p.Animal==""||data.Models.ContainsKey(p.Animal),"unknown animal model");
+            Require(p.Defender==string.Empty||data.Units.ContainsKey(p.Defender),"unknown defender");
+            Require(p.Animal==string.Empty||data.Models.ContainsKey(p.Animal),"unknown animal model");
             Require(float.IsFinite(p.MoveSpeed)&&p.MoveSpeed>0&&p.MoveSpeed<=4&&p.JobSpeed.Values.All(v=>float.IsFinite(v)&&v>0&&v<=4),"invalid road speed");
             Require(p.Professions.All(data.Professions.ContainsKey),"unknown building profession");
         }
@@ -142,16 +142,16 @@ public class Catalog
         Require(data.Game.DefaultMapWidth is >=32 and <=512&&data.Game.DefaultMapHeight is >=32 and <=512,"map dimensions must be 32..512");
         Require(float.IsFinite(data.Game.MigrationThreshold)&&data.Game.MigrationThreshold>0&&float.IsFinite(data.Game.CitizenGrowthSupport)&&data.Game.CitizenGrowthSupport>=0,"invalid growth settings");
         foreach(var s in data.Game.Starter)Require(data.Prefabs.Any(p=>p.Id==s.Prefab)&&s.Residents.All(data.Professions.ContainsKey)&&s.Rotation is >=0 and <=3,"invalid starter placement");
-        foreach(var u in data.Upgrades)Require(u.Kind is "Armor" or "Tools"&&u.Level>0&&float.IsFinite(u.Effect)&&u.Effect>0&&u.Cost.All(e=>resourceIds.Contains(e.Key)&&float.IsFinite(e.Value)&&e.Value>=0),"invalid upgrade");
+        foreach(var u in data.Upgrades)Require(Enum.IsDefined(u.Kind)&&u.Level>0&&float.IsFinite(u.Effect)&&u.Effect>0&&u.Cost.All(e=>resourceIds.Contains(e.Key)&&float.IsFinite(e.Value)&&e.Value>=0),"invalid upgrade");
         Require(data.Upgrades.Select(u=>u.Id).Distinct().Count()==data.Upgrades.Count,"duplicate upgrade");
-        foreach(string kind in new[]{"Armor","Tools"})Require(data.Upgrades.Where(u=>u.Kind==kind).OrderBy(u=>u.Level).Select(u=>u.Level).SequenceEqual(Enumerable.Range(1,data.Upgrades.Count(u=>u.Kind==kind))),"upgrade levels must be unique and consecutive");
+        foreach(var kind in Enum.GetValues<EquipmentKind>())Require(data.Upgrades.Where(u=>u.Kind==kind).OrderBy(u=>u.Level).Select(u=>u.Level).SequenceEqual(Enumerable.Range(1,data.Upgrades.Count(u=>u.Kind==kind))),"upgrade levels must be unique and consecutive");
         Require(data.Game.InitialStock.All(e=>resourceIds.Contains(e.Key)&&float.IsFinite(e.Value)&&e.Value>=0),"invalid starting supplies");
         Require(data.Game.Starter.Select(s=>(s.X,s.Z)).Distinct().Count()==data.Game.Starter.Count&&data.Game.Starter.All(s=>s.X is >=-16 and <16&&s.Z is >=-16 and <16&&s.Residents.Length<=data.Prefabs.First(p=>p.Id==s.Prefab).Homes),"invalid starter footprints or housing");
         Require(data.ResourceDefinitions.All(r=>r.BuyPrice>0&&r.SellPrice>=0&&float.IsFinite(r.BuyPrice)&&float.IsFinite(r.SellPrice)),"invalid trade prices");
         Require(data.Tutorial.Stages.Count>0&&data.Tutorial.Stages.All(s=>new[]{"inspect","road","trees","water","homes","defense"}.Contains(s.Goal)),"invalid tutorial goal");
         Require(data.Terrain.MaxMountainHeight is >=4 and <=16&&data.Terrain.LakeRadius is >=2 and <=6&&data.Terrain.TreeDensity is >=0 and <=.2f&&data.Terrain.GrassDensity is >=0 and <=.5f,"invalid terrain settings");
         Require(data.Prefabs.Any(p=>p.Id==data.Terrain.TreePrefab&&p.Natural),"unknown natural tree prefab");
-        foreach(var p in data.Prefabs)Require(p.RegrowDays is >=1 and <=30&&p.HarvestRadius is >=1 and <=32&&(p.HarvestSource==""||data.Prefabs.Any(t=>t.Id==p.HarvestSource&&t.Harvest.Count>0)),"invalid forestry settings");
+        foreach(var p in data.Prefabs)Require(p.RegrowDays is >=1 and <=30&&p.HarvestRadius is >=1 and <=32&&(p.HarvestSource==string.Empty||data.Prefabs.Any(t=>t.Id==p.HarvestSource&&t.Harvest.Count>0)),"invalid forestry settings");
         Require(float.IsFinite(data.Sunlight.RegularHelmetChance)&&data.Sunlight.RegularHelmetChance is >=0 and <=1&&float.IsFinite(data.Sunlight.DamagePerSecond)&&data.Sunlight.DamagePerSecond is >0 and <=100,"invalid sunlight settings");
         var economy=data.Economy;
         Require(new[]{economy.GoodsPerWorkCycle,economy.GoodsPerKill,economy.EmeraldsPerGood,economy.DeliveryCapacity,economy.InputBufferCycles,economy.MilkHealing,economy.EnchantmentProtection,economy.EnchantmentDamage}.All(n=>float.IsFinite(n)&&n>0)&&economy.DeliveryCapacity<=24&&economy.EnchantmentProtection<1&&economy.EnchantmentDamage<=2&&economy.InputBufferCycles<=100,"invalid economy settings");
@@ -161,27 +161,27 @@ public class Catalog
         L.Load(Path.Combine(path,"Locales"));
         Scripts.Load(Path.Combine(path,"Scripts"));
         foreach(var u in data.Units.Values)Scripts.Require(u.Behavior);
-        foreach(var plan in data.Prefabs)if(plan.Script!="")Scripts.Require(plan.Script);
+        foreach(var plan in data.Prefabs)if(plan.Script!=string.Empty)Scripts.Require(plan.Script);
         Resources=resourceIds;Data=data;
     }
     public static Plan Get(string id)=>Data.byId.TryGetValue(id,out var plan)?plan:throw new InvalidDataException("Unknown prefab: "+id);
 }
-public class ModelFile {public string Id {get;set;}="";public List<Part> Parts {get;set;}=[];}
-public class RenderingSettings {public float AlphaCutoff {get;set;}=.1f;public string CutoutFragment {get;set;}="";}
-public class UnitFile:UnitPlan {public string Id {get;set;}="";}
+public class ModelFile {public string Id {get;set;}=string.Empty;public List<Part> Parts {get;set;}=[];}
+public class RenderingSettings {public float AlphaCutoff {get;set;}=.1f;public string CutoutFragment {get;set;}=string.Empty;}
+public class UnitFile:UnitPlan {public string Id {get;set;}=string.Empty;}
 public class ResourceFile {public List<ResourcePlan> Resources {get;set;}=[];}
 public class UpgradeFile {public List<UpgradePlan> Upgrades {get;set;}=[];}
 public class ResourcePlan
 {
-    public string Id {get;set;}="";
-    public string Icon {get;set;}="";
+    public string Id {get;set;}=string.Empty;
+    public string Icon {get;set;}=string.Empty;
     public float BuyPrice {get;set;}=30;
     public float SellPrice {get;set;}=21;
 }
 public class ProfessionPlan
 {
-    public string Id {get;set;}="";
-    public string Name {get;set;}="";
+    public string Id {get;set;}=string.Empty;
+    public string Name {get;set;}=string.Empty;
     public string Model {get;set;}="villager";
     public string[] Jobs {get;set;}=[];
     public float Efficiency {get;set;}=1;
@@ -190,9 +190,9 @@ public class ProfessionPlan
 }
 public class UpgradePlan
 {
-    public string Id {get;set;}="";
-    public string Name {get;set;}="";
-    public string Kind {get;set;}="Armor";
+    public string Id {get;set;}=string.Empty;
+    public string Name {get;set;}=string.Empty;
+    public EquipmentKind Kind {get;set;}=EquipmentKind.Armor;
     public int Level {get;set;}=1;
     public float Effect {get;set;}=.1f;
     public Dictionary<string,float> Cost {get;set;}=[];

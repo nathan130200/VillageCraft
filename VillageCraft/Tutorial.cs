@@ -2,10 +2,10 @@ namespace VillageCraft;
 public sealed class TutorialFile {public List<TutorialStage> Stages {get;set;}=[];}
 public sealed class TutorialStage
 {
-    public string Id {get;set;}="";
-    public string Title {get;set;}="";
-    public string Description {get;set;}="";
-    public string Goal {get;set;}="";
+    public string Id {get;set;}=string.Empty;
+    public string Title {get;set;}=string.Empty;
+    public string Description {get;set;}=string.Empty;
+    public string Goal {get;set;}=string.Empty;
 }
 public partial class City
 {
@@ -18,7 +18,7 @@ public partial class City
         "trees"=>TutorialTreesHarvested>0,
         "water"=>Water>=Citizens.Count,
         "homes"=>Capacity>=Citizens.Count+4,
-        "defense"=>Buildings.Any(b=>b.Enabled&&!b.Plan.CreatesGuardian&&b.Plan.Defender!=""&&Connected(b,Roads())&&Citizens.Any(v=>v.Work==b.Id)),
+        "defense"=>Buildings.Any(b=>b.Enabled&&!b.Plan.CreatesGuardian&&b.Plan.Defender!=string.Empty&&Connected(b,Roads())&&Citizens.Any(v=>v.Work==b.Id)),
         _=>false
     };
 }

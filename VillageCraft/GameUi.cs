@@ -1,21 +1,21 @@
-﻿using System.Numerics;
+using System.Numerics;
 using ImGuiNET;
 using Raylib_cs;
 namespace VillageCraft;
 
 partial class GameUi
 {
-    public string Selected="";
+    public string Selected=string.Empty;
     public int Rotation,Inspected=-1,InspectedCitizen=-1,Speed=1;
     bool inspectMode=true;
-    public bool InspectMode {get=>inspectMode||Selected=="";set=>inspectMode=value;}
-    public bool IsBuilding=>!InspectMode&&Selected!="";
+    public bool InspectMode {get=>inspectMode||Selected==string.Empty;set=>inspectMode=value;}
+    public bool IsBuilding=>!InspectMode&&Selected!=string.Empty;
     public bool Paused,MenuOpen,ExitRequested,RefreshThumbnails;
     public string MenuPage="Main";
     internal string? TestActivatePrefab;
     internal bool TestTooltip;
     internal int TestActivationCount;
-    string page="Build",category="Roads",search="",tradeResource="Food",currentSave="",saveName=L.T("My village"),loadName="",menuError="";
+    string page="Build",category="Roads",search=string.Empty,tradeResource="Food",currentSave=string.Empty,saveName=L.T("My village"),loadName=string.Empty,menuError=string.Empty;
     bool overwrite;
     bool newTutorial=!GraphicsOptions.Current.TutorialDismissed;
     int newSeed;
@@ -38,7 +38,7 @@ partial class GameUi
     }
     public void Dispose(){foreach(var t in thumbnails.Values)Raylib.UnloadRenderTexture(t);}
     public bool OverUi(Vector2 p)=>MenuOpen||rects.Any(r=>r.Contains(p/frameScale));
-    public void Escape(){MenuOpen=!MenuOpen;MenuPage="Main";menuError="";overwrite=false;}
+    public void Escape(){MenuOpen=!MenuOpen;MenuPage="Main";menuError=string.Empty;overwrite=false;}
     public void SetSpeed(int key){Speed=key switch{1=>1,2=>2,3=>4,4=>16,_=>1};Paused=false;}
     public void SelectPrefab(string id){Selected=id;category=Catalog.Get(id).Category;page="Build";InspectMode=false;buildOpen=true;}
     void Window(string name,float x,float y,float w,float h){ImGui.SetNextWindowPos(new(x,y));ImGui.SetNextWindowSize(new(w,h));ImGui.Begin(name,Fixed);CaptureRect();}
@@ -84,7 +84,7 @@ partial class GameUi
         else if(!OverUi(Raylib.GetMousePosition())&&city.Land(hx,hz)&&IsBuilding)
         {
             var issue=city.PlacementIssue(Selected,hx,hz,Rotation);
-            ShowTooltip((issue==""?L.T("Click to build"):L.T(issue))+"\n"+L.T("R rotate / Tab inspect / Right click inspect / Shift+Q/E fast camera"));
+            ShowTooltip((issue==string.Empty?L.T("Click to build"):L.T(issue))+"\n"+L.T("R rotate / Tab inspect / Right click inspect / Shift+Q/E fast camera"));
         }
         DrawMenu(ref city,w,h);
     }
@@ -113,7 +113,7 @@ partial class GameUi
         if(Button(L.F("Sell 20 / {0:0} emeralds", resource.SellPrice),new(-1,26)))city.Trade(tradeResource,false);
         ImGui.Separator();Title(L.F("Equipment / armor {0} / tools {1}", city.ArmorLevel, city.ToolLevel));
         Hint(L.F("Damage reduction {0:0}% / Work rate {1:0.00}x", city.ArmorReduction*100, city.ToolEfficiency));
-        foreach(var u in Catalog.Data.Upgrades.Where(u=>u.Level==(u.Kind=="Armor"?city.ArmorLevel:city.ToolLevel)+1))
+        foreach(var u in Catalog.Data.Upgrades.Where(u=>u.Level==(u.Kind==EquipmentKind.Armor?city.ArmorLevel:city.ToolLevel)+1))
         {if(Button(L.Name(u),new(-1,26)))city.Upgrade(u.Id);Tooltip(string.Join(" / ",u.Cost.Select(e=>L.F("{0:0} {1}", e.Value, L.Resource(e.Key))))+L.T(". Requires a staffed forge."));}
         if(city.EnchantedArmor)Hint("Enchantment active");
         else {if(Button(L.T("Enchant armor"),new(-1,26)))city.EnchantArmor();Tooltip(string.Join(" / ",Catalog.Data.Economy.EnchantmentCost.Select(e=>L.F("{0:0} {1}",e.Value,L.Resource(e.Key))))); }
@@ -124,12 +124,12 @@ partial class GameUi
     {
         Title("Village defense");ImGui.TextUnformatted(city.RaidIn<0?L.T("Raids disabled"):L.F("Next raid: day {0}", city.Day+city.RaidIn));ImGui.TextUnformatted(L.F("Waves {0} / Kills {1}", city.Waves, city.Kills));ImGui.TextUnformatted(L.F("Hostiles {0}", city.Enemies.Count));
         foreach(var g in city.Defenders.GroupBy(d=>d.Type))ImGui.TextUnformatted(L.F("{0}: {1}", L.Entity(g.Key), g.Count()));ImGui.Separator();
-        foreach(var b in city.Buildings.Where(b=>b.Plan.Defender!="")){if(ImGui.Selectable(L.F("{0}##{1}", L.Name(b.Plan), b.Id))){Focus("building",b.Id);}Hint(L.F("Staff {0}/{1}", city.Citizens.Count(v=>v.Work==b.Id), b.Plan.Jobs));}
+        foreach(var b in city.Buildings.Where(b=>b.Plan.Defender!=string.Empty)){if(ImGui.Selectable(L.F("{0}##{1}", L.Name(b.Plan), b.Id))){Focus("building",b.Id);}Hint(L.F("Staff {0}/{1}", city.Citizens.Count(v=>v.Work==b.Id), b.Plan.Jobs));}
         Wrapped(L.T("Walls and gates block raiders. Warriors intercept; archers, mages and snow golems shoot. Configure attack timing and limits in Options."));
     }
     public void InspectRay(City city,Ray ray,Vector2 tile)
     {
-        InspectAt(city,tile);float nearest=float.MaxValue;string kind="";int id=-1;
+        InspectAt(city,tile);float nearest=float.MaxValue;string kind=string.Empty;int id=-1;
         void Hit(string type,int entity,Vector3 min,Vector3 max)
         {
             float baseHeight=city.SurfaceY((min.X+max.X)*.5f,(min.Z+max.Z)*.5f);min.Y+=baseHeight;max.Y+=baseHeight;
@@ -153,7 +153,7 @@ partial class GameUi
     void VillagerInspector(City city,Citizen v,int w,int h)
     {
         ImGui.TextUnformatted(L.Name(Catalog.Data.Professions[v.Profession]));
-        ImGui.TextUnformatted(L.F("Health {0:0}/50", v.Health));ImGui.ProgressBar(v.Health/50,new(-1,10),"");
+        ImGui.TextUnformatted(L.F("Health {0:0}/50", v.Health));ImGui.ProgressBar(v.Health/50,new(-1,10),string.Empty);
         Hint(L.Task(v.Task));ImGui.TextUnformatted(L.F("Efficiency {0:0}%", city.Efficiency(v)*100));
         ImGui.TextUnformatted(L.F("Work progress {0:0.0}/{1:0.0}s", v.WorkTime, city.Rules.ProductionCycle));
         ImGui.TextUnformatted(L.F("Damage reduction {0:0}% / Work rate {1:0.00}x", city.ArmorReduction*100, city.ToolEfficiency));
@@ -177,7 +177,7 @@ partial class GameUi
         if(b.Plan.LightRadius>0)Hint(b.TorchLit?"Lit":"Extinguished");
         if(b.Plan.Harvest.Count>0)Hint(b.GrowthDays==0?L.T("Ready to harvest"):L.F("Regrows in {0} days",b.GrowthDays));
         Colored(city.Connected(b,city.Roads())?Accent:Gold,city.Connected(b,city.Roads())?L.T("Connected"):L.T("Entrance disconnected"));
-        ImGui.TextUnformatted(L.F("Health {0:0}/{1:0}", b.Health, b.Plan.Health));ImGui.ProgressBar(b.Health/b.Plan.Health,new(-1,10),"");
+        ImGui.TextUnformatted(L.F("Health {0:0}/{1:0}", b.Health, b.Plan.Health));ImGui.ProgressBar(b.Health/b.Plan.Health,new(-1,10),string.Empty);
         if(Button(L.T("Repair / 2 wood + 2 stone"),new(-1,26)))city.Repair(b);
         if(b.Plan.Path){ImGui.TextUnformatted(L.F("Base travel speed: {0:0.00}x", b.Plan.MoveSpeed));foreach(var e in b.Plan.JobSpeed)Wrapped(L.F("{0}: {1:0.00}x", L.Resource(e.Key), b.Plan.MoveSpeed*e.Value));}
         else
@@ -205,10 +205,10 @@ partial class GameUi
                 {
                     if(Button(L.T("Resume game"),new(-1,26))){MenuOpen=false;ImGui.CloseCurrentPopup();}
                     if(Button(L.T("New Game"),new(-1,26)))MenuPage="New Game";
-                    if(Button(L.T("Load Game"),new(-1,26))){saves=SaveStore.List();MenuPage="Load Game";loadName=saves.FirstOrDefault()??"";menuError="";}
+                    if(Button(L.T("Load Game"),new(-1,26))){saves=SaveStore.List();MenuPage="Load Game";loadName=saves.FirstOrDefault()??string.Empty;menuError=string.Empty;}
                     ImGui.BeginDisabled(city.GameOver);
-                    if(Button(L.T("Save Game"),new(-1,26))){if(currentSave=="")MenuPage="Save Game As";else Save(city,currentSave);}
-                    if(Button(L.T("Save Game As"),new(-1,26))){MenuPage="Save Game As";saveName=currentSave==""?L.T("My village"):currentSave;overwrite=false;}
+                    if(Button(L.T("Save Game"),new(-1,26))){if(currentSave==string.Empty)MenuPage="Save Game As";else Save(city,currentSave);}
+                    if(Button(L.T("Save Game As"),new(-1,26))){MenuPage="Save Game As";saveName=currentSave==string.Empty?L.T("My village"):currentSave;overwrite=false;}
                     ImGui.EndDisabled();
                     if(Button(L.T("Options"),new(-1,26)))MenuPage="Options";
                     if(Button(L.T("Exit"),new(-1,26)))ExitRequested=true;
@@ -216,13 +216,13 @@ partial class GameUi
                 }
                 else
                 {
-                    if(Button(L.T("< Back"))){MenuPage="Main";menuError="";}ImGui.Separator();
+                    if(Button(L.T("< Back"))){MenuPage="Main";menuError=string.Empty;}ImGui.Separator();
                     if(MenuPage=="Load Game")
                     {
                         Hint("Saves in executable/UserData");ImGui.BeginChild("Save list",new(0,300),ImGuiChildFlags.Borders);
                         foreach(string name in saves)if(ImGui.Selectable(name,loadName==name))loadName=name;
                         if(saves.Length==0)Wrapped(L.T("No saved villages yet."));ImGui.EndChild();
-                        if(loadName!=""&&Button(L.T("Load selected village"),new(-1,28))){var loaded=City.Load(SaveStore.LoadPathFor(loadName));city=loaded;currentSave=loadName;ResetPanels();Paused=false;MenuOpen=false;ImGui.CloseCurrentPopup();city.Log(L.F("Loaded {0}.",currentSave));}
+                        if(loadName!=string.Empty&&Button(L.T("Load selected village"),new(-1,28))){var loaded=City.Load(SaveStore.LoadPathFor(loadName));city=loaded;currentSave=loadName;ResetPanels();Paused=false;MenuOpen=false;ImGui.CloseCurrentPopup();city.Log(L.F("Loaded {0}.",currentSave));}
                     }
                     if(MenuPage=="Save Game As")
                     {
@@ -238,12 +238,12 @@ partial class GameUi
                         foreach(int size in new[]{32,64,128,256,512}){if(SmallButton(size+"x"+size))newWidth=newHeight=size;if(size!=512)ImGui.SameLine();}
                         Wrapped(L.F("Choose 32–512 tiles per axis. Default: {0}x{1}. Lakes, gentle mountains and natural trees surround a flat starter village. Save before replacing the current session.", Catalog.Data.Game.DefaultMapWidth, Catalog.Data.Game.DefaultMapHeight));
                         ImGui.Checkbox(L.T("Guided tutorial"),ref newTutorial);ImGui.SetNextItemWidth(180);ImGui.InputInt(L.T("Seed (0 = random)"),ref newSeed);
-                        if(Button(L.T("Create village / replace session"),new(-1,28))){city=City.StartVillage(newWidth,newHeight,seed:newSeed==0?null:newSeed,tutorial:newTutorial);currentSave="";ResetPanels();Paused=false;MenuOpen=false;ImGui.CloseCurrentPopup();}
+                        if(Button(L.T("Create village / replace session"),new(-1,28))){city=City.StartVillage(newWidth,newHeight,seed:newSeed==0?null:newSeed,tutorial:newTutorial);currentSave=string.Empty;ResetPanels();Paused=false;MenuOpen=false;ImGui.CloseCurrentPopup();}
                     }
                 }
             }
             catch(Exception e)when(e is IOException or UnauthorizedAccessException or ArgumentException or System.Text.Json.JsonException or InvalidDataException){menuError=e.Message;}
-            if(menuError!="")Wrapped(menuError);ImGui.EndPopup();
+            if(menuError!=string.Empty)Wrapped(menuError);ImGui.EndPopup();
         }
         if(!open)MenuOpen=false;
     }

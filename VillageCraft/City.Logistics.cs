@@ -125,10 +125,10 @@ public partial class City
             if(v.Inventory.GetValueOrDefault("Milk")>=1)
             {v.Inventory["Milk"]--;v.Effects.Clear();v.Health=Math.Min(50,v.Health+Catalog.Data.Economy.MilkHealing);}
             else if(FindSupply(v,"Milk") is {} milk)
-            {v.Task="Collecting milk";Collect(v,milk,"Milk",1,dt);return true;}
+            {v.Task=TaskId.CollectingMilk;Collect(v,milk,"Milk",1,dt);return true;}
         }
         if(v.Inventory.GetValueOrDefault("Food")<1&&FindSupply(v,"Food") is {} food)
-        {v.Task="Collecting food";Collect(v,food,"Food",2-v.Inventory.GetValueOrDefault("Food"),dt);return true;}
+        {v.Task=TaskId.CollectingFood;Collect(v,food,"Food",2-v.Inventory.GetValueOrDefault("Food"),dt);return true;}
         return false;
     }
     static IEnumerable<string> ProducedResources(Building b)=>b.Plan.Output.Keys.Concat(b.Plan.Animal switch
@@ -146,8 +146,8 @@ public partial class City
             var destination=Buildings.FirstOrDefault(b=>b.Id==v.DeliveryTarget&&b.Enabled&&StorageFree(b)>0);
             destination??=Buildings.Where(b=>b.Plan.Warehouse&&b.Enabled&&StorageFree(b)>0)
                 .OrderBy(b=>Vector2.DistanceSquared(v.Position,new(b.X,b.Z))).FirstOrDefault();
-            if(destination==null){v.Task="Waiting for storage space";return;}
-            v.DeliveryTarget=destination.Id;v.Task="Delivering resources";
+            if(destination==null){v.Task=TaskId.WaitingStorage;return;}
+            v.DeliveryTarget=destination.Id;v.Task=TaskId.Delivering;
             if(!WalkTo(v,destination,dt))return;
             foreach(var item in v.Cargo.ToArray())
             {float moved=Receive(destination,item.Key,item.Value);v.Cargo[item.Key]-=moved;}
@@ -162,10 +162,10 @@ public partial class City
         {
             from=null;to=null;
             // Supply workplace input buffers before collecting surplus output for warehouses.
-            foreach(var consumer in Buildings.Where(b=>b.Enabled&&StorageFree(b)>.01f&&(b.Plan.Input.Count>0||b.RequestedResource!="")&&Connected(b,Roads()))
+            foreach(var consumer in Buildings.Where(b=>b.Enabled&&StorageFree(b)>.01f&&(b.Plan.Input.Count>0||b.RequestedResource!=string.Empty)&&Connected(b,Roads()))
                 .OrderByDescending(b=>b.Priority).ThenBy(b=>Vector2.DistanceSquared(v.Position,new(b.X,b.Z))))
             {
-                foreach(var input in consumer.Plan.Input.Select(e=>new KeyValuePair<string,float>(e.Key,InputTarget(consumer,e.Key))).Concat(consumer.RequestedResource==""?[]:[new KeyValuePair<string,float>(consumer.RequestedResource,20)]).Where(e=>!Currency(e.Key)&&Stored(consumer,e.Key)<e.Value-.001f))
+                foreach(var input in consumer.Plan.Input.Select(e=>new KeyValuePair<string,float>(e.Key,InputTarget(consumer,e.Key))).Concat(consumer.RequestedResource==string.Empty?[]:[new KeyValuePair<string,float>(consumer.RequestedResource,20)]).Where(e=>!Currency(e.Key)&&Stored(consumer,e.Key)<e.Value-.001f))
                 {
                     if(Citizens.Any(other=>other.Id!=v.Id&&other.DeliveryTarget==consumer.Id&&other.DeliveryResource==input.Key))continue;
                     var source=FindSupply(v,input.Key,consumer.Id);if(source==null)continue;
@@ -186,10 +186,10 @@ public partial class City
                     from=source;to=warehouse;resource=ProducedResources(source).First(r=>Stored(source,r)>0);break;
                 }
             }
-            if(from==null||to==null){v.Task="Waiting for deliveries";return;}
+            if(from==null||to==null){v.Task=TaskId.WaitingDeliveries;return;}
             v.PickupSource=from.Id;v.DeliveryTarget=to.Id;v.DeliveryResource=resource;
         }
-        v.Task="Collecting delivery";
+        v.Task=TaskId.CollectingDelivery;
         if(!WalkTo(v,from,dt))return;
         float amount=Math.Min(Math.Min(Stored(from,resource),StorageFree(to)),Catalog.Data.Economy.DeliveryCapacity*Efficiency(v));
         if(to.Plan.Input.ContainsKey(resource))amount=Math.Min(amount,Math.Max(0,InputTarget(to,resource)-Stored(to,resource)));
@@ -211,8 +211,8 @@ public partial class City
     public void ValidateLogistics()
     {
         bool ValidMap(Dictionary<string,float>? map)=>map!=null&&map.Count<=64&&map.All(e=>Catalog.Resources.Contains(e.Key)&&!Currency(e.Key)&&float.IsFinite(e.Value)&&e.Value>=0&&e.Value<=1000000000);
-        if(LastSettlementDay<0||LastSettlementDay>Day||Buildings.Any(b=>!ValidMap(b.Storage)||b.RequestedResource!=""&&(!Catalog.Resources.Contains(b.RequestedResource)||Currency(b.RequestedResource))||b.TorchLit&&b.Plan.LightRadius<=0)||
-            Citizens.Any(v=>!ValidMap(v.Cargo)||v.Inventory.Values.Sum()+v.Cargo.Values.Sum()>32.001f||v.Effects==null||v.Effects.Count>16||v.Effects.Any(e=>!(e.Key is "Burning" or "Poison" or "Slowness" or "Weakness")||!float.IsFinite(e.Value)||e.Value<0||e.Value>3600)||v.DeliveryResource!=""&&(!Catalog.Resources.Contains(v.DeliveryResource)||Currency(v.DeliveryResource))))
+        if(LastSettlementDay<0||LastSettlementDay>Day||Buildings.Any(b=>!ValidMap(b.Storage)||b.RequestedResource!=string.Empty&&(!Catalog.Resources.Contains(b.RequestedResource)||Currency(b.RequestedResource))||b.TorchLit&&b.Plan.LightRadius<=0)||
+            Citizens.Any(v=>!ValidMap(v.Cargo)||v.Inventory.Values.Sum()+v.Cargo.Values.Sum()>32.001f||v.Effects==null||v.Effects.Count>16||v.Effects.Any(e=>!(e.Key is "Burning" or "Poison" or "Slowness" or "Weakness")||!float.IsFinite(e.Value)||e.Value<0||e.Value>3600)||v.DeliveryResource!=string.Empty&&(!Catalog.Resources.Contains(v.DeliveryResource)||Currency(v.DeliveryResource))))
             throw new InvalidDataException("Invalid storage, delivery or effects data.");
         EnsureStorage();
         if(Catalog.Resources.Where(r=>!Currency(r)).Any(r=>Math.Abs(Stock[r]-Buildings.Sum(b=>Stored(b,r)))>.1f))throw new InvalidDataException("Resource stock does not match physical storage.");

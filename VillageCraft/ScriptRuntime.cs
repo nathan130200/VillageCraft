@@ -3,7 +3,7 @@ using Jint.Native;
 namespace VillageCraft;
 
 public enum ScriptType { Mod, AI, Building }
-public sealed record WorldEvent(string Name,object? Subject=null,float Amount=0,string Reason="",object? Source=null);
+public sealed record WorldEvent(string Name,object? Subject=null,float Amount=0,string Reason=string.Empty,object? Source=null);
 
 /// <summary>Standalone per-world scripting component. Owns engines, registrations, callbacks and queued mutations.</summary>
 public sealed class ScriptRuntime:IDisposable
@@ -11,7 +11,7 @@ public sealed class ScriptRuntime:IDisposable
     sealed class Component
     {
         public required string Id;public required Engine Engine;
-        public ScriptType Type;public string Target="";public bool Failed,Registered;
+        public ScriptType Type;public string Target=string.Empty;public bool Failed,Registered;
     }
     readonly City city;
     readonly Dictionary<string,Component> components=[];
@@ -35,7 +35,7 @@ public sealed class ScriptRuntime:IDisposable
             {
                 if(!registrationOpen||script.Registered)return;
                 script.Registered=true;script.Type=Enum.IsDefined(typeof(ScriptType),kind)?(ScriptType)kind:ScriptType.Mod;
-                script.Target=script.Type==ScriptType.Mod?"":target;
+                script.Target=script.Type==ScriptType.Mod?string.Empty:target;
             }));
             engine.Execute("function set_script_type(type, target) { __register(type === eST_AI || type === eST_Building ? type : eST_Mod, target === undefined ? '' : String(target)); }");
             engine.SetValue("world",new ScriptWorld(city,this,engine));
@@ -44,13 +44,13 @@ public sealed class ScriptRuntime:IDisposable
         }
         foreach(var c in components.Values.Where(c=>!c.Failed))
         {
-            bool valid=c.Target==""||c.Type==ScriptType.Mod||
+            bool valid=c.Target==string.Empty||c.Type==ScriptType.Mod||
                 (c.Type==ScriptType.Building&&Catalog.Data.Prefabs.Any(p=>p.Id==c.Target))||
                 (c.Type==ScriptType.AI&&(c.Target=="villager"||Catalog.Data.Units.ContainsKey(c.Target)||Catalog.Data.Professions.ContainsKey(c.Target)));
             if(!valid)Fail(c,new InvalidDataException("Unknown script target "+c.Target));
         }
         // Explicit targets override data-file defaults. Duplicate overrides fail visibly instead of depending on filename order.
-        foreach(var group in components.Values.Where(c=>!c.Failed&&c.Type!=ScriptType.Mod&&c.Target!="").GroupBy(c=>(c.Type,c.Target)))
+        foreach(var group in components.Values.Where(c=>!c.Failed&&c.Type!=ScriptType.Mod&&c.Target!=string.Empty).GroupBy(c=>(c.Type,c.Target)))
             if(group.Count()>1)foreach(var c in group)Fail(c,new InvalidDataException("Duplicate script target "+group.Key));
         foreach(var script in components.Values)
         {
@@ -109,16 +109,16 @@ public sealed class ScriptRuntime:IDisposable
             else Invoke(c,evt.Name,Bind(evt.Subject));
         }
     }
-    Component? Resolve(ScriptType type,string instance,string target,string fallback,string generic="")
+    Component? Resolve(ScriptType type,string instance,string target,string fallback,string generic=string.Empty)
     {
-        if(instance!=""&&components.TryGetValue(instance,out var attached)&&attached.Type==type&&!attached.Failed)return attached;
-        var script=components.Values.FirstOrDefault(c=>!c.Failed&&c.Type==type&&c.Target==target&&target!="");
+        if(instance!=string.Empty&&components.TryGetValue(instance,out var attached)&&attached.Type==type&&!attached.Failed)return attached;
+        var script=components.Values.FirstOrDefault(c=>!c.Failed&&c.Type==type&&c.Target==target&&target!=string.Empty);
         if(script!=null)return script;
-        if(generic!=""){script=components.Values.FirstOrDefault(c=>!c.Failed&&c.Type==type&&c.Target==generic);if(script!=null)return script;}
-        return fallback!=""&&components.TryGetValue(fallback,out var data)&&data.Type==type&&!data.Failed?data:null;
+        if(generic!=string.Empty){script=components.Values.FirstOrDefault(c=>!c.Failed&&c.Type==type&&c.Target==generic);if(script!=null)return script;}
+        return fallback!=string.Empty&&components.TryGetValue(fallback,out var data)&&data.Type==type&&!data.Failed?data:null;
     }
     Component? ResolveMonster(Creature m)=>Resolve(ScriptType.AI,m.Behavior,m.Type,Catalog.Data.Units[m.Type].Behavior);
-    Component? ResolveVillager(Citizen v)=>Resolve(ScriptType.AI,v.Behavior,v.Profession,"","villager");
+    Component? ResolveVillager(Citizen v)=>Resolve(ScriptType.AI,v.Behavior,v.Profession,string.Empty,"villager");
     Component? ResolveBuilding(Building b)=>Resolve(ScriptType.Building,b.Behavior,b.Prefab,b.Plan.Script);
     public bool UpdateMonster(Creature mob,MobScriptContext ctx,float dt)
     {
@@ -154,7 +154,7 @@ public sealed class ScriptRuntime:IDisposable
     public bool Attach(object entity,string script)
     {
         var type=entity is Building?ScriptType.Building:ScriptType.AI;
-        if(script!=""&&(!components.TryGetValue(script,out var c)||c.Type!=type||c.Failed))return false;
+        if(script!=string.Empty&&(!components.TryGetValue(script,out var c)||c.Type!=type||c.Failed))return false;
         return Queue(()=>
         {
             string name;

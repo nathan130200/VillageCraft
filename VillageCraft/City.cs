@@ -7,10 +7,10 @@ public class Building
 {
     public Dictionary<string,float> Storage {get;set;}=[];
     public bool TorchLit {get;set;}
-    public string RequestedResource {get;set;}="";
+    public string RequestedResource {get;set;}=string.Empty;
     public int GrowthDays {get;set;}
-    public string Tags {get;set;}="";
-    public string Behavior {get;set;}="";
+    public string Tags {get;set;}=string.Empty;
+    public string Behavior {get;set;}=string.Empty;
     public int Id { get; set; }
     public string Prefab { get; set; } = "path";
     public int X { get; set; }
@@ -33,13 +33,13 @@ public class Citizen
     public Dictionary<string,float> Effects {get;set;}=[];
     public int PickupSource {get;set;}=-1;
     public int DeliveryTarget {get;set;}=-1;
-    public string DeliveryResource {get;set;}="";
+    public string DeliveryResource {get;set;}=string.Empty;
     [JsonIgnore] public int TorchTarget {get;set;}=-1;
     [JsonIgnore] public int ResourceTarget {get;set;}=-1;
-    public string Tags {get;set;}="";
-    public string Behavior {get;set;}="";
-    public string FirstName {get;set;}="";
-    public string Surname {get;set;}="";
+    public string Tags {get;set;}=string.Empty;
+    public string Behavior {get;set;}=string.Empty;
+    public string FirstName {get;set;}=string.Empty;
+    public string Surname {get;set;}=string.Empty;
     public Dictionary<string,float> Inventory {get;set;}=[];
     [JsonIgnore] public string FullName {get{CitizenNames.Ensure(this);return FirstName+" "+Surname;}}
 
@@ -49,7 +49,7 @@ public class Citizen
     public float X { get; set; }
     public float Z { get; set; }
     public float Health { get; set; } = 50;
-    public string Task { get; set; } = "Resting";
+    public TaskId Task { get; set; } = TaskId.Resting;
     public float Cooldown { get; set; }
     public float WorkTime { get; set; }
     public bool HasWorked { get; set; }
@@ -66,8 +66,8 @@ public class Creature
     [JsonIgnore] public bool BurningInSun {get;set;}
     [JsonIgnore] public bool SunKilled {get;set;}
     public int Id {get;set;}
-    public string Tags {get;set;}="";
-    public string Behavior {get;set;}="";
+    public string Tags {get;set;}=string.Empty;
+    public string Behavior {get;set;}=string.Empty;
     public bool NightSpawn {get;set;}
     public float BrainTime {get;set;}
     public string Type { get; set; } = "zombie";
@@ -187,16 +187,16 @@ public partial class City:IDisposable
         if(existing!=null&&!(existing.Plan.Path&&p.Path&&!existing.Plan.BlocksRaiders&&!p.BlocksRaiders&&existing.Prefab!=id))return "Tile occupied";
         if(PlacementCost(id,x,z).Any(e=>Stock[e.Key]<e.Value))return "Insufficient resources";
         if(p.NeedsPath&&!p.Path&&!Roads().Contains(new Building{X=x,Z=z,Rotation=rotation}.Entrance))return "Rotate entrance to face a connected path";
-        return "";
+        return string.Empty;
     }
     public bool Place(string id,int x,int z,int rotation=0)
     {
-        string issue=PlacementIssue(id,x,z,rotation);if(issue!=""){Message=issue;return false;}
+        string issue=PlacementIssue(id,x,z,rotation);if(issue!=string.Empty){Message=issue;return false;}
         var p=Catalog.Get(id);if(!Spend(PlacementCost(id,x,z)))return false;
         var road=At(x,z);if(road!=null){TutorialRoadBuilt=true;road.Prefab=id;road.Health=p.Health;InvalidateTopology();Emit(new("onBuildingChanged",road));Log(L.F("{0} road surface applied.",L.Name(p)));return true;}
         var b=Add(id,x,z,rotation);if(!p.Natural)Statistics.BuildingsPlaced++;
         if(p.Path)TutorialRoadBuilt=true;
-        if(p.Animal!="")for(int i=0;i<2;i++)Animals.Add(new(){Id=NextId++,Type=p.Animal,Home=b.Id,X=x+(i==0?-.2f:.2f),Z=z,Health=20});
+        if(p.Animal!=string.Empty)for(int i=0;i<2;i++)Animals.Add(new(){Id=NextId++,Type=p.Animal,Home=b.Id,X=x+(i==0?-.2f:.2f),Z=z,Health=20});
         Assign();Log(L.F("{0} built.",L.Name(p)));return true;
     }
     Building Add(string id,int x,int z,int rotation=0){var b=new Building{Id=NextId++,Prefab=id,X=x,Z=z,Rotation=rotation,Health=Catalog.Get(id).Health};Buildings.Add(b);InvalidateTopology();lightingDirty=true;Emit(new("onBuildingPlaced",b));return b;}
@@ -279,15 +279,15 @@ public partial class City:IDisposable
         if(source==null||Vector2.Distance(v.Position,new(source.X,source.Z))>.25f||Stored(source,resource)<amount)return false;
         source.Storage[resource]-=amount;Stock[resource]-=amount;v.Inventory[resource]=v.Inventory.GetValueOrDefault(resource)+amount;return true;
     }
-    public float ArmorReduction=>Math.Min(.75f,Catalog.Data.Upgrades.Where(u=>u.Kind=="Armor"&&u.Level<=ArmorLevel).Sum(u=>u.Effect)+(EnchantedArmor?Catalog.Data.Economy.EnchantmentProtection:0));
-    public float ToolEfficiency=>1+Catalog.Data.Upgrades.Where(u=>u.Kind=="Tools"&&u.Level<=ToolLevel).Sum(u=>u.Effect);
+    public float ArmorReduction=>Math.Min(.75f,Catalog.Data.Upgrades.Where(u=>u.Kind==EquipmentKind.Armor&&u.Level<=ArmorLevel).Sum(u=>u.Effect)+(EnchantedArmor?Catalog.Data.Economy.EnchantmentProtection:0));
+    public float ToolEfficiency=>1+Catalog.Data.Upgrades.Where(u=>u.Kind==EquipmentKind.Tools&&u.Level<=ToolLevel).Sum(u=>u.Effect);
     public bool Upgrade(string id)
     {
         var upgrade=Catalog.Data.Upgrades.FirstOrDefault(u=>u.Id==id);if(upgrade==null)return false;
-        if(upgrade.Level!=(upgrade.Kind=="Armor"?ArmorLevel:ToolLevel)+1){Message=L.T("Unlock equipment upgrades in order.");return false;}
+        if(upgrade.Level!=(upgrade.Kind==EquipmentKind.Armor?ArmorLevel:ToolLevel)+1){Message=L.T("Unlock equipment upgrades in order.");return false;}
         if(!Buildings.Any(b=>b.Plan.UpgradeStation&&b.Enabled&&Connected(b,Roads())&&Citizens.Any(v=>v.Work==b.Id))){Message=L.T("A connected, staffed forge is required.");return false;}
         if(!Spend(upgrade.Cost)){Message=L.T("Not enough materials for this upgrade.");return false;}
-        if(upgrade.Kind=="Armor")ArmorLevel++;else ToolLevel++;
+        if(upgrade.Kind==EquipmentKind.Armor)ArmorLevel++;else ToolLevel++;
         Log(L.F("{0} equipped throughout the village.",L.Name(upgrade)));return true;
     }
     public bool Spend(Dictionary<string,float> cost,float multiplier=1)
@@ -313,24 +313,24 @@ public partial class City:IDisposable
             foreach(string effect in v.Effects.Keys.ToArray()){v.Effects[effect]-=dt;if(v.Effects[effect]<=0)v.Effects.Remove(effect);}
             if(scripts.UpdateVillager(v,dt)){ReleaseTorchDuty(v);continue;}
             var work=Buildings.FirstOrDefault(b=>b.Id==v.Work);
-            if(Enemies.Count>0&&work!=null&&work.Plan.Defender!=""&&!work.Plan.CreatesGuardian)
-            {ReleaseTorchDuty(v);Fight(v,work.Plan.Defender,dt);v.Task="Defending village";continue;}
+            if(Enemies.Count>0&&work!=null&&work.Plan.Defender!=string.Empty&&!work.Plan.CreatesGuardian)
+            {ReleaseTorchDuty(v);Fight(v,work.Plan.Defender,dt);v.Task=TaskId.DefendingVillage;continue;}
             if(UpdateTorchDuty(v,dt))continue;
             if(UpdatePersonalSupplies(v,dt))continue;
             if(work?.Plan.Job=="Delivery"&&(!IsNight||v.Cargo.Count>0)){UpdateDelivery(v,work,dt);continue;}
-            if(IsNight&&work!=null&&work.Plan.Defender!=""&&!work.Plan.CreatesGuardian)
+            if(IsNight&&work!=null&&work.Plan.Defender!=string.Empty&&!work.Plan.CreatesGuardian)
             {
                 // Patrol connected roads outside the workplace instead of retiring indoors.
                 var destination=patrolRoads.Length>0?patrolRoads[((int)(DayTime/12)+v.Id)%patrolRoads.Length]:work.Entrance;
                 var route=Route(v.Position,new(destination.Item1,destination.Item2),false);
                 if(route.Count>0)Move(v,Toward(v.Position,route[0],dt*Catalog.Data.Units[work.Plan.Defender].Speed));
-                v.Route.Clear();v.Task="Night patrol";v.HasWorked=true;continue;
+                v.Route.Clear();v.Task=TaskId.NightPatrol;v.HasWorked=true;continue;
             }
-            if(work!=null&&work.Plan.HarvestSource!=""&&!IsNight&&(DayPhase<17f/24||!v.HasWorked))
+            if(work!=null&&work.Plan.HarvestSource!=string.Empty&&!IsNight&&(DayPhase<17f/24||!v.HasWorked))
             {UpdateForester(v,work,dt);continue;}
             var home=Buildings.FirstOrDefault(b=>b.Id==v.Home);
             var target=!IsNight&&(DayPhase<17f/24||!v.HasWorked)?work??home:home;
-            v.Task=target==work&&work!=null?"Going to "+work.Plan.Job:"Going home";
+            v.Task=target==work&&work!=null?TaskId.GoingToWork:TaskId.GoingHome;
             if(target!=null)
             {
                 if(v.RouteTarget!=target.Id){v.RouteTarget=target.Id;v.Route.Clear();}
@@ -341,13 +341,13 @@ public partial class City:IDisposable
                 }
                 else if(target==work)
                 {
-                    v.Task=(v.Profession=="citizen"?"Assisting: ":"")+work!.Plan.Job;v.WorkTime+=dt*Efficiency(v)*ToolEfficiency;
+                    v.Task=v.Profession=="citizen"?TaskId.Assisting:TaskId.Working;v.WorkTime+=dt*Efficiency(v)*ToolEfficiency;
                     work.Attendance+=dt;work.WorkEffort+=dt*Efficiency(v)*ToolEfficiency;
                     if(v.WorkTime>=Rules.ProductionCycle){v.WorkTime-=Rules.ProductionCycle;work.Worked|=Produce(work,v);v.HasWorked=true;}
                 }
-                else v.Task=v.Profession=="citizen"&&v.Work<0?"Helping families grow":"Resting";
+                else v.Task=v.Profession=="citizen"&&v.Work<0?TaskId.SupportingFamilies:TaskId.Resting;
             }
-            else v.Task="Homeless";
+            else v.Task=TaskId.Homeless;
         }
         UpdateAnimals(dt);Combat(dt);
         if(GameOver){scripts.Flush();return;}
@@ -380,7 +380,7 @@ public partial class City:IDisposable
     }
     bool Produce(Building b,Citizen worker)
     {
-        if(b.Plan.HarvestSource!=""||b.Plan.Job=="Delivery")return false;
+        if(b.Plan.HarvestSource!=string.Empty||b.Plan.Job=="Delivery")return false;
         if(b.Plan.CreatesGuardian){Stock["Goods"]+=Catalog.Data.Economy.GoodsPerWorkCycle;return true;}
         var profession=Catalog.Data.Professions[worker.Profession];
         float output=b.Plan.Output.Where(e=>!Currency(e.Key)).Sum(e=>e.Value*profession.ResourceBonus.GetValueOrDefault(e.Key,1));
@@ -417,7 +417,7 @@ public partial class City:IDisposable
             var b=Buildings.FirstOrDefault(b=>b.Plan.Homes>Citizens.Count(v=>v.Home==b.Id)&&Connected(b,roads));
             if(b!=null){string profession=Catalog.Data.Game.ImmigrationProfessions[NextId%Catalog.Data.Game.ImmigrationProfessions.Length];AddVillager(profession,b.Id);Growth-=Catalog.Data.Game.MigrationThreshold;Log(L.F("A new {0} arrived.",L.Name(Catalog.Data.Professions[profession])));}
         }
-        foreach(var b in Buildings.Where(b=>b.Worked&&b.Plan.Animal!="").ToArray())
+        foreach(var b in Buildings.Where(b=>b.Worked&&b.Plan.Animal!=string.Empty).ToArray())
         {
             var herd=Animals.Where(a=>a.Home==b.Id).ToList();int adults=herd.Count(a=>a.Age>=3);
             float efficiency=b.Attendance>0?b.WorkEffort/b.Attendance:1;
@@ -427,7 +427,7 @@ public partial class City:IDisposable
             if(adults>=2){if(b.Plan.Animal=="sheep")RecordProduction("Wool",Receive(b,"Wool",adults*efficiency));if(b.Plan.Animal=="chicken")RecordProduction("Eggs",Receive(b,"Eggs",adults*efficiency));if(b.Plan.Animal=="pig")RecordProduction("Food",Receive(b,"Food",adults*efficiency));}
         }
         foreach(var a in Animals)a.Age++;
-        foreach(var b in Buildings.Where(b=>b.Worked&&b.Plan.CreatesGuardian&&b.Plan.Defender!=""))
+        foreach(var b in Buildings.Where(b=>b.Worked&&b.Plan.CreatesGuardian&&b.Plan.Defender!=string.Empty))
         {
             if(Day%3==0)b.ServiceCredit=Math.Min(2,b.ServiceCredit+(b.Attendance>0?b.WorkEffort/b.Attendance:1));
             if(Defenders.Count(d=>d.Home==b.Id)<Rules.GolemsPerWorkshop&&Day%3==0&&b.ServiceCredit>=.999f&&ConsumeLocal(b,b.Plan.Input))
@@ -562,14 +562,14 @@ public partial class City:IDisposable
         }
         return true;
     }
-    public Creature? SpawnMonster(string type,float x,float z,string tags="",bool night=false,bool bossWave=false)
+    public Creature? SpawnMonster(string type,float x,float z,string tags=string.Empty,bool night=false,bool bossWave=false)
     {
         if(!Catalog.Data.Units.ContainsKey(type)||!float.IsFinite(x)||!float.IsFinite(z)||x<0||z<0||x>=Width||z>=Height||Enemies.Count>=Rules.MaxRaiders||!Walkable((int)MathF.Round(x),(int)MathF.Round(z)))return null;
         EntityTags.Validate(tags);
         var m=new Creature{Id=NextId++,Type=type,X=x,Z=z,Health=Catalog.Data.Units[type].Health,Tags=tags,NightSpawn=night,BossWave=bossWave,LeatherHelmet=Catalog.Data.Units[type].BurnsInSun&&(bossWave||Random.Shared.NextSingle()<Catalog.Data.Sunlight.RegularHelmetChance)};
         Enemies.Add(m);Emit(new("onMonsterSpawned",m));return m;
     }
-    public Citizen? AddVillager(string profession,int home,string tags="")
+    public Citizen? AddVillager(string profession,int home,string tags=string.Empty)
     {
         var b=Buildings.FirstOrDefault(b=>b.Id==home&&b.Plan.Homes>Citizens.Count(v=>v.Home==b.Id));
         if(GameOver||b==null||Citizens.Count>=Rules.MaxPopulation||!Catalog.Data.Professions.ContainsKey(profession))return null;
@@ -602,7 +602,7 @@ public partial class City:IDisposable
         var route=Route(v.Position,target,false);
         if(route.Count>0)Move(v,Toward(v.Position,route[0],dt*.85f*TravelSpeed(v.Position,v.Profession)));
         else if(Vector2.Distance(v.Position,target)<.7f)Move(v,Toward(v.Position,target,dt*.85f));
-        v.Task="Scripted behavior";
+        v.Task=TaskId.ScriptedBehavior;
     }
     public bool Trade(string resource,bool buy)
     {
@@ -659,7 +659,7 @@ public partial class City:IDisposable
             c.Citizens.Any(v=>v.Id<=0||v.Id>1000000000||!finite(v.X)||!finite(v.Z)||v.X<0||v.Z<0||v.X>=c.Width||v.Z>=c.Height||!finite(v.Facing)||!finite(v.Health)||!Catalog.Data.Professions.ContainsKey(v.Profession)||v.FirstName==null||v.Surname==null||v.FirstName.Length>60||v.Surname.Length>60||v.Inventory==null||v.Inventory.Count>64||v.Inventory.Any(e=>!Catalog.Resources.Contains(e.Key)||!finite(e.Value)||e.Value<0)||v.Inventory.Values.Sum()>32||!finite(v.WorkTime)||!finite(v.Cooldown)||(v.Home!=-1&&!c.Buildings.Any(b=>b.Id==v.Home&&b.Plan.Homes>0)))||
             c.Animals.Concat(c.Defenders).Concat(c.Enemies).Any(e=>!finite(e.X)||!finite(e.Z)||e.X<0||e.Z<0||e.X>=c.Width||e.Z>=c.Height||!finite(e.Facing)||!finite(e.Health)||!finite(e.Cooldown)||!finite(e.Age))||
             c.Enemies.Concat(c.Defenders).Any(e=>!Catalog.Data.Units.ContainsKey(e.Type))||c.Animals.Any(a=>!Catalog.Data.Models.ContainsKey(a.Type))||
-            Catalog.Resources.Any(r=>!c.Stock.ContainsKey(r)||!finite(c.Stock[r]))||c.Citizens.Select(v=>v.Id).Distinct().Count()!=c.Citizens.Count||c.Citizens.Any(v=>c.Buildings.Any(b=>b.Id==v.Id))||c.ArmorLevel<0||c.ToolLevel<0||c.ArmorLevel>Catalog.Data.Upgrades.Where(u=>u.Kind=="Armor").Select(u=>u.Level).DefaultIfEmpty().Max()||c.ToolLevel>Catalog.Data.Upgrades.Where(u=>u.Kind=="Tools").Select(u=>u.Level).DefaultIfEmpty().Max()||!finite(c.Balance)||!finite(c.Growth)||c.LastNight<0||c.LastNight>c.Day||c.Enemies.Any(e=>!finite(e.BrainTime)||e.BrainTime<0)||!finite(c.DayTime)||c.DayTime<0||c.DayTime>=c.Rules.DayLength||!finite(c.Happiness)||!finite(c.Tax)||c.Day<1)
+            Catalog.Resources.Any(r=>!c.Stock.ContainsKey(r)||!finite(c.Stock[r]))||c.Citizens.Select(v=>v.Id).Distinct().Count()!=c.Citizens.Count||c.Citizens.Any(v=>c.Buildings.Any(b=>b.Id==v.Id))||c.ArmorLevel<0||c.ToolLevel<0||c.ArmorLevel>Catalog.Data.Upgrades.Where(u=>u.Kind==EquipmentKind.Armor).Select(u=>u.Level).DefaultIfEmpty().Max()||c.ToolLevel>Catalog.Data.Upgrades.Where(u=>u.Kind==EquipmentKind.Tools).Select(u=>u.Level).DefaultIfEmpty().Max()||!finite(c.Balance)||!finite(c.Growth)||c.LastNight<0||c.LastNight>c.Day||c.Enemies.Any(e=>!finite(e.BrainTime)||e.BrainTime<0)||!finite(c.DayTime)||c.DayTime<0||c.DayTime>=c.Rules.DayLength||!finite(c.Happiness)||!finite(c.Tax)||c.Day<1)
             throw new InvalidDataException("Invalid village data");
         c.EnsureEntityIds();
         var ids=c.Buildings.Select(b=>b.Id).Concat(c.Citizens.Select(v=>v.Id)).Concat(c.Animals.Concat(c.Defenders).Concat(c.Enemies).Select(m=>m.Id)).ToArray();

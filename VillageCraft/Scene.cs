@@ -13,10 +13,10 @@ static class Scene
     static Color Lit(Color c,float? illumination=null)
     {float light=illumination??(modelLight>=0?modelLight:Daylight);return new((int)(c.R*light),(int)(c.G*light),(int)(c.B*(.25f+.75f*light)),c.A);}
     public static Color ColorOf(string hex,byte alpha=255)=>new(Convert.ToByte(hex.Substring(1,2),16),Convert.ToByte(hex.Substring(3,2),16),Convert.ToByte(hex.Substring(5,2),16),alpha);
-    static void Box(float x,float y,float z,float w,float h,float d,string color,byte alpha=255,string texture="")
+    static void Box(float x,float y,float z,float w,float h,float d,string color,byte alpha=255,string texture=string.Empty)
     {
         y+=World?.SurfaceY(x,z)??0;
-        if(GraphicsOptions.Current.Textures&&texture!="")
+        if(GraphicsOptions.Current.Textures&&texture!=string.Empty)
         {
             var asset=Assets.Get(texture);if(asset.Id!=0)
             {
@@ -35,7 +35,7 @@ static class Scene
         {
             float px=part.Position[0]*size,pz=part.Position[2]*size;float w=part.Size[0]*size,d=part.Size[2]*size;
             float angle=heading??rotation*MathF.PI/2;float cosine=MathF.Cos(angle),sine=MathF.Sin(angle);(px,pz)=(px*cosine-pz*sine,px*sine+pz*cosine);
-            if(GraphicsOptions.Current.Textures&&part.Texture!=""&&Assets.Get(part.Texture).Id!=0)
+            if(GraphicsOptions.Current.Textures&&part.Texture!=string.Empty&&Assets.Get(part.Texture).Id!=0)
             {
                 var tint=part.Texture.StartsWith("models/armor/leather")?ColorOf(part.Color,alpha):part.Texture.Contains("grass")||part.Texture.Contains("leaves")?ColorOf("#85B455",alpha):new Color(255,255,255,(int)alpha);
                 if(part.Shape=="cross")
@@ -82,7 +82,7 @@ static class Scene
         var pos=v.Position;bool working=b!=null&&Vector2.Distance(pos,new(b.X,b.Z))<.1f;
         float heading=working?(b!.Rotation+2)*MathF.PI/2:v.Facing;
         pos=VillagerPosition(city,v);
-        float bob=new[]{"Going","Collecting","Delivering","Lighting","Extinguishing"}.Any(v.Task.StartsWith)?MathF.Abs(MathF.Sin(time*7+v.Id))*.02f:0;
+        float bob=Tasks.Moving(v.Task)?MathF.Abs(MathF.Sin(time*7+v.Id))*.02f:0;
         if(GraphicsOptions.Current.Shadows&&GraphicsOptions.Current.Quality==2)Box(pos.X,.008f,pos.Y,.18f,.006f,.18f,"#18291C",65);
         Model(model,pos.X,pos.Y,0,.46f,255,bob,heading);
         if(working&&b!.Plan.Output.Count>0)
@@ -103,7 +103,7 @@ static class Scene
     public static void Preview(City city,string id,int x,int z,int rotation)
     {
         if(!city.Land(x,z))return;
-        bool valid=city.PlacementIssue(id,x,z,rotation)=="";var color=ColorOf(valid?"#A7E29C":"#E37E69");
+        bool valid=city.PlacementIssue(id,x,z,rotation)==string.Empty;var color=ColorOf(valid?"#A7E29C":"#E37E69");
         Model(Catalog.Get(id).Model,x,z,rotation,1,120);
         Raylib.DrawCubeWires(new Vector3(x,.05f+city.SurfaceY(x,z),z)*Scale,Scale,.15f,Scale,color);
         if(Catalog.Get(id).NeedsPath&&!Catalog.Get(id).Path)
