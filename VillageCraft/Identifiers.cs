@@ -4,7 +4,7 @@ namespace VillageCraft;
 
 // Closed simulation states are typed; human-readable strings remain at content/UI/JS boundaries.
 [JsonConverter(typeof(TaskIdConverter))]
-public enum TaskId { Resting, DefendingVillage, LightingTorches, ExtinguishingTorches, NightPatrol, GoingHome, SupportingFamilies, Homeless, ScriptedBehavior, CollectingMilk, CollectingFood, WaitingStorage, Delivering, WaitingDeliveries, CollectingDelivery, WaitingTreeRegrowth, GoingToTrees, ChoppingTree, GoingToWork, Working, Assisting, CaravanTravelling, TalkingToResidents, LeavingVillage, WanderingHomeless, SeekingHome }
+public enum TaskId { Resting, DefendingVillage, NightPatrol, GoingHome, SupportingFamilies, Homeless, ScriptedBehavior, CollectingMilk, CollectingFood, WaitingStorage, Delivering, WaitingDeliveries, CollectingDelivery, WaitingTreeRegrowth, GoingToTrees, ChoppingTree, GoingToWork, Working, Assisting, CaravanTravelling, TalkingToResidents, LeavingVillage, WanderingHomeless, SeekingHome, CollectingRepairSupplies, RepairingBuilding }
 public enum CaravanState { Entering, Talking, Departing }
 public enum PillageState { Looting, Retreating }
 public enum EquipmentKind { Armor, Tools }
@@ -16,8 +16,6 @@ public static class Tasks
     {
         TaskId.Resting => "Resting",
         TaskId.DefendingVillage => "Defending village",
-        TaskId.LightingTorches => "Lighting torches",
-        TaskId.ExtinguishingTorches => "Extinguishing torches",
         TaskId.NightPatrol => "Night patrol",
         TaskId.GoingHome => "Going home",
         TaskId.SupportingFamilies => "Helping families grow",
@@ -40,7 +38,9 @@ public static class Tasks
         TaskId.LeavingVillage => "Leaving village",
         TaskId.WanderingHomeless => "Wandering without a home",
         TaskId.SeekingHome => "Seeking a home",
-        _=>nameof(TaskId.ScriptedBehavior)
+        TaskId.CollectingRepairSupplies => "Collecting repair supplies",
+        TaskId.RepairingBuilding => "Repairing building",
+        _=>id.ToString()
     };
     public static TaskId Parse(string? text)
     {
@@ -50,7 +50,7 @@ public static class Tasks
         if(text?.StartsWith("Assisting: ",StringComparison.Ordinal)==true)return TaskId.Assisting;
         return TaskId.Working;
     }
-    public static bool Moving(TaskId id)=>id is TaskId.GoingHome or TaskId.GoingToWork or TaskId.GoingToTrees or TaskId.CollectingFood or TaskId.CollectingMilk or TaskId.CollectingDelivery or TaskId.Delivering or TaskId.LightingTorches or TaskId.ExtinguishingTorches or TaskId.LeavingVillage or TaskId.CaravanTravelling or TaskId.WanderingHomeless;
+    public static bool Moving(TaskId id)=>id is TaskId.GoingHome or TaskId.GoingToWork or TaskId.GoingToTrees or TaskId.CollectingFood or TaskId.CollectingMilk or TaskId.CollectingDelivery or TaskId.Delivering or TaskId.LeavingVillage or TaskId.CaravanTravelling or TaskId.WanderingHomeless;
 }
 public sealed class TaskIdConverter:JsonConverter<TaskId>
 {

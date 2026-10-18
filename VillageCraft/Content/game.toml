@@ -1,5 +1,5 @@
-﻿# TIPO: GameDefaults: configurações globais, Rules e lista Starter.
-# Guia: Content/README.md. Carregado uma vez na inicialização.
+# TIPO: GameDefaults: configuraÃ§Ãµes globais, Rules e lista Starter.
+# Guia: Content/README.md. Carregado uma vez na inicializaÃ§Ã£o.
 # VillageCraft content. Read once at startup; restart after editing.
 FormatVersion = 1
 Categories = ["Roads", "Housing", "Production", "Infrastructure", "Economy", "Animals", "Defense"]
@@ -11,8 +11,8 @@ DirtTexture = "block/dirt.png"
 MigrationThreshold = 3
 CitizenGrowthSupport = 0.2
 ImmigrationProfessions = ["citizen", "farmer", "miner", "citizen", "explorer", "keeper", "smith", "woodcutter", "citizen", "warrior", "archer", "mage"]
-InitialStock = { "Torches" = 12, "Leather" = 8, "Milk" = 4, "Goods" = 0, "AncientDebris" = 0, "Diamonds" = 0, "Eggs" = 0, "Emeralds" = 1100, "Food" = 160, "Gold" = 0, "Iron" = 45, "Stone" = 160, "Tools" = 15, "Wood" = 200, "Wool" = 0 }
-Rules = { "NightMonsters" = true, "NightCount" = 3, "AnimalsPerPen" = 8, "DayLength" = 600, "GolemsPerWorkshop" = 2, "MaxPopulation" = 256, "MaxRaiders" = 100, "ProductionCycle" = 2, "RaidInterval" = 30, "RaidsEnabled" = true, "WaveBase" = 6, "WaveGrowth" = 3 }
+InitialStock = { "Leather" = 8, "Milk" = 4, "Goods" = 0, "AncientDebris" = 0, "Diamonds" = 0, "Eggs" = 0, "Emeralds" = 1100, "Food" = 160, "Gold" = 0, "Iron" = 45, "Stone" = 160, "Tools" = 15, "Wood" = 200, "Wool" = 0 }
+Rules = { "BirthChance" = 0.6, "NightMonsters" = true, "NightCount" = 3, "NightSpawnIntervalMinutes" = 60, "AnimalsPerPen" = 8, "DayLength" = 600, "GolemsPerWorkshop" = 2, "MaxPopulation" = 256, "MaxRaiders" = 100, "ProductionCycle" = 2, "RaidInterval" = 30, "RaidsEnabled" = true, "WaveBase" = 6, "WaveGrowth" = 3 }
 
 [[Starter]]
 Industry = false

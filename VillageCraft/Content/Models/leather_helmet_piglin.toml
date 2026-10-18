@@ -1,0 +1,9 @@
+# ModelFile: leather helmet fitted around a ten-pixel Piglin head.
+Id = "leather_helmet_piglin"
+[[Parts]]
+Position = [0, 0.84, 0]
+Size = [0.315, 0.255, 0.255]
+Color = "#A7794C"
+Texture = "models/armor/leather_layer_1.png"
+UvOrigin = [0, 0]
+UvSize = [8, 8, 8]

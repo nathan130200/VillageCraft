@@ -1,454 +1,1497 @@
-﻿# TYPE: LanguageFile. Copy this file with a new Id to add a language.
+# TYPE: LanguageFile. Stable translation IDs; translate values, never keys.
+# Copy this file, change Id/Name, and preserve numbered format placeholders.
 Id = "pt-BR"
 Name = "Português (Brasil)"
 
 [Text]
-"< Back" = " < Voltar"
-"?" = "?"
-"A baby {0} was born." = "Nasceu um filhote de {0}."
-"A connected, staffed forge is required." = "É necessária uma forja conectada e com trabalhadores."
-"A new {0} arrived." = "Um novo {0} chegou."
-"A save with this name exists. Confirm overwrite or change the name." = "Já existe um save com esse nome. Confirme a substituição ou altere o nome."
-"Animal care" = "Criação de animais"
-"Animals" = "Animais"
-"Animals per pen" = "Animais por cercado"
-"Animals {0} / Guardians {1}" = "Animais {0} / Guardiões {1}"
-"Animated water" = "Água animada"
-"Archery" = "Arqueria"
-"Assisting: " = "Ajudando: "
-"Attack every N days" = "Invasão a cada N dias"
-"BOSS WAVE" = "ONDA DO CHEFE"
-"Balance {0:+0.0;-0.0;0} / day" = "Saldo {0:+0.0;-0.0;0} / dia"
-"Base travel speed: {0:0.00}x" = "Velocidade base: {0:0.00}x"
-"Base wave size" = "Tamanho inicial das ondas"
-"Building [Tab]" = "Construir [Tab]"
-"Buy 20 / {0:0} emeralds" = "Comprar 20 / {0:0} esmeraldas"
-"Carried items are separate from village stock. Food is consumed daily." = "Os itens carregados saem do estoque da vila. A comida é consumida diariamente."
-"Central square and occupied homes are protected." = "A praça central e as casas ocupadas estão protegidas."
-"Choose 32â€“512 tiles on each axis. Default: {0}x{1}. No world generation: a flat grass surface and the starter village only. Creating a map replaces the unsaved session; saved villages remain available." = "Choose 32â€“512 tiles on each axis. Default: {0}x{1}. No world generation: a flat grass surface and the starter village only. Creating a map replaces the unsaved session; saved villages remain available."
-"Choose 32–512 tiles on each axis. Default: {0}x{1}. No world generation: a flat grass surface and the starter village only. Creating a map replaces the unsaved session; saved villages remain available." = "Escolha de 32 a 512 terrenos em cada eixo. Padrão: {0}x{1}. Mapa plano com grama e vila inicial. Criar um mapa substitui a sessão atual; salve antes."
-"Click to build" = "Clique para construir"
-"Close" = "Fechar"
-"Close panel" = "Fechar painel"
-"Confirm overwrite" = "Confirmar substituição"
-"Connect and staff a trading hall." = "Conecte e empregue um trabalhador no mercado."
-"Connected" = "Conectado"
-"Create a flat map" = "Criar mapa plano"
-"Create flat map / replace session" = "Criar mapa / substituir sessão"
-"DANGER" = "PERIGO"
-"DAY {0} {1} {2:00}:00   |   Residents {3}/{4}   |   Happiness {5:0}%   |   Water {6}/{7}   |   {8}x{9}   |   {10}" = "DIA {0} {1} {2:00}:00 | Moradores {3}/{4} | Felicidade {5:0}% | Água {6}/{7} | {8}x{9} | {10}"
-"DAYLIGHT" = "DIA"
-"Damage reduction {0:0}% / Work rate {1:0.00}x" = "Proteção {0:0}% / Trabalho {1:0.00}x"
-"Day {0}: {1}" = "Dia {0}: {1}"
-"Defending village" = "Defendendo a vila"
-"Defense" = "Defesa"
-"Demolish / half emerald refund" = "Demolir / devolver meia despesa"
-"Economy" = "Economia"
-"Efficiency {0:0}%" = "Eficiência {0:0}%"
-"Employed {0} / {1}" = "Empregados {0} / {1}"
-"Empty inventory" = "Inventário vazio"
-"Enable raids" = "Ativar invasões"
-"Entrance disconnected" = "Entrada desconectada"
-"Equipment / armor {0} / tools {1}" = "Equipamentos / armadura {0} / ferramentas {1}"
-"Escape closes this menu. The simulation is paused." = "Esc fecha o menu. A simulação está pausada."
-"Exit" = "Sair"
-"Expedition" = "Exploração"
-"Farming" = "Agricultura"
-"Food reserve: {0:0.0} days" = "Reserva de comida: {0:0.0} dias"
-"Food shortage! Assign farmers or trade for supplies." = "Falta comida! Empregue agricultores ou compre suprimentos."
-"Forging" = "Forja"
-"Frame limit" = "Limite de FPS"
-"Game menu" = "Menu do jogo"
-"Give food / 2 from stock" = "Entregar 2 comidas do estoque"
-"Give tools / 1 from stock" = "Entregar 1 ferramenta do estoque"
-"Going home" = "Indo para casa"
-"Going to " = "Indo para "
-"Golem forging" = "Criação de golems"
-"Golems per workshop" = "Golems por oficina"
-"Graphics" = "Gráficos"
-"Graphics preferences saved." = "Preferências gráficas salvas."
-"Ground shadows" = "Sombras no chão"
-"Growth per wave" = "Crescimento por onda"
-"Health {0:0}/50" = "Vida {0:0}/50"
-"Health {0:0}/{1:0}" = "Vida {0:0}/{1:0}"
-"Height (tiles)" = "Altura (terrenos)"
-"Helping families grow" = "Ajudando famílias a crescer"
-"High" = "Alta"
-"Home: {0}" = "Moradia: {0}"
-"Homeless" = "Sem moradia"
-"Hostile limit" = "Limite de inimigos"
-"Hostiles defeated! Repair and prepare for the next attack." = "Inimigos derrotados! Repare a vila e prepare a defesa."
-"Hostiles {0}" = "Inimigos {0}"
-"Housing" = "Moradias"
-"Infrastructure" = "Serviços"
-"Inspecting [Tab]" = "Inspecionar [Tab]"
-"Insufficient resources" = "Recursos insuficientes"
-"Insufficient supplies for trade." = "Suprimentos insuficientes para negociar."
-"Inventory" = "Inventário"
-"Journal" = "Diário"
-"Land required" = "É necessário terreno"
-"Language" = "Idioma"
-"Load Game" = "Carregar jogo"
-"Load selected village" = "Carregar vila selecionada"
-"Loaded {0}." = "{0} carregado."
-"Low" = "Baixa"
-"MENU [Esc]" = "MENU [Esc]"
-"Makes {0:0.##} {1} / cycle" = "Produz {0:0.##} {1} / ciclo"
-"Medium" = "Média"
-"Minecraft textures" = "Texturas do Minecraft"
-"Minutes per day" = "Minutos por dia"
-"Monsters per night" = "Monstros por noite"
-"My village" = "Minha vila"
-"NIGHT" = "NOITE"
-"New Game" = "Novo jogo"
-"Next attack uses the next multiple of this interval." = "O próximo ataque ocorre no próximo múltiplo desse intervalo."
-"Next raid: day {0}" = "Próxima invasão: dia {0}"
-"Night falls: {0} monsters approach. They retreat at dawn." = "Anoiteceu: {0} monstros se aproximam. Eles fogem ao amanhecer."
-"Nighttime monsters" = "Monstros noturnos"
-"No saved villages yet." = "Ainda não há vilas salvas."
-"Not enough materials for this upgrade." = "Faltam materiais para esta melhoria."
-"Not enough supplies for training." = "Faltam suprimentos para o treinamento."
-"Options" = "Opções"
-"PAUSE" = "PAUSAR"
-"PLAY" = "JOGAR"
-"Paused" = "Pausado"
-"People" = "Moradores"
-"Pig keeping" = "Criação de porcos"
-"Population limit" = "Limite de moradores"
-"Poultry keeping" = "Criação de galinhas"
-"Priority" = "Prioridade"
-"Production" = "Produção"
-"Production seconds" = "Segundos por produção"
-"Quality" = "Qualidade"
-"R rotate / Tab inspect / Right click inspect / Shift+Q/E fast camera" = "R girar / Tab inspecionar / Botão direito inspecionar / Shift+Q/E giro rápido"
-"RAID {0}! {1} hostiles led by a Nether warlord are attacking." = "INVASÃO {0}! {1} inimigos atacam sob o comando de um senhor do Nether."
-"Raid in {0} days" = "Invasão em {0} dias"
-"Raids disabled" = "Invasões desativadas"
-"Repair / 2 wood + 2 stone" = "Reparar / 2 madeiras + 2 pedras"
-"Resource" = "Recurso"
-"Resting" = "Descansando"
-"Resume game" = "Continuar jogo"
-"Roads" = "Caminhos"
-"Rotate [R]  {0} deg" = "Girar [R] {0} graus"
-"Rotate entrance to face a connected path" = "Gire a entrada para um caminho conectado"
-"Rules apply immediately and persist when you save the village. Lower caps stop new spawns without deleting existing villagers or animals. Map dimensions are chosen under New Game." = "As regras são aplicadas imediatamente e salvas com a vila. Limites menores impedem novas criações sem apagar moradores ou animais. Escolha o tamanho do mapa em Novo jogo."
-"Save Game" = "Salvar jogo"
-"Save Game As" = "Salvar jogo como"
-"Save graphics preferences" = "Salvar preferências gráficas"
-"Save village" = "Salvar vila"
-"Saved as {0}." = "Salvo como {0}."
-"Saves in executable/UserData" = "Saves na pasta UserData do executável"
-"Search..." = "Buscar..."
-"Sell 20 / {0:0} emeralds" = "Vender 20 / {0:0} esmeraldas"
-"Shepherding" = "Criação de ovelhas"
-"Snow crafting" = "Criação de golems de neve"
-"Spellcasting" = "Magia"
-"Staff {0}/{1}" = "Trabalhadores {0}/{1}"
-"Stonecutting" = "Mineração"
-"Stored as UserData/<name>.vcs (binary)" = "Salvo em UserData/<nome>.vcs (binário)"
-"Tax" = "Imposto"
-"Tile occupied" = "Terreno ocupado"
-"Tile {0}, {1}" = "Terreno {0}, {1}"
-"Trading" = "Comércio"
-"Trading hall" = "Mercado"
-"Unemployed" = "Desempregado"
-"Unemployed citizens help families attract residents. They can assist any workplace at 50% efficiency. Train specialists using tools and emeralds." = "Cidadãos desempregados ajudam a vila a crescer. Podem trabalhar em qualquer função com 50% de eficiência. Treine especialistas com ferramentas e esmeraldas."
-"Unlock equipment upgrades in order." = "Desbloqueie as melhorias de equipamento na ordem."
-"Uses {0:0.##} {1} / cycle" = "Consome {0:0.##} {1} / ciclo"
-"Village defense" = "Defesa da vila"
-"Village journal" = "Diário da vila"
-"Village rules / saved with this village" = "Regras / salvas com esta vila"
-"Village save name" = "Nome do save da vila"
-"Walls and gates block raiders. Warriors intercept; archers, mages and snow golems shoot. Configure attack timing and limits in Options." = "Muros e portões bloqueiam invasores. Guerreiros interceptam; arqueiros, magos e golems de neve atacam à distância. Configure as invasões em Opções."
-"Warrior training" = "Treino de guerreiros"
-"Water shortage! Build more connected wells." = "Falta água! Construa mais poços conectados."
-"Waves {0} / Kills {1}" = "Ondas {0} / Abates {1}"
-"Width (tiles)" = "Largura (terrenos)"
-"Woodcutting" = "Corte de madeira"
-"Work progress {0:0.0}/{1:0.0}s" = "Progresso {0:0.0}/{1:0.0}s"
-"Workers {0}/{1}" = "Trabalhadores {0}/{1}"
-"Workforce" = "Trabalhadores"
-"Workplace enabled" = "Trabalho ativado"
-"Workplace: {0}" = "Trabalho: {0}"
-"Your first farms and animal keepers are ready. Build a forge and prepare defenses before day {0}." = "As fazendas e os criadores estão prontos. Construa uma forja e prepare as defesas antes do dia {0}."
+
+# Workplace activity name and road profession-bonus label: archery.
+"activity.archery" = "Arqueria"
+
+# Workplace activity name and road profession-bonus label: cattle keeping.
+"activity.cattle_keeping" = "Criação de vacas"
+
+# Workplace activity name and road profession-bonus label: delivery.
+"activity.delivery" = "Entregas"
+
+# Workplace activity name and road profession-bonus label: expedition.
+"activity.expedition" = "Exploração"
+
+# Workplace activity name and road profession-bonus label: farming.
+"activity.farming" = "Agricultura"
+
+# Workplace activity name and road profession-bonus label: forging.
+"activity.forging" = "Forja"
+
+# Workplace activity name and road profession-bonus label: golem forging.
+"activity.golem_forging" = "Criação de golems"
+
+# Workplace activity name and road profession-bonus label: pig keeping.
+"activity.pig_keeping" = "Criação de porcos"
+
+# Workplace activity name and road profession-bonus label: poultry keeping.
+"activity.poultry_keeping" = "Criação de galinhas"
+
+# Workplace activity name and road profession-bonus label: shepherding.
+"activity.shepherding" = "Criação de ovelhas"
+
+# Workplace activity name and road profession-bonus label: snow crafting.
+"activity.snow_crafting" = "Criação de golems de neve"
+
+# Workplace activity name and road profession-bonus label: spellcasting.
+"activity.spellcasting" = "Magia"
+
+# Workplace activity name and road profession-bonus label: stonecutting.
+"activity.stonecutting" = "Mineração"
+
+# Workplace activity name and road profession-bonus label: trading.
+"activity.trading" = "Comércio"
+
+# Workplace activity name and road profession-bonus label: warrior training.
+"activity.warrior_training" = "Treino de guerreiros"
+
+# Workplace activity name and road profession-bonus label: woodcutting.
+"activity.woodcutting" = "Corte de madeira"
+
+# Building inspector health. {0}: current health; {1}: maximum health.
+"building.health" = "Vida {0:0}/{1:0}"
+
+# Build-menu category label for Animals.
+"category.Animals" = "Animais"
+
+# Build-menu category label for Defense.
+"category.Defense" = "Defesa"
+
+# Build-menu category label for Economy.
+"category.Economy" = "Economia"
+
+# Build-menu category label for Housing.
+"category.Housing" = "Moradias"
+
+# Build-menu category label for Infrastructure.
+"category.Infrastructure" = "Serviços"
+
+# Build-menu category label for Production.
+"category.Production" = "Produção"
+
+# Build-menu category label for Roads.
+"category.Roads" = "Caminhos"
+
+# Villager status-effect name in the inspector: Burning.
+"effect.Burning" = "Em chamas"
+
+# Villager status-effect name in the inspector: Poison.
+"effect.Poison" = "Veneno"
+
+# Villager status-effect name in the inspector: Slowness.
+"effect.Slowness" = "Lentidão"
+
+# Villager status-effect name in the inspector: Weakness.
+"effect.Weakness" = "Fraqueza"
+
+# Creature display name in inspectors and notifications: archer.
 "entity.archer" = "Arqueiro"
+
+# Creature display name in inspectors and notifications: blaze.
 "entity.blaze" = "Blaze"
+
+# Creature display name in inspectors and notifications: chicken.
 "entity.chicken" = "Galinha"
+
+# Creature display name in inspectors and notifications: cow.
+"entity.cow" = "Vaca"
+
+# Creature display name in inspectors and notifications: creeper.
 "entity.creeper" = "Creeper"
+
+# Creature display name in inspectors and notifications: iron_golem.
 "entity.iron_golem" = "Golem de ferro"
+
+# Creature display name in inspectors and notifications: mage.
 "entity.mage" = "Mago"
+
+# Creature display name in inspectors and notifications: nether_warlord.
 "entity.nether_warlord" = "Senhor do Nether"
+
+# Creature display name in inspectors and notifications: pig.
 "entity.pig" = "Porco"
+
+# Creature display name in inspectors and notifications: piglin.
 "entity.piglin" = "Piglin"
+
+# Creature display name in inspectors and notifications: piglin_brute.
 "entity.piglin_brute" = "Piglin bárbaro"
+
+# Creature display name in inspectors and notifications: sheep.
 "entity.sheep" = "Ovelha"
+
+# Creature display name in inspectors and notifications: skeleton.
 "entity.skeleton" = "Esqueleto"
+
+# Creature display name in inspectors and notifications: snow_golem.
 "entity.snow_golem" = "Golem de neve"
+
+# Creature display name in inspectors and notifications: warrior.
 "entity.warrior" = "Guerreiro"
+
+# Creature display name in inspectors and notifications: zombie.
 "entity.zombie" = "Zumbi"
+
+# Creature display name in inspectors and notifications: zombified_piglin.
 "entity.zombified_piglin" = "Piglin zumbificado"
+
+# Day label with details. {0}: day number; {1}: clock or journal message.
+"format.day_details" = "Dia {0}: {1}"
+
+# Resource cost display. {0}: numeric amount; {1}: localized resource name.
+"format.resource_amount" = "{0:0} {1}"
+
+# Building storage display. {0}: resource name; {1}: stored amount.
+"format.resource_stock" = "{0}: {1:0.##}"
+
+# Explanation below the village-defeat title.
+"gameover.description" = "Todos os aldeões foram eliminados."
+
+# Title shown after every villager has been eliminated.
+"gameover.title" = "VILA DESTRUÍDA"
+
+# Interface label, help text or control: BOSS WAVE
+"hud.boss_wave" = "ONDA DO CHEFE"
+
+# Interface label, help text or control: DAYLIGHT
+"hud.daylight" = "DIA"
+
+# Interface label, help text or control: NIGHT
+"hud.night" = "NOITE"
+
+# Interface label, help text or control: Night monsters begin on day {0}
+"hud.peaceful_nights" = "Monstros noturnos começam no dia {0}"
+
+# Game-over screen: Exit
+"menu.exit" = "Sair"
+
+# Interface label, help text or control: Paused
+"menu.paused" = "Pausado"
+
+# Interface label, help text or control: Resume game
+"menu.resume" = "Continuar jogo"
+
+# Interface label, help text or control: Game menu
+"menu.title" = "Menu do jogo"
+
+# Interface label, help text or control: A baby {0} was born.
+"message.animal_born" = "Nasceu um filhote de {0}."
+
+# Village status or journal: {0} was destroyed!
+"message.building_destroyed" = "{0} foi destruído!"
+
+# Workplace shortage status. {0}: building name; {1}: required resources.
+"message.building_missing_resources" = "{0} precisa de {1}"
+
+# Journal notification after construction. {0}: localized building name.
+"message.building_placed" = "{0} construído."
+
+# Village status or journal: {0} removed.
+"message.building_removed" = "{0} removido."
+
+# Village status or journal: {0} is waiting for local deliveries.
+"message.building_waiting_delivery" = "{0} está aguardando entregas locais."
+
+# Village status or journal: Food shortage! Assign farmers or trade for supplies.
+"message.food_shortage" = "Falta comida! Empregue agricultores ou compre suprimentos."
+
+# Night encounter notification. {0}: number of approaching monsters.
+"message.night_monsters" = "Anoiteceu: {0} monstros se aproximam. O sol queima mortos-vivos sem proteção."
+
+# Village status or journal: A new {0} arrived.
+"message.villager_arrived" = "Um novo {0} chegou."
+
+# Village status or journal: Some villagers are collecting food from local storage.
+"message.villagers_collecting_food" = "Alguns aldeões estão buscando comida no estoque local."
+
+# Village status or journal: Water shortage! Build more connected wells.
+"message.water_shortage" = "Falta água! Construa mais poços conectados."
+
+# Options slider for the daily birth probability of an eligible home.
+"options.birth_chance" = "Chance diária de nascimento"
+
+# People panel counter. {0}: number of hidden babies waiting to mature.
+"people.growing_babies" = "Bebês em crescimento: {0}"
+
+# People panel button: automatically redistribute all villager professions.
+"people.reassign_professions" = "Redistribuir profissões"
+
+# Village status or journal: Rotate entrance to face a connected path
+"placement.entrance_not_connected" = "Gire a entrada para um caminho conectado"
+
+# Village status or journal: Insufficient resources
+"placement.insufficient_resources" = "Recursos insuficientes"
+
+# Village status or journal: Land required
+"placement.land_required" = "É necessário terreno"
+
+# Village status or journal: Tile occupied
+"placement.tile_occupied" = "Terreno ocupado"
+
+# Building/road description in the build menu and inspector: archery.
 "prefab.archery.description" = "Arqueiros atingem inimigos a longa distância."
+
+# Building/road display name: archery.
 "prefab.archery.name" = "Campo de arqueria"
+
+# Building/road description in the build menu and inspector: barracks.
 "prefab.barracks.description" = "Guerreiros interceptam invasores com espadas e escudos."
+
+# Building/road display name: barracks.
 "prefab.barracks.name" = "Quartel de guerreiros"
+
+# Building/road description in the build menu and inspector: cave.
 "prefab.cave.description" = "Mineiros e exploradores procuram ouro, diamantes e detritos ancestrais. Cidadãos ajudam com metade da eficiência."
+
+# Building/road display name: cave.
 "prefab.cave.name" = "Entrada da caverna"
+
+# Building/road description in the build menu and inspector: chicken_coop.
 "prefab.chicken_coop.description" = "Criadores reproduzem galinhas e coletam ovos."
+
+# Building/road display name: chicken_coop.
 "prefab.chicken_coop.name" = "Galinheiro"
+
+# Building/road description in the build menu and inspector: cobble_road.
 "prefab.cobble_road.description" = "Rápida para mineiros e ferreiros; dificulta o trabalho dos agricultores."
+
+# Building/road display name: cobble_road.
 "prefab.cobble_road.name" = "Rua de pedregulho"
+
+# Building/road description in the build menu and inspector: cottage.
 "prefab.cottage.description" = "Quatro camas, paredes de carvalho e telhado em degraus."
+
+# Building/road display name: cottage.
 "prefab.cottage.name" = "Casa de carvalho"
+
+# Building/road description in the build menu and inspector: cow_shed.
+"prefab.cow_shed.description" = "Criadores cuidam de vacas e produzem couro e leite. Entregadores levam alimento ao estábulo."
+
+# Building/road display name: cow_shed.
+"prefab.cow_shed.name" = "Estábulo de vacas"
+
+# Building/road description in the build menu and inspector: family_house.
 "prefab.family_house.description" = "Uma casa maior para seis moradores."
+
+# Building/road display name: family_house.
 "prefab.family_house.name" = "Casa com chaminé"
+
+# Building/road description in the build menu and inspector: farm.
 "prefab.farm.description" = "Agricultores cultivam e colhem alimentos."
+
+# Building/road display name: farm.
 "prefab.farm.name" = "Plantação de trigo"
+
+# Building/road description in the build menu and inspector: forge.
 "prefab.forge.description" = "Ferreiros usam ferro e madeira para produzir ferramentas."
+
+# Building/road display name: forge.
 "prefab.forge.name" = "Forja do ferreiro"
+
+# Building/road description in the build menu and inspector: gate.
 "prefab.gate.description" = "Conecta caminhos e impede a entrada de invasores até ser destruído."
+
+# Building/road display name: gate.
 "prefab.gate.name" = "Portão da vila"
+
+# Building/road description in the build menu and inspector: gravel_road.
 "prefab.gravel_road.description" = "Barata. Lenhadores andam mais rápido; guerreiros com armadura ficam mais lentos."
+
+# Building/road display name: gravel_road.
 "prefab.gravel_road.name" = "Trilha de cascalho"
+
+# Building/road description in the build menu and inspector: ice_road.
 "prefab.ice_road.description" = "Golems de neve deslizam rápido; os outros moradores têm pouca aderência."
+
+# Building/road display name: ice_road.
 "prefab.ice_road.name" = "Rua de gelo compacto"
+
+# Building/road description in the build menu and inspector: iron_foundry.
 "prefab.iron_foundry.description" = "A cada três dias os ferreiros podem criar um golem de ferro, respeitando o limite configurado."
+
+# Building/road display name: iron_foundry.
 "prefab.iron_foundry.name" = "Fundição de golems"
+
+# Building/road description in the build menu and inspector: large_warehouse.
+"prefab.large_warehouse.description" = "Armazena até 10.000 recursos físicos e emprega cinco entregadores."
+
+# Building/road display name: large_warehouse.
+"prefab.large_warehouse.name" = "Armazém grande"
+
+# Building/road description in the build menu and inspector: lumber.
 "prefab.lumber.description" = "Lenhadores visitam árvores próximas, colhem madeira uma vez e aguardam o crescimento."
+
+# Building/road display name: lumber.
 "prefab.lumber.name" = "Acampamento madeireiro"
+
+# Building/road description in the build menu and inspector: mage_hall.
 "prefab.mage_hall.description" = "Aldeões magos lançam projéteis violeta poderosos."
+
+# Building/road display name: mage_hall.
 "prefab.mage_hall.name" = "Salão de encantamentos"
+
+# Building/road description in the build menu and inspector: market.
 "prefab.market.description" = "Empregue um comerciante para importar e exportar recursos."
+
+# Building/road display name: market.
 "prefab.market.name" = "Mercado"
-"prefab.park.description" = "Árvores, flores e bancos aumentam a felicidade."
-"prefab.park.name" = "Praça arborizada"
-"prefab.path.description" = "Conecte as entradas das construções à praça central."
-"prefab.path.name" = "Caminho de terra"
-"prefab.pig_pen.description" = "Criadores alimentam e reproduzem porcos para produzir comida."
-"prefab.pig_pen.name" = "Chiqueiro"
-"prefab.plank_road.description" = "Acelera os criadores de animais, mas reduz a velocidade dos mineiros."
-"prefab.plank_road.name" = "Passarela de carvalho"
-"prefab.quarry.description" = "Mineiros extraem pedra e pequenas quantidades de ferro."
-"prefab.quarry.name" = "Pedreira"
-"prefab.sheep_pen.description" = "Criadores alimentam e reproduzem ovelhas e coletam lã."
-"prefab.sheep_pen.name" = "Aprisco"
-"prefab.snow_shrine.description" = "A cada três dias um criador pode formar um golem de neve, respeitando o limite configurado."
-"prefab.snow_shrine.name" = "Santuário de neve"
-"prefab.soul_road.description" = "Acelera aldeões magos e atrasa os outros viajantes."
-"prefab.soul_road.name" = "Trilha de areia das almas"
-"prefab.wall.description" = "Bloqueia invasores terrestres. Gire para fechar o perímetro."
-"prefab.wall.name" = "Muro de pedra"
-"prefab.watchtower.description" = "Posto fortificado para os arqueiros da vila."
-"prefab.watchtower.name" = "Torre de vigia"
-"prefab.well.description" = "Água limpa para dezesseis moradores."
-"prefab.well.name" = "Poço da vila"
-"profession.archer" = "Arqueiro"
-"profession.citizen" = "Cidadão"
-"profession.explorer" = "Explorador"
-"profession.farmer" = "Agricultor"
-"profession.keeper" = "Criador de animais"
-"profession.mage" = "Mago"
-"profession.miner" = "Mineiro"
-"profession.smith" = "Ferreiro"
-"profession.trader" = "Comerciante"
-"profession.warrior" = "Guerreiro"
-"profession.woodcutter" = "Lenhador"
-"resource.AncientDebris" = "Detritos ancestrais"
-"resource.Diamonds" = "Diamantes"
-"resource.Eggs" = "Ovos"
-"resource.Emeralds" = "Esmeraldas"
-"resource.Food" = "Comida"
-"resource.Gold" = "Ouro"
-"resource.Iron" = "Ferro"
-"resource.Stone" = "Pedra"
-"resource.Tools" = "Ferramentas"
-"resource.Wood" = "Madeira"
-"resource.Wool" = "Lã"
-"upgrade.diamond_armor" = "Armadura de diamante"
-"upgrade.diamond_tools" = "Ferramentas de diamante"
-"upgrade.iron_armor" = "Armadura de ferro"
-"upgrade.iron_tools" = "Ferramentas temperadas"
-"upgrade.netherite_armor" = "Armadura de netherita"
-"upgrade.netherite_tools" = "Ferramentas de netherita"
-"{0:0} {1}" = "{0:0} {1}"
-"{0} awakened." = "{0} despertou."
-"{0} built." = "{0} construído."
-"{0} equipped throughout the village." = "{0} equipado em toda a vila."
-"{0} needs {1}" = "{0} precisa de {1}"
-"{0} removed." = "{0} removido."
-"{0} road surface applied." = "Pavimentação de {0} aplicada."
-"{0} trained as {1}." = "{0} treinado como {1}."
-"{0} villagers fell during the raid." = "{0} aldeões morreram na invasão."
-"{0} was destroyed!" = "{0} foi destruído!"
-"{0} | {1:0} HP" = "{0} | {1:0} PV"
-"{0}##{1}" = "{0}##{1}"
-"{0}: {1:0.00}x" = "{0}: {1:0.00}x"
-"{0}: {1}" = "{0}: {1}"
-"{0}: {1} ({2} young)" = "{0}: {1} ({2} filhotes)"
-"{0}: {1} HOSTILES" = "{0}: {1} INIMIGOS"
-"{0}{1}x [{2}]" = "{0}{1}x [{2}]"
-". Requires a staffed forge." = ". Exige uma forja com trabalhador."
-"Villager inspector" = "Inspetor de aldeão"
-"Building inspector" = "Inspetor de construção"
-"Unlimited" = "Sem limite"
-"Scripted behavior" = "Comportamento por script"
-"Residents" = "Moradores"
-"Happiness" = "Felicidade"
-"Water" = "Água"
-"Hostiles" = "Inimigos"
-"Days until raid" = "Dias até a invasão"
-"Map size" = "Tamanho do mapa"
-"Inspect tool" = "Inspecionar / ferramenta vazia [Tab]"
-"Pin panel" = "Fixar painel"
-"Unpin panel" = "Desafixar painel"
-"Select a building" = "Selecione uma construção"
-"Hostile" = "Hostil"
-"Friendly" = "Amigável"
-"Damage {0:0} / Range {1:0.0}" = "Dano {0:0} / Alcance {1:0.0}"
-"Speed {0:0.00} / Cooldown {1:0.0}s" = "Velocidade {0:0.00} / Recarga {1:0.0}s"
-"1 game minute = {0:0.00}s at 1x" = "1 minuto no jogo = {0:0.00}s em 1x"
-"Display" = "Tela"
-"Display mode" = "Modo de exibição"
-"Windowed" = "Janela"
-"Fullscreen" = "Tela cheia"
-"Borderless fullscreen" = "Tela cheia sem bordas"
-"Resolution" = "Resolução"
-"Apply display settings" = "Aplicar configurações de tela"
-"Borderless uses the desktop resolution." = "O modo sem bordas usa a resolução da área de trabalho."
-"Windowed size is fitted to the screen to keep the title bar visible." = "O tamanho da janela é ajustado à tela para manter a barra de título acessível."
-"Create a village" = "Criar uma vila"
-"Create village / replace session" = "Criar vila / substituir sessão"
-"Choose 32–512 tiles per axis. Default: {0}x{1}. Lakes, gentle mountains and natural trees surround a flat starter village. Save before replacing the current session." = "Escolha de 32 a 512 terrenos por eixo. Padrão: {0}x{1}. Lagos, montanhas suaves e árvores cercam a vila inicial plana. Salve antes de substituir a sessão."
-"Guided tutorial" = "Tutorial guiado"
-"Seed (0 = random)" = "Semente (0 = aleatória)"
-"Peaceful nights" = "Noites iniciais sem monstros"
-"Tutorial complete" = "Tutorial concluído"
-"Your village is ready to grow." = "Sua vila está pronta para crescer."
-"Goal complete" = "Objetivo concluído"
-"Goal in progress" = "Objetivo em andamento"
-"Continue" = "Continuar"
-"Skip tutorial" = "Pular tutorial"
-"Ready to harvest" = "Pronta para colher"
-"Regrows in {0} days" = "Cresce novamente em {0} dias"
-"Waiting for trees to regrow" = "Esperando as árvores crescerem"
-"Chopping tree" = "Cortando árvore"
-"trees" = "árvores"
-"Night monsters begin on day {0}" = "Monstros noturnos começam no dia {0}"
-"prefab.oak_tree.name" = "Carvalho"
+
+# Building/road description in the build menu and inspector: oak_tree.
 "prefab.oak_tree.description" = "Uma árvore viva. Lenhadores a cortam uma vez; ela cresce novamente em três dias."
-"tutorial.inspect.title" = "Conheça seus aldeões"
-"tutorial.inspect.description" = "Clique em um aldeão ou construção para inspecionar. O alfinete mantém o painel aberto."
-"tutorial.road.title" = "Conecte a vila"
-"tutorial.road.description" = "Abra Caminhos na barra e coloque terra junto à rede conectada. R gira entradas de construções."
-"tutorial.trees.title" = "Colete madeira de verdade"
-"tutorial.trees.description" = "Observe um lenhador ir até um carvalho e cortá-lo. Cada árvore dá madeira uma vez e cresce em três dias."
-"tutorial.water.title" = "Abasteça os moradores"
-"tutorial.water.description" = "Inspecione o poço e veja sua capacidade. Mantenha água suficiente para todos os moradores."
-"tutorial.homes.title" = "Deixe espaço para crescer"
-"tutorial.homes.description" = "Mantenha quatro camas livres para novos moradores. As entradas das casas devem apontar para caminhos conectados."
-"tutorial.defense.title" = "Prepare suas defesas"
+
+# Building/road display name: oak_tree.
+"prefab.oak_tree.name" = "Carvalho"
+
+# Building/road description in the build menu and inspector: park.
+"prefab.park.description" = "Árvores, flores e bancos aumentam a felicidade."
+
+# Building/road display name: park.
+"prefab.park.name" = "Praça arborizada"
+
+# Building/road description in the build menu and inspector: path.
+"prefab.path.description" = "Conecte as entradas das construções à praça central."
+
+# Building/road display name: path.
+"prefab.path.name" = "Caminho de terra"
+
+# Building/road description in the build menu and inspector: pig_pen.
+"prefab.pig_pen.description" = "Criadores alimentam e reproduzem porcos para produzir comida."
+
+# Building/road display name: pig_pen.
+"prefab.pig_pen.name" = "Chiqueiro"
+
+# Building/road description in the build menu and inspector: plank_road.
+"prefab.plank_road.description" = "Acelera os criadores de animais, mas reduz a velocidade dos mineiros."
+
+# Building/road display name: plank_road.
+"prefab.plank_road.name" = "Passarela de carvalho"
+
+# Building/road description in the build menu and inspector: quarry.
+"prefab.quarry.description" = "Mineiros extraem pedra e pequenas quantidades de ferro."
+
+# Building/road display name: quarry.
+"prefab.quarry.name" = "Pedreira"
+
+# Building/road description in the build menu and inspector: sheep_pen.
+"prefab.sheep_pen.description" = "Criadores alimentam e reproduzem ovelhas e coletam lã."
+
+# Building/road display name: sheep_pen.
+"prefab.sheep_pen.name" = "Aprisco"
+
+# Building/road description in the build menu and inspector: small_warehouse.
+"prefab.small_warehouse.description" = "Armazena até 2.000 recursos físicos. Emprega dois entregadores. Esmeraldas e Bens ficam no tesouro."
+
+# Building/road display name: small_warehouse.
+"prefab.small_warehouse.name" = "Armazém pequeno"
+
+# Building/road description in the build menu and inspector: snow_shrine.
+"prefab.snow_shrine.description" = "A cada três dias um criador pode formar um golem de neve, respeitando o limite configurado."
+
+# Building/road display name: snow_shrine.
+"prefab.snow_shrine.name" = "Santuário de neve"
+
+# Building/road description in the build menu and inspector: soul_road.
+"prefab.soul_road.description" = "Acelera aldeões magos e atrasa os outros viajantes."
+
+# Building/road display name: soul_road.
+"prefab.soul_road.name" = "Trilha de areia das almas"
+
+# Building/road description in the build menu and inspector: wall.
+"prefab.wall.description" = "Bloqueia invasores terrestres. Gire para fechar o perímetro."
+
+# Building/road display name: wall.
+"prefab.wall.name" = "Muro de pedra"
+
+# Building/road description in the build menu and inspector: watchtower.
+"prefab.watchtower.description" = "Posto fortificado para os arqueiros da vila."
+
+# Building/road display name: watchtower.
+"prefab.watchtower.name" = "Torre de vigia"
+
+# Building/road description in the build menu and inspector: well.
+"prefab.well.description" = "Água limpa para dezesseis moradores."
+
+# Building/road display name: well.
+"prefab.well.name" = "Poço da vila"
+
+# Villager profession label in People and inspectors: archer.
+"profession.archer" = "Arqueiro"
+
+# Villager profession label in People and inspectors: citizen.
+"profession.citizen" = "Cidadão"
+
+# Villager profession label in People and inspectors: deliveryman.
+"profession.deliveryman" = "Entregador de recursos"
+
+# Villager profession label in People and inspectors: explorer.
+"profession.explorer" = "Explorador"
+
+# Villager profession label in People and inspectors: farmer.
+"profession.farmer" = "Agricultor"
+
+# Villager profession label in People and inspectors: keeper.
+"profession.keeper" = "Criador de animais"
+
+# Villager profession label in People and inspectors: mage.
+"profession.mage" = "Mago"
+
+# Villager profession label in People and inspectors: miner.
+"profession.miner" = "Mineiro"
+
+# Villager profession label in People and inspectors: smith.
+"profession.smith" = "Ferreiro"
+
+# Villager profession label in People and inspectors: trader.
+"profession.trader" = "Comerciante"
+
+# Villager profession label in People and inspectors: warrior.
+"profession.warrior" = "Guerreiro"
+
+# Villager profession label in People and inspectors: woodcutter.
+"profession.woodcutter" = "Lenhador"
+
+# Resource name used in HUD tooltips, inventory, recipes and trade: AncientDebris.
+"resource.AncientDebris" = "Detritos ancestrais"
+
+# Resource name used in HUD tooltips, inventory, recipes and trade: Diamonds.
+"resource.Diamonds" = "Diamantes"
+
+# Resource name used in HUD tooltips, inventory, recipes and trade: Eggs.
+"resource.Eggs" = "Ovos"
+
+# Resource name used in HUD tooltips, inventory, recipes and trade: Emeralds.
+"resource.Emeralds" = "Esmeraldas"
+
+# Resource name used in HUD tooltips, inventory, recipes and trade: Food.
+"resource.Food" = "Comida"
+
+# Resource name used in HUD tooltips, inventory, recipes and trade: Gold.
+"resource.Gold" = "Ouro"
+
+# Resource name used in HUD tooltips, inventory, recipes and trade: Goods.
+"resource.Goods" = "Bens"
+
+# Resource name used in HUD tooltips, inventory, recipes and trade: Iron.
+"resource.Iron" = "Ferro"
+
+# Resource name used in HUD tooltips, inventory, recipes and trade: Leather.
+"resource.Leather" = "Couro"
+
+# Resource name used in HUD tooltips, inventory, recipes and trade: Milk.
+"resource.Milk" = "Leite"
+
+# Resource name used in HUD tooltips, inventory, recipes and trade: Stone.
+"resource.Stone" = "Pedra"
+
+# Resource name used in HUD tooltips, inventory, recipes and trade: Tools.
+"resource.Tools" = "Ferramentas"
+
+# Resource name used in HUD tooltips, inventory, recipes and trade: Wood.
+"resource.Wood" = "Madeira"
+
+# Resource name used in HUD tooltips, inventory, recipes and trade: Wool.
+"resource.Wool" = "Lã"
+
+# Initial editable name for a village save.
+"save.default_name" = "Minha vila"
+
+# Game-over screen: Births
+"statistics.births" = "Nascimentos"
+
+# Game-over screen: Growing babies
+"statistics.growing_babies" = "Bebês em crescimento"
+
+# Villager activity shown in the People panel and inspector: Assisting.
+"task.Assisting" = "Assisting"
+
+# Villager activity shown in the People panel and inspector: CaravanTravelling.
+"task.CaravanTravelling" = "Travelling with caravan"
+
+# Villager activity shown in the People panel and inspector: ChoppingTree.
+"task.ChoppingTree" = "Cortando árvore"
+
+# Villager activity shown in the People panel and inspector: CollectingDelivery.
+"task.CollectingDelivery" = "Coletando encomenda"
+
+# Villager activity shown in the People panel and inspector: CollectingFood.
+"task.CollectingFood" = "Buscando alimento"
+
+# Villager activity shown in the People panel and inspector: CollectingMilk.
+"task.CollectingMilk" = "Buscando leite"
+
+# Villager activity shown in the People panel and inspector: CollectingRepairSupplies.
+"task.CollectingRepairSupplies" = "Buscando materiais de reparo"
+
+# Villager activity shown in the People panel and inspector: DefendingVillage.
+"task.DefendingVillage" = "Defendendo a vila"
+
+# Villager activity shown in the People panel and inspector: Delivering.
+"task.Delivering" = "Entregando recursos"
+
+# Villager activity shown in the People panel and inspector: GoingHome.
+"task.GoingHome" = "Indo para casa"
+
+# Villager activity shown in the People panel and inspector: GoingToTrees.
+"task.GoingToTrees" = "Going to trees"
+
+# Villager activity shown in the People panel and inspector: GoingToWork.
+"task.GoingToWork" = "Going to work"
+
+# Villager activity shown in the People panel and inspector: Homeless.
+"task.Homeless" = "Sem moradia"
+
+# Villager activity shown in the People panel and inspector: LeavingVillage.
+"task.LeavingVillage" = "Leaving village"
+
+# Villager activity shown in the People panel and inspector: NightPatrol.
+"task.NightPatrol" = "Patrulha noturna"
+
+# Villager activity shown in the People panel and inspector: RepairingBuilding.
+"task.RepairingBuilding" = "Reparando construção"
+
+# Villager activity shown in the People panel and inspector: Resting.
+"task.Resting" = "Descansando"
+
+# Villager activity shown in the People panel and inspector: ScriptedBehavior.
+"task.ScriptedBehavior" = "Comportamento por script"
+
+# Villager activity shown in the People panel and inspector: SeekingHome.
+"task.SeekingHome" = "Seeking a home"
+
+# Villager activity shown in the People panel and inspector: SupportingFamilies.
+"task.SupportingFamilies" = "Ajudando famílias a crescer"
+
+# Villager activity shown in the People panel and inspector: TalkingToResidents.
+"task.TalkingToResidents" = "Talking to residents"
+
+# Villager activity shown in the People panel and inspector: WaitingDeliveries.
+"task.WaitingDeliveries" = "Aguardando entregas"
+
+# Villager activity shown in the People panel and inspector: WaitingStorage.
+"task.WaitingStorage" = "Aguardando espaço no estoque"
+
+# Villager activity shown in the People panel and inspector: WaitingTreeRegrowth.
+"task.WaitingTreeRegrowth" = "Esperando as árvores crescerem"
+
+# Villager activity shown in the People panel and inspector: WanderingHomeless.
+"task.WanderingHomeless" = "Wandering without a home"
+
+# Villager activity shown in the People panel and inspector: Working.
+"task.Working" = "Working"
+
+# Guided tutorial instructions for the defense stage.
 "tutorial.defense.description" = "Construa e empregue soldados no quartel, arqueria ou salão dos magos. As noites 1–5 são seguras; monstros começam na noite 6."
 
-"UI scale" = "Escala da interface"
-"Night patrol" = "Patrulha noturna"
+# Guided tutorial heading for the defense stage.
+"tutorial.defense.title" = "Prepare suas defesas"
 
-# 1.0.5-beta
-"resource.Goods" = "Bens"
-"resource.Torches" = "Tochas"
-"resource.Leather" = "Couro"
-"resource.Milk" = "Leite"
-"profession.deliveryman" = "Entregador de recursos"
-"entity.cow" = "Vaca"
-"prefab.small_warehouse.name" = "Armazém pequeno"
-"prefab.large_warehouse.name" = "Armazém grande"
-"prefab.cow_shed.name" = "Estábulo de vacas"
-"prefab.torch.name" = "Tocha"
-"prefab.torch_workshop.name" = "Oficina de tochas"
-"prefab.small_warehouse.description" = "Armazena até 2.000 recursos físicos. Emprega dois entregadores. Esmeraldas e Bens ficam no tesouro."
-"prefab.large_warehouse.description" = "Armazena até 10.000 recursos físicos e emprega cinco entregadores."
-"prefab.cow_shed.description" = "Criadores cuidam de vacas e produzem couro e leite. Entregadores levam alimento ao estábulo."
-"prefab.torch.description" = "Iluminação sem combustível. Aldeões acendem ao anoitecer e apagam ao amanhecer. Pode ser destruída, reparada ou demolida."
-"prefab.torch_workshop.description" = "Transforma madeira entregue à oficina em tochas."
-"Collecting milk" = "Buscando leite"
-"Collecting food" = "Buscando alimento"
-"Delivering resources" = "Entregando recursos"
-"Collecting delivery" = "Coletando encomenda"
-"Waiting for deliveries" = "Aguardando entregas"
-"Waiting for storage space" = "Aguardando espaço no estoque"
-"Lighting torches" = "Acendendo tochas"
-"Extinguishing torches" = "Apagando tochas"
-"Cattle keeping" = "Criação de vacas"
-"Delivery" = "Entregas"
-"Torch crafting" = "Fabricação de tochas"
-"Storage" = "Estoque"
-"Storage {0:0.##}/{1}" = "Estoque {0:0.##}/{1}"
-"Cargo: {0:0.##} {1}" = "Carga: {0:0.##} {1}"
-"Effect: {0} ({1:0}s)" = "Efeito: {0} ({1:0}s)"
-"Burning" = "Em chamas"
-"Lit" = "Acesa"
-"Extinguished" = "Apagada"
-"Reset tutorial" = "Redefinir tutorial"
-"Enchant armor" = "Encantar armadura"
-"Goods convert to emeralds every day at 06:00." = "Bens são convertidos em esmeraldas todos os dias às 06:00."
-"A staffed mage hall and leather armor are required. Enchanting improves protection and damage." = "Requer armadura e salão dos magos com um mago trabalhando. Encantar aumenta proteção e dano."
-"Villagers collect supplies from nearby warehouses or sources." = "Aldeões buscam suprimentos nos armazéns mais próximos ou nas fontes."
-"06:00: {0:0.##} emeralds earned from Goods; upkeep {1:0.##}." = "06:00: {0:0.##} esmeraldas recebidas por Bens; manutenção {1:0.##}."
-"Delivery required: bring 20 items to the trading hall." = "Entrega solicitada: leve 20 unidades ao mercado."
-"Resource deliveries" = "Entregas de recursos"
-"Resources are stored in buildings. Deliverymen carry inputs to workplaces and surplus to warehouses." = "Recursos ficam nas construções. Entregadores levam insumos aos locais de trabalho e excedentes aos armazéns."
+# Guided tutorial instructions for the homes stage.
+"tutorial.homes.description" = "Mantenha quatro camas livres para novos moradores. As entradas das casas devem apontar para caminhos conectados."
 
-"Daily Goods contribution" = "Contribuição diária de Bens"
-"Sell requests are delivered to the trading hall before the exchange." = "Pedidos de venda precisam ser entregues ao mercado antes da troca."
-"A staffed mage hall and armor are required. Enchanting improves protection and damage." = "Requer armadura e salão dos magos conectado com um mago trabalhando. Encantar aumenta proteção e dano."
-"Poison" = "Veneno"
-"Slowness" = "Lentidão"
-"Weakness" = "Fraqueza"
-"Enchantment active" = "Encantamento ativo"
+# Guided tutorial heading for the homes stage.
+"tutorial.homes.title" = "Deixe espaço para crescer"
 
-"Supplies moved into warehouse storage. Train deliverymen to supply workplaces." = "Suprimentos transferidos para o armazém. Treine entregadores para abastecer os locais de trabalho."
+# Guided tutorial instructions for the inspect stage.
+"tutorial.inspect.description" = "Clique em um aldeão ou construção para inspecionar. O alfinete mantém o painel aberto."
 
-# Sunlight and game over
-"Night falls: {0} monsters approach. Sunlight burns unprotected undead." = "Anoiteceu: {0} monstros se aproximam. O sol queima mortos-vivos sem proteção."
-"Leather helmet / sunlight protection" = "Capacete de couro / proteção solar"
-"Burning in sunlight" = "Queimando ao sol"
-"Boss wave" = "Onda de chefe"
-"VILLAGE LOST" = "VILA DESTRUÍDA"
-"All villagers have been eliminated." = "Todos os aldeões foram eliminados."
-"Unsaved village" = "Vila não salva"
-"Save: {0}" = "Save: {0}"
-"Village statistics" = "Estatísticas da vila"
-"Day / time" = "Dia / hora"
-"Recorded since day" = "Registradas desde o dia"
-"Simulated minutes" = "Minutos simulados"
-"Map / seed" = "Mapa / semente"
-"Peak population" = "População máxima"
-"New arrivals" = "Novos moradores"
-"Villagers lost" = "Aldeões perdidos"
-"Waves / monsters defeated" = "Ondas / monstros derrotados"
-"Monsters lost to sunlight" = "Monstros eliminados pelo sol"
-"Remaining monsters" = "Monstros restantes"
-"Animals / guardians" = "Animais / guardiões"
-"Buildings placed / destroyed" = "Construções feitas / destruídas"
-"Deliveries completed" = "Entregas realizadas"
-"Emeralds from Goods" = "Esmeraldas recebidas por Bens"
-"Daily balance" = "Saldo diário"
-"Housing / water" = "Moradia / água"
-"Immigration progress" = "Progresso de imigração"
-"Armor / tools" = "Armadura / ferramentas"
-"Enchantment" = "Encantamento"
-"Yes" = "Sim"
-"No" = "Não"
-"Boss wave interval" = "Intervalo entre chefes"
-"Day duration" = "Duração do dia"
-"{0} days" = "{0} dias"
-"{0:0.##} minutes" = "{0:0.##} minutos"
-"Resources remaining" = "Recursos restantes"
-"Total production" = "Produção total"
-"Buildings remaining" = "Construções restantes"
-"Retry save" = "Save para tentar novamente"
-"Select a save" = "Selecione um save"
-"Reload save / Retry" = "Recarregar / Tentar novamente"
-"Delete save" = "Excluir save"
-"Confirm delete save" = "Confirmar exclusão"
-"Permanently delete {0}?" = "Excluir {0} permanentemente?"
-"Save deleted." = "Save excluído."
-"This save already contains a defeated village. Choose an earlier save." = "Este save já contém uma vila destruída. Escolha um save anterior."
+# Guided tutorial heading for the inspect stage.
+"tutorial.inspect.title" = "Conheça seus aldeões"
+
+# Guided tutorial instructions for the road stage.
+"tutorial.road.description" = "Abra Caminhos na barra e coloque terra junto à rede conectada. R gira entradas de construções."
+
+# Guided tutorial heading for the road stage.
+"tutorial.road.title" = "Conecte a vila"
+
+# Guided tutorial instructions for the trees stage.
+"tutorial.trees.description" = "Observe um lenhador ir até um carvalho e cortá-lo. Cada árvore dá madeira uma vez e cresce em três dias."
+
+# Guided tutorial heading for the trees stage.
+"tutorial.trees.title" = "Colete madeira de verdade"
+
+# Guided tutorial instructions for the water stage.
+"tutorial.water.description" = "Inspecione o poço e veja sua capacidade. Mantenha água suficiente para todos os moradores."
+
+# Guided tutorial heading for the water stage.
+"tutorial.water.title" = "Abasteça os moradores"
+
+# Village status or journal: 06:00: {0:0.##} emeralds earned from Goods; upkeep {1:0.##}.
+"message.goods_settlement" = "06:00: {0:0.##} esmeraldas recebidas por Bens; manutenção {1:0.##}."
+
+# Interface label, help text or control: 1 game minute = {0:0.00}s at 1x
+"format.game_minute_seconds" = "1 minuto no jogo = {0:0.00}s em 1x"
+
+# Village status or journal: A connected, staffed forge is required.
+"ui.a_connected_staffed_forge_is_required" = "É necessária uma forja conectada e com trabalhadores."
+
+# Interface label, help text or control: A save with this name exists. Confirm overwrite or change the name.
+"ui.a_save_with_this_name_exists_confirm_overwrite" = "Já existe um save com esse nome. Confirme a substituição ou altere o nome."
+
+# Village status or journal: A staffed mage hall and armor are required. Enchanting improves protection and damage.
+"ui.a_staffed_mage_hall_and_armor_are_required" = "Requer armadura e salão dos magos conectado com um mago trabalhando. Encantar aumenta proteção e dano."
+
+# Interface label, help text or control: A staffed mage hall and leather armor are required. Enchanting improves protection and damage.
+"ui.a_staffed_mage_hall_and_leather_armor_are" = "Requer armadura e salão dos magos com um mago trabalhando. Encantar aumenta proteção e dano."
+
+# Interface label, help text or control: Animal care
+"ui.animal_care" = "Criação de animais"
+
+# Interface label, help text or control: Animals
+"ui.animals" = "Animais"
+
+# Interface label, help text or control: Animals {0} / Guardians {1}
+"ui.animals_guardians" = "Animais {0} / Guardiões {1}"
+
+# Game-over screen: Animals / guardians
+"ui.animals_guardians_2" = "Animais / guardiões"
+
+# Interface label, help text or control: Animals per pen
+"ui.animals_per_pen" = "Animais por cercado"
+
+# Interface label, help text or control: Animated water
+"ui.animated_water" = "Água animada"
+
+# Interface label, help text or control: Apply display settings
+"ui.apply_display_settings" = "Aplicar configurações de tela"
+
+# Interface label, help text or control: Archery
+"ui.archery" = "Arqueria"
+
+# Game-over screen: Armor / tools
+"ui.armor_tools" = "Armadura / ferramentas"
+
+# Interface label, help text or control: Assign specialists to connected workplaces; surplus villagers become citizens.
+"ui.assign_specialists_to_connected_workplaces_surplus_villagers_become" = "Distribui especialistas nos trabalhos conectados; os demais viram cidadãos."
+
+# Interface label, help text or control: Assisting:
+"ui.assisting" = "Ajudando: "
+
+# Interface label, help text or control: Attack every N days
+"ui.attack_every_n_days" = "Invasão a cada N dias"
+
+# Interface label, help text or control: {0} awakened.
+"ui.awakened" = "{0} despertou."
+
+# Interface label, help text or control: < Back
+"ui.back" = " < Voltar"
+
+# Interface label, help text or control: Balance {0:+0.0;-0.0;0} / day
+"ui.balance_day" = "Saldo {0:+0.0;-0.0;0} / dia"
+
+# Interface label, help text or control: Base travel speed: {0:0.00}x
+"ui.base_travel_speed_x" = "Velocidade base: {0:0.00}x"
+
+# Interface label, help text or control: Base wave size
+"ui.base_wave_size" = "Tamanho inicial das ondas"
+
+# Interface label, help text or control: Borderless fullscreen
+"ui.borderless_fullscreen" = "Tela cheia sem bordas"
+
+# Interface label, help text or control: Borderless uses the desktop resolution.
+"ui.borderless_uses_the_desktop_resolution" = "O modo sem bordas usa a resolução da área de trabalho."
+
+# Game-over screen: Boss wave interval
+"ui.boss_wave_interval" = "Intervalo entre chefes"
+
+# Interface label, help text or control: Building inspector
+"ui.building_inspector" = "Inspetor de construção"
+
+# Interface label, help text or control: Building [Tab]
+"ui.building_tab" = "Construir [Tab]"
+
+# Game-over screen: Buildings placed / destroyed
+"ui.buildings_placed_destroyed" = "Construções feitas / destruídas"
+
+# Game-over screen: Buildings remaining
+"ui.buildings_remaining" = "Construções restantes"
+
+# Interface label, help text or control: Burning in sunlight
+"ui.burning_in_sunlight" = "Queimando ao sol"
+
+# Interface label, help text or control: Buy 20 / {0:0} emeralds
+"ui.buy_20_emeralds" = "Comprar 20 / {0:0} esmeraldas"
+
+# Game-over screen: Cancel
+"ui.cancel" = "Cancelar"
+
+# Interface label, help text or control: Cargo: {0:0.##} {1}
+"ui.cargo" = "Carga: {0:0.##} {1}"
+
+# Interface label, help text or control: Carried items are separate from village stock. Food is consumed daily.
+"ui.carried_items_are_separate_from_village_stock_food" = "Os itens carregados saem do estoque da vila. A comida é consumida diariamente."
+
+# Interface label, help text or control: Cattle keeping
+"ui.cattle_keeping" = "Criação de vacas"
+
+# Village status or journal: Central square and occupied homes are protected.
+"ui.central_square_and_occupied_homes_are_protected" = "A praça central e as casas ocupadas estão protegidas."
+
+# Interface label, help text or control: Choose 32–512 tiles on each axis. Default: {0}x{1}. No world generation: a flat grass surface and th...
+"ui.choose_32512_tiles_on_each_axis_default_x" = "Escolha de 32 a 512 terrenos em cada eixo. Padrão: {0}x{1}. Mapa plano com grama e vila inicial. Criar um mapa substitui a sessão atual; salve antes."
+
+# Interface label, help text or control: Choose 32–512 tiles per axis. Default: {0}x{1}. Lakes, gentle mountains and natural trees surround a...
+"ui.choose_32512_tiles_per_axis_default_x_lakes" = "Escolha de 32 a 512 terrenos por eixo. Padrão: {0}x{1}. Lagos, montanhas suaves e árvores cercam a vila inicial plana. Salve antes de substituir a sessão."
+
+# Interface label, help text or control: Choose 32â€“512 tiles on each axis. Default: {0}x{1}. No world generation: a flat grass surface and ...
+"ui.choose_32a512_tiles_on_each_axis_default_x" = "Choose 32â€“512 tiles on each axis. Default: {0}x{1}. No world generation: a flat grass surface and the starter village only. Creating a map replaces the unsaved session; saved villages remain available."
+
+# Interface label, help text or control: Chopping tree
+"ui.chopping_tree" = "Cortando árvore"
+
+# Interface label, help text or control: Click to build
+"ui.click_to_build" = "Clique para construir"
+
+# Interface label, help text or control: Close
+"ui.close" = "Fechar"
+
+# Interface label, help text or control: Close panel
+"ui.close_panel" = "Fechar painel"
+
+# Interface label, help text or control: Collecting delivery
+"ui.collecting_delivery" = "Coletando encomenda"
+
+# Interface label, help text or control: Collecting food
+"ui.collecting_food" = "Buscando alimento"
+
+# Interface label, help text or control: Collecting milk
+"ui.collecting_milk" = "Buscando leite"
+
+# Interface label, help text or control: Collecting repair supplies
+"ui.collecting_repair_supplies" = "Buscando materiais de reparo"
+
+# Game-over screen: Confirm delete save
+"ui.confirm_delete_save" = "Confirmar exclusão"
+
+# Interface label, help text or control: Confirm overwrite
+"ui.confirm_overwrite" = "Confirmar substituição"
+
+# Village status or journal: Connect and staff a trading hall.
+"ui.connect_and_staff_a_trading_hall" = "Conecte e empregue um trabalhador no mercado."
+
+# Interface label, help text or control: Connected
+"ui.connected" = "Conectado"
+
+# Interface label, help text or control: Continue
+"ui.continue" = "Continuar"
+
+# Interface label, help text or control: Create a flat map
+"ui.create_a_flat_map" = "Criar mapa plano"
+
+# Interface label, help text or control: Create a village
+"ui.create_a_village" = "Criar uma vila"
+
+# Interface label, help text or control: Create flat map / replace session
+"ui.create_flat_map_replace_session" = "Criar mapa / substituir sessão"
+
+# Interface label, help text or control: Create village / replace session
+"ui.create_village_replace_session" = "Criar vila / substituir sessão"
+
+# Game-over screen: Daily balance
+"ui.daily_balance" = "Saldo diário"
+
+# Interface label, help text or control: Daily Goods contribution
+"ui.daily_goods_contribution" = "Contribuição diária de Bens"
+
+# Interface label, help text or control: Damage {0:0} / Range {1:0.0}
+"ui.damage_range" = "Dano {0:0} / Alcance {1:0.0}"
+
+# Interface label, help text or control: Damage reduction {0:0}% / Work rate {1:0.00}x
+"ui.damage_reduction_work_rate_x" = "Proteção {0:0}% / Trabalho {1:0.00}x"
+
+# Interface label, help text or control: DANGER
+"ui.danger" = "PERIGO"
+
+# Interface label, help text or control: DAY {0} {1} {2:00}:00 | Residents {3}/{4} | Happiness {5:0}% | Water {6}/{7} | {8}x{9} | {10}
+"ui.day_00_residents_happiness_water_x" = "DIA {0} {1} {2:00}:00 | Moradores {3}/{4} | Felicidade {5:0}% | Água {6}/{7} | {8}x{9} | {10}"
+
+# Game-over screen: Day duration
+"ui.day_duration" = "Duração do dia"
+
+# Game-over screen: Day / time
+"ui.day_time" = "Dia / hora"
+
+# Game-over screen: {0} days
+"ui.days" = "{0} dias"
+
+# Interface label, help text or control: Days until raid
+"ui.days_until_raid" = "Dias até a invasão"
+
+# Interface label, help text or control: Defending village
+"ui.defending_village" = "Defendendo a vila"
+
+# Interface label, help text or control: Defense
+"ui.defense" = "Defesa"
+
+# Game-over screen: Delete save
+"ui.delete_save" = "Excluir save"
+
+# Game-over screen: Deliveries completed
+"ui.deliveries_completed" = "Entregas realizadas"
+
+# Interface label, help text or control: Delivering resources
+"ui.delivering_resources" = "Entregando recursos"
+
+# Interface label, help text or control: Delivery
+"ui.delivery" = "Entregas"
+
+# Village status or journal: Delivery required: bring 20 items to the trading hall.
+"ui.delivery_required_bring_20_items_to_the_trading" = "Entrega solicitada: leve 20 unidades ao mercado."
+
+# Interface label, help text or control: Demolish / half emerald refund
+"ui.demolish_half_emerald_refund" = "Demolir / devolver meia despesa"
+
+# Interface label, help text or control: Display
+"ui.display" = "Tela"
+
+# Interface label, help text or control: Display mode
+"ui.display_mode" = "Modo de exibição"
+
+# Interface label, help text or control: Economy
+"ui.economy" = "Economia"
+
+# Interface label, help text or control: Effect: {0} ({1:0}s)
+"ui.effect_s" = "Efeito: {0} ({1:0}s)"
+
+# Interface label, help text or control: Efficiency {0:0}%
+"ui.efficiency" = "Eficiência {0:0}%"
+
+# Game-over screen: Emeralds from Goods
+"ui.emeralds_from_goods" = "Esmeraldas recebidas por Bens"
+
+# Interface label, help text or control: Employed {0} / {1}
+"ui.employed" = "Empregados {0} / {1}"
+
+# Interface label, help text or control: Empty inventory
+"ui.empty_inventory" = "Inventário vazio"
+
+# Interface label, help text or control: Enable raids
+"ui.enable_raids" = "Ativar invasões"
+
+# Interface label, help text or control: Enchant armor
+"ui.enchant_armor" = "Encantar armadura"
+
+# Game-over screen: Enchantment
+"ui.enchantment" = "Encantamento"
+
+# Interface label, help text or control: Enchantment active
+"ui.enchantment_active" = "Encantamento ativo"
+
+# Interface label, help text or control: Entrance disconnected
+"ui.entrance_disconnected" = "Entrada desconectada"
+
+# Interface label, help text or control: Equipment / armor {0} / tools {1}
+"ui.equipment_armor_tools" = "Equipamentos / armadura {0} / ferramentas {1}"
+
+# Village status or journal: {0} equipped throughout the village.
+"ui.equipped_throughout_the_village" = "{0} equipado em toda a vila."
+
+# Interface label, help text or control: Escape closes this menu. The simulation is paused.
+"ui.escape_closes_this_menu_the_simulation_is_paused" = "Esc fecha o menu. A simulação está pausada."
+
+# Interface label, help text or control: Expedition
+"ui.expedition" = "Exploração"
+
+# Interface label, help text or control: Extinguished
+"ui.extinguished" = "Apagada"
+
+# Interface label, help text or control: Farming
+"ui.farming" = "Agricultura"
+
+# Interface label, help text or control: Food reserve: {0:0.0} days
+"ui.food_reserve_days" = "Reserva de comida: {0:0.0} dias"
+
+# Interface label, help text or control: Forging
+"ui.forging" = "Forja"
+
+# Interface label, help text or control: Frame limit
+"ui.frame_limit" = "Limite de FPS"
+
+# Interface label, help text or control: Friendly
+"ui.friendly" = "Amigável"
+
+# Interface label, help text or control: Fullscreen
+"ui.fullscreen" = "Tela cheia"
+
+# Interface label, help text or control: Give food / 2 from stock
+"ui.give_food_2_from_stock" = "Entregar 2 comidas do estoque"
+
+# Interface label, help text or control: Give tools / 1 from stock
+"ui.give_tools_1_from_stock" = "Entregar 1 ferramenta do estoque"
+
+# Interface label, help text or control: Goal complete
+"ui.goal_complete" = "Objetivo concluído"
+
+# Interface label, help text or control: Goal in progress
+"ui.goal_in_progress" = "Objetivo em andamento"
+
+# Interface label, help text or control: Going home
+"ui.going_home" = "Indo para casa"
+
+# Interface label, help text or control: Going to
+"ui.going_to" = "Indo para "
+
+# Interface label, help text or control: Golem forging
+"ui.golem_forging" = "Criação de golems"
+
+# Interface label, help text or control: Golems per workshop
+"ui.golems_per_workshop" = "Golems por oficina"
+
+# Interface label, help text or control: Goods convert to emeralds every day at 06:00.
+"ui.goods_convert_to_emeralds_every_day_at_06" = "Bens são convertidos em esmeraldas todos os dias às 06:00."
+
+# Interface label, help text or control: Graphics
+"ui.graphics" = "Gráficos"
+
+# Interface label, help text or control: Graphics preferences saved.
+"ui.graphics_preferences_saved" = "Preferências gráficas salvas."
+
+# Interface label, help text or control: Ground shadows
+"ui.ground_shadows" = "Sombras no chão"
+
+# Interface label, help text or control: Growth per wave
+"ui.growth_per_wave" = "Crescimento por onda"
+
+# Interface label, help text or control: Guided tutorial
+"ui.guided_tutorial" = "Tutorial guiado"
+
+# Game-over screen: Happiness
+"ui.happiness" = "Felicidade"
+
+# Interface label, help text or control: Height (tiles)
+"ui.height_tiles" = "Altura (terrenos)"
+
+# Interface label, help text or control: Helping families grow
+"ui.helping_families_grow" = "Ajudando famílias a crescer"
+
+# Interface label, help text or control: High
+"ui.high" = "Alta"
+
+# Interface label, help text or control: Home: {0}
+"ui.home" = "Moradia: {0}"
+
+# Interface label, help text or control: Homeless
+"ui.homeless" = "Sem moradia"
+
+# Interface label, help text or control: Hostile
+"ui.hostile" = "Hostil"
+
+# Interface label, help text or control: Hostile limit
+"ui.hostile_limit" = "Limite de inimigos"
+
+# Interface label, help text or control: Hostiles {0}
+"ui.hostiles" = "Inimigos {0}"
+
+# Interface label, help text or control: {0}: {1} HOSTILES
+"ui.hostiles_2" = "{0}: {1} INIMIGOS"
+
+# Interface label, help text or control: Hostiles
+"ui.hostiles_3" = "Inimigos"
+
+# Village status or journal: Hostiles defeated! Repair and prepare for the next attack.
+"ui.hostiles_defeated_repair_and_prepare_for_the_next" = "Inimigos derrotados! Repare a vila e prepare a defesa."
+
+# Interface label, help text or control: Housing
+"ui.housing" = "Moradias"
+
+# Game-over screen: Housing / water
+"ui.housing_water" = "Moradia / água"
+
+# Game-over screen: Immigration progress
+"ui.immigration_progress" = "Progresso de imigração"
+
+# Interface label, help text or control: Infrastructure
+"ui.infrastructure" = "Serviços"
+
+# Interface label, help text or control: Inspect tool
+"ui.inspect_tool" = "Inspecionar / ferramenta vazia [Tab]"
+
+# Interface label, help text or control: Inspecting [Tab]
+"ui.inspecting_tab" = "Inspecionar [Tab]"
+
+# Village status or journal: Insufficient supplies for trade.
+"ui.insufficient_supplies_for_trade" = "Suprimentos insuficientes para negociar."
+
+# Interface label, help text or control: Inventory
+"ui.inventory" = "Inventário"
+
+# Game-over screen: Journal
+"ui.journal" = "Diário"
+
+# Interface label, help text or control: {0}##{1}
+"ui.label" = "{0}##{1}"
+
+# Interface label, help text or control: {0}: {1}
+"ui.label_2" = "{0}: {1}"
+
+# Interface label, help text or control: Language
+"ui.language" = "Idioma"
+
+# Interface label, help text or control: Leather helmet / sunlight protection
+"ui.leather_helmet_sunlight_protection" = "Capacete de couro / proteção solar"
+
+# Interface label, help text or control: Lit
+"ui.lit" = "Acesa"
+
+# Interface label, help text or control: Load Game
+"ui.load_game" = "Carregar jogo"
+
+# Interface label, help text or control: Load selected village
+"ui.load_selected_village" = "Carregar vila selecionada"
+
+# Interface label, help text or control: Loaded {0}.
+"ui.loaded" = "{0} carregado."
+
+# Interface label, help text or control: Low
+"ui.low" = "Baixa"
+
+# Interface label, help text or control: Makes {0:0.##} {1} / cycle
+"ui.makes_cycle" = "Produz {0:0.##} {1} / ciclo"
+
+# Game-over screen: Map / seed
+"ui.map_seed" = "Mapa / semente"
+
+# Interface label, help text or control: Map size
+"ui.map_size" = "Tamanho do mapa"
+
+# Interface label, help text or control: Medium
+"ui.medium" = "Média"
+
+# Interface label, help text or control: MENU [Esc]
+"ui.menu_esc" = "MENU [Esc]"
+
+# Interface label, help text or control: Minecraft textures
+"ui.minecraft_textures" = "Texturas do Minecraft"
+
+# Game-over screen: {0:0.##} minutes
+"ui.minutes" = "{0:0.##} minutos"
+
+# Interface label, help text or control: Minutes per day
+"ui.minutes_per_day" = "Minutos por dia"
+
+# Game-over screen: Monsters lost to sunlight
+"ui.monsters_lost_to_sunlight" = "Monstros eliminados pelo sol"
+
+# Interface label, help text or control: Monsters per night
+"options.night_group_size" = "Monstros por encontro"
+
+# Game-over screen: New arrivals
+"ui.new_arrivals" = "Novos moradores"
+
+# Game-over screen: New Game
+"ui.new_game" = "Novo jogo"
+
+# Interface label, help text or control: Next attack uses the next multiple of this interval.
+"ui.next_attack_uses_the_next_multiple_of_this" = "O próximo ataque ocorre no próximo múltiplo desse intervalo."
+
+# Interface label, help text or control: Next raid: day {0}
+"ui.next_raid_day" = "Próxima invasão: dia {0}"
+
+# Interface label, help text or control: Night falls: {0} monsters approach. They retreat at dawn.
+"ui.night_falls_monsters_approach_they_retreat_at_dawn" = "Anoiteceu: {0} monstros se aproximam. Eles fogem ao amanhecer."
+
+# Interface label, help text or control: Night patrol
+"ui.night_patrol" = "Patrulha noturna"
+
+# Interface label, help text or control: Nighttime monsters
+"ui.nighttime_monsters" = "Monstros noturnos"
+
+# Game-over screen: No
+"ui.no" = "Não"
+
+# Interface label, help text or control: No saved villages yet.
+"ui.no_saved_villages_yet" = "Ainda não há vilas salvas."
+
+# Village status or journal: Not enough materials for this upgrade.
+"ui.not_enough_materials_for_this_upgrade" = "Faltam materiais para esta melhoria."
+
+# Village status or journal: Not enough supplies for training.
+"ui.not_enough_supplies_for_training" = "Faltam suprimentos para o treinamento."
+
+# Button or heading that opens game options.
+"ui.options" = "Opções"
+
+# Interface label, help text or control: PAUSE
+"ui.pause" = "PAUSAR"
+
+# Interface label, help text or control: Peaceful nights
+"ui.peaceful_nights" = "Noites iniciais sem monstros"
+
+# Game-over screen: Peak population
+"ui.peak_population" = "População máxima"
+
+# Interface label, help text or control: People
+"ui.people" = "Moradores"
+
+# Game-over screen: Permanently delete {0}?
+"ui.permanently_delete" = "Excluir {0} permanentemente?"
+
+# Interface label, help text or control: Pig keeping
+"ui.pig_keeping" = "Criação de porcos"
+
+# Interface label, help text or control: Pin panel
+"ui.pin_panel" = "Fixar painel"
+
+# Interface label, help text or control: PLAY
+"ui.play" = "JOGAR"
+
+# Interface label, help text or control: Population limit
+"ui.population_limit" = "Limite de moradores"
+
+# Interface label, help text or control: Poultry keeping
+"ui.poultry_keeping" = "Criação de galinhas"
+
+# Interface label, help text or control: Priority
+"ui.priority" = "Prioridade"
+
+# Interface label, help text or control: Production
+"ui.production" = "Produção"
+
+# Interface label, help text or control: Production seconds
+"ui.production_seconds" = "Segundos por produção"
+
+# Interface label, help text or control: Quality
+"ui.quality" = "Qualidade"
+
+# Interface label, help text or control: R rotate / Tab inspect / Right click inspect / Shift+Q/E fast camera
+"ui.r_rotate_tab_inspect_right_click_inspect_shift" = "R girar / Tab inspecionar / Botão direito inspecionar / Shift+Q/E giro rápido"
+
+# Village status or journal: RAID {0}! {1} hostiles led by a Nether warlord are attacking.
+"ui.raid_hostiles_led_by_a_nether_warlord_are" = "INVASÃO {0}! {1} inimigos atacam sob o comando de um senhor do Nether."
+
+# Interface label, help text or control: Raid in {0} days
+"ui.raid_in_days" = "Invasão em {0} dias"
+
+# Interface label, help text or control: Raids disabled
+"ui.raids_disabled" = "Invasões desativadas"
+
+# Interface label, help text or control: Ready to harvest
+"ui.ready_to_harvest" = "Pronta para colher"
+
+# Game-over screen: Recorded since day
+"ui.recorded_since_day" = "Registradas desde o dia"
+
+# Interface label, help text or control: Regrows in {0} days
+"ui.regrows_in_days" = "Cresce novamente em {0} dias"
+
+# Game-over screen: Reload save / Retry
+"ui.reload_save_retry" = "Recarregar / Tentar novamente"
+
+# Game-over screen: Remaining monsters
+"ui.remaining_monsters" = "Monstros restantes"
+
+# Interface label, help text or control: Repair / 2 wood + 2 stone
+"ui.repair_2_wood_2_stone" = "Reparar / 2 madeiras + 2 pedras"
+
+# Interface label, help text or control: Repairing building
+"ui.repairing_building" = "Reparando construção"
+
+# Interface label, help text or control: . Requires a staffed forge.
+"ui.requires_a_staffed_forge" = ". Exige uma forja com trabalhador."
+
+# Interface label, help text or control: Reset tutorial
+"ui.reset_tutorial" = "Redefinir tutorial"
+
+# Interface label, help text or control: Residents
+"ui.residents" = "Moradores"
+
+# Interface label, help text or control: Resolution
+"ui.resolution" = "Resolução"
+
+# Interface label, help text or control: Resource
+"ui.resource" = "Recurso"
+
+# Interface label, help text or control: Resource deliveries
+"ui.resource_deliveries" = "Entregas de recursos"
+
+# Interface label, help text or control: Resources are stored in buildings. Deliverymen carry inputs to workplaces and surplus to warehouses.
+"ui.resources_are_stored_in_buildings_deliverymen_carry_inputs" = "Recursos ficam nas construções. Entregadores levam insumos aos locais de trabalho e excedentes aos armazéns."
+
+# Game-over screen: Resources remaining
+"ui.resources_remaining" = "Recursos restantes"
+
+# Interface label, help text or control: Resting
+"ui.resting" = "Descansando"
+
+# Game-over screen: Retry save
+"ui.retry_save" = "Save para tentar novamente"
+
+# Village status or journal: {0} road surface applied.
+"ui.road_surface_applied" = "Pavimentação de {0} aplicada."
+
+# Interface label, help text or control: Roads
+"ui.roads" = "Caminhos"
+
+# Interface label, help text or control: Rotate [R] {0} deg
+"ui.rotate_r_deg" = "Girar [R] {0} graus"
+
+# Interface label, help text or control: Rules apply immediately and persist when you save the village. Lower caps stop new spawns without de...
+"ui.rules_apply_immediately_and_persist_when_you_save" = "As regras são aplicadas imediatamente e salvas com a vila. Limites menores impedem novas criações sem apagar moradores ou animais. Escolha o tamanho do mapa em Novo jogo."
+
+# Game-over screen: Save: {0}
+"ui.save" = "Save: {0}"
+
+# Game-over screen: Save deleted.
+"ui.save_deleted" = "Save excluído."
+
+# Interface label, help text or control: Save Game
+"ui.save_game" = "Salvar jogo"
+
+# Interface label, help text or control: Save Game As
+"ui.save_game_as" = "Salvar jogo como"
+
+# Interface label, help text or control: Save graphics preferences
+"ui.save_graphics_preferences" = "Salvar preferências gráficas"
+
+# Interface label, help text or control: Save village
+"ui.save_village" = "Salvar vila"
+
+# Interface label, help text or control: Saved as {0}.
+"ui.saved_as" = "Salvo como {0}."
+
+# Interface label, help text or control: Saves in executable/UserData
+"ui.saves_in_executable_userdata" = "Saves na pasta UserData do executável"
+
+# Interface label, help text or control: Scripted behavior
+"ui.scripted_behavior" = "Comportamento por script"
+
+# Interface label, help text or control: Search...
+"ui.search" = "Buscar..."
+
+# Interface label, help text or control: Seed (0 = random)
+"ui.seed_0_random" = "Semente (0 = aleatória)"
+
+# Interface label, help text or control: Select a building
+"ui.select_a_building" = "Selecione uma construção"
+
+# Game-over screen: Select a save
+"ui.select_a_save" = "Selecione um save"
+
+# Interface label, help text or control: Sell 20 / {0:0} emeralds
+"ui.sell_20_emeralds" = "Vender 20 / {0:0} esmeraldas"
+
+# Interface label, help text or control: Sell requests are delivered to the trading hall before the exchange.
+"ui.sell_requests_are_delivered_to_the_trading_hall" = "Pedidos de venda precisam ser entregues ao mercado antes da troca."
+
+# Interface label, help text or control: Shepherding
+"ui.shepherding" = "Criação de ovelhas"
+
+# Game-over screen: Simulated minutes
+"ui.simulated_minutes" = "Minutos simulados"
+
+# Interface label, help text or control: Skip tutorial
+"ui.skip_tutorial" = "Pular tutorial"
+
+# Interface label, help text or control: Snow crafting
+"ui.snow_crafting" = "Criação de golems de neve"
+
+# Interface label, help text or control: Speed {0:0.00} / Cooldown {1:0.0}s
+"ui.speed_cooldown_s" = "Velocidade {0:0.00} / Recarga {1:0.0}s"
+
+# Interface label, help text or control: Spellcasting
+"ui.spellcasting" = "Magia"
+
+# Interface label, help text or control: Staff {0}/{1}
+"ui.staff" = "Trabalhadores {0}/{1}"
+
+# Interface label, help text or control: Stonecutting
+"ui.stonecutting" = "Mineração"
+
+# Interface label, help text or control: Storage
+"ui.storage" = "Estoque"
+
+# Interface label, help text or control: Storage {0:0.##}/{1}
+"ui.storage_2" = "Estoque {0:0.##}/{1}"
+
+# Interface label, help text or control: Stored as UserData/<name>.vcs (binary)
+"ui.stored_as_userdata_name_vcs_binary" = "Salvo em UserData/<nome>.vcs (binário)"
+
+# Village status or journal: Supplies moved into warehouse storage. Train deliverymen to supply workplaces.
+"ui.supplies_moved_into_warehouse_storage_train_deliverymen_to" = "Suprimentos transferidos para o armazém. Treine entregadores para abastecer os locais de trabalho."
+
+# Interface label, help text or control: Tax
+"ui.tax" = "Imposto"
+
+# Game-over screen: This save already contains a defeated village. Choose an earlier save.
+"ui.this_save_already_contains_a_defeated_village_choose" = "Este save já contém uma vila destruída. Escolha um save anterior."
+
+# Interface label, help text or control: Tile {0}, {1}
+"ui.tile" = "Terreno {0}, {1}"
+
+# Game-over screen: Total production
+"ui.total_production" = "Produção total"
+
+# Interface label, help text or control: Trading
+"ui.trading" = "Comércio"
+
+# Interface label, help text or control: Trading hall
+"ui.trading_hall" = "Mercado"
+
+# Village status or journal: {0} trained as {1}.
+"ui.trained_as" = "{0} treinado como {1}."
+
+# Interface label, help text or control: trees
+"ui.trees" = "árvores"
+
+# Interface label, help text or control: Tutorial complete
+"ui.tutorial_complete" = "Tutorial concluído"
+
+# Interface label, help text or control: UI scale
+"ui.ui_scale" = "Escala da interface"
+
+# Interface label, help text or control: Unemployed
+"ui.unemployed" = "Desempregado"
+
+# Interface label, help text or control: Unemployed citizens help families attract residents. They can assist any workplace at 50% efficiency...
+"ui.unemployed_citizens_help_families_attract_residents_they_can" = "Cidadãos desempregados ajudam a vila a crescer. Podem trabalhar em qualquer função com 50% de eficiência. Treine especialistas com ferramentas e esmeraldas."
+
+# Interface label, help text or control: ?
+"ui.unknown" = "?"
+
+# Interface label, help text or control: Unlimited
+"ui.unlimited" = "Sem limite"
+
+# Village status or journal: Unlock equipment upgrades in order.
+"ui.unlock_equipment_upgrades_in_order" = "Desbloqueie as melhorias de equipamento na ordem."
+
+# Interface label, help text or control: Unpin panel
+"ui.unpin_panel" = "Desafixar painel"
+
+# Game-over screen: Unsaved village
+"ui.unsaved_village" = "Vila não salva"
+
+# Interface label, help text or control: Uses {0:0.##} {1} / cycle
+"ui.uses_cycle" = "Consome {0:0.##} {1} / ciclo"
+
+# Interface label, help text or control: Village defense
+"ui.village_defense" = "Defesa da vila"
+
+# Interface label, help text or control: Village journal
+"ui.village_journal" = "Diário da vila"
+
+# Interface label, help text or control: Village rules / saved with this village
+"ui.village_rules_saved_with_this_village" = "Regras / salvas com esta vila"
+
+# Interface label, help text or control: Village save name
+"ui.village_save_name" = "Nome do save da vila"
+
+# Game-over screen: Village statistics
+"ui.village_statistics" = "Estatísticas da vila"
+
+# Interface label, help text or control: Villager inspector
+"ui.villager_inspector" = "Inspetor de aldeão"
+
+# Interface label, help text or control: Villagers collect supplies from nearby warehouses or sources.
+"ui.villagers_collect_supplies_from_nearby_warehouses_or_sources" = "Aldeões buscam suprimentos nos armazéns mais próximos ou nas fontes."
+
+# Village status or journal: {0} villagers fell during the raid.
+"ui.villagers_fell_during_the_raid" = "{0} aldeões morreram na invasão."
+
+# Game-over screen: Villagers lost
+"ui.villagers_lost" = "Aldeões perdidos"
+
+# Interface label, help text or control: Waiting for deliveries
+"ui.waiting_for_deliveries" = "Aguardando entregas"
+
+# Interface label, help text or control: Waiting for storage space
+"ui.waiting_for_storage_space" = "Aguardando espaço no estoque"
+
+# Interface label, help text or control: Waiting for trees to regrow
+"ui.waiting_for_trees_to_regrow" = "Esperando as árvores crescerem"
+
+# Interface label, help text or control: Walls and gates block raiders. Warriors intercept; archers, mages and snow golems shoot. Configure a...
+"ui.walls_and_gates_block_raiders_warriors_intercept_archers" = "Muros e portões bloqueiam invasores. Guerreiros interceptam; arqueiros, magos e golems de neve atacam à distância. Configure as invasões em Opções."
+
+# Interface label, help text or control: Warrior training
+"ui.warrior_training" = "Treino de guerreiros"
+
+# Interface label, help text or control: Water
+"ui.water" = "Água"
+
+# Interface label, help text or control: Waves {0} / Kills {1}
+"ui.waves_kills" = "Ondas {0} / Abates {1}"
+
+# Game-over screen: Waves / monsters defeated
+"ui.waves_monsters_defeated" = "Ondas / monstros derrotados"
+
+# Interface label, help text or control: Width (tiles)
+"ui.width_tiles" = "Largura (terrenos)"
+
+# Interface label, help text or control: Windowed
+"ui.windowed" = "Janela"
+
+# Interface label, help text or control: Windowed size is fitted to the screen to keep the title bar visible.
+"ui.windowed_size_is_fitted_to_the_screen_to" = "O tamanho da janela é ajustado à tela para manter a barra de título acessível."
+
+# Interface label, help text or control: Woodcutting
+"ui.woodcutting" = "Corte de madeira"
+
+# Interface label, help text or control: Work progress {0:0.0}/{1:0.0}s
+"ui.work_progress_s" = "Progresso {0:0.0}/{1:0.0}s"
+
+# Interface label, help text or control: Workers {0}/{1}
+"ui.workers" = "Trabalhadores {0}/{1}"
+
+# Interface label, help text or control: Workforce
+"ui.workforce" = "Trabalhadores"
+
+# Interface label, help text or control: Workplace: {0}
+"ui.workplace" = "Trabalho: {0}"
+
+# Interface label, help text or control: Workplace enabled
+"ui.workplace_enabled" = "Trabalho ativado"
+
+# Interface label, help text or control: {0}: {1:0.00}x
+"ui.x" = "{0}: {1:0.00}x"
+
+# Interface label, help text or control: {0}{1}x [{2}]
+"ui.x_2" = "{0}{1}x [{2}]"
+
+# Game-over screen: Yes
+"ui.yes" = "Sim"
+
+# Interface label, help text or control: {0}: {1} ({2} young)
+"ui.young" = "{0}: {1} ({2} filhotes)"
+
+# Village status or journal: Your first farms and animal keepers are ready. Build a forge and prepare defenses before day {0}.
+"ui.your_first_farms_and_animal_keepers_are_ready" = "As fazendas e os criadores estão prontos. Construa uma forja e prepare as defesas antes do dia {0}."
+
+# Interface label, help text or control: Your village is ready to grow.
+"ui.your_village_is_ready_to_grow" = "Sua vila está pronta para crescer."
+
+# Interface label, help text or control: Boss wave
+"unit.boss_wave" = "Onda de chefe"
+
+# Equipment upgrade name in the Economy panel: diamond_armor.
+"upgrade.diamond_armor" = "Armadura de diamante"
+
+# Equipment upgrade name in the Economy panel: diamond_tools.
+"upgrade.diamond_tools" = "Ferramentas de diamante"
+
+# Equipment upgrade name in the Economy panel: iron_armor.
+"upgrade.iron_armor" = "Armadura de ferro"
+
+# Equipment upgrade name in the Economy panel: iron_tools.
+"upgrade.iron_tools" = "Ferramentas temperadas"
+
+# Equipment upgrade name in the Economy panel: netherite_armor.
+"upgrade.netherite_armor" = "Armadura de netherita"
+
+# Equipment upgrade name in the Economy panel: netherite_tools.
+"upgrade.netherite_tools" = "Ferramentas de netherita"
+
+# Villager inspector health. {0}: current health; maximum is 50.
+"villager.health" = "Vida {0:0}/50"
+
+# Interface label, help text or control: {0} | {1:0} HP
+"villager.name_health" = "{0} | {1:0} PV"
+
+# Options: interval between regular night encounters, measured on the game clock.
+"options.night_spawn_interval" = "Intervalo noturno (minutos do jogo)"
+
+# Options: help describing the recurring night-monster schedule.
+"options.night_spawn_window" = "Encontros se repetem das 18:00 até 05:00, respeitando o limite de monstros e as noites de paz."

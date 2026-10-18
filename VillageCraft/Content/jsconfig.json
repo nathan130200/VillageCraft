@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "checkJs": true,
+    "noEmit": true,
+    "target": "ES2020",
+    "moduleDetection": "force",
+    "lib": ["ES2020"],
+    "strict": false
+  },
+  "include": ["Scripts/**/*.js", "game.d.ts"]
+}

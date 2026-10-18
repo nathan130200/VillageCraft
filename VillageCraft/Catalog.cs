@@ -19,9 +19,8 @@ public class Plan
     public bool SheltersFromSun {get;set;}
     public bool Warehouse {get;set;}
     public bool Indestructible {get;set;}
-    public float LightRadius {get;set;}
     public bool Natural {get;set;}
-    public Dictionary<string,float> Harvest {get;set;}=[];
+    public Dictionary<ResourceType,float> Harvest {get;set;}=[];
     public int RegrowDays {get;set;}=3;
     public string HarvestSource {get;set;}=string.Empty;
     public int HarvestRadius {get;set;}=7;
@@ -42,9 +41,9 @@ public class Plan
     public bool Path { get; set; }
     public bool NeedsPath { get; set; } = true;
     public bool BlocksRaiders { get; set; }
-    public Dictionary<string,float> Cost { get; set; } = [];
-    public Dictionary<string,float> Input { get; set; } = [];
-    public Dictionary<string,float> Output { get; set; } = [];
+    public Dictionary<ResourceType,float> Cost { get; set; } = [];
+    public Dictionary<ResourceType,float> Input { get; set; } = [];
+    public Dictionary<ResourceType,float> Output { get; set; } = [];
     public string Animal { get; set; } = string.Empty;
     public string Defender { get; set; } = string.Empty;
     public bool CreatesGuardian { get; set; }
@@ -78,10 +77,10 @@ public class Catalog
     public EconomySettings Economy {get;set;}=new();
     public TerrainSettings Terrain {get;set;}=new();
     public TutorialFile Tutorial {get;set;}=new();
-    public Dictionary<string,string> ResourceIcons {get;set;}=[];
+    public Dictionary<ResourceType,string> ResourceIcons {get;set;}=[];
     Dictionary<string,Plan> byId=[];
     public static Catalog Data { get; private set; } = null!;
-    public static string[] Resources {get;private set;}=[];
+    public static ResourceType[] Resources {get;private set;}=[];
     public static void Load(string? path=null)
     {
         path ??= Path.Combine(AppContext.BaseDirectory,"Content");
@@ -100,7 +99,7 @@ public class Catalog
         foreach(var file in Directory.GetFiles(Path.Combine(path,"Professions"),"*.toml").Order())
         {var profession=TomlFile.Read<ProfessionPlan>(file);if(!data.Professions.TryAdd(profession.Id,profession))throw new InvalidDataException("Duplicate profession: "+profession.Id);}
         data.Upgrades=TomlFile.Read<UpgradeFile>(Path.Combine(path,"upgrades.toml")).Upgrades;
-        string[] resourceIds=data.ResourceDefinitions.Select(r=>r.Id).ToArray();
+        ResourceType[] resourceIds=data.ResourceDefinitions.Select(r=>r.Id).ToArray();
         void Require(bool ok,string reason){if(!ok)throw new InvalidDataException("Prefab catalog: "+reason);}
         Require(data.Prefabs.Count>0&&data.Prefabs.Count<=256,"expected 1..256 prefabs");
         Require(data.Game.FormatVersion==1,"unsupported content version");
@@ -118,7 +117,7 @@ public class Catalog
         foreach(var p in data.Prefabs)
         {
             Require(!string.IsNullOrWhiteSpace(p.Id)&&data.Models.ContainsKey(p.Model)&&data.Models.ContainsKey(p.WorkerModel),"missing id or model");
-            Require(p.StorageCapacity is >=0 and <=100000&&float.IsFinite(p.LightRadius)&&p.LightRadius is >=0 and <=16&&(!p.Warehouse||p.StorageCapacity>0),"invalid storage or lighting settings");
+            Require(p.StorageCapacity is >=0 and <=100000&&(!p.Warehouse||p.StorageCapacity>0),"invalid storage settings");
             Require(p.Jobs>=0&&p.Homes>=0&&p.Water>=0&&p.Health>0&&float.IsFinite(p.Health)&&p.Upkeep>=0,"invalid prefab values");
             foreach(var map in new[]{p.Cost,p.Input,p.Output,p.Harvest})Require(map.All(e=>resourceIds.Contains(e.Key)&&float.IsFinite(e.Value)&&e.Value>=0),"unknown resource or negative amount");
             Require(p.Input.Where(e=>!City.Currency(e.Key)).Sum(e=>e.Value)<=p.StorageCapacity&&p.Output.Where(e=>!City.Currency(e.Key)).Sum(e=>e.Value)<=p.StorageCapacity,"storage is smaller than a production cycle");
@@ -130,8 +129,8 @@ public class Catalog
         foreach(var u in data.Units.Values)Require(data.Models.ContainsKey(u.Model)&&new[]{u.Health,u.Damage,u.Range,u.Speed,u.Cooldown}.All(v=>float.IsFinite(v)&&v>0),"invalid unit");
         foreach(string id in new[]{"path","cottage","farm","well","lumber","quarry","sheep_pen","pig_pen","chicken_coop"})Require(data.Prefabs.Any(p=>p.Id==id),"missing starter prefab "+id);
         foreach(string id in new[]{"zombie","piglin","blaze"})Require(data.Units.ContainsKey(id),"missing raider "+id);
-        Require(resourceIds.Distinct().Count()==resourceIds.Length&&resourceIds.Length is >0 and <=64,"duplicate or too many resources");
-        foreach(string id in new[]{"Emeralds","Food","Wood","Stone","Iron","Tools","Wool","Eggs"})Require(resourceIds.Contains(id),"missing resource "+id);
+        Require(resourceIds.All(r=>r!=ResourceType.None&&Enum.IsDefined(r))&&resourceIds.Distinct().Count()==resourceIds.Length&&resourceIds.Length is >0 and <=64,"duplicate or too many resources");
+        foreach(ResourceType id in new[]{ResourceType.Emeralds,ResourceType.Food,ResourceType.Wood,ResourceType.Stone,ResourceType.Iron,ResourceType.Tools,ResourceType.Wool,ResourceType.Eggs})Require(resourceIds.Contains(id),"missing resource "+id);
         foreach(var p in data.Professions.Values)
         {
             Require(data.Models.ContainsKey(p.Model)&&float.IsFinite(p.Efficiency)&&p.Efficiency>0&&p.Efficiency<=2,"invalid profession "+p.Id);
@@ -155,11 +154,14 @@ public class Catalog
         Require(float.IsFinite(data.Sunlight.RegularHelmetChance)&&data.Sunlight.RegularHelmetChance is >=0 and <=1&&float.IsFinite(data.Sunlight.DamagePerSecond)&&data.Sunlight.DamagePerSecond is >0 and <=100,"invalid sunlight settings");
         var economy=data.Economy;
         Require(new[]{economy.GoodsPerWorkCycle,economy.GoodsPerKill,economy.EmeraldsPerGood,economy.DeliveryCapacity,economy.InputBufferCycles,economy.MilkHealing,economy.EnchantmentProtection,economy.EnchantmentDamage}.All(n=>float.IsFinite(n)&&n>0)&&economy.DeliveryCapacity<=24&&economy.EnchantmentProtection<1&&economy.EnchantmentDamage<=2&&economy.InputBufferCycles<=100,"invalid economy settings");
+        Require(float.IsFinite(economy.RepairWorkSeconds)&&economy.RepairWorkSeconds is >=.1f and <=120&&float.IsFinite(economy.RepairAmount)&&economy.RepairAmount is >0 and <=100&&economy.RepairCost.Values.Sum()<=24&&economy.RepairCost.All(e=>resourceIds.Contains(e.Key)&&!City.Currency(e.Key)&&float.IsFinite(e.Value)&&e.Value>0),"invalid automatic repair settings");
         Require(economy.EnchantmentCost.All(e=>resourceIds.Contains(e.Key)&&float.IsFinite(e.Value)&&e.Value>=0),"invalid enchantment cost");
+        Require(float.IsFinite(data.Rendering.NightAmbient)&&data.Rendering.NightAmbient is >=.15f and <=.6f,"night ambient must be 0.15..0.6");
         data.Game.Rules.Validate();data.byId=data.Prefabs.ToDictionary(p=>p.Id);data.ResourceIcons=data.ResourceDefinitions.ToDictionary(r=>r.Id,r=>r.Icon);
         CitizenNames.Load(Path.Combine(path,"names.toml"));
         L.Load(Path.Combine(path,"Locales"));
         Scripts.Load(Path.Combine(path,"Scripts"));
+        foreach(string required in new[]{"_ai","villager","guardian","animal","building","employment","population"})Scripts.Require(required);
         foreach(var u in data.Units.Values)Scripts.Require(u.Behavior);
         foreach(var plan in data.Prefabs)if(plan.Script!=string.Empty)Scripts.Require(plan.Script);
         Resources=resourceIds;Data=data;
@@ -167,13 +169,13 @@ public class Catalog
     public static Plan Get(string id)=>Data.byId.TryGetValue(id,out var plan)?plan:throw new InvalidDataException("Unknown prefab: "+id);
 }
 public class ModelFile {public string Id {get;set;}=string.Empty;public List<Part> Parts {get;set;}=[];}
-public class RenderingSettings {public float AlphaCutoff {get;set;}=.1f;public string CutoutFragment {get;set;}=string.Empty;}
+public class RenderingSettings {public float NightAmbient {get;set;}= .4f;public float AlphaCutoff {get;set;}=.1f;public string CutoutFragment {get;set;}=string.Empty;}
 public class UnitFile:UnitPlan {public string Id {get;set;}=string.Empty;}
 public class ResourceFile {public List<ResourcePlan> Resources {get;set;}=[];}
 public class UpgradeFile {public List<UpgradePlan> Upgrades {get;set;}=[];}
 public class ResourcePlan
 {
-    public string Id {get;set;}=string.Empty;
+    public ResourceType Id {get;set;}=ResourceType.None;
     public string Icon {get;set;}=string.Empty;
     public float BuyPrice {get;set;}=30;
     public float SellPrice {get;set;}=21;
@@ -185,8 +187,8 @@ public class ProfessionPlan
     public string Model {get;set;}="villager";
     public string[] Jobs {get;set;}=[];
     public float Efficiency {get;set;}=1;
-    public Dictionary<string,float> TrainingCost {get;set;}=[];
-    public Dictionary<string,float> ResourceBonus {get;set;}=[];
+    public Dictionary<ResourceType,float> TrainingCost {get;set;}=[];
+    public Dictionary<ResourceType,float> ResourceBonus {get;set;}=[];
 }
 public class UpgradePlan
 {
@@ -195,7 +197,7 @@ public class UpgradePlan
     public EquipmentKind Kind {get;set;}=EquipmentKind.Armor;
     public int Level {get;set;}=1;
     public float Effect {get;set;}=.1f;
-    public Dictionary<string,float> Cost {get;set;}=[];
+    public Dictionary<ResourceType,float> Cost {get;set;}=[];
 }
 public class StarterPlacement
 {
@@ -218,15 +220,17 @@ public class GameDefaults
     public float MigrationThreshold {get;set;}=3;
     public float CitizenGrowthSupport {get;set;}=.2f;
     public string[] ImmigrationProfessions {get;set;}=["citizen"];
-    public Dictionary<string,float> InitialStock {get;set;}=[];
+    public Dictionary<ResourceType,float> InitialStock {get;set;}=[];
     public List<StarterPlacement> Starter {get;set;}=[];
     public VillageRules Rules {get;set;}=new();
 }
 public static class TomlFile
 {
+    static readonly TomlSerializerOptions options=new(){Converters=[new ResourceTableConverter()]};
+    public static string Serialize<T>(T value)=>TomlSerializer.Serialize(value,options);
     public static T Read<T>(string path)
     {
-        try{return TomlSerializer.Deserialize<T>(File.ReadAllText(path))??throw new InvalidDataException("Empty TOML file");}
+        try{return TomlSerializer.Deserialize<T>(File.ReadAllText(path),options)??throw new InvalidDataException("Empty TOML file");}
         catch(Exception e){throw new InvalidDataException($"{path}: {e.Message}",e);}
     }
 }

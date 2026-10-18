@@ -9,11 +9,11 @@ static class Scene
     public static float Time;
     public static float Daylight=1;
     static float modelLight=-1;
-    public static float LightAt(float x,float z)=>Math.Max(Daylight,World?.TorchLightAt(x,z)??0);
+    public static float LightAt(float x,float z)=>Daylight;
     static Color Lit(Color c,float? illumination=null)
     {float light=illumination??(modelLight>=0?modelLight:Daylight);return new((int)(c.R*light),(int)(c.G*light),(int)(c.B*(.25f+.75f*light)),c.A);}
     public static Color ColorOf(string hex,byte alpha=255)=>new(Convert.ToByte(hex.Substring(1,2),16),Convert.ToByte(hex.Substring(3,2),16),Convert.ToByte(hex.Substring(5,2),16),alpha);
-    static void Box(float x,float y,float z,float w,float h,float d,string color,byte alpha=255,string texture=string.Empty)
+    static void Box(float x,float y,float z,float w,float h,float d,string color,byte alpha=255,string texture="")
     {
         y+=World?.SurfaceY(x,z)??0;
         if(GraphicsOptions.Current.Textures&&texture!=string.Empty)
@@ -65,7 +65,6 @@ static class Scene
             if(progress>0)Model(b.Plan.Model,b.X,b.Z,size:.2f+progress*.5f);
         }
         else Model(b.Plan.Model,b.X,b.Z,b.Rotation);
-        if(b.TorchLit&&b.Plan.LightRadius>0)Model("torch_flame",b.X,b.Z,y:.35f);
         if(b.Health<b.Plan.Health){float ratio=b.Health/b.Plan.Health;Box(b.X,1.65f,b.Z,.8f,.035f,.04f,"#493D36");Box(b.X-(1-ratio)*.4f,1.66f,b.Z,.8f*ratio,.04f,.05f,"#CA795C");}
         if(b.Plan.NeedsPath&&!b.Plan.Path&&!city.Connected(b,roads))Box(b.X,1.5f,b.Z,.13f,.13f,.13f,"#E9AF56");
     }
@@ -96,7 +95,7 @@ static class Scene
         string model=Catalog.Data.Units.TryGetValue(c.Type,out var unit)?unit.Model:c.Type;
         float scale=unit!=null?.52f:c.Age<3?.42f:.7f;
         Model(model,c.X,c.Z,0,scale,heading:c.Facing);
-        if(enemy&&c.LeatherHelmet)Model("leather_helmet",c.X,c.Z,0,scale,heading:c.Facing);
+        if(enemy&&c.LeatherHelmet)Model(c.Type is "piglin" or "piglin_brute" or "zombified_piglin" or "nether_warlord"?"leather_helmet_piglin":"leather_helmet",c.X,c.Z,0,scale,heading:c.Facing);
         if(enemy&&c.BurningInSun)Model("monster_fire",c.X,c.Z,0,scale,heading:c.Facing);
         if(enemy)Box(c.X,.8f,c.Z,.25f,.025f,.03f,"#DC715D");
     }

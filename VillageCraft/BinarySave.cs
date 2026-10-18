@@ -10,9 +10,13 @@ public static class BinarySave
     static void Text(BinaryWriter w,string text){byte[] bytes=Utf8.GetBytes(text);if(bytes.Length>65536)throw new InvalidDataException("Save string is too long.");w.Write(bytes.Length);w.Write(bytes);}
     static string Text(BinaryReader r){int n=Count(r,65536);var bytes=r.ReadBytes(n);if(bytes.Length!=n)throw new EndOfStreamException();return Utf8.GetString(bytes);}
     static int Count(BinaryReader r,int max){int n=r.ReadInt32();if(n<0||n>max)throw new InvalidDataException("Invalid binary collection length.");return n;}
+    static void Map(BinaryWriter w,Dictionary<ResourceType,float> map){w.Write(map.Count);foreach(var e in map.OrderBy(e=>e.Key)){w.Write((byte)e.Key);w.Write(e.Value);}}
     static void Map(BinaryWriter w,Dictionary<string,float> map){w.Write(map.Count);foreach(var e in map.OrderBy(e=>e.Key)){Text(w,e.Key);w.Write(e.Value);}}
-    static Dictionary<string,float> Map(BinaryReader r)
-    {int n=Count(r,64);var result=new Dictionary<string,float>();for(int i=0;i<n;i++)if(!result.TryAdd(Text(r),r.ReadSingle()))throw new InvalidDataException("Duplicate resource.");return result;}
+    static ResourceType Resource(BinaryReader r,bool optional=false){var id=(ResourceType)r.ReadByte();if(!Enum.IsDefined(id)||!optional&&id==ResourceType.None)throw new InvalidDataException("Invalid resource ID.");return id;}
+    static Dictionary<string,float> Effects(BinaryReader r)
+    {int n=Count(r,16);var result=new Dictionary<string,float>();for(int i=0;i<n;i++)if(!result.TryAdd(Text(r),r.ReadSingle()))throw new InvalidDataException("Duplicate effect.");return result;}
+    static Dictionary<ResourceType,float> Map(BinaryReader r)
+    {int n=Count(r,64);var result=new Dictionary<ResourceType,float>();for(int i=0;i<n;i++)if(!result.TryAdd(Resource(r),r.ReadSingle()))throw new InvalidDataException("Duplicate resource.");return result;}
     static void Rules(BinaryWriter w,VillageRules r)
     {w.Write(r.RaidsEnabled);w.Write(r.RaidInterval);w.Write(r.WaveBase);w.Write(r.WaveGrowth);w.Write(r.MaxRaiders);w.Write(r.MaxPopulation);w.Write(r.AnimalsPerPen);w.Write(r.GolemsPerWorkshop);w.Write(r.DayLength);w.Write(r.ProductionCycle);}
     static VillageRules Rules(BinaryReader r)=>new(){RaidsEnabled=r.ReadBoolean(),RaidInterval=r.ReadInt32(),WaveBase=r.ReadInt32(),WaveGrowth=r.ReadInt32(),MaxRaiders=r.ReadInt32(),MaxPopulation=r.ReadInt32(),AnimalsPerPen=r.ReadInt32(),GolemsPerWorkshop=r.ReadInt32(),DayLength=r.ReadSingle(),ProductionCycle=r.ReadSingle()};
@@ -40,19 +44,21 @@ public static class BinarySave
             for(int i=0;i<c.Terrain.Elevation.Length;i++){w.Write((sbyte)c.Terrain.Elevation[i]);w.Write(c.Terrain.Water[i]);w.Write(c.Terrain.Grass[i]);}
             foreach(var b in c.Buildings)w.Write(b.GrowthDays);
             w.Write(c.PeaceDays);w.Write(c.TutorialEnabled);w.Write(c.TutorialStep);w.Write(c.TutorialInspected);w.Write(c.TutorialRoadBuilt);w.Write(c.TutorialTreesHarvested);
-            foreach(var b in c.Buildings){Map(w,b.Storage);w.Write(b.TorchLit);Text(w,b.RequestedResource);}
-            foreach(var v in c.Citizens){Map(w,v.Cargo);Map(w,v.Effects);w.Write(v.PickupSource);w.Write(v.DeliveryTarget);Text(w,v.DeliveryResource);}
+            foreach(var b in c.Buildings){Map(w,b.Storage);w.Write((byte)b.RequestedResource);}
+            foreach(var v in c.Citizens){Map(w,v.Cargo);Map(w,v.Effects);w.Write(v.PickupSource);w.Write(v.DeliveryTarget);w.Write((byte)v.DeliveryResource);}
             w.Write(c.StorageInitialized);w.Write(c.LastSettlementDay);w.Write(c.EnchantedArmor);
             foreach(var m in c.Enemies){w.Write(m.LeatherHelmet);w.Write(m.BossWave);}
             w.Write(c.GameOver);var stats=c.Statistics;
             w.Write(stats.RecordedSinceDay);w.Write(stats.SimulatedSeconds);w.Write(stats.PeakPopulation);w.Write(stats.Arrivals);w.Write(stats.VillagersLost);w.Write(stats.BuildingsPlaced);w.Write(stats.BuildingsDestroyed);w.Write(stats.Deliveries);w.Write(stats.SunDeaths);w.Write(stats.EmeraldsFromGoods);Map(w,stats.Production);
+            w.Write(c.Rules.BirthChance);w.Write(stats.Births);w.Write(c.Babies.Count);foreach(var baby in c.Babies){w.Write(baby.Home);w.Write(baby.DueDay);}
+            w.Write(c.Rules.NightSpawnIntervalMinutes);w.Write(c.LastNightSpawnMinute);
 
 
         }
         if(payload.Length>MaxBytes)throw new InvalidDataException("Village exceeds save size limit.");
         byte[] bytes=payload.ToArray();string full=Path.GetFullPath(path);Directory.CreateDirectory(Path.GetDirectoryName(full)!);
         using(var file=File.Create(full+".tmp"))using(var w=new BinaryWriter(file,Utf8))
-        {w.Write("VCTY"u8);w.Write((ushort)9);w.Write(bytes.Length);w.Write(SHA256.HashData(bytes));w.Write(bytes);file.Flush(true);}
+        {w.Write("VCTY"u8);w.Write((ushort)11);w.Write(bytes.Length);w.Write(SHA256.HashData(bytes));w.Write(bytes);file.Flush(true);}
         File.Move(full+".tmp",full,true);
     }
     public static City Read(string path)
@@ -62,7 +68,7 @@ public static class BinarySave
             using var file=File.OpenRead(path);if(file.Length>MaxBytes+42)throw new InvalidDataException("Save exceeds size limit.");
             using var header=new BinaryReader(file,Utf8,true);
             if(!header.ReadBytes(4).AsSpan().SequenceEqual("VCTY"u8))throw new InvalidDataException("Unsupported binary save format.");
-            ushort format=header.ReadUInt16();if(format is not (3 or 4 or 5 or 6 or 7 or 8 or 9))throw new InvalidDataException("Unsupported binary save format.");
+            ushort format=header.ReadUInt16();if(format!=11)throw new InvalidDataException("This beta requires save format 11. Older beta saves are not supported.");
             int length=Count(header,MaxBytes);byte[] hash=header.ReadBytes(32);if(file.Length-file.Position!=length)throw new InvalidDataException("Truncated save or unexpected trailing data.");
             byte[] bytes=header.ReadBytes(length);if(!CryptographicOperations.FixedTimeEquals(hash,SHA256.HashData(bytes)))throw new InvalidDataException("Save checksum failed; the file is damaged.");
             using var payload=new MemoryStream(bytes,false);using var r=new BinaryReader(payload,Utf8);
@@ -70,44 +76,24 @@ public static class BinarySave
             int n=Count(r,512*512);for(int i=0;i<n;i++)c.Buildings.Add(new(){Id=r.ReadInt32(),Prefab=Text(r),X=r.ReadInt32(),Z=r.ReadInt32(),Rotation=r.ReadInt32(),Health=r.ReadSingle(),Priority=r.ReadInt32(),Enabled=r.ReadBoolean(),Worked=r.ReadBoolean(),WorkEffort=r.ReadSingle(),Attendance=r.ReadSingle(),ServiceCredit=r.ReadSingle()});
             n=Count(r,4096);for(int i=0;i<n;i++)c.Citizens.Add(new(){Id=r.ReadInt32(),Home=r.ReadInt32(),Work=r.ReadInt32(),X=r.ReadSingle(),Z=r.ReadSingle(),Health=r.ReadSingle(),Task=Tasks.Parse(Text(r)),Cooldown=r.ReadSingle(),WorkTime=r.ReadSingle(),HasWorked=r.ReadBoolean(),Profession=Text(r),Facing=r.ReadSingle()});
             c.Animals=Creatures(r,32768);c.Defenders=Creatures(r,8192);c.Enemies=Creatures(r,4096);n=Count(r,512);for(int i=0;i<n;i++)c.Events.Add(Text(r));
-            if(format>=4){c.LastNight=r.ReadInt32();c.Rules.NightMonsters=r.ReadBoolean();c.Rules.NightCount=r.ReadInt32();foreach(var e in c.Enemies){e.NightSpawn=r.ReadBoolean();e.BrainTime=r.ReadSingle();}}
-            else c.LastNight=c.IsNight?c.Day:0;
-            if(format>=5)foreach(var v in c.Citizens){v.FirstName=Text(r);v.Surname=Text(r);v.Inventory=Map(r);}
-            if(format>=6)
-            {
-                foreach(var b in c.Buildings){b.Tags=Text(r);b.Behavior=Text(r);}
-                foreach(var v in c.Citizens){v.Tags=Text(r);v.Behavior=Text(r);}
-                foreach(var m in c.Animals.Concat(c.Defenders).Concat(c.Enemies)){m.Id=r.ReadInt32();m.Tags=Text(r);m.Behavior=Text(r);}
-            }
-            if(format>=7)
-            {
-                int seed=r.ReadInt32(),count=Count(r,512*512);if(count!=c.Width*c.Height)throw new InvalidDataException("Invalid terrain size");
-                c.Terrain=TerrainData.Flat(c.Width,c.Height);c.Terrain.Seed=seed;
-                for(int i=0;i<count;i++){c.Terrain.Elevation[i]=r.ReadSByte();c.Terrain.Water[i]=r.ReadByte();c.Terrain.Grass[i]=r.ReadByte();}
-                foreach(var b in c.Buildings)b.GrowthDays=r.ReadInt32();
-                c.PeaceDays=r.ReadInt32();c.TutorialEnabled=r.ReadBoolean();c.TutorialStep=r.ReadInt32();c.TutorialInspected=r.ReadBoolean();c.TutorialRoadBuilt=r.ReadBoolean();c.TutorialTreesHarvested=r.ReadInt32();
-            }
-            if(format>=8)
-            {
-                foreach(var b in c.Buildings){b.Storage=Map(r);b.TorchLit=r.ReadBoolean();b.RequestedResource=Text(r);}
-                foreach(var v in c.Citizens){v.Cargo=Map(r);v.Effects=Map(r);v.PickupSource=r.ReadInt32();v.DeliveryTarget=r.ReadInt32();v.DeliveryResource=Text(r);}
-                c.StorageInitialized=r.ReadBoolean();c.LastSettlementDay=r.ReadInt32();c.EnchantedArmor=r.ReadBoolean();
-            }
-            else
-            {
-                foreach(string id in Catalog.Resources)c.Stock.TryAdd(id,0);
-                c.LastSettlementDay=c.Day;
-            }
-            if(format>=9)
-            {
-                foreach(var m in c.Enemies){m.LeatherHelmet=r.ReadBoolean();m.BossWave=r.ReadBoolean();}
-                c.GameOver=r.ReadBoolean();c.Statistics=new(){RecordedSinceDay=r.ReadInt32(),SimulatedSeconds=r.ReadDouble(),PeakPopulation=r.ReadInt32(),Arrivals=r.ReadInt32(),VillagersLost=r.ReadInt32(),BuildingsPlaced=r.ReadInt32(),BuildingsDestroyed=r.ReadInt32(),Deliveries=r.ReadInt32(),SunDeaths=r.ReadInt32(),EmeraldsFromGoods=r.ReadSingle(),Production=Map(r)};
-            }
-            else
-            {
-                c.Statistics=new(){RecordedSinceDay=c.Day,PeakPopulation=c.Citizens.Count};c.GameOver=c.Citizens.Count==0;
-                foreach(var m in c.Enemies){m.BossWave=!m.NightSpawn;m.LeatherHelmet=m.BossWave&&Catalog.Data.Units.TryGetValue(m.Type,out var unit)&&unit.BurnsInSun;}
-            }
+            c.LastNight=r.ReadInt32();c.Rules.NightMonsters=r.ReadBoolean();c.Rules.NightCount=r.ReadInt32();
+            foreach(var e in c.Enemies){e.NightSpawn=r.ReadBoolean();e.BrainTime=r.ReadSingle();}
+            foreach(var v in c.Citizens){v.FirstName=Text(r);v.Surname=Text(r);v.Inventory=Map(r);}
+            foreach(var b in c.Buildings){b.Tags=Text(r);b.Behavior=Text(r);}
+            foreach(var v in c.Citizens){v.Tags=Text(r);v.Behavior=Text(r);}
+            foreach(var m in c.Animals.Concat(c.Defenders).Concat(c.Enemies)){m.Id=r.ReadInt32();m.Tags=Text(r);m.Behavior=Text(r);}
+            int seed=r.ReadInt32(),count=Count(r,512*512);if(count!=c.Width*c.Height)throw new InvalidDataException("Invalid terrain size.");
+            c.Terrain=TerrainData.Flat(c.Width,c.Height);c.Terrain.Seed=seed;
+            for(int i=0;i<count;i++){c.Terrain.Elevation[i]=r.ReadSByte();c.Terrain.Water[i]=r.ReadByte();c.Terrain.Grass[i]=r.ReadByte();}
+            foreach(var b in c.Buildings)b.GrowthDays=r.ReadInt32();
+            c.PeaceDays=r.ReadInt32();c.TutorialEnabled=r.ReadBoolean();c.TutorialStep=r.ReadInt32();c.TutorialInspected=r.ReadBoolean();c.TutorialRoadBuilt=r.ReadBoolean();c.TutorialTreesHarvested=r.ReadInt32();
+            foreach(var b in c.Buildings){b.Storage=Map(r);b.RequestedResource=Resource(r,true);}
+            foreach(var v in c.Citizens){v.Cargo=Map(r);v.Effects=Effects(r);v.PickupSource=r.ReadInt32();v.DeliveryTarget=r.ReadInt32();v.DeliveryResource=Resource(r,true);}
+            c.StorageInitialized=r.ReadBoolean();c.LastSettlementDay=r.ReadInt32();c.EnchantedArmor=r.ReadBoolean();
+            foreach(var m in c.Enemies){m.LeatherHelmet=r.ReadBoolean();m.BossWave=r.ReadBoolean();}
+            c.GameOver=r.ReadBoolean();c.Statistics=new(){RecordedSinceDay=r.ReadInt32(),SimulatedSeconds=r.ReadDouble(),PeakPopulation=r.ReadInt32(),Arrivals=r.ReadInt32(),VillagersLost=r.ReadInt32(),BuildingsPlaced=r.ReadInt32(),BuildingsDestroyed=r.ReadInt32(),Deliveries=r.ReadInt32(),SunDeaths=r.ReadInt32(),EmeraldsFromGoods=r.ReadSingle(),Production=Map(r)};
+            c.Rules.BirthChance=r.ReadSingle();c.Statistics.Births=r.ReadInt32();n=Count(r,4096);for(int i=0;i<n;i++)c.Babies.Add(new(){Home=r.ReadInt32(),DueDay=r.ReadInt32()});
+            c.Rules.NightSpawnIntervalMinutes=r.ReadInt32();c.LastNightSpawnMinute=r.ReadInt64();
             if(payload.Position!=payload.Length)throw new InvalidDataException("Unexpected binary records.");return c;
         }
         catch(Exception e)when(e is EndOfStreamException or DecoderFallbackException){throw new InvalidDataException("Truncated or invalid binary save.",e);}

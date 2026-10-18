@@ -30,9 +30,9 @@ static class TerrainChecks
         }
         using(var forest=City.StartVillage(seed:3))
         {
-            forest.Rules.NightMonsters=false;float wood=forest.Stock["Wood"];
+            forest.Rules.NightMonsters=false;float wood=forest.Stock[ResourceType.Wood];
             for(int i=0;i<400;i++)forest.Update(.1f);
-            Check(forest.Stock["Wood"]>wood&&forest.Buildings.Any(b=>b.Plan.Harvest.Count>0&&b.GrowthDays>0),"woodcutter travels and harvests a real tree");
+            Check(forest.Stock[ResourceType.Wood]>wood&&forest.Buildings.Any(b=>b.Plan.Harvest.Count>0&&b.GrowthDays>0),"woodcutter travels and harvests a real tree");
             var stump=forest.Buildings.First(b=>b.Plan.Harvest.Count>0&&b.GrowthDays>0);
             var worker=forest.Citizens.First(v=>v.Profession=="woodcutter");worker.Position=new(stump.X,stump.Z);
             Check(!forest.HarvestTree(stump,worker),"cannot harvest depleted tree twice");

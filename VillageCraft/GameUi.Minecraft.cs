@@ -86,10 +86,10 @@ partial class GameUi
         Bevel(min,max,selected);UiIcons.Draw(icon,min+new Vector2((size-16)/2));
         Tooltip(hint);ImGui.PopID();return clicked;
     }
-    static void Stat(string icon,string value,string hint,string texture=string.Empty)
+    static void Stat(string icon,string value,string hint,string texture="")
     {
         var point=ImGui.GetCursorScreenPos();ImGui.Dummy(new(18,18));
-        if(texture!=string.Empty)
+        if(!string.IsNullOrEmpty(texture))
         {
             var asset=Assets.Get(texture);
             if(asset.Id!=0)ImGui.GetWindowDrawList().AddImage((IntPtr)asset.Id,point,point+new Vector2(18));
@@ -106,27 +106,27 @@ partial class GameUi
         Window("Village guide",8,hudHeight+16,304,158);
         if(city.TutorialStep>=stages.Count)
         {
-            Title("Tutorial complete");Hint("Your village is ready to grow.");
-            if(Button(L.T("Close")))city.TutorialEnabled=false;ImGui.End();return;
+            Title("ui.tutorial_complete");Hint("ui.your_village_is_ready_to_grow");
+            if(Button(L.T("ui.close")))city.TutorialEnabled=false;ImGui.End();return;
         }
         var stage=stages[city.TutorialStep];Title(L.Get("tutorial."+stage.Id+".title",stage.Title));
         Wrapped(L.Get("tutorial."+stage.Id+".description",stage.Description));
         bool done=city.TutorialGoalMet(stage.Goal);
-        Colored(done?Accent:Muted,done?L.T("Goal complete"):L.T("Goal in progress"));
-        ImGui.BeginDisabled(!done);if(Button(L.T("Continue")))city.TutorialStep++;ImGui.EndDisabled();
-        ImGui.SameLine();if(Button(L.T("Skip tutorial"))){city.TutorialEnabled=false;GraphicsOptions.Current.TutorialDismissed=true;GraphicsOptions.Current.Save();newTutorial=false;}
+        Colored(done?Accent:Muted,done?L.T("ui.goal_complete"):L.T("ui.goal_in_progress"));
+        ImGui.BeginDisabled(!done);if(Button(L.T("ui.continue")))city.TutorialStep++;ImGui.EndDisabled();
+        ImGui.SameLine();if(Button(L.T("ui.skip_tutorial"))){city.TutorialEnabled=false;GraphicsOptions.Current.TutorialDismissed=true;GraphicsOptions.Current.Save();newTutorial=false;}
         ImGui.End();
     }
     int hudHeight=58;
     void DrawTopBar(City city,int w)
     {
-        var resources=Catalog.Resources.Where(id=>id!="Torches").ToArray();
+        var resources=Catalog.Resources.ToArray();
         float rowWidth=0;int rows=1;
-        foreach(string id in resources){float size=18+6+ImGui.CalcTextSize(city.Stock[id].ToString("0")).X+8;if(rowWidth+size>w-36){rows++;rowWidth=0;}rowWidth+=size;}
+        foreach(ResourceType id in resources){float size=18+6+ImGui.CalcTextSize(city.Stock[id].ToString("0")).X+8;if(rowWidth+size>w-36){rows++;rowWidth=0;}rowWidth+=size;}
         bool separateMenus=w<850;
         hudHeight=58+(rows-1)*22+(separateMenus?28:0);
         Window("Village HUD",8,6,w-16,hudHeight);rowWidth=0;
-        foreach(string id in resources)
+        foreach(ResourceType id in resources)
         {
             float size=18+6+ImGui.CalcTextSize(city.Stock[id].ToString("0")).X+8;
             if(rowWidth+size>w-36){ImGui.NewLine();rowWidth=0;}
@@ -134,22 +134,25 @@ partial class GameUi
         }
         ImGui.NewLine();
         string clock=city.ClockTime;
-        Stat("map",$"{city.Day}  {clock}",L.F("Day {0}: {1}",city.Day,clock),$"item/clock_{ClockFrame(city.DayPhase):00}.png");
-        Stat("people",$"{city.Citizens.Count}/{city.Capacity}",L.T("Residents"));
-        Stat("happy",$"{city.Happiness:0}%",L.T("Happiness"));
-        Stat("water",$"{city.Water}/{city.Citizens.Count}",L.T("Water"));
-        Stat("raid",city.Enemies.Count>0?city.Enemies.Count.ToString():city.RaidIn<0?"-":city.RaidIn.ToString(),city.Enemies.Count>0?L.T("Hostiles"):L.T("Days until raid")+(city.Day<=city.PeaceDays?"\n"+L.F("Night monsters begin on day {0}",city.PeaceDays+1):string.Empty));
-        Stat("map",$"{city.Width}x{city.Height}",L.T("Map size"));
+        Stat("map",$"{city.Day}  {clock}",L.F("format.day_details",city.Day,clock),$"item/clock_{ClockFrame(city.DayPhase):00}.png");
+        Stat("people",$"{city.Citizens.Count}/{city.Capacity}",L.T("ui.residents"));
+        Stat("happy",$"{city.Happiness:0}%",L.T("ui.happiness"));
+        Stat("water",$"{city.Water}/{city.Citizens.Count}",L.T("ui.water"));
+        Stat("raid",city.Enemies.Count>0?city.Enemies.Count.ToString():city.RaidIn<0?"-":city.RaidIn.ToString(),city.Enemies.Count>0?L.T("ui.hostiles_3"):L.T("ui.days_until_raid")+(city.Day<=city.PeaceDays?"\n"+L.F("hud.peaceful_nights",city.PeaceDays+1):string.Empty));
+        Stat("map",$"{city.Width}x{city.Height}",L.T("ui.map_size"));
         ImGui.SetCursorScreenPos(new(w-176,32+(rows-1)*22+(separateMenus?26:0)));
         foreach(var (tab,icon) in new[]{("People","people"),("Economy","economy"),("Defense","shield"),("Journal","book")})
         {
-            if(IconButton("open_"+tab,icon,L.T(tab),page==tab,24)){page=page==tab?"Build":tab;}
+            if(IconButton("open_"+tab,icon,L.Ui(tab),page==tab,24)){page=page==tab?"Build":tab;}
             ImGui.SameLine(0,4);
         }
-        if(IconButton("menu","menu",L.T("MENU [Esc]"),false,24))Escape();
+        if(IconButton("menu","menu",L.T("ui.menu_esc"),false,24))Escape();
         ImGui.End();
     }
+#if DEBUG
+    internal void ShowPeople()=>page="People";
     internal void ShowBuildCategory(string id){category=id;buildOpen=true;}
+#endif
     public void UseInspectTool(){InspectMode=true;Selected=string.Empty;buildOpen=false;}
     public void ToggleTool(){if(IsBuilding)UseInspectTool();else buildOpen=!buildOpen;}
     void CloseTransientPanels(){page="Build";Inspected=InspectedCitizen=InspectedMonster=-1;}
@@ -159,6 +162,7 @@ partial class GameUi
         CloseTransientPanels();UseInspectTool();
         if(kind=="villager")InspectedCitizen=id;else if(kind=="monster")InspectedMonster=id;else Inspected=id;
     }
+#if DEBUG
     public void PinCurrent()
     {
         if(Inspected>=0)pinned.Add(new("building",Inspected));
@@ -166,6 +170,7 @@ partial class GameUi
         if(InspectedMonster>=0)pinned.Add(new("monster",InspectedMonster));
     }
     public int PinnedCount=>pinned.Count;
+#endif
     bool BeginPanel(string key,string title,int x,int y,int height)
     {
         ImGui.SetNextWindowPos(new(x,y),ImGuiCond.FirstUseEver);
@@ -179,8 +184,8 @@ partial class GameUi
         int order=0;
         foreach(string tab in pinnedManagement.Concat(page=="Build"?Array.Empty<string>():new[]{page}).Distinct().ToArray())
         {
-            bool open=BeginPanel("management_"+tab,L.T(tab),8+order++*272,hudHeight+16,Math.Min(460,h-240));
-            if(IconButton("pin","pin",pinnedManagement.Contains(tab)?L.T("Unpin panel"):L.T("Pin panel"),pinnedManagement.Contains(tab),22))
+            bool open=BeginPanel("management_"+tab,L.Ui(tab),8+order++*272,hudHeight+16,Math.Min(460,h-240));
+            if(IconButton("pin","pin",pinnedManagement.Contains(tab)?L.T("ui.unpin_panel"):L.T("ui.pin_panel"),pinnedManagement.Contains(tab),22))
             {if(!pinnedManagement.Remove(tab))pinnedManagement.Add(tab);}
             ImGui.Separator();
             if(tab=="People")PeoplePanel(city);
@@ -206,7 +211,7 @@ partial class GameUi
             string name=building!=null?L.Name(building.Plan):person!=null?person.FullName:L.Entity(monster!.Type);
             int columns=Math.Max(1,(w-16)/272),column=panelOrder%columns,row=panelOrder/columns;panelOrder++;
             bool open=BeginPanel("inspect_"+panel.Kind+"_"+panel.Id,name,w-272-column*272,hudHeight+16+row*36,Math.Min(430,h-240));
-            if(IconButton("pin","pin",pinned.Contains(panel)?L.T("Unpin panel"):L.T("Pin panel"),pinned.Contains(panel),22))
+            if(IconButton("pin","pin",pinned.Contains(panel)?L.T("ui.unpin_panel"):L.T("ui.pin_panel"),pinned.Contains(panel),22))
             {if(!pinned.Remove(panel))pinned.Add(panel);}
             ImGui.Separator();
             if(building!=null)Inspector(city,building,w,h);
@@ -225,17 +230,17 @@ partial class GameUi
     void MonsterInspector(City city,Creature monster)
     {
         float max=Catalog.Data.Units.TryGetValue(monster.Type,out var unit)?unit.Health:20;
-        if(monster.LeatherHelmet)Hint("Leather helmet / sunlight protection");
-        if(monster.BurningInSun)Hint("Burning in sunlight");
-        if(monster.BossWave)Hint("Boss wave");
-        ImGui.TextUnformatted(L.F("Health {0:0}/{1:0}",monster.Health,max));ImGui.ProgressBar(monster.Health/max,new(-1,8),string.Empty);
+        if(monster.LeatherHelmet)Hint("ui.leather_helmet_sunlight_protection");
+        if(monster.BurningInSun)Hint("ui.burning_in_sunlight");
+        if(monster.BossWave)Hint("unit.boss_wave");
+        ImGui.TextUnformatted(L.F("building.health",monster.Health,max));ImGui.ProgressBar(monster.Health/max,new(-1,8),string.Empty);
         if(unit!=null)
         {
-            ImGui.TextUnformatted(L.F("Damage {0:0} / Range {1:0.0}",unit.Damage,unit.Range));
-            ImGui.TextUnformatted(L.F("Speed {0:0.00} / Cooldown {1:0.0}s",unit.Speed,monster.Cooldown));
+            ImGui.TextUnformatted(L.F("ui.damage_range",unit.Damage,unit.Range));
+            ImGui.TextUnformatted(L.F("ui.speed_cooldown_s",unit.Speed,monster.Cooldown));
         }
-        Hint(city.Enemies.Contains(monster)?L.T("Hostile"):L.T("Friendly"));
-        if(monster.Tags!=string.Empty)Wrapped(monster.Tags);
+        Hint(city.Enemies.Contains(monster)?L.T("ui.hostile"):L.T("ui.friendly"));
+        if(!string.IsNullOrEmpty(monster.Tags))Wrapped(monster.Tags);
     }
     void DrawHotbar(City city,int w,int h)
     {
@@ -243,18 +248,20 @@ partial class GameUi
         if(buildOpen)
         {
             Window("Build inventory",left,h-152,width,102);
-            ImGui.SetNextItemWidth(160);ImGui.InputTextWithHint("##search",L.T("Search..."),ref search,80);
-            ImGui.SameLine();Hint(IsBuilding?L.Name(Catalog.Get(Selected)):L.T("Select a building"));
+            ImGui.SetNextItemWidth(160);ImGui.InputTextWithHint("##search",L.T("ui.search"),ref search,80);
+            ImGui.SameLine();Hint(IsBuilding?L.Name(Catalog.Get(Selected)):L.T("ui.select_a_building"));
             ImGui.BeginChild("Prefab slots",new(width-245,66),ImGuiChildFlags.None,ImGuiWindowFlags.HorizontalScrollbar);
-            foreach(var p in Catalog.Data.Prefabs.Where(p=>(search!=string.Empty||p.Category==category)&&L.Name(p).Contains(search,StringComparison.OrdinalIgnoreCase)).OrderBy(p=>p.Cost.GetValueOrDefault("Emeralds")))
+            foreach(var p in Catalog.Data.Prefabs.Where(p=>(!string.IsNullOrEmpty(search)||p.Category==category)&&L.Name(p).Contains(search,StringComparison.OrdinalIgnoreCase)).OrderBy(p=>p.Cost.GetValueOrDefault(ResourceType.Emeralds)))
             {
                 ImGui.PushID(p.Id);ImGui.BeginGroup();
                 bool selected=IsBuilding&&Selected==p.Id;
                 ImGui.PushStyleColor(ImGuiCol.Button,selected?new Vector4(.44f,.4f,.24f,1):new Vector4(.22f,.22f,.22f,1));
                 bool clicked=thumbnails.TryGetValue(p.Id,out var t)&&ImGui.ImageButton("##prefab",(IntPtr)t.Texture.Id,new(64,42),new(0,1),new(1,0));
+#if DEBUG
                 if(TestActivatePrefab==p.Id){clicked=true;TestActivatePrefab=null;TestActivationCount++;}
+#endif
                 ImGui.PopStyleColor();Bevel(ImGui.GetItemRectMin(),ImGui.GetItemRectMax(),selected);
-                Tooltip(L.Name(p)+"\n"+L.Description(p)+"\n"+string.Join(" / ",p.Cost.Where(e=>e.Value>0).Select(e=>L.F("{0:0} {1}",e.Value,L.Resource(e.Key)))));
+                Tooltip(L.Name(p)+"\n"+L.Description(p)+"\n"+string.Join(" / ",p.Cost.Where(e=>e.Value>0).Select(e=>L.F("format.resource_amount",e.Value,L.Resource(e.Key)))));
                 if(clicked)SelectPrefab(p.Id);
                 ImGui.EndGroup();ImGui.PopID();ImGui.SameLine();
             }
@@ -262,22 +269,22 @@ partial class GameUi
             if(IsBuilding)
             {
                 foreach(var cost in Catalog.Get(Selected).Cost.Where(e=>e.Value>0)){Resource(cost.Key,cost.Value,city.Stock[cost.Key]>=cost.Value);ImGui.SameLine();}ImGui.NewLine();
-                if(IconButton("rotate","rotate",L.F("Rotate [R]  {0} deg",Rotation*90)))Rotation=(Rotation+1)%4;
-                ImGui.SameLine();if(IconButton("cancel","close",L.T("Inspect tool")))UseInspectTool();
+                if(IconButton("rotate","rotate",L.F("ui.rotate_r_deg",Rotation*90)))Rotation=(Rotation+1)%4;
+                ImGui.SameLine();if(IconButton("cancel","close",L.T("ui.inspect_tool")))UseInspectTool();
             }
             ImGui.EndGroup();ImGui.End();
         }
         Window("Hotbar",left,h-46,width,40);
-        if(IconButton("inspect","inspect",L.T("Inspect tool"),InspectMode))UseInspectTool();ImGui.SameLine(0,5);
+        if(IconButton("inspect","inspect",L.T("ui.inspect_tool"),InspectMode))UseInspectTool();ImGui.SameLine(0,5);
         var categories=new Dictionary<string,string>{{"Roads","road"},{"Housing","home"},{"Production","production"},{"Infrastructure","services"},{"Economy","economy"},{"Animals","animals"},{"Defense","shield"}};
         foreach(string c in Catalog.Data.Game.Categories.Concat(Catalog.Data.Prefabs.Select(p=>p.Category)).Distinct())
         {
-            if(IconButton("category_"+c,categories.GetValueOrDefault(c,"build"),L.T(c),buildOpen&&category==c))
+            if(IconButton("category_"+c,categories.GetValueOrDefault(c,"build"),L.Category(c),buildOpen&&category==c))
             {if(buildOpen&&category==c)buildOpen=false;else{buildOpen=true;category=c;}InspectMode=true;Selected=string.Empty;}
             ImGui.SameLine(0,4);
         }
         ImGui.Dummy(new(10,0));ImGui.SameLine(0,4);
-        if(IconButton("pause",Paused?"play":"pause",Paused?L.T("PLAY"):L.T("PAUSE"),Paused))Paused=!Paused;
+        if(IconButton("pause",Paused?"play":"pause",Paused?L.T("ui.play"):L.T("ui.pause"),Paused))Paused=!Paused;
         for(int i=1;i<=4;i++)
         {
             ImGui.SameLine(0,4);int speed=i switch{3=>4,4=>16,_=>i};

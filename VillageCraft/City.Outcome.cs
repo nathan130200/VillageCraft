@@ -10,6 +10,7 @@ public sealed class VillageStatistics
     public int RecordedSinceDay {get;set;}=1;
     public double SimulatedSeconds {get;set;}
     public int PeakPopulation {get;set;}
+    public int Births {get;set;}
     public int Arrivals {get;set;}
     public int VillagersLost {get;set;}
     public int BuildingsPlaced {get;set;}
@@ -17,7 +18,7 @@ public sealed class VillageStatistics
     public int Deliveries {get;set;}
     public int SunDeaths {get;set;}
     public float EmeraldsFromGoods {get;set;}
-    public Dictionary<string,float> Production {get;set;}=[];
+    public Dictionary<ResourceType,float> Production {get;set;}=[];
 }
 public partial class City
 {
@@ -25,7 +26,8 @@ public partial class City
     public VillageStatistics Statistics {get;set;}=new();
     public bool ExposedToSun(Creature monster)
     {
-        if(IsNight||Daylight<.65f||IsWater((int)MathF.Round(monster.X),(int)MathF.Round(monster.Z)))return false;
+        // Burning uses solar strength, independent of the visual ambient-light setting.
+        if(IsNight||(.16f+.84f*SunStrength)<.65f||IsWater((int)MathF.Round(monster.X),(int)MathF.Round(monster.Z)))return false;
         var cover=At((int)MathF.Round(monster.X),(int)MathF.Round(monster.Z));
         return cover==null||!cover.Plan.SheltersFromSun;
     }
@@ -43,15 +45,15 @@ public partial class City
     {
         if(GameOver)return;
         while(DayTime>=Rules.DayLength){DayTime-=Rules.DayLength;Day++;}
-        GameOver=true;Emit(new("onGameOver"));Log(L.T("All villagers have been eliminated."));
+        GameOver=true;Emit(new("onGameOver"));Log(L.T("gameover.description"));
     }
-    void RecordProduction(string resource,float amount)
+    void RecordProduction(ResourceType resource,float amount)
     {Statistics.Production[resource]=Statistics.Production.GetValueOrDefault(resource)+amount;}
     void ValidateOutcome()
     {
         var s=Statistics;
         if(s==null||s.RecordedSinceDay<1||s.RecordedSinceDay>Day||!double.IsFinite(s.SimulatedSeconds)||s.SimulatedSeconds<0||
-            new[]{s.PeakPopulation,s.Arrivals,s.VillagersLost,s.BuildingsPlaced,s.BuildingsDestroyed,s.Deliveries,s.SunDeaths}.Any(n=>n<0)||
+            new[]{s.PeakPopulation,s.Births,s.Arrivals,s.VillagersLost,s.BuildingsPlaced,s.BuildingsDestroyed,s.Deliveries,s.SunDeaths}.Any(n=>n<0)||
             !float.IsFinite(s.EmeraldsFromGoods)||s.EmeraldsFromGoods<0||s.Production==null||s.Production.Count>64||s.Production.Any(e=>!Catalog.Resources.Contains(e.Key)||!float.IsFinite(e.Value)||e.Value<0))
             throw new InvalidDataException("Invalid village statistics.");
         s.PeakPopulation=Math.Max(s.PeakPopulation,Citizens.Count);

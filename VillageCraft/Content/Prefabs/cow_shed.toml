@@ -1,4 +1,4 @@
-﻿# Plan: Cow shed, 1.0.5-beta.
+# Plan: Cow shed, 1.0.5-beta.
 Id = "cow_shed"
 Name = "Cow shed"
 Description = "Cow shed"
@@ -15,3 +15,6 @@ Health = 180
 
 # A roof or canopy blocks direct sunlight on this tile.
 SheltersFromSun = true
+
+# JavaScript component for this prefab type.
+Script = "building_cow_shed"

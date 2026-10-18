@@ -1,4 +1,4 @@
-﻿# Plan: Large warehouse, 1.0.5-beta.
+# Plan: Large warehouse, 1.0.5-beta.
 Id = "large_warehouse"
 Name = "Large warehouse"
 Description = "Large warehouse"
@@ -14,3 +14,6 @@ Health = 400
 
 # A roof or canopy blocks direct sunlight on this tile.
 SheltersFromSun = true
+
+# JavaScript component for this prefab type.
+Script = "building_large_warehouse"

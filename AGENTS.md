@@ -17,6 +17,7 @@ This file records the repository owner's requirements from the project conversat
 
 - Implement a multiplatform 3D game in C#, with ImGui.NET support. Keep platform behavior and native dependencies in mind.
 - Avoid magic strings for fixed internal identifiers, especially task IDs. Prefer enums, typed identifiers or named constants appropriate to the domain.
+- Resource types must use the ResourceType enum in C# simulation, storage, inventory, recipe and economy code. Keep human-readable names only at validated TOML/JavaScript/save boundaries.
 - Keep externally extensible content IDs usable by TOML and JavaScript; do not make adding content require modifying a closed enum unnecessarily.
 - Avoid comparisons with empty string literals. Prefer string.IsNullOrEmpty/string.IsNullOrWhiteSpace as appropriate, or string.Empty where an empty value is needed.
 - All game-owned content/configuration files use human-readable TOML. External Minecraft assets_index.json remains JSON because it is an external asset index.
@@ -75,6 +76,9 @@ This file records the repository owner's requirements from the project conversat
 - Pillagers attack, steal Goods, emeralds and potentially valuable physical resources, may destroy farms, and then leave.
 - When all villagers are eliminated, show a game-over screen with save statistics, retry/reload and a red delete-save button.
 
+- Torches, the torch workshop, torch crafting/conversion and the torch resource have been removed. This supersedes all previous torch requirements.
+- Beta save compatibility is not required for current changes; reject unsupported old saves clearly without overwriting them.
+
 ## Population, hunger and employment
 
 - Build a living village with farmers, woodcutters, stonecutters/miners, smiths, explorers, animal keepers and combat professions.
@@ -87,7 +91,8 @@ This file records the repository owner's requirements from the project conversat
 - Automatically adjust professions/jobs to demand, always preserving at least one resource deliveryman.
 - Support sheep, pigs and chickens/birds with reproduction and animal-care work. Distinguish chicken-farmer and pig-farmer appearances.
 
-## Economy, storage and torches
+
+## Economy and storage
 
 - Include an economy with resource production, needs, trade and emerald income.
 - Goods represent labor/combat contributions and convert to emeralds daily at **06:00**.
@@ -96,12 +101,12 @@ This file records the repository owner's requirements from the project conversat
 - Resource deliverymen physically transport resources between buildings; resources must not teleport into workplaces. Emeralds are exempt from physical delivery.
 - Buildings hold local input/output storage. Small and large warehouses store physical resources, excluding emeralds.
 - Villagers prioritize accessible nearby warehouses when retrieving supplies, otherwise retrieve from the production source.
-- Torches are placeable light objects, **not a resource to show in the top bar**. This supersedes the original request describing them as a resource.
-- Torches require no fuel or lifetime expiration. Villagers light them before sleep and extinguish them at dawn; these tasks must not trap villagers in stalled loops.
-- Torches ARE destructible, superseding the original indestructible-torch request.
 
 ## JavaScript components
 
+- Put villager and enemy AI decisions in editable JavaScript, including employment, scheduling, targeting and task selection. Expose missing validated actions through the bindings, and ship readable examples for mod authors.
+- Put building behavior in JavaScript too. Isolate each prefab/building type in its own script, linked by its TOML definition; common helpers may be shared.
+- Preserve C# optimizations and null-safe empty-string checks while changing scripting.
 - Use Jint as a standalone scripting component, with direct live game bindings rather than JSON serialization between scripts and game logic.
 - Every script supports onInit(), onUpdate(dt) and onShutdown().
 - Provide callback-based world events such as onMonsterSpawned, onBuildingPlaced and onBuildingDamaged, plus appropriate additional lifecycle/gameplay events.
@@ -120,3 +125,24 @@ This file records the repository owner's requirements from the project conversat
 - Check implementations against these requirements, including physical movement, inventory changes, persistence and UI behavior, rather than relying on appearance alone.
 - Keep documentation honest about implementation status and platform validation. Update version metadata and relevant documentation together when a release is actually ready.
 - Keep generated test artifacts out of the repository root, and keep development checks out of Release distributions.
+
+## Latest 1.0.6 requirements
+
+- Add configurable daily reproduction, initially 60% per eligible home. Newborns remain hidden and become fully grown villagers the next day; persist pending growth.
+- Provide one button to reassign all professions automatically, instead of individual manual selection.
+- Every villager profession can automatically repair damaged buildings using physically collected materials.
+- Deliverymen must supply local building inputs, prioritize empty buffers, and protect feed/input reserves from surplus collection. Prefer roads and entrances and do not pass through buildings.
+- Include TypeScript declarations and editor support for JavaScript mod authors.
+- Torches, their workshop, resource and crafting/conversion are removed. Beta save compatibility is not required; preserve files and clearly reject unsupported formats.
+
+## Localization, documentation, lighting and diagnostics
+
+- Translation tables use stable IDs (`ui.options = "translated value"`), not English source sentences as keys. Put a short usage/argument description immediately above every translation entry and preserve format placeholders.
+- Keep README screenshots in root `images/`, referenced with relative Markdown paths. Capture tests in root `screenshots/` first, then copy selected documentation images into images/.
+- Keep nights readable rather than excessively dark. Visual ambient brightness must not alter sunlight-damage timing.
+- Log critical errors to files and keep script logging always enabled, including Release builds. Logs belong under executable-relative UserData/Logs and must not be committed.
+- Regular nighttime monsters must recur at configurable game-clock intervals from 18:00 until 05:00. Preserve the first five peaceful nights, hostile caps, pause/speed behavior and save/load interval phase.
+
+- Nether enemies must use their matching skins and cuboid UV layouts. Never reuse ordinary pig skins for Piglins or obsolete pigman paths for modern variants; log missing textures and validate models from multiple directions.
+
+- Cache only referenced/used external Minecraft assets in executable-relative UserData/cache.zip. Load the archive once at startup, resolve cache misses from external sources, and keep cached proprietary files out of Git and distributions.

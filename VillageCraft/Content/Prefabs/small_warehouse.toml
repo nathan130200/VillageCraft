@@ -1,4 +1,4 @@
-﻿# Plan: Small warehouse, 1.0.5-beta.
+# Plan: Small warehouse, 1.0.5-beta.
 Id = "small_warehouse"
 Name = "Small warehouse"
 Description = "Small warehouse"
@@ -14,3 +14,6 @@ Health = 240
 
 # A roof or canopy blocks direct sunlight on this tile.
 SheltersFromSun = true
+
+# JavaScript component for this prefab type.
+Script = "building_small_warehouse"

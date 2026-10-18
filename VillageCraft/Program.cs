@@ -4,15 +4,23 @@ using Raylib_cs;
 using rlImGui_cs;
 using VillageCraft;
 
-try{Catalog.Load();}catch(Exception e){Console.Error.WriteLine("Cannot load TOML content: "+e.Message);Environment.ExitCode=1;return;}
+GameLog.Initialize();
+try{Catalog.Load();}catch(Exception e){GameLog.Write(GameLogLevel.Critical,"Cannot load TOML content: "+e);Environment.ExitCode=1;return;}
+#if DEBUG
+if(args.Contains("--asset-cache-test")){try{AssetCacheChecks.Run();}catch(Exception e){Console.Error.WriteLine(e);Environment.ExitCode=1;}return;}
+if(args.Contains("--presentation-test")){try{LocalizationChecks.Run();NightChecks.Run();LoggingChecks.Run();}catch(Exception e){Console.Error.WriteLine(e);Environment.ExitCode=1;}return;}
+if(args.Contains("--population-test")){try{PopulationChecks.Run();}catch(Exception e){Console.Error.WriteLine(e);Environment.ExitCode=1;}return;}
+if(args.Contains("--logistics-test")){try{LogisticsChecks.Run();}catch(Exception e){Console.Error.WriteLine(e);Environment.ExitCode=1;}return;}
 if(args.Contains("--self-test")){try{Checks.Run();}catch(Exception e){Console.Error.WriteLine(e);Environment.ExitCode=1;}return;}
 bool smoke=args.Contains("--smoke-test"),raidSmoke=args.Contains("--raid-smoke");
+bool peopleSmoke=args.Contains("--people-smoke");if(peopleSmoke)smoke=true;
 bool menuSmoke=args.Contains("--menu-smoke"),optionsSmoke=args.Contains("--options-smoke");
 bool uiSmoke=args.Contains("--ui-smoke");
 bool caveSmoke=args.Contains("--cave-smoke"),newMapSmoke=args.Contains("--newmap-smoke");
+bool netherModels=args.Contains("--nether-models-smoke");
 bool sunlightModels=args.Contains("--sunlight-models-smoke");
 bool gameOverSmoke=args.Contains("--gameover-smoke");if(gameOverSmoke)smoke=true;
-bool modelsSmoke=args.Contains("--models-smoke")||sunlightModels;
+bool modelsSmoke=args.Contains("--models-smoke")||sunlightModels||netherModels;
 bool beta105Models=args.Contains("--beta105-models-smoke");
 bool materialsSmoke=args.Contains("--materials-smoke")||beta105Models;if(materialsSmoke)modelsSmoke=true;
 bool englishSmoke=args.Contains("--english-smoke");
@@ -24,9 +32,17 @@ bool panelsSmoke=args.Contains("--panels-smoke"),clockSmoke=args.Contains("--clo
 bool citizenSmoke=args.Contains("--citizen-smoke");if(englishSmoke)smoke=true;
 bool nightSmoke=args.Contains("--night-smoke");if(citizenSmoke)smoke=true;if(nightSmoke)smoke=true;
 if(smoke||raidSmoke||menuSmoke||optionsSmoke||uiSmoke||caveSmoke||newMapSmoke||modelsSmoke)Raylib.SetTraceLogLevel(TraceLogLevel.Warning);
-GraphicsOptions.Load();if(args.Contains("--scale-smoke")){GraphicsOptions.Current.UiScale=1.5f;smoke=true;}if(englishSmoke)L.Set("en-US");Assets.Discover();
+GraphicsOptions.Load();if(args.Contains("--scale-smoke")){GraphicsOptions.Current.UiScale=1.5f;smoke=true;}if(englishSmoke)L.Set("en-US");Assets.Prepare();
+#else
+if(args.Length>0){Console.Error.WriteLine("Development command-line modes require a Debug build.");Environment.ExitCode=1;return;}
+GraphicsOptions.Load();Assets.Prepare();
+#endif
+GameLog.CaptureRenderer();
 Raylib.SetConfigFlags(ConfigFlags.ResizableWindow|ConfigFlags.Msaa4xHint);
-Raylib.InitWindow(1024,640,"VillageCraft 1.0.5-beta | The Living Overworld");DisplaySettings.Apply(false);Raylib.SetTargetFPS(GraphicsOptions.Current.Fps);Raylib.SetExitKey(KeyboardKey.Null);
+Raylib.InitWindow(1024,640,"VillageCraft 1.0.6 | The Living Overworld");DisplaySettings.Apply(false);Raylib.SetTargetFPS(GraphicsOptions.Current.Fps);Raylib.SetExitKey(KeyboardKey.Null);
+#if DEBUG
+if(smoke||uiSmoke)Raylib.TraceLog(TraceLogLevel.Warning,"Visual check renderer logging is active.");
+#endif
 Rlgl.SetClipPlanes(.1,10000);
 rlImGui.Setup(true);
 string font=Path.Combine(AppContext.BaseDirectory,"Content","Fonts","mojangles.ttf");
@@ -34,31 +50,39 @@ if(!File.Exists(font))throw new FileNotFoundException("Missing Mojangles UI font
 ImGui.GetIO().Fonts.Clear();ImGui.GetIO().Fonts.AddFontFromFileTTF(font,16);rlImGui.ReloadFonts();
 Rlgl.TextureParameters((uint)ImGui.GetIO().Fonts.TexID,0x2800,0x2600);
 Rlgl.TextureParameters((uint)ImGui.GetIO().Fonts.TexID,0x2801,0x2600);
+#if DEBUG
 if(compactSmoke)Raylib.SetWindowSize(1024,640);
 if(modelsSmoke)
 {
-    try{if(sunlightModels)VisualChecks.Sunlight();else if(materialsSmoke)VisualChecks.Materials(beta105Models);else VisualChecks.Models();}finally{Assets.Dispose();rlImGui.Shutdown();Raylib.CloseWindow();}return;
+    try{if(netherModels)VisualChecks.Nether();else if(sunlightModels)VisualChecks.Sunlight();else if(materialsSmoke)VisualChecks.Materials(beta105Models);else VisualChecks.Models();}finally{Assets.Dispose();rlImGui.Shutdown();Raylib.CloseWindow();}return;
 }
+#endif
 var ui=new GameUi();ui.Theme();
-ui.BuildThumbnails();if(menuSmoke||optionsSmoke){ui.MenuOpen=true;ui.MenuPage=optionsSmoke?"Options":"Main";}
+ui.BuildThumbnails();
+#if DEBUG
+if(menuSmoke||optionsSmoke){ui.MenuOpen=true;ui.MenuPage=optionsSmoke?"Options":"Main";}
 if(newMapSmoke){ui.MenuOpen=true;ui.MenuPage="New Game";}
 var city=args.Contains("--demo")||raidSmoke||caveSmoke?City.New():City.StartVillage();if(args.Contains("--demo")||raidSmoke||caveSmoke)Checks.Demo(city);
 if(compactSmoke){ui.SelectPrefab("farm");ui.Inspected=city.Buildings.First(b=>b.Prefab=="farm").Id;ui.Paused=true;}
 if(citizenSmoke){ui.InspectMode=true;ui.InspectedCitizen=city.Citizens[0].Id;ui.Paused=true;}
 if(panelsSmoke){ui.InspectedCitizen=city.Citizens[0].Id;ui.PinCurrent();var m=city.SpawnMonster("zombie",city.AnchorX-3,city.AnchorZ+3)!;ui.InspectAt(city,m.Position);ui.Paused=true;}
+if(peopleSmoke){city.Rules.BirthChance=1;city.Tick();ui.ShowPeople();ui.Paused=true;}
 if(clockSmoke)ui.Paused=true;
-if(nightSmoke){city.Day=6;city.DayTime=city.Rules.DayLength*.78f;ui.Paused=true;city.SpawnNight();}
+if(nightSmoke){city.Day=6;city.DayTime=city.Rules.DayLength*.9f;ui.Paused=true;city.SpawnNight();}
 if(caveSmoke){ui.SelectPrefab("cave");ui.Inspected=city.Buildings.First(b=>b.Prefab=="cave").Id;}
 if(beta105Smoke)
 {
-    foreach(string id in Catalog.Resources)city.Stock[id]=Math.Max(city.Stock[id],100);city.ReconcileStock();
-    city.Place("cow_shed",city.AnchorX-3,city.AnchorZ-1);city.Place("torch_workshop",city.AnchorX+3,city.AnchorZ-1);
+    foreach(ResourceType id in Catalog.Resources)city.Stock[id]=Math.Max(city.Stock[id],100);city.ReconcileStock();
+    city.Place("cow_shed",city.AnchorX-3,city.AnchorZ-1);
     city.Place("large_warehouse",city.AnchorX+5,city.AnchorZ-1);
-    foreach(var (dx,dz) in new[]{(-3,1),(3,1),(2,2)})if(city.Place("torch",city.AnchorX+dx,city.AnchorZ+dz))city.SetTorch(city.At(city.AnchorX+dx,city.AnchorZ+dz)!,true);
     city.DayTime=city.Rules.DayLength*.8f;ui.Paused=true;city.TutorialEnabled=false;
     ui.Inspected=city.Buildings.First(b=>b.Plan.Warehouse).Id;
 }
+#else
+var city=City.StartVillage();
+#endif
 _=city.Scripting;city.Scripting.Flush();
+#if DEBUG
 if(raidSmoke)for(int i=0;i<240;i++)city.Update(.1f);
 string? previewSave=null;
 if(gameOverSmoke)
@@ -66,17 +90,24 @@ if(gameOverSmoke)
     previewSave="gameover-preview-"+Guid.NewGuid().ToString("N");city.Day=32;city.Statistics.RecordedSinceDay=1;city.Kills=42;city.Waves=1;city.Statistics.Deliveries=37;city.Statistics.EmeraldsFromGoods=550;city.Save(SaveStore.PathFor(previewSave));ui.RememberSave(previewSave);
     foreach(var v in city.Citizens.ToArray())city.RemoveVillager(v,"killed");
 }
-float yaw=.85f,distance=beta105Smoke?62:terrainSmoke?145:102,time=0;var focus=new Vector3(city.AnchorX*4,0,city.AnchorZ*4);int frames=0;City cameraCity=city;
+
+#endif
+float yaw=.85f,distance=102,time=0;var focus=new Vector3(city.AnchorX*4,0,city.AnchorZ*4);City cameraCity=city;
+#if DEBUG
+int frames=0;distance=peopleSmoke||nightSmoke||beta105Smoke?62:terrainSmoke?145:102;
+#endif
 try
 {
     while(!Raylib.WindowShouldClose()&&!ui.ExitRequested)
     {
         float dt=Math.Min(Raylib.GetFrameTime(),.1f);time+=dt;
         if(!ReferenceEquals(cameraCity,city)){cameraCity.Dispose();_=city.Scripting;city.Scripting.Flush();focus=new(city.AnchorX*4,0,city.AnchorZ*4);distance=102;cameraCity=city;}
+#if DEBUG
         if(clockSmoke)city.DayTime=city.Rules.DayLength*frames/64f;
         ui.TestTooltip=(uiSmoke&&frames>=50)||compactSmoke;
         if(optionsSmoke&&frames==20)L.Set("en-US");if(optionsSmoke&&frames==40)L.Set("pt-BR");
         if(uiSmoke&&frames%5==0){ui.ShowBuildCategory("Roads");ui.TestActivatePrefab=Catalog.Data.Prefabs.Where(p=>p.Category=="Roads").ElementAt(frames/5%6).Id;distance=frames<30?55:145;}
+#endif
         if(Raylib.IsKeyPressed(KeyboardKey.Escape))ui.Escape();
         if(!ui.Paused&&!ui.MenuOpen)city.Update(dt*ui.Speed);
         var mouse=Raylib.GetMousePosition();bool capture=city.GameOver||ui.OverUi(mouse)||ImGui.GetIO().WantCaptureMouse;
@@ -123,11 +154,16 @@ try
         var selectedMonster=city.Enemies.Concat(city.Defenders).Concat(city.Animals).FirstOrDefault(m=>m.Id==ui.InspectedMonster);
         if(selectedMonster!=null)Raylib.DrawCubeWires(new Vector3(selectedMonster.X,.4f+city.SurfaceY(selectedMonster.X,selectedMonster.Z),selectedMonster.Z)*4,1.4f,3.2f,1.4f,Scene.ColorOf("#E8C478"));
         Raylib.EndMode3D();Scene.World=null;
+#if DEBUG
         if(args.Contains("--scale-smoke")&&frames==5)Raylib.SetMousePosition(Raylib.GetScreenWidth()-30,Raylib.GetScreenHeight()-30);
+#endif
         ui.BeginFrame();
+#if DEBUG
         if(args.Contains("--scale-smoke")&&frames==10&&Vector2.Distance(ImGui.GetIO().MousePos,Raylib.GetMousePosition()/GraphicsOptions.Current.UiScale)>2)
             throw new InvalidOperationException("Scaled mouse input does not match UI coordinates.");
+#endif
         ui.Draw(ref city,hx,hz);ui.EndFrame();Raylib.EndDrawing();DisplaySettings.ApplyPending();
+#if DEBUG
         if(displaySmoke&&frames is 10 or 25 or 40)
         {
             int mode=frames==10?1:frames==25?2:0;GraphicsOptions.Current.DisplayMode=mode;DisplaySettings.Apply(false);
@@ -135,15 +171,20 @@ try
             if(!valid){Console.Error.WriteLine("Display mode transition failed: "+mode);Environment.ExitCode=1;}
             Console.WriteLine($"Display mode {mode}: {Raylib.GetScreenWidth()}x{Raylib.GetScreenHeight()}");
         }
-        if(clockSmoke&&frames==33)Raylib.TakeScreenshot(Path.Combine(Directory.CreateDirectory(Path.Combine(Environment.CurrentDirectory,"screenshots")).FullName,"clock-noon.png"));
-        if(clockSmoke&&frames==1)Raylib.TakeScreenshot(Path.Combine(Directory.CreateDirectory(Path.Combine(Environment.CurrentDirectory,"screenshots")).FullName,"clock-first.png"));
-        if(uiSmoke&&frames==29)Raylib.TakeScreenshot(Path.Combine(Directory.CreateDirectory(Path.Combine(Environment.CurrentDirectory,"screenshots")).FullName,"ui-near-smoke.png"));
+        if(clockSmoke&&frames==33)VisualChecks.Capture("clock-noon.png");
+        if(clockSmoke&&frames==1)VisualChecks.Capture("clock-first.png");
+        if(uiSmoke&&frames==29)VisualChecks.Capture("ui-near-smoke.png");
         if((smoke||raidSmoke||menuSmoke||optionsSmoke||uiSmoke||caveSmoke||newMapSmoke)&&++frames>=60)
         {
-            Raylib.TakeScreenshot(Path.Combine(Directory.CreateDirectory(Path.Combine(Environment.CurrentDirectory,"screenshots")).FullName,gameOverSmoke?"gameover-smoke.png":beta105Smoke?"beta105-smoke.png":raidSmoke?"raid-smoke.png":menuSmoke?"menu-smoke.png":optionsSmoke?"options-smoke.png":uiSmoke?"ui-smoke.png":caveSmoke?"cave-smoke.png":newMapSmoke?"newmap-smoke.png":citizenSmoke?"citizen-smoke.png":panelsSmoke?"panels-smoke.png":clockSmoke?"clock-smoke.png":compactSmoke?"compact-smoke.png":terrainSmoke?"terrain-smoke.png":englishSmoke?"english-smoke.png":"smoke-test.png"));
+            VisualChecks.Capture(nightSmoke?"night-village.png":peopleSmoke?"people-beta106.png":gameOverSmoke?"gameover-smoke.png":beta105Smoke?"beta105-smoke.png":raidSmoke?"raid-smoke.png":menuSmoke?"menu-smoke.png":optionsSmoke?"options-smoke.png":uiSmoke?"ui-smoke.png":caveSmoke?"cave-smoke.png":newMapSmoke?"newmap-smoke.png":citizenSmoke?"citizen-smoke.png":panelsSmoke?"panels-smoke.png":clockSmoke?"clock-smoke.png":compactSmoke?"compact-smoke.png":terrainSmoke?"terrain-smoke.png":englishSmoke?"english-smoke.png":"smoke-test.png");
             if(uiSmoke&&ui.TestActivationCount!=12){Console.Error.WriteLine("UI activation count mismatch: "+ui.TestActivationCount);Environment.ExitCode=1;}
             Console.WriteLine($"PASS: rendered {frames} frames, loaded {Assets.TextureCount} textures"+(uiSmoke?", activated construction cards 12 times across two zoom levels.":"."));break;
         }
+#endif
     }
 }
-finally{if(previewSave!=null)SaveStore.Delete(previewSave);city.Dispose();ui.Dispose();Assets.Dispose();rlImGui.Shutdown();Raylib.CloseWindow();}
+finally{
+#if DEBUG
+if(previewSave!=null)SaveStore.Delete(previewSave);
+#endif
+city.Dispose();ui.Dispose();Assets.Dispose();rlImGui.Shutdown();Raylib.CloseWindow();}

@@ -1,4 +1,4 @@
-﻿# TIPO: Plan. A natural renewable resource entity, also plantable by the player.
+# TIPO: Plan. A natural renewable resource entity, also plantable by the player.
 Id = "oak_tree"
 Name = "Oak tree"
 Category = "Infrastructure"
@@ -13,3 +13,6 @@ RegrowDays = 3
 
 # A roof or canopy blocks direct sunlight on this tile.
 SheltersFromSun = true
+
+# JavaScript component for this prefab type.
+Script = "building_oak_tree"

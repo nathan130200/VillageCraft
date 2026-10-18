@@ -12,9 +12,25 @@ static class Assets
     static readonly List<ZipArchive> packs=[];
     static readonly List<string> roots=[];
     static Shader cutoutShader;
+    static AssetCache? cache;
     public static int TextureCount=>textures.Count;
-    public static Dictionary<string,string> Icons=>Catalog.Data.ResourceIcons;
+    public static Dictionary<ResourceType,string> Icons=>Catalog.Data.ResourceIcons;
     public static void Discover()
+    {
+        if(cache!=null)return;
+        cache=new AssetCache(Path.Combine(SaveStore.Folder,"cache.zip"));cache.Load();
+    }
+    public static void Prepare()
+    {
+        Discover();
+        // Resolve referenced files once, without decoding or uploading every texture to the GPU.
+        var names=Catalog.Data.Models.Values.SelectMany(parts=>parts).Select(p=>p.Texture)
+            .Concat(Icons.Values).Concat(new[]{Catalog.Data.Game.GroundTexture,Catalog.Data.Game.DirtTexture,"block/sand.png","block/stone.png","block/water_still.png"})
+            .Concat(Enumerable.Range(0,64).Select(i=>$"item/clock_{i:00}.png"));
+        foreach(string name in names.Where(n=>!string.IsNullOrWhiteSpace(n)).Distinct(StringComparer.OrdinalIgnoreCase))Read(name);
+        cache!.Save();
+    }
+    static void DiscoverSources()
     {
         if(roots.Count>0)return;
         string? configured=Environment.GetEnvironmentVariable("VILLAGECRAFT_ASSETS");
@@ -31,7 +47,7 @@ static class Assets
         }
         foreach(var root in roots.ToArray())
         {
-            foreach(var folder in new[]{Path.Combine(root,"assets"),Path.Combine(root,"Content","Assets")})
+            foreach(var folder in new[]{Path.Combine(root,"textures"),Path.Combine(root,"assets"),Path.Combine(root,"Content","Assets")})
             {
                 if(!Directory.Exists(folder))continue;
                 foreach(var file in Directory.EnumerateFiles(folder,"*.png",SearchOption.AllDirectories))
@@ -71,6 +87,11 @@ static class Assets
     {
         if(name=="block/dirt_path.png")name="block/grass_path_top.png";
         Discover();string logical=name.StartsWith("minecraft/")?name:"minecraft/textures/"+name;
+        return cache!.Read(logical,()=>ReadSource(name,logical));
+    }
+    static byte[]? ReadSource(string name,string logical)
+    {
+        DiscoverSources();
         foreach(string key in new[]{logical,"assets/"+logical,name,Path.GetFileName(name),logical.Replace('/','_')})
             if(loose.TryGetValue(key,out var path))return File.ReadAllBytes(path);
         foreach(string key in new[]{logical,"assets/"+logical,name})if(indexed.TryGetValue(key,out var path))return File.ReadAllBytes(path);
@@ -92,6 +113,7 @@ static class Assets
             if(name.StartsWith("block/")||name.StartsWith("entity/")||name.StartsWith("models/armor/"))Raylib.GenTextureMipmaps(ref result);
             Filter(result,name);Raylib.SetTextureWrap(result,TextureWrap.Repeat);
         }
+        else GameLog.Write(GameLogLevel.Warning,"Missing texture: "+name+". Using model fallback colors; supply this skin through VILLAGECRAFT_ASSETS.");
         textures[name]=result;return result;
     }
     static void Filter(Texture2D texture,string name)
@@ -121,7 +143,7 @@ static class Assets
     }
     public static void EndCutouts(){Raylib.EndShaderMode();Rlgl.EnableBackfaceCulling();}
     public static void Dispose()
-    {if(cutoutShader.Id!=0){Raylib.UnloadShader(cutoutShader);cutoutShader=default;}foreach(var t in textures.Values)if(t.Id!=0)Raylib.UnloadTexture(t);textures.Clear();foreach(var p in packs)p.Dispose();packs.Clear();roots.Clear();loose.Clear();indexed.Clear();}
+    {cache?.Save();cache=null;if(cutoutShader.Id!=0){Raylib.UnloadShader(cutoutShader);cutoutShader=default;}foreach(var t in textures.Values)if(t.Id!=0)Raylib.UnloadTexture(t);textures.Clear();foreach(var p in packs)p.Dispose();packs.Clear();roots.Clear();loose.Clear();indexed.Clear();}
 
     public static void Cross(Texture2D texture,Vector3 center,Vector3 size,Color tint,float heading=0)
     {

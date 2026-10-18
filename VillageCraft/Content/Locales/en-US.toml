@@ -1,454 +1,1497 @@
-﻿# TYPE: LanguageFile. Copy this file with a new Id to add a language.
+# TYPE: LanguageFile. Stable translation IDs; translate values, never keys.
+# Copy this file, change Id/Name, and preserve numbered format placeholders.
 Id = "en-US"
 Name = "English (US)"
 
 [Text]
-"< Back" = "< Back"
-"?" = "?"
-"A baby {0} was born." = "A baby {0} was born."
-"A connected, staffed forge is required." = "A connected, staffed forge is required."
-"A new {0} arrived." = "A new {0} arrived."
-"A save with this name exists. Confirm overwrite or change the name." = "A save with this name exists. Confirm overwrite or change the name."
-"Animal care" = "Animal care"
-"Animals" = "Animals"
-"Animals per pen" = "Animals per pen"
-"Animals {0} / Guardians {1}" = "Animals {0} / Guardians {1}"
-"Animated water" = "Animated water"
-"Archery" = "Archery"
-"Assisting: " = "Assisting: "
-"Attack every N days" = "Attack every N days"
-"BOSS WAVE" = "BOSS WAVE"
-"Balance {0:+0.0;-0.0;0} / day" = "Balance {0:+0.0;-0.0;0} / day"
-"Base travel speed: {0:0.00}x" = "Base travel speed: {0:0.00}x"
-"Base wave size" = "Base wave size"
-"Building [Tab]" = "Building [Tab]"
-"Buy 20 / {0:0} emeralds" = "Buy 20 / {0:0} emeralds"
-"Carried items are separate from village stock. Food is consumed daily." = "Carried items are separate from village stock. Food is consumed daily."
-"Central square and occupied homes are protected." = "Central square and occupied homes are protected."
-"Choose 32â€“512 tiles on each axis. Default: {0}x{1}. No world generation: a flat grass surface and the starter village only. Creating a map replaces the unsaved session; saved villages remain available." = "Choose 32â€“512 tiles on each axis. Default: {0}x{1}. No world generation: a flat grass surface and the starter village only. Creating a map replaces the unsaved session; saved villages remain available."
-"Choose 32–512 tiles on each axis. Default: {0}x{1}. No world generation: a flat grass surface and the starter village only. Creating a map replaces the unsaved session; saved villages remain available." = "Choose 32–512 tiles on each axis. Default: {0}x{1}. No world generation: a flat grass surface and the starter village only. Creating a map replaces the unsaved session; saved villages remain available."
-"Click to build" = "Click to build"
-"Close" = "Close"
-"Close panel" = "Close panel"
-"Confirm overwrite" = "Confirm overwrite"
-"Connect and staff a trading hall." = "Connect and staff a trading hall."
-"Connected" = "Connected"
-"Create a flat map" = "Create a flat map"
-"Create flat map / replace session" = "Create flat map / replace session"
-"DANGER" = "DANGER"
-"DAY {0} {1} {2:00}:00   |   Residents {3}/{4}   |   Happiness {5:0}%   |   Water {6}/{7}   |   {8}x{9}   |   {10}" = "DAY {0} {1} {2:00}:00   |   Residents {3}/{4}   |   Happiness {5:0}%   |   Water {6}/{7}   |   {8}x{9}   |   {10}"
-"DAYLIGHT" = "DAYLIGHT"
-"Damage reduction {0:0}% / Work rate {1:0.00}x" = "Damage reduction {0:0}% / Work rate {1:0.00}x"
-"Day {0}: {1}" = "Day {0}: {1}"
-"Defending village" = "Defending village"
-"Defense" = "Defense"
-"Demolish / half emerald refund" = "Demolish / half emerald refund"
-"Economy" = "Economy"
-"Efficiency {0:0}%" = "Efficiency {0:0}%"
-"Employed {0} / {1}" = "Employed {0} / {1}"
-"Empty inventory" = "Empty inventory"
-"Enable raids" = "Enable raids"
-"Entrance disconnected" = "Entrance disconnected"
-"Equipment / armor {0} / tools {1}" = "Equipment / armor {0} / tools {1}"
-"Escape closes this menu. The simulation is paused." = "Escape closes this menu. The simulation is paused."
-"Exit" = "Exit"
-"Expedition" = "Expedition"
-"Farming" = "Farming"
-"Food reserve: {0:0.0} days" = "Food reserve: {0:0.0} days"
-"Food shortage! Assign farmers or trade for supplies." = "Food shortage! Assign farmers or trade for supplies."
-"Forging" = "Forging"
-"Frame limit" = "Frame limit"
-"Game menu" = "Game menu"
-"Give food / 2 from stock" = "Give food / 2 from stock"
-"Give tools / 1 from stock" = "Give tools / 1 from stock"
-"Going home" = "Going home"
-"Going to " = "Going to "
-"Golem forging" = "Golem forging"
-"Golems per workshop" = "Golems per workshop"
-"Graphics" = "Graphics"
-"Graphics preferences saved." = "Graphics preferences saved."
-"Ground shadows" = "Ground shadows"
-"Growth per wave" = "Growth per wave"
-"Health {0:0}/50" = "Health {0:0}/50"
-"Health {0:0}/{1:0}" = "Health {0:0}/{1:0}"
-"Height (tiles)" = "Height (tiles)"
-"Helping families grow" = "Helping families grow"
-"High" = "High"
-"Home: {0}" = "Home: {0}"
-"Homeless" = "Homeless"
-"Hostile limit" = "Hostile limit"
-"Hostiles defeated! Repair and prepare for the next attack." = "Hostiles defeated! Repair and prepare for the next attack."
-"Hostiles {0}" = "Hostiles {0}"
-"Housing" = "Housing"
-"Infrastructure" = "Infrastructure"
-"Inspecting [Tab]" = "Inspecting [Tab]"
-"Insufficient resources" = "Insufficient resources"
-"Insufficient supplies for trade." = "Insufficient supplies for trade."
-"Inventory" = "Inventory"
-"Journal" = "Journal"
-"Land required" = "Land required"
-"Language" = "Language"
-"Load Game" = "Load Game"
-"Load selected village" = "Load selected village"
-"Loaded {0}." = "Loaded {0}."
-"Low" = "Low"
-"MENU [Esc]" = "MENU [Esc]"
-"Makes {0:0.##} {1} / cycle" = "Makes {0:0.##} {1} / cycle"
-"Medium" = "Medium"
-"Minecraft textures" = "Minecraft textures"
-"Minutes per day" = "Minutes per day"
-"Monsters per night" = "Monsters per night"
-"My village" = "My village"
-"NIGHT" = "NIGHT"
-"New Game" = "New Game"
-"Next attack uses the next multiple of this interval." = "Next attack uses the next multiple of this interval."
-"Next raid: day {0}" = "Next raid: day {0}"
-"Night falls: {0} monsters approach. They retreat at dawn." = "Night falls: {0} monsters approach. They retreat at dawn."
-"Nighttime monsters" = "Nighttime monsters"
-"No saved villages yet." = "No saved villages yet."
-"Not enough materials for this upgrade." = "Not enough materials for this upgrade."
-"Not enough supplies for training." = "Not enough supplies for training."
-"Options" = "Options"
-"PAUSE" = "PAUSE"
-"PLAY" = "PLAY"
-"Paused" = "Paused"
-"People" = "People"
-"Pig keeping" = "Pig keeping"
-"Population limit" = "Population limit"
-"Poultry keeping" = "Poultry keeping"
-"Priority" = "Priority"
-"Production" = "Production"
-"Production seconds" = "Production seconds"
-"Quality" = "Quality"
-"R rotate / Tab inspect / Right click inspect / Shift+Q/E fast camera" = "R rotate / Tab inspect / Right click inspect / Shift+Q/E fast camera"
-"RAID {0}! {1} hostiles led by a Nether warlord are attacking." = "RAID {0}! {1} hostiles led by a Nether warlord are attacking."
-"Raid in {0} days" = "Raid in {0} days"
-"Raids disabled" = "Raids disabled"
-"Repair / 2 wood + 2 stone" = "Repair / 2 wood + 2 stone"
-"Resource" = "Resource"
-"Resting" = "Resting"
-"Resume game" = "Resume game"
-"Roads" = "Roads"
-"Rotate [R]  {0} deg" = "Rotate [R]  {0} deg"
-"Rotate entrance to face a connected path" = "Rotate entrance to face a connected path"
-"Rules apply immediately and persist when you save the village. Lower caps stop new spawns without deleting existing villagers or animals. Map dimensions are chosen under New Game." = "Rules apply immediately and persist when you save the village. Lower caps stop new spawns without deleting existing villagers or animals. Map dimensions are chosen under New Game."
-"Save Game" = "Save Game"
-"Save Game As" = "Save Game As"
-"Save graphics preferences" = "Save graphics preferences"
-"Save village" = "Save village"
-"Saved as {0}." = "Saved as {0}."
-"Saves in executable/UserData" = "Saves in executable/UserData"
-"Search..." = "Search..."
-"Sell 20 / {0:0} emeralds" = "Sell 20 / {0:0} emeralds"
-"Shepherding" = "Shepherding"
-"Snow crafting" = "Snow crafting"
-"Spellcasting" = "Spellcasting"
-"Staff {0}/{1}" = "Staff {0}/{1}"
-"Stonecutting" = "Stonecutting"
-"Stored as UserData/<name>.vcs (binary)" = "Stored as UserData/<name>.vcs (binary)"
-"Tax" = "Tax"
-"Tile occupied" = "Tile occupied"
-"Tile {0}, {1}" = "Tile {0}, {1}"
-"Trading" = "Trading"
-"Trading hall" = "Trading hall"
-"Unemployed" = "Unemployed"
-"Unemployed citizens help families attract residents. They can assist any workplace at 50% efficiency. Train specialists using tools and emeralds." = "Unemployed citizens help families attract residents. They can assist any workplace at 50% efficiency. Train specialists using tools and emeralds."
-"Unlock equipment upgrades in order." = "Unlock equipment upgrades in order."
-"Uses {0:0.##} {1} / cycle" = "Uses {0:0.##} {1} / cycle"
-"Village defense" = "Village defense"
-"Village journal" = "Village journal"
-"Village rules / saved with this village" = "Village rules / saved with this village"
-"Village save name" = "Village save name"
-"Walls and gates block raiders. Warriors intercept; archers, mages and snow golems shoot. Configure attack timing and limits in Options." = "Walls and gates block raiders. Warriors intercept; archers, mages and snow golems shoot. Configure attack timing and limits in Options."
-"Warrior training" = "Warrior training"
-"Water shortage! Build more connected wells." = "Water shortage! Build more connected wells."
-"Waves {0} / Kills {1}" = "Waves {0} / Kills {1}"
-"Width (tiles)" = "Width (tiles)"
-"Woodcutting" = "Woodcutting"
-"Work progress {0:0.0}/{1:0.0}s" = "Work progress {0:0.0}/{1:0.0}s"
-"Workers {0}/{1}" = "Workers {0}/{1}"
-"Workforce" = "Workforce"
-"Workplace enabled" = "Workplace enabled"
-"Workplace: {0}" = "Workplace: {0}"
-"Your first farms and animal keepers are ready. Build a forge and prepare defenses before day {0}." = "Your first farms and animal keepers are ready. Build a forge and prepare defenses before day {0}."
+
+# Workplace activity name and road profession-bonus label: archery.
+"activity.archery" = "Archery"
+
+# Workplace activity name and road profession-bonus label: cattle keeping.
+"activity.cattle_keeping" = "Cattle keeping"
+
+# Workplace activity name and road profession-bonus label: delivery.
+"activity.delivery" = "Delivery"
+
+# Workplace activity name and road profession-bonus label: expedition.
+"activity.expedition" = "Expedition"
+
+# Workplace activity name and road profession-bonus label: farming.
+"activity.farming" = "Farming"
+
+# Workplace activity name and road profession-bonus label: forging.
+"activity.forging" = "Forging"
+
+# Workplace activity name and road profession-bonus label: golem forging.
+"activity.golem_forging" = "Golem forging"
+
+# Workplace activity name and road profession-bonus label: pig keeping.
+"activity.pig_keeping" = "Pig keeping"
+
+# Workplace activity name and road profession-bonus label: poultry keeping.
+"activity.poultry_keeping" = "Poultry keeping"
+
+# Workplace activity name and road profession-bonus label: shepherding.
+"activity.shepherding" = "Shepherding"
+
+# Workplace activity name and road profession-bonus label: snow crafting.
+"activity.snow_crafting" = "Snow crafting"
+
+# Workplace activity name and road profession-bonus label: spellcasting.
+"activity.spellcasting" = "Spellcasting"
+
+# Workplace activity name and road profession-bonus label: stonecutting.
+"activity.stonecutting" = "Stonecutting"
+
+# Workplace activity name and road profession-bonus label: trading.
+"activity.trading" = "Trading"
+
+# Workplace activity name and road profession-bonus label: warrior training.
+"activity.warrior_training" = "Warrior training"
+
+# Workplace activity name and road profession-bonus label: woodcutting.
+"activity.woodcutting" = "Woodcutting"
+
+# Building inspector health. {0}: current health; {1}: maximum health.
+"building.health" = "Health {0:0}/{1:0}"
+
+# Build-menu category label for Animals.
+"category.Animals" = "Animals"
+
+# Build-menu category label for Defense.
+"category.Defense" = "Defense"
+
+# Build-menu category label for Economy.
+"category.Economy" = "Economy"
+
+# Build-menu category label for Housing.
+"category.Housing" = "Housing"
+
+# Build-menu category label for Infrastructure.
+"category.Infrastructure" = "Infrastructure"
+
+# Build-menu category label for Production.
+"category.Production" = "Production"
+
+# Build-menu category label for Roads.
+"category.Roads" = "Roads"
+
+# Villager status-effect name in the inspector: Burning.
+"effect.Burning" = "Burning"
+
+# Villager status-effect name in the inspector: Poison.
+"effect.Poison" = "Poison"
+
+# Villager status-effect name in the inspector: Slowness.
+"effect.Slowness" = "Slowness"
+
+# Villager status-effect name in the inspector: Weakness.
+"effect.Weakness" = "Weakness"
+
+# Creature display name in inspectors and notifications: archer.
 "entity.archer" = "Archer"
+
+# Creature display name in inspectors and notifications: blaze.
 "entity.blaze" = "Blaze"
+
+# Creature display name in inspectors and notifications: chicken.
 "entity.chicken" = "Chicken"
+
+# Creature display name in inspectors and notifications: cow.
+"entity.cow" = "Cow"
+
+# Creature display name in inspectors and notifications: creeper.
 "entity.creeper" = "Creeper"
+
+# Creature display name in inspectors and notifications: iron_golem.
 "entity.iron_golem" = "Iron Golem"
+
+# Creature display name in inspectors and notifications: mage.
 "entity.mage" = "Mage"
+
+# Creature display name in inspectors and notifications: nether_warlord.
 "entity.nether_warlord" = "Nether Warlord"
+
+# Creature display name in inspectors and notifications: pig.
 "entity.pig" = "Pig"
+
+# Creature display name in inspectors and notifications: piglin.
 "entity.piglin" = "Piglin"
+
+# Creature display name in inspectors and notifications: piglin_brute.
 "entity.piglin_brute" = "Piglin Brute"
+
+# Creature display name in inspectors and notifications: sheep.
 "entity.sheep" = "Sheep"
+
+# Creature display name in inspectors and notifications: skeleton.
 "entity.skeleton" = "Skeleton"
+
+# Creature display name in inspectors and notifications: snow_golem.
 "entity.snow_golem" = "Snow Golem"
+
+# Creature display name in inspectors and notifications: warrior.
 "entity.warrior" = "Warrior"
+
+# Creature display name in inspectors and notifications: zombie.
 "entity.zombie" = "Zombie"
+
+# Creature display name in inspectors and notifications: zombified_piglin.
 "entity.zombified_piglin" = "Zombified Piglin"
+
+# Day label with details. {0}: day number; {1}: clock or journal message.
+"format.day_details" = "Day {0}: {1}"
+
+# Resource cost display. {0}: numeric amount; {1}: localized resource name.
+"format.resource_amount" = "{0:0} {1}"
+
+# Building storage display. {0}: resource name; {1}: stored amount.
+"format.resource_stock" = "{0}: {1:0.##}"
+
+# Explanation below the village-defeat title.
+"gameover.description" = "All villagers have been eliminated."
+
+# Title shown after every villager has been eliminated.
+"gameover.title" = "VILLAGE LOST"
+
+# Interface label, help text or control: BOSS WAVE
+"hud.boss_wave" = "BOSS WAVE"
+
+# Interface label, help text or control: DAYLIGHT
+"hud.daylight" = "DAYLIGHT"
+
+# Interface label, help text or control: NIGHT
+"hud.night" = "NIGHT"
+
+# Interface label, help text or control: Night monsters begin on day {0}
+"hud.peaceful_nights" = "Night monsters begin on day {0}"
+
+# Game-over screen: Exit
+"menu.exit" = "Exit"
+
+# Interface label, help text or control: Paused
+"menu.paused" = "Paused"
+
+# Interface label, help text or control: Resume game
+"menu.resume" = "Resume game"
+
+# Interface label, help text or control: Game menu
+"menu.title" = "Game menu"
+
+# Interface label, help text or control: A baby {0} was born.
+"message.animal_born" = "A baby {0} was born."
+
+# Village status or journal: {0} was destroyed!
+"message.building_destroyed" = "{0} was destroyed!"
+
+# Workplace shortage status. {0}: building name; {1}: required resources.
+"message.building_missing_resources" = "{0} needs {1}"
+
+# Journal notification after construction. {0}: localized building name.
+"message.building_placed" = "{0} built."
+
+# Village status or journal: {0} removed.
+"message.building_removed" = "{0} removed."
+
+# Village status or journal: {0} is waiting for local deliveries.
+"message.building_waiting_delivery" = "{0} is waiting for local deliveries."
+
+# Village status or journal: Food shortage! Assign farmers or trade for supplies.
+"message.food_shortage" = "Food shortage! Assign farmers or trade for supplies."
+
+# Night encounter notification. {0}: number of approaching monsters.
+"message.night_monsters" = "Night falls: {0} monsters approach. Sunlight burns unprotected undead."
+
+# Village status or journal: A new {0} arrived.
+"message.villager_arrived" = "A new {0} arrived."
+
+# Village status or journal: Some villagers are collecting food from local storage.
+"message.villagers_collecting_food" = "Some villagers are collecting food from local storage."
+
+# Village status or journal: Water shortage! Build more connected wells.
+"message.water_shortage" = "Water shortage! Build more connected wells."
+
+# Options slider for the daily birth probability of an eligible home.
+"options.birth_chance" = "Daily birth chance"
+
+# People panel counter. {0}: number of hidden babies waiting to mature.
+"people.growing_babies" = "Growing babies: {0}"
+
+# People panel button: automatically redistribute all villager professions.
+"people.reassign_professions" = "Reassign professions"
+
+# Village status or journal: Rotate entrance to face a connected path
+"placement.entrance_not_connected" = "Rotate entrance to face a connected path"
+
+# Village status or journal: Insufficient resources
+"placement.insufficient_resources" = "Insufficient resources"
+
+# Village status or journal: Land required
+"placement.land_required" = "Land required"
+
+# Village status or journal: Tile occupied
+"placement.tile_occupied" = "Tile occupied"
+
+# Building/road description in the build menu and inspector: archery.
 "prefab.archery.description" = "Archers fire at enemies from a longer distance."
+
+# Building/road display name: archery.
 "prefab.archery.name" = "Archery range"
+
+# Building/road description in the build menu and inspector: barracks.
 "prefab.barracks.description" = "Warriors intercept raiders with swords and shields."
+
+# Building/road display name: barracks.
 "prefab.barracks.name" = "Warrior barracks"
+
+# Building/road description in the build menu and inspector: cave.
 "prefab.cave.description" = "Miners and explorers search underground for gold, diamonds and ancient debris. Citizens can assist at half efficiency."
+
+# Building/road display name: cave.
 "prefab.cave.name" = "Cave entrance"
+
+# Building/road description in the build menu and inspector: chicken_coop.
 "prefab.chicken_coop.description" = "Keepers breed chicks and gather eggs."
+
+# Building/road display name: chicken_coop.
 "prefab.chicken_coop.name" = "Chicken coop"
+
+# Building/road description in the build menu and inspector: cobble_road.
 "prefab.cobble_road.description" = "Fast for stonecutters and smiths; rough under farmers feet."
+
+# Building/road display name: cobble_road.
 "prefab.cobble_road.name" = "Cobblestone road"
+
+# Building/road description in the build menu and inspector: cottage.
 "prefab.cottage.description" = "Four beds, oak walls and a stepped plank roof."
+
+# Building/road display name: cottage.
 "prefab.cottage.name" = "Oak cottage"
+
+# Building/road description in the build menu and inspector: cow_shed.
+"prefab.cow_shed.description" = "Keepers produce leather and milk while deliverymen supply feed."
+
+# Building/road display name: cow_shed.
+"prefab.cow_shed.name" = "Cow shed"
+
+# Building/road description in the build menu and inspector: family_house.
 "prefab.family_house.description" = "A larger household with room for six residents."
+
+# Building/road display name: family_house.
 "prefab.family_house.name" = "Chimney house"
+
+# Building/road description in the build menu and inspector: farm.
 "prefab.farm.description" = "Farmers tend crops on site and harvest food."
+
+# Building/road display name: farm.
 "prefab.farm.name" = "Wheat farm"
+
+# Building/road description in the build menu and inspector: forge.
 "prefab.forge.description" = "Smiths consume iron and timber to forge tools."
+
+# Building/road display name: forge.
 "prefab.forge.name" = "Blacksmith forge"
+
+# Building/road description in the build menu and inspector: gate.
 "prefab.gate.description" = "Carries connected paths while barring raiders until destroyed."
+
+# Building/road display name: gate.
 "prefab.gate.name" = "Village gate"
+
+# Building/road description in the build menu and inspector: gravel_road.
 "prefab.gravel_road.description" = "Inexpensive. Woodcutters move faster; armored warriors move slower."
+
+# Building/road display name: gravel_road.
 "prefab.gravel_road.name" = "Gravel trail"
+
+# Building/road description in the build menu and inspector: ice_road.
 "prefab.ice_road.description" = "Snow golems glide rapidly; most villagers struggle for traction."
+
+# Building/road display name: ice_road.
 "prefab.ice_road.name" = "Packed ice road"
+
+# Building/road description in the build menu and inspector: iron_foundry.
 "prefab.iron_foundry.description" = "Every three days, smiths can awaken a golem. Maximum two per foundry."
+
+# Building/road display name: iron_foundry.
 "prefab.iron_foundry.name" = "Iron guardian foundry"
+
+# Building/road description in the build menu and inspector: large_warehouse.
+"prefab.large_warehouse.description" = "Stores 10,000 physical resources and employs five deliverymen."
+
+# Building/road display name: large_warehouse.
+"prefab.large_warehouse.name" = "Large warehouse"
+
+# Building/road description in the build menu and inspector: lumber.
 "prefab.lumber.description" = "Woodcutters harvest nearby natural trees once and wait for regrowth."
+
+# Building/road display name: lumber.
 "prefab.lumber.name" = "Lumber camp"
+
+# Building/road description in the build menu and inspector: mage_hall.
 "prefab.mage_hall.description" = "Magic villagers launch powerful violet bolts."
+
+# Building/road display name: mage_hall.
 "prefab.mage_hall.name" = "Enchanter hall"
+
+# Building/road description in the build menu and inspector: market.
 "prefab.market.description" = "Staff this hall to import or export resources."
+
+# Building/road display name: market.
 "prefab.market.name" = "Trading hall"
-"prefab.park.description" = "Trees, flowers and seating raise happiness."
-"prefab.park.name" = "Village green"
-"prefab.path.description" = "Connect entrances to the central square."
-"prefab.path.name" = "Dirt path"
-"prefab.pig_pen.description" = "Keepers feed pigs, breed piglets and produce food."
-"prefab.pig_pen.name" = "Pig pasture"
-"prefab.plank_road.description" = "Quick steps for shepherds and poultry keepers; stonecutters slow down."
-"prefab.plank_road.name" = "Oak boardwalk"
-"prefab.quarry.description" = "Stonecutters mine stone and small amounts of iron ore."
-"prefab.quarry.name" = "Stone quarry"
-"prefab.sheep_pen.description" = "Keepers feed sheep, breed lambs and gather wool."
-"prefab.sheep_pen.name" = "Shepherd pasture"
-"prefab.snow_shrine.description" = "Every three days, a keeper can create a snow golem. Maximum two."
-"prefab.snow_shrine.name" = "Snow guardian shrine"
-"prefab.soul_road.description" = "Magic villagers gain speed; other travelers slow down."
-"prefab.soul_road.name" = "Soul sand way"
-"prefab.wall.description" = "Blocks ground raiders. Rotate to join a perimeter."
-"prefab.wall.name" = "Stone wall"
-"prefab.watchtower.description" = "A fortified post for village archers."
-"prefab.watchtower.name" = "Archer watchtower"
-"prefab.well.description" = "Clean water for sixteen villagers."
-"prefab.well.name" = "Village well"
-"profession.archer" = "Archer"
-"profession.citizen" = "Citizen"
-"profession.explorer" = "Explorer"
-"profession.farmer" = "Farmer"
-"profession.keeper" = "Animal keeper"
-"profession.mage" = "Magic villager"
-"profession.miner" = "Miner"
-"profession.smith" = "Smith"
-"profession.trader" = "Trader"
-"profession.warrior" = "Warrior"
-"profession.woodcutter" = "Woodcutter"
-"resource.AncientDebris" = "Ancient debris"
-"resource.Diamonds" = "Diamonds"
-"resource.Eggs" = "Eggs"
-"resource.Emeralds" = "Emeralds"
-"resource.Food" = "Food"
-"resource.Gold" = "Gold"
-"resource.Iron" = "Iron"
-"resource.Stone" = "Stone"
-"resource.Tools" = "Tools"
-"resource.Wood" = "Wood"
-"resource.Wool" = "Wool"
-"upgrade.diamond_armor" = "Diamond armor"
-"upgrade.diamond_tools" = "Diamond tools"
-"upgrade.iron_armor" = "Iron armor"
-"upgrade.iron_tools" = "Tempered tools"
-"upgrade.netherite_armor" = "Netherite armor"
-"upgrade.netherite_tools" = "Netherite tools"
-"{0:0} {1}" = "{0:0} {1}"
-"{0} awakened." = "{0} awakened."
-"{0} built." = "{0} built."
-"{0} equipped throughout the village." = "{0} equipped throughout the village."
-"{0} needs {1}" = "{0} needs {1}"
-"{0} removed." = "{0} removed."
-"{0} road surface applied." = "{0} road surface applied."
-"{0} trained as {1}." = "{0} trained as {1}."
-"{0} villagers fell during the raid." = "{0} villagers fell during the raid."
-"{0} was destroyed!" = "{0} was destroyed!"
-"{0} | {1:0} HP" = "{0} | {1:0} HP"
-"{0}##{1}" = "{0}##{1}"
-"{0}: {1:0.00}x" = "{0}: {1:0.00}x"
-"{0}: {1}" = "{0}: {1}"
-"{0}: {1} ({2} young)" = "{0}: {1} ({2} young)"
-"{0}: {1} HOSTILES" = "{0}: {1} HOSTILES"
-"{0}{1}x [{2}]" = "{0}{1}x [{2}]"
-". Requires a staffed forge." = ". Requires a staffed forge."
-"Villager inspector" = "Villager inspector"
-"Building inspector" = "Building inspector"
-"Unlimited" = "Unlimited"
-"Scripted behavior" = "Scripted behavior"
-"Residents" = "Residents"
-"Happiness" = "Happiness"
-"Water" = "Water"
-"Hostiles" = "Hostiles"
-"Days until raid" = "Days until raid"
-"Map size" = "Map size"
-"Inspect tool" = "Inspect tool"
-"Pin panel" = "Pin panel"
-"Unpin panel" = "Unpin panel"
-"Select a building" = "Select a building"
-"Hostile" = "Hostile"
-"Friendly" = "Friendly"
-"Damage {0:0} / Range {1:0.0}" = "Damage {0:0} / Range {1:0.0}"
-"Speed {0:0.00} / Cooldown {1:0.0}s" = "Speed {0:0.00} / Cooldown {1:0.0}s"
-"1 game minute = {0:0.00}s at 1x" = "1 game minute = {0:0.00}s at 1x"
-"Display" = "Display"
-"Display mode" = "Display mode"
-"Windowed" = "Windowed"
-"Fullscreen" = "Fullscreen"
-"Borderless fullscreen" = "Borderless fullscreen"
-"Resolution" = "Resolution"
-"Apply display settings" = "Apply display settings"
-"Borderless uses the desktop resolution." = "Borderless uses the desktop resolution."
-"Windowed size is fitted to the screen to keep the title bar visible." = "Windowed size is fitted to the screen to keep the title bar visible."
-"Create a village" = "Create a village"
-"Create village / replace session" = "Create village / replace session"
-"Choose 32–512 tiles per axis. Default: {0}x{1}. Lakes, gentle mountains and natural trees surround a flat starter village. Save before replacing the current session." = "Choose 32–512 tiles per axis. Default: {0}x{1}. Lakes, gentle mountains and natural trees surround a flat starter village. Save before replacing the current session."
-"Guided tutorial" = "Guided tutorial"
-"Seed (0 = random)" = "Seed (0 = random)"
-"Peaceful nights" = "Peaceful nights"
-"Tutorial complete" = "Tutorial complete"
-"Your village is ready to grow." = "Your village is ready to grow."
-"Goal complete" = "Goal complete"
-"Goal in progress" = "Goal in progress"
-"Continue" = "Continue"
-"Skip tutorial" = "Skip tutorial"
-"Ready to harvest" = "Ready to harvest"
-"Regrows in {0} days" = "Regrows in {0} days"
-"Waiting for trees to regrow" = "Waiting for trees to regrow"
-"Chopping tree" = "Chopping tree"
-"trees" = "trees"
-"Night monsters begin on day {0}" = "Night monsters begin on day {0}"
-"prefab.oak_tree.name" = "Oak tree"
+
+# Building/road description in the build menu and inspector: oak_tree.
 "prefab.oak_tree.description" = "A living oak. Woodcutters harvest it once, then wait three days for regrowth."
-"tutorial.inspect.title" = "Meet your villagers"
-"tutorial.inspect.description" = "Left-click a villager or building to inspect it. The pin keeps a panel open."
-"tutorial.road.title" = "Connect the village"
-"tutorial.road.description" = "Open Roads in the hotbar and place a dirt path next to the connected road network. R rotates building entrances."
-"tutorial.trees.title" = "Harvest real timber"
-"tutorial.trees.description" = "Watch a woodcutter walk to a natural oak and chop it. Each oak gives wood once, then regrows over three days."
-"tutorial.water.title" = "Keep everyone supplied"
-"tutorial.water.description" = "Inspect the well and check water capacity. Keep enough connected wells for every resident."
-"tutorial.homes.title" = "Leave room to grow"
-"tutorial.homes.description" = "Keep four spare beds for newcomers. New homes need an entrance facing a connected path."
-"tutorial.defense.title" = "Prepare your defenses"
+
+# Building/road display name: oak_tree.
+"prefab.oak_tree.name" = "Oak tree"
+
+# Building/road description in the build menu and inspector: park.
+"prefab.park.description" = "Trees, flowers and seating raise happiness."
+
+# Building/road display name: park.
+"prefab.park.name" = "Village green"
+
+# Building/road description in the build menu and inspector: path.
+"prefab.path.description" = "Connect entrances to the central square."
+
+# Building/road display name: path.
+"prefab.path.name" = "Dirt path"
+
+# Building/road description in the build menu and inspector: pig_pen.
+"prefab.pig_pen.description" = "Keepers feed pigs, breed piglets and produce food."
+
+# Building/road display name: pig_pen.
+"prefab.pig_pen.name" = "Pig pasture"
+
+# Building/road description in the build menu and inspector: plank_road.
+"prefab.plank_road.description" = "Quick steps for shepherds and poultry keepers; stonecutters slow down."
+
+# Building/road display name: plank_road.
+"prefab.plank_road.name" = "Oak boardwalk"
+
+# Building/road description in the build menu and inspector: quarry.
+"prefab.quarry.description" = "Stonecutters mine stone and small amounts of iron ore."
+
+# Building/road display name: quarry.
+"prefab.quarry.name" = "Stone quarry"
+
+# Building/road description in the build menu and inspector: sheep_pen.
+"prefab.sheep_pen.description" = "Keepers feed sheep, breed lambs and gather wool."
+
+# Building/road display name: sheep_pen.
+"prefab.sheep_pen.name" = "Shepherd pasture"
+
+# Building/road description in the build menu and inspector: small_warehouse.
+"prefab.small_warehouse.description" = "Stores 2,000 physical resources and employs two deliverymen. Emeralds and Goods stay in the treasury."
+
+# Building/road display name: small_warehouse.
+"prefab.small_warehouse.name" = "Small warehouse"
+
+# Building/road description in the build menu and inspector: snow_shrine.
+"prefab.snow_shrine.description" = "Every three days, a keeper can create a snow golem. Maximum two."
+
+# Building/road display name: snow_shrine.
+"prefab.snow_shrine.name" = "Snow guardian shrine"
+
+# Building/road description in the build menu and inspector: soul_road.
+"prefab.soul_road.description" = "Magic villagers gain speed; other travelers slow down."
+
+# Building/road display name: soul_road.
+"prefab.soul_road.name" = "Soul sand way"
+
+# Building/road description in the build menu and inspector: wall.
+"prefab.wall.description" = "Blocks ground raiders. Rotate to join a perimeter."
+
+# Building/road display name: wall.
+"prefab.wall.name" = "Stone wall"
+
+# Building/road description in the build menu and inspector: watchtower.
+"prefab.watchtower.description" = "A fortified post for village archers."
+
+# Building/road display name: watchtower.
+"prefab.watchtower.name" = "Archer watchtower"
+
+# Building/road description in the build menu and inspector: well.
+"prefab.well.description" = "Clean water for sixteen villagers."
+
+# Building/road display name: well.
+"prefab.well.name" = "Village well"
+
+# Villager profession label in People and inspectors: archer.
+"profession.archer" = "Archer"
+
+# Villager profession label in People and inspectors: citizen.
+"profession.citizen" = "Citizen"
+
+# Villager profession label in People and inspectors: deliveryman.
+"profession.deliveryman" = "Resource deliveryman"
+
+# Villager profession label in People and inspectors: explorer.
+"profession.explorer" = "Explorer"
+
+# Villager profession label in People and inspectors: farmer.
+"profession.farmer" = "Farmer"
+
+# Villager profession label in People and inspectors: keeper.
+"profession.keeper" = "Animal keeper"
+
+# Villager profession label in People and inspectors: mage.
+"profession.mage" = "Magic villager"
+
+# Villager profession label in People and inspectors: miner.
+"profession.miner" = "Miner"
+
+# Villager profession label in People and inspectors: smith.
+"profession.smith" = "Smith"
+
+# Villager profession label in People and inspectors: trader.
+"profession.trader" = "Trader"
+
+# Villager profession label in People and inspectors: warrior.
+"profession.warrior" = "Warrior"
+
+# Villager profession label in People and inspectors: woodcutter.
+"profession.woodcutter" = "Woodcutter"
+
+# Resource name used in HUD tooltips, inventory, recipes and trade: AncientDebris.
+"resource.AncientDebris" = "Ancient debris"
+
+# Resource name used in HUD tooltips, inventory, recipes and trade: Diamonds.
+"resource.Diamonds" = "Diamonds"
+
+# Resource name used in HUD tooltips, inventory, recipes and trade: Eggs.
+"resource.Eggs" = "Eggs"
+
+# Resource name used in HUD tooltips, inventory, recipes and trade: Emeralds.
+"resource.Emeralds" = "Emeralds"
+
+# Resource name used in HUD tooltips, inventory, recipes and trade: Food.
+"resource.Food" = "Food"
+
+# Resource name used in HUD tooltips, inventory, recipes and trade: Gold.
+"resource.Gold" = "Gold"
+
+# Resource name used in HUD tooltips, inventory, recipes and trade: Goods.
+"resource.Goods" = "Goods"
+
+# Resource name used in HUD tooltips, inventory, recipes and trade: Iron.
+"resource.Iron" = "Iron"
+
+# Resource name used in HUD tooltips, inventory, recipes and trade: Leather.
+"resource.Leather" = "Leather"
+
+# Resource name used in HUD tooltips, inventory, recipes and trade: Milk.
+"resource.Milk" = "Milk"
+
+# Resource name used in HUD tooltips, inventory, recipes and trade: Stone.
+"resource.Stone" = "Stone"
+
+# Resource name used in HUD tooltips, inventory, recipes and trade: Tools.
+"resource.Tools" = "Tools"
+
+# Resource name used in HUD tooltips, inventory, recipes and trade: Wood.
+"resource.Wood" = "Wood"
+
+# Resource name used in HUD tooltips, inventory, recipes and trade: Wool.
+"resource.Wool" = "Wool"
+
+# Initial editable name for a village save.
+"save.default_name" = "My village"
+
+# Game-over screen: Births
+"statistics.births" = "Births"
+
+# Game-over screen: Growing babies
+"statistics.growing_babies" = "Growing babies"
+
+# Villager activity shown in the People panel and inspector: Assisting.
+"task.Assisting" = "Assisting"
+
+# Villager activity shown in the People panel and inspector: CaravanTravelling.
+"task.CaravanTravelling" = "Travelling with caravan"
+
+# Villager activity shown in the People panel and inspector: ChoppingTree.
+"task.ChoppingTree" = "Chopping tree"
+
+# Villager activity shown in the People panel and inspector: CollectingDelivery.
+"task.CollectingDelivery" = "Collecting delivery"
+
+# Villager activity shown in the People panel and inspector: CollectingFood.
+"task.CollectingFood" = "Collecting food"
+
+# Villager activity shown in the People panel and inspector: CollectingMilk.
+"task.CollectingMilk" = "Collecting milk"
+
+# Villager activity shown in the People panel and inspector: CollectingRepairSupplies.
+"task.CollectingRepairSupplies" = "Collecting repair supplies"
+
+# Villager activity shown in the People panel and inspector: DefendingVillage.
+"task.DefendingVillage" = "Defending village"
+
+# Villager activity shown in the People panel and inspector: Delivering.
+"task.Delivering" = "Delivering resources"
+
+# Villager activity shown in the People panel and inspector: GoingHome.
+"task.GoingHome" = "Going home"
+
+# Villager activity shown in the People panel and inspector: GoingToTrees.
+"task.GoingToTrees" = "Going to trees"
+
+# Villager activity shown in the People panel and inspector: GoingToWork.
+"task.GoingToWork" = "Going to work"
+
+# Villager activity shown in the People panel and inspector: Homeless.
+"task.Homeless" = "Homeless"
+
+# Villager activity shown in the People panel and inspector: LeavingVillage.
+"task.LeavingVillage" = "Leaving village"
+
+# Villager activity shown in the People panel and inspector: NightPatrol.
+"task.NightPatrol" = "Night patrol"
+
+# Villager activity shown in the People panel and inspector: RepairingBuilding.
+"task.RepairingBuilding" = "Repairing building"
+
+# Villager activity shown in the People panel and inspector: Resting.
+"task.Resting" = "Resting"
+
+# Villager activity shown in the People panel and inspector: ScriptedBehavior.
+"task.ScriptedBehavior" = "Scripted behavior"
+
+# Villager activity shown in the People panel and inspector: SeekingHome.
+"task.SeekingHome" = "Seeking a home"
+
+# Villager activity shown in the People panel and inspector: SupportingFamilies.
+"task.SupportingFamilies" = "Helping families grow"
+
+# Villager activity shown in the People panel and inspector: TalkingToResidents.
+"task.TalkingToResidents" = "Talking to residents"
+
+# Villager activity shown in the People panel and inspector: WaitingDeliveries.
+"task.WaitingDeliveries" = "Waiting for deliveries"
+
+# Villager activity shown in the People panel and inspector: WaitingStorage.
+"task.WaitingStorage" = "Waiting for storage space"
+
+# Villager activity shown in the People panel and inspector: WaitingTreeRegrowth.
+"task.WaitingTreeRegrowth" = "Waiting for trees to regrow"
+
+# Villager activity shown in the People panel and inspector: WanderingHomeless.
+"task.WanderingHomeless" = "Wandering without a home"
+
+# Villager activity shown in the People panel and inspector: Working.
+"task.Working" = "Working"
+
+# Guided tutorial instructions for the defense stage.
 "tutorial.defense.description" = "Build and staff a barracks, archery range or mage hall. Nights 1–5 are safe; common monsters begin on night 6."
 
-"UI scale" = "UI scale"
-"Night patrol" = "Night patrol"
+# Guided tutorial heading for the defense stage.
+"tutorial.defense.title" = "Prepare your defenses"
 
-# 1.0.5-beta
-"resource.Goods" = "Goods"
-"resource.Torches" = "Torches"
-"resource.Leather" = "Leather"
-"resource.Milk" = "Milk"
-"profession.deliveryman" = "Resource deliveryman"
-"entity.cow" = "Cow"
-"prefab.small_warehouse.name" = "Small warehouse"
-"prefab.large_warehouse.name" = "Large warehouse"
-"prefab.cow_shed.name" = "Cow shed"
-"prefab.torch.name" = "Torch"
-"prefab.torch_workshop.name" = "Torch workshop"
-"prefab.small_warehouse.description" = "Stores 2,000 physical resources and employs two deliverymen. Emeralds and Goods stay in the treasury."
-"prefab.large_warehouse.description" = "Stores 10,000 physical resources and employs five deliverymen."
-"prefab.cow_shed.description" = "Keepers produce leather and milk while deliverymen supply feed."
-"prefab.torch.description" = "Fuel-free lighting. Villagers light it at dusk and extinguish it at dawn. Can be damaged, repaired or demolished."
-"prefab.torch_workshop.description" = "Turns delivered wood into torches."
-"Collecting milk" = "Collecting milk"
-"Collecting food" = "Collecting food"
-"Delivering resources" = "Delivering resources"
-"Collecting delivery" = "Collecting delivery"
-"Waiting for deliveries" = "Waiting for deliveries"
-"Waiting for storage space" = "Waiting for storage space"
-"Lighting torches" = "Lighting torches"
-"Extinguishing torches" = "Extinguishing torches"
-"Cattle keeping" = "Cattle keeping"
-"Delivery" = "Delivery"
-"Torch crafting" = "Torch crafting"
-"Storage" = "Storage"
-"Storage {0:0.##}/{1}" = "Storage {0:0.##}/{1}"
-"Cargo: {0:0.##} {1}" = "Cargo: {0:0.##} {1}"
-"Effect: {0} ({1:0}s)" = "Effect: {0} ({1:0}s)"
-"Burning" = "Burning"
-"Lit" = "Lit"
-"Extinguished" = "Extinguished"
-"Reset tutorial" = "Reset tutorial"
-"Enchant armor" = "Enchant armor"
-"Goods convert to emeralds every day at 06:00." = "Goods convert to emeralds every day at 06:00."
-"A staffed mage hall and leather armor are required. Enchanting improves protection and damage." = "A staffed mage hall and leather armor are required. Enchanting improves protection and damage."
-"Villagers collect supplies from nearby warehouses or sources." = "Villagers collect supplies from nearby warehouses or sources."
-"06:00: {0:0.##} emeralds earned from Goods; upkeep {1:0.##}." = "06:00: {0:0.##} emeralds earned from Goods; upkeep {1:0.##}."
-"Delivery required: bring 20 items to the trading hall." = "Delivery required: bring 20 items to the trading hall."
-"Resource deliveries" = "Resource deliveries"
-"Resources are stored in buildings. Deliverymen carry inputs to workplaces and surplus to warehouses." = "Resources are stored in buildings. Deliverymen carry inputs to workplaces and surplus to warehouses."
+# Guided tutorial instructions for the homes stage.
+"tutorial.homes.description" = "Keep four spare beds for newcomers. New homes need an entrance facing a connected path."
 
-"Daily Goods contribution" = "Daily Goods contribution"
-"Sell requests are delivered to the trading hall before the exchange." = "Sell requests are delivered to the trading hall before the exchange."
-"A staffed mage hall and armor are required. Enchanting improves protection and damage." = "A staffed mage hall and armor are required. Enchanting improves protection and damage."
-"Poison" = "Poison"
-"Slowness" = "Slowness"
-"Weakness" = "Weakness"
-"Enchantment active" = "Enchantment active"
+# Guided tutorial heading for the homes stage.
+"tutorial.homes.title" = "Leave room to grow"
 
-"Supplies moved into warehouse storage. Train deliverymen to supply workplaces." = "Supplies moved into warehouse storage. Train deliverymen to supply workplaces."
+# Guided tutorial instructions for the inspect stage.
+"tutorial.inspect.description" = "Left-click a villager or building to inspect it. The pin keeps a panel open."
 
-# Sunlight and game over
-"Night falls: {0} monsters approach. Sunlight burns unprotected undead." = "Night falls: {0} monsters approach. Sunlight burns unprotected undead."
-"Leather helmet / sunlight protection" = "Leather helmet / sunlight protection"
-"Burning in sunlight" = "Burning in sunlight"
-"Boss wave" = "Boss wave"
-"VILLAGE LOST" = "VILLAGE LOST"
-"All villagers have been eliminated." = "All villagers have been eliminated."
-"Unsaved village" = "Unsaved village"
-"Save: {0}" = "Save: {0}"
-"Village statistics" = "Village statistics"
-"Day / time" = "Day / time"
-"Recorded since day" = "Recorded since day"
-"Simulated minutes" = "Simulated minutes"
-"Map / seed" = "Map / seed"
-"Peak population" = "Peak population"
-"New arrivals" = "New arrivals"
-"Villagers lost" = "Villagers lost"
-"Waves / monsters defeated" = "Waves / monsters defeated"
-"Monsters lost to sunlight" = "Monsters lost to sunlight"
-"Remaining monsters" = "Remaining monsters"
-"Animals / guardians" = "Animals / guardians"
-"Buildings placed / destroyed" = "Buildings placed / destroyed"
-"Deliveries completed" = "Deliveries completed"
-"Emeralds from Goods" = "Emeralds from Goods"
-"Daily balance" = "Daily balance"
-"Housing / water" = "Housing / water"
-"Immigration progress" = "Immigration progress"
-"Armor / tools" = "Armor / tools"
-"Enchantment" = "Enchantment"
-"Yes" = "Yes"
-"No" = "No"
-"Boss wave interval" = "Boss wave interval"
-"Day duration" = "Day duration"
-"{0} days" = "{0} days"
-"{0:0.##} minutes" = "{0:0.##} minutes"
-"Resources remaining" = "Resources remaining"
-"Total production" = "Total production"
-"Buildings remaining" = "Buildings remaining"
-"Retry save" = "Retry save"
-"Select a save" = "Select a save"
-"Reload save / Retry" = "Reload save / Retry"
-"Delete save" = "Delete save"
-"Confirm delete save" = "Confirm delete save"
-"Permanently delete {0}?" = "Permanently delete {0}?"
-"Save deleted." = "Save deleted."
-"This save already contains a defeated village. Choose an earlier save." = "This save already contains a defeated village. Choose an earlier save."
+# Guided tutorial heading for the inspect stage.
+"tutorial.inspect.title" = "Meet your villagers"
+
+# Guided tutorial instructions for the road stage.
+"tutorial.road.description" = "Open Roads in the hotbar and place a dirt path next to the connected road network. R rotates building entrances."
+
+# Guided tutorial heading for the road stage.
+"tutorial.road.title" = "Connect the village"
+
+# Guided tutorial instructions for the trees stage.
+"tutorial.trees.description" = "Watch a woodcutter walk to a natural oak and chop it. Each oak gives wood once, then regrows over three days."
+
+# Guided tutorial heading for the trees stage.
+"tutorial.trees.title" = "Harvest real timber"
+
+# Guided tutorial instructions for the water stage.
+"tutorial.water.description" = "Inspect the well and check water capacity. Keep enough connected wells for every resident."
+
+# Guided tutorial heading for the water stage.
+"tutorial.water.title" = "Keep everyone supplied"
+
+# Village status or journal: 06:00: {0:0.##} emeralds earned from Goods; upkeep {1:0.##}.
+"message.goods_settlement" = "06:00: {0:0.##} emeralds earned from Goods; upkeep {1:0.##}."
+
+# Interface label, help text or control: 1 game minute = {0:0.00}s at 1x
+"format.game_minute_seconds" = "1 game minute = {0:0.00}s at 1x"
+
+# Village status or journal: A connected, staffed forge is required.
+"ui.a_connected_staffed_forge_is_required" = "A connected, staffed forge is required."
+
+# Interface label, help text or control: A save with this name exists. Confirm overwrite or change the name.
+"ui.a_save_with_this_name_exists_confirm_overwrite" = "A save with this name exists. Confirm overwrite or change the name."
+
+# Village status or journal: A staffed mage hall and armor are required. Enchanting improves protection and damage.
+"ui.a_staffed_mage_hall_and_armor_are_required" = "A staffed mage hall and armor are required. Enchanting improves protection and damage."
+
+# Interface label, help text or control: A staffed mage hall and leather armor are required. Enchanting improves protection and damage.
+"ui.a_staffed_mage_hall_and_leather_armor_are" = "A staffed mage hall and leather armor are required. Enchanting improves protection and damage."
+
+# Interface label, help text or control: Animal care
+"ui.animal_care" = "Animal care"
+
+# Interface label, help text or control: Animals
+"ui.animals" = "Animals"
+
+# Interface label, help text or control: Animals {0} / Guardians {1}
+"ui.animals_guardians" = "Animals {0} / Guardians {1}"
+
+# Game-over screen: Animals / guardians
+"ui.animals_guardians_2" = "Animals / guardians"
+
+# Interface label, help text or control: Animals per pen
+"ui.animals_per_pen" = "Animals per pen"
+
+# Interface label, help text or control: Animated water
+"ui.animated_water" = "Animated water"
+
+# Interface label, help text or control: Apply display settings
+"ui.apply_display_settings" = "Apply display settings"
+
+# Interface label, help text or control: Archery
+"ui.archery" = "Archery"
+
+# Game-over screen: Armor / tools
+"ui.armor_tools" = "Armor / tools"
+
+# Interface label, help text or control: Assign specialists to connected workplaces; surplus villagers become citizens.
+"ui.assign_specialists_to_connected_workplaces_surplus_villagers_become" = "Assign specialists to connected workplaces; surplus villagers become citizens."
+
+# Interface label, help text or control: Assisting:
+"ui.assisting" = "Assisting: "
+
+# Interface label, help text or control: Attack every N days
+"ui.attack_every_n_days" = "Attack every N days"
+
+# Interface label, help text or control: {0} awakened.
+"ui.awakened" = "{0} awakened."
+
+# Interface label, help text or control: < Back
+"ui.back" = "< Back"
+
+# Interface label, help text or control: Balance {0:+0.0;-0.0;0} / day
+"ui.balance_day" = "Balance {0:+0.0;-0.0;0} / day"
+
+# Interface label, help text or control: Base travel speed: {0:0.00}x
+"ui.base_travel_speed_x" = "Base travel speed: {0:0.00}x"
+
+# Interface label, help text or control: Base wave size
+"ui.base_wave_size" = "Base wave size"
+
+# Interface label, help text or control: Borderless fullscreen
+"ui.borderless_fullscreen" = "Borderless fullscreen"
+
+# Interface label, help text or control: Borderless uses the desktop resolution.
+"ui.borderless_uses_the_desktop_resolution" = "Borderless uses the desktop resolution."
+
+# Game-over screen: Boss wave interval
+"ui.boss_wave_interval" = "Boss wave interval"
+
+# Interface label, help text or control: Building inspector
+"ui.building_inspector" = "Building inspector"
+
+# Interface label, help text or control: Building [Tab]
+"ui.building_tab" = "Building [Tab]"
+
+# Game-over screen: Buildings placed / destroyed
+"ui.buildings_placed_destroyed" = "Buildings placed / destroyed"
+
+# Game-over screen: Buildings remaining
+"ui.buildings_remaining" = "Buildings remaining"
+
+# Interface label, help text or control: Burning in sunlight
+"ui.burning_in_sunlight" = "Burning in sunlight"
+
+# Interface label, help text or control: Buy 20 / {0:0} emeralds
+"ui.buy_20_emeralds" = "Buy 20 / {0:0} emeralds"
+
+# Game-over screen: Cancel
+"ui.cancel" = "Cancel"
+
+# Interface label, help text or control: Cargo: {0:0.##} {1}
+"ui.cargo" = "Cargo: {0:0.##} {1}"
+
+# Interface label, help text or control: Carried items are separate from village stock. Food is consumed daily.
+"ui.carried_items_are_separate_from_village_stock_food" = "Carried items are separate from village stock. Food is consumed daily."
+
+# Interface label, help text or control: Cattle keeping
+"ui.cattle_keeping" = "Cattle keeping"
+
+# Village status or journal: Central square and occupied homes are protected.
+"ui.central_square_and_occupied_homes_are_protected" = "Central square and occupied homes are protected."
+
+# Interface label, help text or control: Choose 32–512 tiles on each axis. Default: {0}x{1}. No world generation: a flat grass surface and th...
+"ui.choose_32512_tiles_on_each_axis_default_x" = "Choose 32–512 tiles on each axis. Default: {0}x{1}. No world generation: a flat grass surface and the starter village only. Creating a map replaces the unsaved session; saved villages remain available."
+
+# Interface label, help text or control: Choose 32–512 tiles per axis. Default: {0}x{1}. Lakes, gentle mountains and natural trees surround a...
+"ui.choose_32512_tiles_per_axis_default_x_lakes" = "Choose 32–512 tiles per axis. Default: {0}x{1}. Lakes, gentle mountains and natural trees surround a flat starter village. Save before replacing the current session."
+
+# Interface label, help text or control: Choose 32â€“512 tiles on each axis. Default: {0}x{1}. No world generation: a flat grass surface and ...
+"ui.choose_32a512_tiles_on_each_axis_default_x" = "Choose 32â€“512 tiles on each axis. Default: {0}x{1}. No world generation: a flat grass surface and the starter village only. Creating a map replaces the unsaved session; saved villages remain available."
+
+# Interface label, help text or control: Chopping tree
+"ui.chopping_tree" = "Chopping tree"
+
+# Interface label, help text or control: Click to build
+"ui.click_to_build" = "Click to build"
+
+# Interface label, help text or control: Close
+"ui.close" = "Close"
+
+# Interface label, help text or control: Close panel
+"ui.close_panel" = "Close panel"
+
+# Interface label, help text or control: Collecting delivery
+"ui.collecting_delivery" = "Collecting delivery"
+
+# Interface label, help text or control: Collecting food
+"ui.collecting_food" = "Collecting food"
+
+# Interface label, help text or control: Collecting milk
+"ui.collecting_milk" = "Collecting milk"
+
+# Interface label, help text or control: Collecting repair supplies
+"ui.collecting_repair_supplies" = "Collecting repair supplies"
+
+# Game-over screen: Confirm delete save
+"ui.confirm_delete_save" = "Confirm delete save"
+
+# Interface label, help text or control: Confirm overwrite
+"ui.confirm_overwrite" = "Confirm overwrite"
+
+# Village status or journal: Connect and staff a trading hall.
+"ui.connect_and_staff_a_trading_hall" = "Connect and staff a trading hall."
+
+# Interface label, help text or control: Connected
+"ui.connected" = "Connected"
+
+# Interface label, help text or control: Continue
+"ui.continue" = "Continue"
+
+# Interface label, help text or control: Create a flat map
+"ui.create_a_flat_map" = "Create a flat map"
+
+# Interface label, help text or control: Create a village
+"ui.create_a_village" = "Create a village"
+
+# Interface label, help text or control: Create flat map / replace session
+"ui.create_flat_map_replace_session" = "Create flat map / replace session"
+
+# Interface label, help text or control: Create village / replace session
+"ui.create_village_replace_session" = "Create village / replace session"
+
+# Game-over screen: Daily balance
+"ui.daily_balance" = "Daily balance"
+
+# Interface label, help text or control: Daily Goods contribution
+"ui.daily_goods_contribution" = "Daily Goods contribution"
+
+# Interface label, help text or control: Damage {0:0} / Range {1:0.0}
+"ui.damage_range" = "Damage {0:0} / Range {1:0.0}"
+
+# Interface label, help text or control: Damage reduction {0:0}% / Work rate {1:0.00}x
+"ui.damage_reduction_work_rate_x" = "Damage reduction {0:0}% / Work rate {1:0.00}x"
+
+# Interface label, help text or control: DANGER
+"ui.danger" = "DANGER"
+
+# Interface label, help text or control: DAY {0} {1} {2:00}:00 | Residents {3}/{4} | Happiness {5:0}% | Water {6}/{7} | {8}x{9} | {10}
+"ui.day_00_residents_happiness_water_x" = "DAY {0} {1} {2:00}:00   |   Residents {3}/{4}   |   Happiness {5:0}%   |   Water {6}/{7}   |   {8}x{9}   |   {10}"
+
+# Game-over screen: Day duration
+"ui.day_duration" = "Day duration"
+
+# Game-over screen: Day / time
+"ui.day_time" = "Day / time"
+
+# Game-over screen: {0} days
+"ui.days" = "{0} days"
+
+# Interface label, help text or control: Days until raid
+"ui.days_until_raid" = "Days until raid"
+
+# Interface label, help text or control: Defending village
+"ui.defending_village" = "Defending village"
+
+# Interface label, help text or control: Defense
+"ui.defense" = "Defense"
+
+# Game-over screen: Delete save
+"ui.delete_save" = "Delete save"
+
+# Game-over screen: Deliveries completed
+"ui.deliveries_completed" = "Deliveries completed"
+
+# Interface label, help text or control: Delivering resources
+"ui.delivering_resources" = "Delivering resources"
+
+# Interface label, help text or control: Delivery
+"ui.delivery" = "Delivery"
+
+# Village status or journal: Delivery required: bring 20 items to the trading hall.
+"ui.delivery_required_bring_20_items_to_the_trading" = "Delivery required: bring 20 items to the trading hall."
+
+# Interface label, help text or control: Demolish / half emerald refund
+"ui.demolish_half_emerald_refund" = "Demolish / half emerald refund"
+
+# Interface label, help text or control: Display
+"ui.display" = "Display"
+
+# Interface label, help text or control: Display mode
+"ui.display_mode" = "Display mode"
+
+# Interface label, help text or control: Economy
+"ui.economy" = "Economy"
+
+# Interface label, help text or control: Effect: {0} ({1:0}s)
+"ui.effect_s" = "Effect: {0} ({1:0}s)"
+
+# Interface label, help text or control: Efficiency {0:0}%
+"ui.efficiency" = "Efficiency {0:0}%"
+
+# Game-over screen: Emeralds from Goods
+"ui.emeralds_from_goods" = "Emeralds from Goods"
+
+# Interface label, help text or control: Employed {0} / {1}
+"ui.employed" = "Employed {0} / {1}"
+
+# Interface label, help text or control: Empty inventory
+"ui.empty_inventory" = "Empty inventory"
+
+# Interface label, help text or control: Enable raids
+"ui.enable_raids" = "Enable raids"
+
+# Interface label, help text or control: Enchant armor
+"ui.enchant_armor" = "Enchant armor"
+
+# Game-over screen: Enchantment
+"ui.enchantment" = "Enchantment"
+
+# Interface label, help text or control: Enchantment active
+"ui.enchantment_active" = "Enchantment active"
+
+# Interface label, help text or control: Entrance disconnected
+"ui.entrance_disconnected" = "Entrance disconnected"
+
+# Interface label, help text or control: Equipment / armor {0} / tools {1}
+"ui.equipment_armor_tools" = "Equipment / armor {0} / tools {1}"
+
+# Village status or journal: {0} equipped throughout the village.
+"ui.equipped_throughout_the_village" = "{0} equipped throughout the village."
+
+# Interface label, help text or control: Escape closes this menu. The simulation is paused.
+"ui.escape_closes_this_menu_the_simulation_is_paused" = "Escape closes this menu. The simulation is paused."
+
+# Interface label, help text or control: Expedition
+"ui.expedition" = "Expedition"
+
+# Interface label, help text or control: Extinguished
+"ui.extinguished" = "Extinguished"
+
+# Interface label, help text or control: Farming
+"ui.farming" = "Farming"
+
+# Interface label, help text or control: Food reserve: {0:0.0} days
+"ui.food_reserve_days" = "Food reserve: {0:0.0} days"
+
+# Interface label, help text or control: Forging
+"ui.forging" = "Forging"
+
+# Interface label, help text or control: Frame limit
+"ui.frame_limit" = "Frame limit"
+
+# Interface label, help text or control: Friendly
+"ui.friendly" = "Friendly"
+
+# Interface label, help text or control: Fullscreen
+"ui.fullscreen" = "Fullscreen"
+
+# Interface label, help text or control: Give food / 2 from stock
+"ui.give_food_2_from_stock" = "Give food / 2 from stock"
+
+# Interface label, help text or control: Give tools / 1 from stock
+"ui.give_tools_1_from_stock" = "Give tools / 1 from stock"
+
+# Interface label, help text or control: Goal complete
+"ui.goal_complete" = "Goal complete"
+
+# Interface label, help text or control: Goal in progress
+"ui.goal_in_progress" = "Goal in progress"
+
+# Interface label, help text or control: Going home
+"ui.going_home" = "Going home"
+
+# Interface label, help text or control: Going to
+"ui.going_to" = "Going to "
+
+# Interface label, help text or control: Golem forging
+"ui.golem_forging" = "Golem forging"
+
+# Interface label, help text or control: Golems per workshop
+"ui.golems_per_workshop" = "Golems per workshop"
+
+# Interface label, help text or control: Goods convert to emeralds every day at 06:00.
+"ui.goods_convert_to_emeralds_every_day_at_06" = "Goods convert to emeralds every day at 06:00."
+
+# Interface label, help text or control: Graphics
+"ui.graphics" = "Graphics"
+
+# Interface label, help text or control: Graphics preferences saved.
+"ui.graphics_preferences_saved" = "Graphics preferences saved."
+
+# Interface label, help text or control: Ground shadows
+"ui.ground_shadows" = "Ground shadows"
+
+# Interface label, help text or control: Growth per wave
+"ui.growth_per_wave" = "Growth per wave"
+
+# Interface label, help text or control: Guided tutorial
+"ui.guided_tutorial" = "Guided tutorial"
+
+# Game-over screen: Happiness
+"ui.happiness" = "Happiness"
+
+# Interface label, help text or control: Height (tiles)
+"ui.height_tiles" = "Height (tiles)"
+
+# Interface label, help text or control: Helping families grow
+"ui.helping_families_grow" = "Helping families grow"
+
+# Interface label, help text or control: High
+"ui.high" = "High"
+
+# Interface label, help text or control: Home: {0}
+"ui.home" = "Home: {0}"
+
+# Interface label, help text or control: Homeless
+"ui.homeless" = "Homeless"
+
+# Interface label, help text or control: Hostile
+"ui.hostile" = "Hostile"
+
+# Interface label, help text or control: Hostile limit
+"ui.hostile_limit" = "Hostile limit"
+
+# Interface label, help text or control: Hostiles {0}
+"ui.hostiles" = "Hostiles {0}"
+
+# Interface label, help text or control: {0}: {1} HOSTILES
+"ui.hostiles_2" = "{0}: {1} HOSTILES"
+
+# Interface label, help text or control: Hostiles
+"ui.hostiles_3" = "Hostiles"
+
+# Village status or journal: Hostiles defeated! Repair and prepare for the next attack.
+"ui.hostiles_defeated_repair_and_prepare_for_the_next" = "Hostiles defeated! Repair and prepare for the next attack."
+
+# Interface label, help text or control: Housing
+"ui.housing" = "Housing"
+
+# Game-over screen: Housing / water
+"ui.housing_water" = "Housing / water"
+
+# Game-over screen: Immigration progress
+"ui.immigration_progress" = "Immigration progress"
+
+# Interface label, help text or control: Infrastructure
+"ui.infrastructure" = "Infrastructure"
+
+# Interface label, help text or control: Inspect tool
+"ui.inspect_tool" = "Inspect tool"
+
+# Interface label, help text or control: Inspecting [Tab]
+"ui.inspecting_tab" = "Inspecting [Tab]"
+
+# Village status or journal: Insufficient supplies for trade.
+"ui.insufficient_supplies_for_trade" = "Insufficient supplies for trade."
+
+# Interface label, help text or control: Inventory
+"ui.inventory" = "Inventory"
+
+# Game-over screen: Journal
+"ui.journal" = "Journal"
+
+# Interface label, help text or control: {0}##{1}
+"ui.label" = "{0}##{1}"
+
+# Interface label, help text or control: {0}: {1}
+"ui.label_2" = "{0}: {1}"
+
+# Interface label, help text or control: Language
+"ui.language" = "Language"
+
+# Interface label, help text or control: Leather helmet / sunlight protection
+"ui.leather_helmet_sunlight_protection" = "Leather helmet / sunlight protection"
+
+# Interface label, help text or control: Lit
+"ui.lit" = "Lit"
+
+# Interface label, help text or control: Load Game
+"ui.load_game" = "Load Game"
+
+# Interface label, help text or control: Load selected village
+"ui.load_selected_village" = "Load selected village"
+
+# Interface label, help text or control: Loaded {0}.
+"ui.loaded" = "Loaded {0}."
+
+# Interface label, help text or control: Low
+"ui.low" = "Low"
+
+# Interface label, help text or control: Makes {0:0.##} {1} / cycle
+"ui.makes_cycle" = "Makes {0:0.##} {1} / cycle"
+
+# Game-over screen: Map / seed
+"ui.map_seed" = "Map / seed"
+
+# Interface label, help text or control: Map size
+"ui.map_size" = "Map size"
+
+# Interface label, help text or control: Medium
+"ui.medium" = "Medium"
+
+# Interface label, help text or control: MENU [Esc]
+"ui.menu_esc" = "MENU [Esc]"
+
+# Interface label, help text or control: Minecraft textures
+"ui.minecraft_textures" = "Minecraft textures"
+
+# Game-over screen: {0:0.##} minutes
+"ui.minutes" = "{0:0.##} minutes"
+
+# Interface label, help text or control: Minutes per day
+"ui.minutes_per_day" = "Minutes per day"
+
+# Game-over screen: Monsters lost to sunlight
+"ui.monsters_lost_to_sunlight" = "Monsters lost to sunlight"
+
+# Interface label, help text or control: Monsters per night
+"options.night_group_size" = "Monsters per encounter"
+
+# Game-over screen: New arrivals
+"ui.new_arrivals" = "New arrivals"
+
+# Game-over screen: New Game
+"ui.new_game" = "New Game"
+
+# Interface label, help text or control: Next attack uses the next multiple of this interval.
+"ui.next_attack_uses_the_next_multiple_of_this" = "Next attack uses the next multiple of this interval."
+
+# Interface label, help text or control: Next raid: day {0}
+"ui.next_raid_day" = "Next raid: day {0}"
+
+# Interface label, help text or control: Night falls: {0} monsters approach. They retreat at dawn.
+"ui.night_falls_monsters_approach_they_retreat_at_dawn" = "Night falls: {0} monsters approach. They retreat at dawn."
+
+# Interface label, help text or control: Night patrol
+"ui.night_patrol" = "Night patrol"
+
+# Interface label, help text or control: Nighttime monsters
+"ui.nighttime_monsters" = "Nighttime monsters"
+
+# Game-over screen: No
+"ui.no" = "No"
+
+# Interface label, help text or control: No saved villages yet.
+"ui.no_saved_villages_yet" = "No saved villages yet."
+
+# Village status or journal: Not enough materials for this upgrade.
+"ui.not_enough_materials_for_this_upgrade" = "Not enough materials for this upgrade."
+
+# Village status or journal: Not enough supplies for training.
+"ui.not_enough_supplies_for_training" = "Not enough supplies for training."
+
+# Button or heading that opens game options.
+"ui.options" = "Options"
+
+# Interface label, help text or control: PAUSE
+"ui.pause" = "PAUSE"
+
+# Interface label, help text or control: Peaceful nights
+"ui.peaceful_nights" = "Peaceful nights"
+
+# Game-over screen: Peak population
+"ui.peak_population" = "Peak population"
+
+# Interface label, help text or control: People
+"ui.people" = "People"
+
+# Game-over screen: Permanently delete {0}?
+"ui.permanently_delete" = "Permanently delete {0}?"
+
+# Interface label, help text or control: Pig keeping
+"ui.pig_keeping" = "Pig keeping"
+
+# Interface label, help text or control: Pin panel
+"ui.pin_panel" = "Pin panel"
+
+# Interface label, help text or control: PLAY
+"ui.play" = "PLAY"
+
+# Interface label, help text or control: Population limit
+"ui.population_limit" = "Population limit"
+
+# Interface label, help text or control: Poultry keeping
+"ui.poultry_keeping" = "Poultry keeping"
+
+# Interface label, help text or control: Priority
+"ui.priority" = "Priority"
+
+# Interface label, help text or control: Production
+"ui.production" = "Production"
+
+# Interface label, help text or control: Production seconds
+"ui.production_seconds" = "Production seconds"
+
+# Interface label, help text or control: Quality
+"ui.quality" = "Quality"
+
+# Interface label, help text or control: R rotate / Tab inspect / Right click inspect / Shift+Q/E fast camera
+"ui.r_rotate_tab_inspect_right_click_inspect_shift" = "R rotate / Tab inspect / Right click inspect / Shift+Q/E fast camera"
+
+# Village status or journal: RAID {0}! {1} hostiles led by a Nether warlord are attacking.
+"ui.raid_hostiles_led_by_a_nether_warlord_are" = "RAID {0}! {1} hostiles led by a Nether warlord are attacking."
+
+# Interface label, help text or control: Raid in {0} days
+"ui.raid_in_days" = "Raid in {0} days"
+
+# Interface label, help text or control: Raids disabled
+"ui.raids_disabled" = "Raids disabled"
+
+# Interface label, help text or control: Ready to harvest
+"ui.ready_to_harvest" = "Ready to harvest"
+
+# Game-over screen: Recorded since day
+"ui.recorded_since_day" = "Recorded since day"
+
+# Interface label, help text or control: Regrows in {0} days
+"ui.regrows_in_days" = "Regrows in {0} days"
+
+# Game-over screen: Reload save / Retry
+"ui.reload_save_retry" = "Reload save / Retry"
+
+# Game-over screen: Remaining monsters
+"ui.remaining_monsters" = "Remaining monsters"
+
+# Interface label, help text or control: Repair / 2 wood + 2 stone
+"ui.repair_2_wood_2_stone" = "Repair / 2 wood + 2 stone"
+
+# Interface label, help text or control: Repairing building
+"ui.repairing_building" = "Repairing building"
+
+# Interface label, help text or control: . Requires a staffed forge.
+"ui.requires_a_staffed_forge" = ". Requires a staffed forge."
+
+# Interface label, help text or control: Reset tutorial
+"ui.reset_tutorial" = "Reset tutorial"
+
+# Interface label, help text or control: Residents
+"ui.residents" = "Residents"
+
+# Interface label, help text or control: Resolution
+"ui.resolution" = "Resolution"
+
+# Interface label, help text or control: Resource
+"ui.resource" = "Resource"
+
+# Interface label, help text or control: Resource deliveries
+"ui.resource_deliveries" = "Resource deliveries"
+
+# Interface label, help text or control: Resources are stored in buildings. Deliverymen carry inputs to workplaces and surplus to warehouses.
+"ui.resources_are_stored_in_buildings_deliverymen_carry_inputs" = "Resources are stored in buildings. Deliverymen carry inputs to workplaces and surplus to warehouses."
+
+# Game-over screen: Resources remaining
+"ui.resources_remaining" = "Resources remaining"
+
+# Interface label, help text or control: Resting
+"ui.resting" = "Resting"
+
+# Game-over screen: Retry save
+"ui.retry_save" = "Retry save"
+
+# Village status or journal: {0} road surface applied.
+"ui.road_surface_applied" = "{0} road surface applied."
+
+# Interface label, help text or control: Roads
+"ui.roads" = "Roads"
+
+# Interface label, help text or control: Rotate [R] {0} deg
+"ui.rotate_r_deg" = "Rotate [R]  {0} deg"
+
+# Interface label, help text or control: Rules apply immediately and persist when you save the village. Lower caps stop new spawns without de...
+"ui.rules_apply_immediately_and_persist_when_you_save" = "Rules apply immediately and persist when you save the village. Lower caps stop new spawns without deleting existing villagers or animals. Map dimensions are chosen under New Game."
+
+# Game-over screen: Save: {0}
+"ui.save" = "Save: {0}"
+
+# Game-over screen: Save deleted.
+"ui.save_deleted" = "Save deleted."
+
+# Interface label, help text or control: Save Game
+"ui.save_game" = "Save Game"
+
+# Interface label, help text or control: Save Game As
+"ui.save_game_as" = "Save Game As"
+
+# Interface label, help text or control: Save graphics preferences
+"ui.save_graphics_preferences" = "Save graphics preferences"
+
+# Interface label, help text or control: Save village
+"ui.save_village" = "Save village"
+
+# Interface label, help text or control: Saved as {0}.
+"ui.saved_as" = "Saved as {0}."
+
+# Interface label, help text or control: Saves in executable/UserData
+"ui.saves_in_executable_userdata" = "Saves in executable/UserData"
+
+# Interface label, help text or control: Scripted behavior
+"ui.scripted_behavior" = "Scripted behavior"
+
+# Interface label, help text or control: Search...
+"ui.search" = "Search..."
+
+# Interface label, help text or control: Seed (0 = random)
+"ui.seed_0_random" = "Seed (0 = random)"
+
+# Interface label, help text or control: Select a building
+"ui.select_a_building" = "Select a building"
+
+# Game-over screen: Select a save
+"ui.select_a_save" = "Select a save"
+
+# Interface label, help text or control: Sell 20 / {0:0} emeralds
+"ui.sell_20_emeralds" = "Sell 20 / {0:0} emeralds"
+
+# Interface label, help text or control: Sell requests are delivered to the trading hall before the exchange.
+"ui.sell_requests_are_delivered_to_the_trading_hall" = "Sell requests are delivered to the trading hall before the exchange."
+
+# Interface label, help text or control: Shepherding
+"ui.shepherding" = "Shepherding"
+
+# Game-over screen: Simulated minutes
+"ui.simulated_minutes" = "Simulated minutes"
+
+# Interface label, help text or control: Skip tutorial
+"ui.skip_tutorial" = "Skip tutorial"
+
+# Interface label, help text or control: Snow crafting
+"ui.snow_crafting" = "Snow crafting"
+
+# Interface label, help text or control: Speed {0:0.00} / Cooldown {1:0.0}s
+"ui.speed_cooldown_s" = "Speed {0:0.00} / Cooldown {1:0.0}s"
+
+# Interface label, help text or control: Spellcasting
+"ui.spellcasting" = "Spellcasting"
+
+# Interface label, help text or control: Staff {0}/{1}
+"ui.staff" = "Staff {0}/{1}"
+
+# Interface label, help text or control: Stonecutting
+"ui.stonecutting" = "Stonecutting"
+
+# Interface label, help text or control: Storage
+"ui.storage" = "Storage"
+
+# Interface label, help text or control: Storage {0:0.##}/{1}
+"ui.storage_2" = "Storage {0:0.##}/{1}"
+
+# Interface label, help text or control: Stored as UserData/<name>.vcs (binary)
+"ui.stored_as_userdata_name_vcs_binary" = "Stored as UserData/<name>.vcs (binary)"
+
+# Village status or journal: Supplies moved into warehouse storage. Train deliverymen to supply workplaces.
+"ui.supplies_moved_into_warehouse_storage_train_deliverymen_to" = "Supplies moved into warehouse storage. Train deliverymen to supply workplaces."
+
+# Interface label, help text or control: Tax
+"ui.tax" = "Tax"
+
+# Game-over screen: This save already contains a defeated village. Choose an earlier save.
+"ui.this_save_already_contains_a_defeated_village_choose" = "This save already contains a defeated village. Choose an earlier save."
+
+# Interface label, help text or control: Tile {0}, {1}
+"ui.tile" = "Tile {0}, {1}"
+
+# Game-over screen: Total production
+"ui.total_production" = "Total production"
+
+# Interface label, help text or control: Trading
+"ui.trading" = "Trading"
+
+# Interface label, help text or control: Trading hall
+"ui.trading_hall" = "Trading hall"
+
+# Village status or journal: {0} trained as {1}.
+"ui.trained_as" = "{0} trained as {1}."
+
+# Interface label, help text or control: trees
+"ui.trees" = "trees"
+
+# Interface label, help text or control: Tutorial complete
+"ui.tutorial_complete" = "Tutorial complete"
+
+# Interface label, help text or control: UI scale
+"ui.ui_scale" = "UI scale"
+
+# Interface label, help text or control: Unemployed
+"ui.unemployed" = "Unemployed"
+
+# Interface label, help text or control: Unemployed citizens help families attract residents. They can assist any workplace at 50% efficiency...
+"ui.unemployed_citizens_help_families_attract_residents_they_can" = "Unemployed citizens help families attract residents. They can assist any workplace at 50% efficiency. Train specialists using tools and emeralds."
+
+# Interface label, help text or control: ?
+"ui.unknown" = "?"
+
+# Interface label, help text or control: Unlimited
+"ui.unlimited" = "Unlimited"
+
+# Village status or journal: Unlock equipment upgrades in order.
+"ui.unlock_equipment_upgrades_in_order" = "Unlock equipment upgrades in order."
+
+# Interface label, help text or control: Unpin panel
+"ui.unpin_panel" = "Unpin panel"
+
+# Game-over screen: Unsaved village
+"ui.unsaved_village" = "Unsaved village"
+
+# Interface label, help text or control: Uses {0:0.##} {1} / cycle
+"ui.uses_cycle" = "Uses {0:0.##} {1} / cycle"
+
+# Interface label, help text or control: Village defense
+"ui.village_defense" = "Village defense"
+
+# Interface label, help text or control: Village journal
+"ui.village_journal" = "Village journal"
+
+# Interface label, help text or control: Village rules / saved with this village
+"ui.village_rules_saved_with_this_village" = "Village rules / saved with this village"
+
+# Interface label, help text or control: Village save name
+"ui.village_save_name" = "Village save name"
+
+# Game-over screen: Village statistics
+"ui.village_statistics" = "Village statistics"
+
+# Interface label, help text or control: Villager inspector
+"ui.villager_inspector" = "Villager inspector"
+
+# Interface label, help text or control: Villagers collect supplies from nearby warehouses or sources.
+"ui.villagers_collect_supplies_from_nearby_warehouses_or_sources" = "Villagers collect supplies from nearby warehouses or sources."
+
+# Village status or journal: {0} villagers fell during the raid.
+"ui.villagers_fell_during_the_raid" = "{0} villagers fell during the raid."
+
+# Game-over screen: Villagers lost
+"ui.villagers_lost" = "Villagers lost"
+
+# Interface label, help text or control: Waiting for deliveries
+"ui.waiting_for_deliveries" = "Waiting for deliveries"
+
+# Interface label, help text or control: Waiting for storage space
+"ui.waiting_for_storage_space" = "Waiting for storage space"
+
+# Interface label, help text or control: Waiting for trees to regrow
+"ui.waiting_for_trees_to_regrow" = "Waiting for trees to regrow"
+
+# Interface label, help text or control: Walls and gates block raiders. Warriors intercept; archers, mages and snow golems shoot. Configure a...
+"ui.walls_and_gates_block_raiders_warriors_intercept_archers" = "Walls and gates block raiders. Warriors intercept; archers, mages and snow golems shoot. Configure attack timing and limits in Options."
+
+# Interface label, help text or control: Warrior training
+"ui.warrior_training" = "Warrior training"
+
+# Interface label, help text or control: Water
+"ui.water" = "Water"
+
+# Interface label, help text or control: Waves {0} / Kills {1}
+"ui.waves_kills" = "Waves {0} / Kills {1}"
+
+# Game-over screen: Waves / monsters defeated
+"ui.waves_monsters_defeated" = "Waves / monsters defeated"
+
+# Interface label, help text or control: Width (tiles)
+"ui.width_tiles" = "Width (tiles)"
+
+# Interface label, help text or control: Windowed
+"ui.windowed" = "Windowed"
+
+# Interface label, help text or control: Windowed size is fitted to the screen to keep the title bar visible.
+"ui.windowed_size_is_fitted_to_the_screen_to" = "Windowed size is fitted to the screen to keep the title bar visible."
+
+# Interface label, help text or control: Woodcutting
+"ui.woodcutting" = "Woodcutting"
+
+# Interface label, help text or control: Work progress {0:0.0}/{1:0.0}s
+"ui.work_progress_s" = "Work progress {0:0.0}/{1:0.0}s"
+
+# Interface label, help text or control: Workers {0}/{1}
+"ui.workers" = "Workers {0}/{1}"
+
+# Interface label, help text or control: Workforce
+"ui.workforce" = "Workforce"
+
+# Interface label, help text or control: Workplace: {0}
+"ui.workplace" = "Workplace: {0}"
+
+# Interface label, help text or control: Workplace enabled
+"ui.workplace_enabled" = "Workplace enabled"
+
+# Interface label, help text or control: {0}: {1:0.00}x
+"ui.x" = "{0}: {1:0.00}x"
+
+# Interface label, help text or control: {0}{1}x [{2}]
+"ui.x_2" = "{0}{1}x [{2}]"
+
+# Game-over screen: Yes
+"ui.yes" = "Yes"
+
+# Interface label, help text or control: {0}: {1} ({2} young)
+"ui.young" = "{0}: {1} ({2} young)"
+
+# Village status or journal: Your first farms and animal keepers are ready. Build a forge and prepare defenses before day {0}.
+"ui.your_first_farms_and_animal_keepers_are_ready" = "Your first farms and animal keepers are ready. Build a forge and prepare defenses before day {0}."
+
+# Interface label, help text or control: Your village is ready to grow.
+"ui.your_village_is_ready_to_grow" = "Your village is ready to grow."
+
+# Interface label, help text or control: Boss wave
+"unit.boss_wave" = "Boss wave"
+
+# Equipment upgrade name in the Economy panel: diamond_armor.
+"upgrade.diamond_armor" = "Diamond armor"
+
+# Equipment upgrade name in the Economy panel: diamond_tools.
+"upgrade.diamond_tools" = "Diamond tools"
+
+# Equipment upgrade name in the Economy panel: iron_armor.
+"upgrade.iron_armor" = "Iron armor"
+
+# Equipment upgrade name in the Economy panel: iron_tools.
+"upgrade.iron_tools" = "Tempered tools"
+
+# Equipment upgrade name in the Economy panel: netherite_armor.
+"upgrade.netherite_armor" = "Netherite armor"
+
+# Equipment upgrade name in the Economy panel: netherite_tools.
+"upgrade.netherite_tools" = "Netherite tools"
+
+# Villager inspector health. {0}: current health; maximum is 50.
+"villager.health" = "Health {0:0}/50"
+
+# Interface label, help text or control: {0} | {1:0} HP
+"villager.name_health" = "{0} | {1:0} HP"
+
+# Options: interval between regular night encounters, measured on the game clock.
+"options.night_spawn_interval" = "Night encounter interval (game minutes)"
+
+# Options: help describing the recurring night-monster schedule.
+"options.night_spawn_window" = "Encounters repeat from 18:00 until 05:00. The hostile cap and peaceful nights still apply."

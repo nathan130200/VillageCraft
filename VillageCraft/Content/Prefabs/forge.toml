@@ -1,4 +1,4 @@
-﻿# TIPO: Plan: construção/caminho colocável. Um arquivo por prefab.
+# TIPO: Plan: construção/caminho colocável. Um arquivo por prefab.
 # Carregado uma vez na inicialização. Guia completo: Content/README.md.
 # ID único e estável; usado por saves, scripts e traduções. Não traduzir.
 Id = "forge"
@@ -54,7 +54,7 @@ Professions = []
 UpgradeStation = true
 
 # Componente de construção padrão (arquivo .js sem extensão). Pode ser substituído por set_script_type(eST_Building, Id).
-Script = ""
+Script = "building_forge"
 
 # A roof or canopy blocks direct sunlight on this tile.
 SheltersFromSun = true

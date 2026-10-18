@@ -24,8 +24,8 @@ static class OutcomeChecks
             c.DayTime=0;h=bare.Health;c.Update(.2f);Check(bare.Health==h&&!bare.BurningInSun,"midnight never burns monsters");
             Catalog.Data.Sunlight.RegularHelmetChance=0;c.SpawnWave();
             Check(c.Enemies.Where(m=>m.BossWave&&Catalog.Data.Units[m.Type].BurnsInSun).Any()&&c.Enemies.Where(m=>m.BossWave&&Catalog.Data.Units[m.Type].BurnsInSun).All(m=>m.LeatherHelmet),"boss-wave susceptible monsters always have helmets");
-            bare.Health=.1f;c.DayTime=c.Rules.DayLength*.5f;float goods=c.Stock["Goods"];c.Update(.2f);
-            Check(!c.Enemies.Contains(bare)&&c.Statistics.SunDeaths==1&&c.Stock["Goods"]==goods,"sunlight can kill without awarding labor Goods");
+            bare.Health=.1f;c.DayTime=c.Rules.DayLength*.5f;float goods=c.Stock[ResourceType.Goods];c.Update(.2f);
+            Check(!c.Enemies.Contains(bare)&&c.Statistics.SunDeaths==1&&c.Stock[ResourceType.Goods]==goods,"sunlight can kill without awarding labor Goods");
             Check(c.Place("cottage",9,15),"shelter fixture");var sheltered=c.SpawnMonster("zombie",9,15)!;
             Check(!c.ExposedToSun(sheltered),"roof provides shade");
         }
@@ -41,8 +41,8 @@ static class OutcomeChecks
         try
         {
             var helmet=village.SpawnMonster("skeleton",2,2,bossWave:true)!;
-            village.Statistics.Deliveries=7;village.Statistics.Production["Wood"]=42;village.Save(path);
-            using(var saved=City.Load(path))Check(saved.Enemies.Single().LeatherHelmet&&saved.Enemies.Single().BossWave&&saved.Statistics.Deliveries==7&&saved.Statistics.Production["Wood"]==42,"helmet, wave and statistics roundtrip");
+            village.Statistics.Deliveries=7;village.Statistics.Production[ResourceType.Wood]=42;village.Save(path);
+            using(var saved=City.Load(path))Check(saved.Enemies.Single().LeatherHelmet&&saved.Enemies.Single().BossWave&&saved.Statistics.Deliveries==7&&saved.Statistics.Production[ResourceType.Wood]==42,"helmet, wave and statistics roundtrip");
             int population=village.Citizens.Count;
             foreach(var person in village.Citizens.ToArray()){village.DamageVillager(person,10000);}
             village.ResolveDeaths();

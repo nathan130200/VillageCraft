@@ -1,139 +1,147 @@
-# TIPO: ModelFile: geometria feita de cuboides. Não define custo, vagas ou profissão.
-# Carregado uma vez na inicialização. Guia completo: Content/README.md.
-# ID único do modelo, referenciado por prefabs, profissões e unidades.
+# ModelFile: cuboid geometry, loaded once at startup. See Content/README.md.
+# Minecraft 1.16 Piglin skin layout: 64x64. Each variant uses its own skin; no pig or legacy pigman substitution.
 Id = "zombified_piglin"
 
-# Nova peça/cuboide.
+# Right leg: independent limb atlas region.
 [[Parts]]
-# Centro [x,y,z] em terrenos. +Y = cima; +Z = frente.
-Position = [-0.065, 0.18, 0]
-# Dimensões [largura,altura,profundidade], todas positivas.
-Size = [0.1, 0.36, 0.12]
-# Cor hexadecimal de fallback #RRGGBB.
-Color = "#FFFFFF"
-# Nome lógico de textura resolvido pelo caminho externo de assets.
-Texture = "entity/zombie_pigman.png"
-# Origem [u,v] em pixels na skin; [] = textura repetida.
+Position = [-0.06, 0.18, 0]
+Size = [0.12, 0.36, 0.12]
+Color = "#765844"
+Texture = "entity/piglin/zombified_piglin.png"
 UvOrigin = [0, 16]
-# Dimensões [largura,altura,profundidade] em pixels da skin; [] = repetição.
 UvSize = [4, 12, 4]
 
-# Nova peça/cuboide.
+# Left leg: independent limb atlas region.
 [[Parts]]
-# Centro [x,y,z] em terrenos. +Y = cima; +Z = frente.
-Position = [0.065, 0.18, 0]
-# Dimensões [largura,altura,profundidade], todas positivas.
-Size = [0.1, 0.36, 0.12]
-# Cor hexadecimal de fallback #RRGGBB.
-Color = "#FFFFFF"
-# Nome lógico de textura resolvido pelo caminho externo de assets.
-Texture = "entity/zombie_pigman.png"
-# Origem [u,v] em pixels na skin; [] = textura repetida.
-UvOrigin = [0, 16]
-# Dimensões [largura,altura,profundidade] em pixels da skin; [] = repetição.
+Position = [0.06, 0.18, 0]
+Size = [0.12, 0.36, 0.12]
+Color = "#765844"
+Texture = "entity/piglin/zombified_piglin.png"
+UvOrigin = [16, 48]
 UvSize = [4, 12, 4]
 
-# Nova peça/cuboide.
+# Torso.
 [[Parts]]
-# Centro [x,y,z] em terrenos. +Y = cima; +Z = frente.
-Position = [0, 0.48, 0]
-# Dimensões [largura,altura,profundidade], todas positivas.
-Size = [0.27, 0.4, 0.18]
-# Cor hexadecimal de fallback #RRGGBB.
-Color = "#FFFFFF"
-# Nome lógico de textura resolvido pelo caminho externo de assets.
-Texture = "entity/zombie_pigman.png"
-# Origem [u,v] em pixels na skin; [] = textura repetida.
+Position = [0, 0.54, 0]
+Size = [0.24, 0.36, 0.12]
+Color = "#765844"
+Texture = "entity/piglin/zombified_piglin.png"
 UvOrigin = [16, 16]
-# Dimensões [largura,altura,profundidade] em pixels da skin; [] = repetição.
 UvSize = [8, 12, 4]
 
-# Nova peça/cuboide.
+# Right arm.
 [[Parts]]
-# Centro [x,y,z] em terrenos. +Y = cima; +Z = frente.
-Position = [0, 0.83, 0]
-# Dimensões [largura,altura,profundidade], todas positivas.
-Size = [0.24, 0.27, 0.24]
-# Cor hexadecimal de fallback #RRGGBB.
-Color = "#FFFFFF"
-# Nome lógico de textura resolvido pelo caminho externo de assets.
-Texture = "entity/zombie_pigman.png"
-# Origem [u,v] em pixels na skin; [] = textura repetida.
+Position = [-0.18, 0.54, 0]
+Size = [0.12, 0.36, 0.12]
+Color = "#A9A16D"
+Texture = "entity/piglin/zombified_piglin.png"
+UvOrigin = [40, 16]
+UvSize = [4, 12, 4]
+
+# Left arm.
+[[Parts]]
+Position = [0.18, 0.54, 0]
+Size = [0.12, 0.36, 0.12]
+Color = "#A9A16D"
+Texture = "entity/piglin/zombified_piglin.png"
+UvOrigin = [32, 48]
+UvSize = [4, 12, 4]
+
+# Piglin head is ten pixels wide, unlike a villager head.
+[[Parts]]
+Position = [0, 0.84, 0]
+Size = [0.3, 0.24, 0.24]
+Color = "#A9A16D"
+Texture = "entity/piglin/zombified_piglin.png"
 UvOrigin = [0, 0]
-# Dimensões [largura,altura,profundidade] em pixels da skin; [] = repetição.
-UvSize = [8, 8, 8]
+UvSize = [10, 8, 8]
 
-# Nova peça/cuboide.
+# Flat snout on the front of the head.
 [[Parts]]
-# Centro [x,y,z] em terrenos. +Y = cima; +Z = frente.
-Position = [0, 0.81, 0.155]
-# Dimensões [largura,altura,profundidade], todas positivas.
-Size = [0.07, 0.11, 0.11]
-# Cor hexadecimal de fallback #RRGGBB.
-Color = "#FFFFFF"
-# Nome lógico de textura resolvido pelo caminho externo de assets.
-Texture = "entity/zombie_pigman.png"
-# Origem [u,v] em pixels na skin; [] = textura repetida.
-UvOrigin = [24, 0]
-# Dimensões [largura,altura,profundidade] em pixels da skin; [] = repetição.
-UvSize = [2, 4, 2]
+Position = [0, 0.78, 0.135]
+Size = [0.12, 0.12, 0.03]
+Color = "#C78D77"
+Texture = "entity/piglin/zombified_piglin.png"
+UvOrigin = [31, 1]
+UvSize = [4, 4, 1]
 
-# Nova peça/cuboide.
+# Right tusk.
 [[Parts]]
-# Centro [x,y,z] em terrenos. +Y = cima; +Z = frente.
-Position = [-0.055, 0.85, 0.125]
-# Dimensões [largura,altura,profundidade], todas positivas.
-Size = [0.04, 0.025, 0.015]
-# Cor hexadecimal de fallback #RRGGBB.
-Color = "#FFFFFF"
-# Nome lógico de textura resolvido pelo caminho externo de assets.
-Texture = "entity/zombie_pigman.png"
-# Origem [u,v] em pixels na skin; [] = textura repetida.
-UvOrigin = [44, 22]
-# Dimensões [largura,altura,profundidade] em pixels da skin; [] = repetição.
-UvSize = [4, 8, 4]
+Position = [-0.075, 0.75, 0.135]
+Size = [0.03, 0.06, 0.03]
+Color = "#F0E5B5"
+Texture = "entity/piglin/zombified_piglin.png"
+UvOrigin = [2, 0]
+UvSize = [1, 2, 1]
 
-# Nova peça/cuboide.
+# Left tusk.
 [[Parts]]
-# Centro [x,y,z] em terrenos. +Y = cima; +Z = frente.
-Position = [0.055, 0.85, 0.125]
-# Dimensões [largura,altura,profundidade], todas positivas.
-Size = [0.04, 0.025, 0.015]
-# Cor hexadecimal de fallback #RRGGBB.
-Color = "#31513B"
-# Nome lógico de textura resolvido pelo caminho externo de assets.
-Texture = ""
-# Origem [u,v] em pixels na skin; [] = textura repetida.
-UvOrigin = []
-# Dimensões [largura,altura,profundidade] em pixels da skin; [] = repetição.
-UvSize = []
+Position = [0.075, 0.75, 0.135]
+Size = [0.03, 0.06, 0.03]
+Color = "#F0E5B5"
+Texture = "entity/piglin/zombified_piglin.png"
+UvOrigin = [2, 4]
+UvSize = [1, 2, 1]
 
-# Nova peça/cuboide.
+# Right ear.
 [[Parts]]
-# Centro [x,y,z] em terrenos. +Y = cima; +Z = frente.
-Position = [0, 0.91, 0.128]
-# Dimensões [largura,altura,profundidade], todas positivas.
-Size = [0.15, 0.024, 0.015]
-# Cor hexadecimal de fallback #RRGGBB.
-Color = "#5A4736"
-# Nome lógico de textura resolvido pelo caminho externo de assets.
-Texture = ""
-# Origem [u,v] em pixels na skin; [] = textura repetida.
-UvOrigin = []
-# Dimensões [largura,altura,profundidade] em pixels da skin; [] = repetição.
-UvSize = []
+Position = [-0.155, 0.825, 0]
+Size = [0.03, 0.15, 0.12]
+Color = "#A9A16D"
+Texture = "entity/piglin/zombified_piglin.png"
+UvOrigin = [39, 6]
+UvSize = [1, 5, 4]
 
-# Nova peça/cuboide.
+# Left ear.
 [[Parts]]
-# Centro [x,y,z] em terrenos. +Y = cima; +Z = frente.
-Position = [0, 0.49, 0.13]
-# Dimensões [largura,altura,profundidade], todas positivas.
-Size = [0.32, 0.1, 0.1]
-# Cor hexadecimal de fallback #RRGGBB.
-Color = "#62834D"
-# Nome lógico de textura resolvido pelo caminho externo de assets.
-Texture = ""
-# Origem [u,v] em pixels na skin; [] = textura repetida.
-UvOrigin = []
-# Dimensões [largura,altura,profundidade] em pixels da skin; [] = repetição.
-UvSize = []
+Position = [0.155, 0.825, 0]
+Size = [0.03, 0.15, 0.12]
+Color = "#A9A16D"
+Texture = "entity/piglin/zombified_piglin.png"
+UvOrigin = [51, 6]
+UvSize = [1, 5, 4]
+
+# Coat outer layer.
+[[Parts]]
+Position = [0, 0.54, 0]
+Size = [0.248, 0.368, 0.128]
+Color = "#765844"
+Texture = "entity/piglin/zombified_piglin.png"
+UvOrigin = [16, 32]
+UvSize = [8, 12, 4]
+
+# Right sleeve outer layer.
+[[Parts]]
+Position = [-0.18, 0.54, 0]
+Size = [0.128, 0.368, 0.128]
+Color = "#765844"
+Texture = "entity/piglin/zombified_piglin.png"
+UvOrigin = [40, 32]
+UvSize = [4, 12, 4]
+
+# Left sleeve outer layer.
+[[Parts]]
+Position = [0.18, 0.54, 0]
+Size = [0.128, 0.368, 0.128]
+Color = "#765844"
+Texture = "entity/piglin/zombified_piglin.png"
+UvOrigin = [48, 48]
+UvSize = [4, 12, 4]
+
+# Right trouser outer layer.
+[[Parts]]
+Position = [-0.06, 0.18, 0]
+Size = [0.128, 0.368, 0.128]
+Color = "#765844"
+Texture = "entity/piglin/zombified_piglin.png"
+UvOrigin = [0, 32]
+UvSize = [4, 12, 4]
+
+# Left trouser outer layer.
+[[Parts]]
+Position = [0.06, 0.18, 0]
+Size = [0.128, 0.368, 0.128]
+Color = "#765844"
+Texture = "entity/piglin/zombified_piglin.png"
+UvOrigin = [0, 48]
+UvSize = [4, 12, 4]

@@ -1,5 +1,5 @@
 # TIPO: ResourceFile: lista Resources com Id, Icon, BuyPrice e SellPrice.
-# Guia: Content/README.md. Carregado uma vez na inicialização.
+# Guia: Content/README.md. Carregado uma vez na inicializaÃ§Ã£o.
 # Resource names, UI icons, and prices per twenty items.
 
 [[Resources]]
@@ -73,12 +73,6 @@ Id = "Goods"
 Icon = "item/paper.png"
 BuyPrice = 1
 SellPrice = 0.0
-
-[[Resources]]
-Id = "Torches"
-Icon = "block/torch.png"
-BuyPrice = 15
-SellPrice = 10.5
 
 [[Resources]]
 Id = "Leather"

@@ -1,3 +1,5 @@
+# Minimum ambient light at night (0.15..0.6). Higher values keep the village readable.
+NightAmbient = 0.4
 # TIPO: RenderingSettings: AlphaCutoff (0..1) e fragment shader GLSL CutoutFragment.
 # Guia: Content/README.md. Carregado uma vez na inicialização.
 # Cutout pixels must be discarded before they can update the depth buffer.

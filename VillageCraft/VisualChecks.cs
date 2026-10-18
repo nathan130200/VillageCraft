@@ -4,6 +4,45 @@ namespace VillageCraft;
 
 static class VisualChecks
 {
+    internal static void Capture(string name)
+    {
+        var root=new DirectoryInfo(AppContext.BaseDirectory);
+        while(root!=null&&!File.Exists(Path.Combine(root.FullName,"VillageCraft","VillageCraft.csproj")))root=root.Parent;
+        if(root==null)throw new InvalidOperationException("Capture checks require a source checkout.");
+        string path=Path.Combine(Directory.CreateDirectory(Path.Combine(root.FullName,"screenshots")).FullName,Path.GetFileName(name));
+        var image=Raylib.LoadImageFromScreen();
+        try{if(!Raylib.ExportImage(image,path))throw new IOException("Screenshot export failed: "+name);}
+        finally{Raylib.UnloadImage(image);}
+    }
+
+    public static void Nether()
+    {
+        string[] models=["piglin","piglin_brute","zombified_piglin","blaze","nether_warlord"];
+        var target=Raylib.LoadRenderTexture(244,270);Raylib.SetWindowSize(1280,660);
+        try
+        {
+            for(int frame=0;frame<8;frame++)
+            {
+                Raylib.BeginDrawing();Raylib.ClearBackground(new Color(24,37,43,255));
+                for(int i=0;i<10;i++)
+                {
+                    var camera=new Camera3D{Position=new(2.5f,2.8f,6),Target=new(0,1.9f,0),Up=Vector3.UnitY,FovY=42,Projection=CameraProjection.Perspective};
+                    Raylib.BeginTextureMode(target);Raylib.ClearBackground(new Color(182,199,202,255));Raylib.BeginMode3D(camera);
+                    Raylib.DrawPlane(Vector3.Zero,new(8,8),new Color(122,147,101,255));
+                    Scene.Model(models[i%5],0,0,heading:i<5?0:MathF.PI);
+                    Raylib.EndMode3D();Raylib.EndTextureMode();
+                    int x=10+i%5*254,y=10+i/5*320;
+                    Raylib.DrawText(models[i%5]+(i<5?" front":" rear"),x,y,16,Color.White);
+                    Raylib.DrawTextureRec(target.Texture,new(0,0,244,-270),new Vector2(x,y+25),Color.White);
+                }
+                Raylib.EndDrawing();
+            }
+            Capture("nether-models.png");
+            Console.WriteLine("PASS: Nether models rendered from front and rear.");
+        }
+        finally{Raylib.UnloadRenderTexture(target);}
+    }
+
     public static void Sunlight()
     {
         var target=Raylib.LoadRenderTexture(600,290);Raylib.SetWindowSize(1280,720);
@@ -26,7 +65,7 @@ static class VisualChecks
                 }
                 Raylib.EndDrawing();
             }
-            Raylib.TakeScreenshot(Path.Combine(Directory.CreateDirectory(Path.Combine(Environment.CurrentDirectory,"screenshots")).FullName,"sunlight-models.png"));
+            VisualChecks.Capture("sunlight-models.png");
             Console.WriteLine("PASS: burning and helmet-protected zombies/skeletons rendered.");
         }
         finally{Raylib.UnloadRenderTexture(target);}
@@ -34,7 +73,7 @@ static class VisualChecks
     public static void Materials(bool beta=false)
     {
         Transparency();
-        string[] models=beta?["warehouse","large_warehouse","cow_shed","cow","deliveryman","torch"]:["market","pen","quarry","coop","wild_flower","wild_grass"];
+        string[] models=beta?["warehouse","large_warehouse","cow_shed","cow","deliveryman"]:["market","pen","quarry","coop","wild_flower","wild_grass"];
         var target=Raylib.LoadRenderTexture(400,310);
         Raylib.SetWindowSize(1280,760);
         try
@@ -59,9 +98,9 @@ static class VisualChecks
                     }
                     Raylib.EndDrawing();
                 }
-                Raylib.TakeScreenshot(Path.Combine(Directory.CreateDirectory(Path.Combine(Environment.CurrentDirectory,"screenshots")).FullName,beta?(light==1?"beta105-models-day.png":"beta105-models-night.png"):(light==1?"materials-day.png":"materials-night.png")));
+                VisualChecks.Capture(beta?(light==1?"beta105-models-day.png":"beta105-models-night.png"):(light==1?"materials-day.png":"materials-night.png"));
             }
-            Console.WriteLine(beta?"PASS: warehouses, cow shed, cow skin, deliveryman and torch rendered in daylight and at night.":"PASS: market, troughs, mine and crossed plants rendered in daylight and at night.");
+            Console.WriteLine(beta?"PASS: warehouses, cow shed, cow skin, deliveryman rendered in daylight and at night.":"PASS: market, troughs, mine and crossed plants rendered in daylight and at night.");
         }
         finally{Scene.Daylight=1;Raylib.UnloadRenderTexture(target);}
     }
@@ -89,7 +128,7 @@ static class VisualChecks
                 }
                 Raylib.EndDrawing();
             }
-            Raylib.TakeScreenshot(Path.Combine(Directory.CreateDirectory(Path.Combine(Environment.CurrentDirectory,"screenshots")).FullName,"models-smoke.png"));Console.WriteLine("PASS: chicken rendered from four directions; lumber foliage rendered from both sides.");
+            VisualChecks.Capture("models-smoke.png");Console.WriteLine("PASS: chicken rendered from four directions; lumber foliage rendered from both sides.");
         }
         finally{foreach(var t in targets)Raylib.UnloadRenderTexture(t);}
     }

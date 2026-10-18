@@ -5,6 +5,7 @@ public class VillageRules
 {
     public VillageRules Copy()=>(VillageRules)MemberwiseClone();
     public bool NightMonsters {get;set;}=true;
+    public int NightSpawnIntervalMinutes {get;set;}=60;
     public int NightCount {get;set;}=3;
     public bool RaidsEnabled {get;set;}=true;
     public int RaidInterval {get;set;}=30;
@@ -15,9 +16,12 @@ public class VillageRules
     public int AnimalsPerPen {get;set;}=8;
     public int GolemsPerWorkshop {get;set;}=2;
     public float DayLength {get;set;}=600;
+    public float BirthChance {get;set;}=.6f;
     public float ProductionCycle {get;set;}=2;
     public void Validate()
     {
+        BirthChance=float.IsFinite(BirthChance)?Math.Clamp(BirthChance,0,1):.6f;
+        NightSpawnIntervalMinutes=Math.Clamp(NightSpawnIntervalMinutes,5,660);
         NightCount=Math.Clamp(NightCount,0,12);
         RaidInterval=Math.Clamp(RaidInterval,1,1000);WaveBase=Math.Clamp(WaveBase,1,100);WaveGrowth=Math.Clamp(WaveGrowth,0,50);
         MaxRaiders=Math.Clamp(MaxRaiders,1,256);MaxPopulation=Math.Clamp(MaxPopulation,12,1024);
@@ -55,7 +59,7 @@ public static class SaveStore
     public static string PathFor(string name)
     {
         name=name.Trim();if(name.EndsWith(".vcs",StringComparison.OrdinalIgnoreCase))name=name[..^4];else if(name.EndsWith(".json",StringComparison.OrdinalIgnoreCase))name=name[..^5];
-        if(name.Length is <1 or >64||name.EndsWith('.')||name.IndexOfAny("<>:\"/\\|?*".ToCharArray())>=0||name.Any(char.IsControl)||name is "." or ".."||name.Equals("options",StringComparison.OrdinalIgnoreCase))throw new ArgumentException("Use 1–64 characters without path separators or reserved filename characters.");
+        if(name.Length is <1 or >64||name.EndsWith('.')||name.IndexOfAny("<>:\"/\\|?*".ToCharArray())>=0||name.Any(char.IsControl)||name is "." or ".."||name.Equals("options",StringComparison.OrdinalIgnoreCase))throw new ArgumentException("Use 1â€“64 characters without path separators or reserved filename characters.");
         string stem=name.Split('.')[0].ToUpperInvariant();
         if(new[]{"CON","PRN","AUX","NUL","COM1","COM2","COM3","COM4","COM5","COM6","COM7","COM8","COM9","LPT1","LPT2","LPT3","LPT4","LPT5","LPT6","LPT7","LPT8","LPT9"}.Contains(stem))throw new ArgumentException("That filename is reserved by the operating system.");
         return Path.Combine(Folder,name+".vcs");

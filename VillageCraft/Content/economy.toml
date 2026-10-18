@@ -8,3 +8,8 @@ MilkHealing = 12.0
 EnchantmentProtection = 0.1
 EnchantmentDamage = 0.15
 EnchantmentCost = { Emeralds = 75, Leather = 12, Gold = 4 }
+
+# Automatic repair: time and carried materials per repair batch.
+RepairWorkSeconds = 4
+RepairAmount = 25
+RepairCost = { Wood = 2, Stone = 2 }
