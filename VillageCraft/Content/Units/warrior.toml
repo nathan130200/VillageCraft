@@ -16,4 +16,4 @@ Speed = 0.9
 Cooldown = 0.8
 
 # Componente de IA padrão (arquivo .js sem extensão). Pode ser substituído por set_script_type(eST_AI, Id).
-Behavior = "melee"
+Behavior = "entity_melee"

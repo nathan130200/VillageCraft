@@ -15,6 +15,10 @@ Speed = 0.85
 # Intervalo entre ataques, em segundos de simulação.
 Cooldown = 1.8
 # Componente de IA padrão (arquivo .js sem extensão). Pode ser substituído por set_script_type(eST_AI, Id).
-Behavior = "ranged"
+Behavior = "entity_ranged"
 
 BurnsInSun = true
+
+# Moving projectile kind and speed in tiles per simulation second.
+Projectile = "Arrow"
+ProjectileSpeed = 8

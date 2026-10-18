@@ -75,7 +75,11 @@ public partial class City
     {
         using var profile=Profiler.Measure(ProfileArea.ManagedActions);
         var b=Buildings.FirstOrDefault(b=>b.Id==v.Work);float speed=b!=null&&Catalog.Data.Units.TryGetValue(b.Plan.Defender,out var unit)?unit.Speed:.9f;
-        var route=PreferRoads(v.Position,new(x,z));if(route.Count>0)Move(v,Toward(v.Position,route[0],dt*speed*TravelSpeed(v.Position,v.Profession)));v.Route.Clear();
+        var target=new Vector2(x,z);var route=PreferRoads(v.Position,target);
+        float amount=dt*speed*TravelSpeed(v.Position,v.Profession);
+        if(route.Count>0)Move(v,Toward(v.Position,route[0],amount));
+        else if(MathF.Round(v.X)==MathF.Round(x)&&MathF.Round(v.Z)==MathF.Round(z)&&Sight(v.Position,target))Move(v,Toward(v.Position,target,amount));
+        v.Route.Clear();
     }
     internal bool ScriptSight(Vector2 from,Vector2 to){using var profile=Profiler.Measure(ProfileArea.ManagedActions);return Sight(from,to);}
     internal bool ScriptAttack(Citizen v,Creature enemy)
@@ -83,9 +87,11 @@ public partial class City
         using var profile=Profiler.Measure(ProfileArea.ManagedActions);
         var b=Buildings.FirstOrDefault(b=>b.Id==v.Work&&b.Enabled&&Connected(b,Roads()));
         if(b==null||b.Plan.CreatesGuardian||!Catalog.Data.Units.TryGetValue(b.Plan.Defender,out var unit)||enemy.Health<=0||v.Cooldown>0||Vector2.Distance(v.Position,enemy.Position)>unit.Range||!Sight(v.Position,enemy.Position))return false;
-        DamageMonster(enemy,unit.Damage*Efficiency(v)*(v.Effects.ContainsKey("Weakness")?.7f:1)*(EnchantedArmor?1+Catalog.Data.Economy.EnchantmentDamage:1),v);
+        float damage=unit.Damage*Efficiency(v)*(v.Effects.ContainsKey("Weakness")?.7f:1)*(EnchantedArmor?1+Catalog.Data.Economy.EnchantmentDamage:1);
+        if(unit.Projectile!=ProjectileKind.None){if(!LaunchProjectile(v.Position,enemy.Position,b.Plan.Defender,unit,damage,v,false))return false;}
+        else DamageMonster(enemy,damage,v);
         Emit(new("onVillagerAttack",v,Source:enemy));
-        v.Cooldown=unit.Cooldown;Shots.Add(new(v.Position,enemy.Position,b.Plan.Defender));return true;
+        v.Cooldown=unit.Cooldown;return true;
     }
     internal bool ScriptAttack(Creature mob,object target)
     {
@@ -97,7 +103,12 @@ public partial class City
         bool valid=hostile?target switch {Citizen person=>Citizens.Contains(person),Creature guardian=>Defenders.Contains(guardian),Building structure=>Buildings.Contains(structure)&&!structure.Plan.Natural&&!structure.Plan.Indestructible,_=>false}:target is Creature enemy&&Enemies.Contains(enemy);
         if(!valid)return false;
         Emit(new(hostile?"onMonsterAttack":"onGuardianAttack",mob,Source:target));
-        mob.Cooldown=unit.Cooldown;Shots.Add(new(mob.Position,point,mob.Type));
+        if(unit.Projectile!=ProjectileKind.None)
+        {
+            if(!LaunchProjectile(mob.Position,point,mob.Type,unit,unit.Damage,mob,hostile))return false;
+            mob.Cooldown=unit.Cooldown;return true;
+        }
+        mob.Cooldown=unit.Cooldown;
         switch(target){case Citizen v:DamageVillager(v,unit.Damage*(1-ArmorReduction),mob);break;case Building b:DamageBuilding(b,unit.Damage,mob);break;case Creature c:if(hostile){float damage=unit.Damage*(1-ArmorReduction);c.Health-=damage;Emit(new("onGuardianDamaged",c,Amount:damage,Source:mob));}else DamageMonster(c,unit.Damage,mob);break;}
         return true;
     }
@@ -105,11 +116,12 @@ public partial class City
     {
         using var profile=Profiler.Measure(ProfileArea.ManagedActions);
         if(!Enemies.Contains(mob)||mob.Health<=0||!Catalog.Data.Units.TryGetValue(mob.Type,out var unit)||Vector2.Distance(mob.Position,target)>2.5f)return false;
+        if(Cats.Any(c=>c.Health>0&&Vector2.Distance(c.Position,mob.Position)<=Catalog.Data.Cats.CreeperAvoidRadius))return false;
         foreach(var b in Buildings.Where(b=>Vector2.Distance(mob.Position,new(b.X,b.Z))<=2).ToArray())DamageBuilding(b,unit.Damage,mob);
         foreach(var v in Citizens.Where(v=>Vector2.Distance(mob.Position,v.Position)<=2).ToArray())DamageVillager(v,unit.Damage*(1-ArmorReduction),mob);
         foreach(var d in Defenders.Where(d=>Vector2.Distance(mob.Position,d.Position)<=2))d.Health-=unit.Damage*(1-ArmorReduction);
         Emit(new("onExplosion",mob));
-        Shots.Add(new(mob.Position,target,"blaze"));DamageMonster(mob,mob.Health,mob);return true;
+        DamageMonster(mob,mob.Health,mob);return true;
     }
 }
 
@@ -227,7 +239,7 @@ public partial class City
         for(int i=0;i<people.Length;i++)
         {
             var v=Citizens.FirstOrDefault(v=>v.Id==people[i]);var b=Buildings.FirstOrDefault(b=>b.Id==workplaces[i]&&b.Enabled&&Connected(b,Roads()));
-            if(v==null||b==null||!Qualified(v,b)&&v.Profession!="citizen"||slots.GetValueOrDefault(b.Id)>=b.Plan.Jobs)return false;
+            if(v==null||b==null||!Qualified(v,b)||slots.GetValueOrDefault(b.Id)>=b.Plan.Jobs)return false;
             assignments[v.Id]=b.Id;slots[b.Id]=slots.GetValueOrDefault(b.Id)+1;
         }
         foreach(var v in Citizens){int work=assignments.GetValueOrDefault(v.Id,-1);if(v.Work!=work){v.Work=work;v.WorkTime=0;v.Route.Clear();}}

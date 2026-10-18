@@ -55,8 +55,11 @@ public class Plan
 }
 public class UnitPlan
 {
+    public float ModelScale {get;set;}=.52f;
+    public ProjectileKind Projectile {get;set;}
+    public float ProjectileSpeed {get;set;}=8;
     public bool BurnsInSun {get;set;}
-    public string Behavior {get;set;}="melee";
+    public string Behavior {get;set;}="entity_melee";
     public string Model { get; set; } = string.Empty;
     public float Health { get; set; } = 50;
     public float Damage { get; set; } = 8;
@@ -72,6 +75,7 @@ public class Catalog
     public Dictionary<string,ProfessionPlan> Professions {get;set;}=[];
     public List<ResourcePlan> ResourceDefinitions {get;set;}=[];
     public List<UpgradePlan> Upgrades {get;set;}=[];
+    public CatSettings Cats {get;set;}=new();
     public GameDefaults Game {get;set;}=new();
     public AudioSettings Audio {get;set;}=new();
     public RenderingSettings Rendering {get;set;}=new();
@@ -87,6 +91,7 @@ public class Catalog
     {
         path ??= Path.Combine(AppContext.BaseDirectory,"Content");
         var data=new Catalog {Game=TomlFile.Read<GameDefaults>(Path.Combine(path,"game.toml"))};
+        data.Cats=TomlFile.Read<CatSettings>(Path.Combine(path,"cats.toml"));
         data.Tutorial=TomlFile.Read<TutorialFile>(Path.Combine(path,"tutorial.toml"));
         data.Terrain=TomlFile.Read<TerrainSettings>(Path.Combine(path,"terrain.toml"));
         data.Sunlight=TomlFile.Read<SunlightSettings>(Path.Combine(path,"sunlight.toml"));
@@ -105,6 +110,7 @@ public class Catalog
         ResourceType[] resourceIds=data.ResourceDefinitions.Select(r=>r.Id).ToArray();
         void Require(bool ok,string reason){if(!ok)throw new InvalidDataException("Prefab catalog: "+reason);}
         Require(data.Prefabs.Count>0&&data.Prefabs.Count<=256,"expected 1..256 prefabs");
+        Require(new[]{data.Cats.DawnSpawnChance,data.Cats.TameChance}.All(v=>float.IsFinite(v)&&v>=0&&v<=1)&&data.Cats.MaxCats is >=1 and <=128&&new[]{data.Cats.WildStayDays,data.Cats.SupplyGraceDays,data.Cats.CreeperAvoidRadius}.All(v=>float.IsFinite(v)&&v>0&&v<=32),"invalid cat settings");
         Require(data.Game.FormatVersion==1,"unsupported content version");
         Require(float.IsFinite(data.Rendering.AlphaCutoff)&&data.Rendering.AlphaCutoff>0&&data.Rendering.AlphaCutoff<1&&!string.IsNullOrWhiteSpace(data.Rendering.CutoutFragment),"invalid cutout rendering settings");
         Require(System.Text.RegularExpressions.Regex.IsMatch(data.Rendering.WaterTint,@"^#[0-9A-Fa-f]{6}$")&&!string.IsNullOrWhiteSpace(data.Rendering.WaterFragment),"invalid water rendering settings");
@@ -130,7 +136,7 @@ public class Catalog
             Require(float.IsFinite(p.MoveSpeed)&&p.MoveSpeed>0&&p.MoveSpeed<=4&&p.JobSpeed.Values.All(v=>float.IsFinite(v)&&v>0&&v<=4),"invalid road speed");
             Require(p.Professions.All(data.Professions.ContainsKey),"unknown building profession");
         }
-        foreach(var u in data.Units.Values)Require(data.Models.ContainsKey(u.Model)&&new[]{u.Health,u.Damage,u.Range,u.Speed,u.Cooldown}.All(v=>float.IsFinite(v)&&v>0),"invalid unit");
+        foreach(var u in data.Units.Values)Require(float.IsFinite(u.ModelScale)&&u.ModelScale>0&&u.ModelScale<=4&&Enum.IsDefined(u.Projectile)&&float.IsFinite(u.ProjectileSpeed)&&u.ProjectileSpeed>0&&u.ProjectileSpeed<=64&&data.Models.ContainsKey(u.Model)&&new[]{u.Health,u.Damage,u.Range,u.Speed,u.Cooldown}.All(v=>float.IsFinite(v)&&v>0),"invalid unit");
         foreach(string id in new[]{"path","cottage","farm","well","lumber","quarry","sheep_pen","pig_pen","chicken_coop"})Require(data.Prefabs.Any(p=>p.Id==id),"missing starter prefab "+id);
         foreach(string id in new[]{"zombie","piglin","blaze"})Require(data.Units.ContainsKey(id),"missing raider "+id);
         Require(resourceIds.All(r=>r!=ResourceType.None&&Enum.IsDefined(r))&&resourceIds.Distinct().Count()==resourceIds.Length&&resourceIds.Length is >0 and <=64,"duplicate or too many resources");
@@ -140,10 +146,10 @@ public class Catalog
             Require(data.Models.ContainsKey(p.Model)&&float.IsFinite(p.Efficiency)&&p.Efficiency>0&&p.Efficiency<=2&&float.IsFinite(p.BaseHealth)&&p.BaseHealth>=1&&p.BaseHealth<=10000,"invalid profession "+p.Id);
             Require(p.TrainingCost.Concat(p.ResourceBonus).All(e=>resourceIds.Contains(e.Key)&&float.IsFinite(e.Value)&&e.Value>=0),"invalid profession recipe");
         }
-        Require(data.Professions.TryGetValue("citizen",out var citizen)&&citizen.Efficiency==.5f,"citizens must have 50% efficiency");
+        Require(data.Professions.ContainsKey("farmer"),"a farmer profession is required");
         Require(data.Game.ImmigrationProfessions.Length>0&&data.Game.ImmigrationProfessions.All(data.Professions.ContainsKey),"invalid immigration professions");
         Require(data.Game.DefaultMapWidth is >=32 and <=512&&data.Game.DefaultMapHeight is >=32 and <=512,"map dimensions must be 32..512");
-        Require(float.IsFinite(data.Game.MigrationThreshold)&&data.Game.MigrationThreshold>0&&float.IsFinite(data.Game.CitizenGrowthSupport)&&data.Game.CitizenGrowthSupport>=0,"invalid growth settings");
+        Require(float.IsFinite(data.Game.MigrationThreshold)&&data.Game.MigrationThreshold>0,"invalid growth settings");
         foreach(var s in data.Game.Starter)Require(data.Prefabs.Any(p=>p.Id==s.Prefab)&&s.Residents.All(data.Professions.ContainsKey)&&s.Rotation is >=0 and <=3,"invalid starter placement");
         foreach(var u in data.Upgrades)Require(Enum.IsDefined(u.Kind)&&u.Level>0&&float.IsFinite(u.Effect)&&u.Effect>0&&u.Cost.All(e=>resourceIds.Contains(e.Key)&&float.IsFinite(e.Value)&&e.Value>=0),"invalid upgrade");
         Require(data.Upgrades.Select(u=>u.Id).Distinct().Count()==data.Upgrades.Count,"duplicate upgrade");
@@ -165,7 +171,7 @@ public class Catalog
         CitizenNames.Load(Path.Combine(path,"names.toml"));
         L.Load(Path.Combine(path,"Locales"));
         Scripts.Load(Path.Combine(path,"Scripts"));
-        foreach(string required in new[]{"_ai","villager","guardian","animal","building","employment","population"})Scripts.Require(required);
+        foreach(string required in new[]{BuiltinScripts.Helpers,BuiltinScripts.Villager,BuiltinScripts.Guardian,BuiltinScripts.Animal,BuiltinScripts.Building,BuiltinScripts.Employment,BuiltinScripts.Population})Scripts.Require(required);
         foreach(var u in data.Units.Values)Scripts.Require(u.Behavior);
         foreach(var plan in data.Prefabs)if(plan.Script!=string.Empty)Scripts.Require(plan.Script);
         Resources=resourceIds;Data=data;
@@ -223,8 +229,7 @@ public class GameDefaults
     public string GroundTint {get;set;}="#92B968";
     public string DirtTexture {get;set;}="block/dirt.png";
     public float MigrationThreshold {get;set;}=3;
-    public float CitizenGrowthSupport {get;set;}=.2f;
-    public string[] ImmigrationProfessions {get;set;}=["citizen"];
+    public string[] ImmigrationProfessions {get;set;}=["farmer"];
     public Dictionary<ResourceType,float> InitialStock {get;set;}=[];
     public List<StarterPlacement> Starter {get;set;}=[];
     public VillageRules Rules {get;set;}=new();

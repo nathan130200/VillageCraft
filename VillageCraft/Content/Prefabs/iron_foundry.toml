@@ -7,7 +7,7 @@ Name = "Iron guardian foundry"
 # Categoria interna do menu. Use um ID existente ou crie uma categoria e sua tradução.
 Category = "Defense"
 # Descrição de fallback; tradução: prefab.<Id>.description.
-Description = "Every three days, smiths can awaken a golem. Maximum two per foundry."
+Description = "Smiths use materials to awaken iron golems for village defense."
 # ID de um arquivo de Models. Não é o nome de uma textura.
 Model = "iron_foundry"
 # ID interno da atividade. Deve coincidir com Jobs de uma profissão. Não traduzir.

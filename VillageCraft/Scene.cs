@@ -89,7 +89,7 @@ static class Scene
         float strength=room==null?1:Math.Clamp((Vector2.Distance(v.Position,new(room.X,room.Z))-.62f)/.48f,0,1);
         return EntityOffsets.Position(city,v.Position,v.Id,strength);
     }
-    public static Vector2 CreaturePosition(City city,Creature c)=>city.Animals.Contains(c)?c.Position:EntityOffsets.Position(city,c.Position,c.Id);
+    public static Vector2 CreaturePosition(City city,Creature c)=>city.Animals.Contains(c)&&c.Type!=CreatureIds.Cat?c.Position:EntityOffsets.Position(city,c.Position,c.Id);
     public static void Villager(City city,Citizen v,float time)
     {
         if(!VillagerVisible(city,v))return;
@@ -108,10 +108,10 @@ static class Scene
     }
     public static void Creature(Creature c,bool enemy=false)
     {
-        if(World?.IsNight==true&&World.Animals.Contains(c))return;
+        if(World?.IsSleepingAnimal(c)==true)return;
         var pos=World==null?c.Position:CreaturePosition(World,c);
         string model=Catalog.Data.Units.TryGetValue(c.Type,out var unit)?unit.Model:c.Type;
-        float scale=unit!=null?.52f:c.Age<3?.42f:.7f;
+        float scale=unit!=null?unit.ModelScale:c.Age<3?.42f:.7f;
         Model(model,pos.X,pos.Y,0,scale,heading:c.Facing);
         if(enemy&&c.LeatherHelmet)Model(c.Type is "piglin" or "piglin_brute" or "zombified_piglin" or "nether_warlord"?"leather_helmet_piglin":"leather_helmet",pos.X,pos.Y,0,scale,heading:c.Facing);
         if(enemy&&c.BurningInSun)Model("monster_fire",pos.X,pos.Y,0,scale,heading:c.Facing);
@@ -149,8 +149,15 @@ static class Scene
         }
         foreach(var s in city.Shots)
         {
-            var color=ColorOf(s.Type is "mage"?"#C697EA":s.Type=="blaze"?"#FBA04E":s.Type=="snow_golem"?"#ECF4F3":"#D2B87C");
-            Raylib.DrawLine3D(new Vector3(s.From.X,.3f+city.SurfaceY(s.From.X,s.From.Y),s.From.Y)*Scale,new Vector3(s.To.X,.3f+city.SurfaceY(s.To.X,s.To.Y),s.To.Y)*Scale,color);
+            var p=s.Position*Scale;
+            var color=ColorOf(s.Kind switch{ProjectileKind.Fireball=>"#FF9238",ProjectileKind.Magic=>"#B478EC",ProjectileKind.Snowball=>"#F3F8FF",_=>"#D2B87C"});
+            if(s.Kind==ProjectileKind.Arrow)
+            {
+                var direction=Vector3.Normalize(s.Velocity);
+                Raylib.DrawCylinderEx(p-direction*.22f*Scale,p,.018f*Scale,.018f*Scale,4,color);
+                Raylib.DrawSphere(p,.035f*Scale,Color.LightGray);
+            }
+            else Raylib.DrawSphere(p,(s.Kind==ProjectileKind.Fireball?.09f:.055f)*Scale,color);
         }
     }
 }

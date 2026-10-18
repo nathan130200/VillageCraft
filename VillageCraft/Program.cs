@@ -42,6 +42,7 @@ bool beta105Smoke=args.Contains("--beta105-smoke");if(beta105Smoke)smoke=true;
 bool terrainSmoke=args.Contains("--terrain-smoke");if(terrainSmoke)smoke=true;
 bool displaySmoke=args.Contains("--display-smoke");if(displaySmoke){smoke=true;optionsSmoke=true;}
 bool compactSmoke=args.Contains("--compact-smoke");if(compactSmoke)smoke=true;
+bool catsSmoke=args.Contains("--cats-smoke");if(catsSmoke)smoke=true;
 bool occupantsSmoke=args.Contains("--occupants-smoke");if(occupantsSmoke)smoke=true;
 bool panelsSmoke=args.Contains("--panels-smoke"),clockSmoke=args.Contains("--clock-smoke");if(panelsSmoke||clockSmoke)smoke=true;
 bool citizenSmoke=args.Contains("--citizen-smoke");if(englishSmoke)smoke=true;
@@ -54,7 +55,7 @@ GraphicsOptions.Load();Assets.Prepare();
 #endif
 GameLog.CaptureRenderer();
 Raylib.SetConfigFlags(ConfigFlags.ResizableWindow|ConfigFlags.Msaa4xHint);
-Raylib.InitWindow(1024,640,"VillageCraft 1.0.8 | The Living Overworld");DisplaySettings.Apply(false);Raylib.SetTargetFPS(GraphicsOptions.Current.Fps);Raylib.SetExitKey(KeyboardKey.Null);
+Raylib.InitWindow(1024,640,"VillageCraft 1.0.9 | The Living Overworld");DisplaySettings.Apply(false);Raylib.SetTargetFPS(GraphicsOptions.Current.Fps);Raylib.SetExitKey(KeyboardKey.Null);
 #if DEBUG
 if(smoke||uiSmoke)Raylib.TraceLog(TraceLogLevel.Warning,"Visual check renderer logging is active.");
 #endif
@@ -81,6 +82,15 @@ if(newMapSmoke){ui.MenuOpen=true;ui.MenuPage="New Game";}
 var city=args.Contains("--demo")||raidSmoke||caveSmoke?City.New():City.StartVillage();if(args.Contains("--demo")||raidSmoke||caveSmoke)Checks.Demo(city);
 if(compactSmoke){ui.SelectPrefab("farm");ui.Inspected=city.Buildings.First(b=>b.Prefab=="farm").Id;ui.Paused=true;}
 if(citizenSmoke){ui.InspectMode=true;ui.InspectedCitizen=city.Citizens[0].Id;ui.Paused=true;}
+if(catsSmoke)
+{
+    city.TutorialEnabled=false;ui.Paused=true;
+    if(city.SpawnCat() is {} cat){cat.Position=new(city.AnchorX,city.AnchorZ+2);ui.InspectedMonster=cat.Id;}
+    else {GameLog.Write(GameLogLevel.Error,"Cat validation could not find a reachable spawn");Environment.ExitCode=1;}
+    var source=new Creature{Type="blaze",X=city.AnchorX-4,Z=city.AnchorZ+2};
+    city.LaunchProjectile(source.Position,new(city.AnchorX+4,city.AnchorZ+2),"blaze",Catalog.Data.Units["blaze"],1,source,true);
+    city.UpdateProjectiles(.4f);
+}
 if(occupantsSmoke)
 {
     city.TutorialEnabled=false;ui.Paused=true;
@@ -128,7 +138,7 @@ float yaw=.85f,distance=102,time=0;var focus=new Vector3(city.AnchorX*4,0,city.A
 var cameraDrag=new CameraDrag();
 var visuals=new EnhancedVisuals();
 #if DEBUG
-int frames=0;distance=peopleSmoke||nightSmoke||beta105Smoke?62:terrainSmoke?145:102;
+int frames=0;distance=catsSmoke?30:peopleSmoke||nightSmoke||beta105Smoke?62:terrainSmoke?145:102;
 Raylib_cs.Color[]? shadowBaseline=null;
 if(crowdSmoke)distance=36;
 #endif
@@ -232,7 +242,7 @@ try
         if(inspected!=null)Raylib.DrawCubeWires(new Vector3(inspected.X,.6f+city.SurfaceY(inspected.X,inspected.Z),inspected.Z)*4,4,5,4,Scene.ColorOf("#E8C478"));
         var selectedCitizen=city.Citizens.FirstOrDefault(v=>v.Id==ui.InspectedCitizen);
         if(selectedCitizen!=null&&Scene.VillagerVisible(city,selectedCitizen)){var pos=Scene.VillagerPosition(city,selectedCitizen);Raylib.DrawCubeWires(new Vector3(pos.X,.3f+city.SurfaceY(pos.X,pos.Y),pos.Y)*4,1.1f,2.4f,1.1f,Scene.ColorOf("#E8C478"));}
-        var selectedMonster=city.Enemies.Concat(city.Defenders).Concat(city.IsNight?Enumerable.Empty<Creature>():city.Animals).FirstOrDefault(m=>m.Id==ui.InspectedMonster);
+        var selectedMonster=city.Enemies.Concat(city.Defenders).Concat(city.Animals.Where(a=>!city.IsSleepingAnimal(a))).FirstOrDefault(m=>m.Id==ui.InspectedMonster);
         if(selectedMonster!=null){var p=Scene.CreaturePosition(city,selectedMonster);Raylib.DrawCubeWires(new Vector3(p.X,.4f+city.SurfaceY(p.X,p.Y),p.Y)*4,1.4f,3.2f,1.4f,Scene.ColorOf("#E8C478"));}
         }
         Raylib.EndMode3D();Scene.World=null;
@@ -289,7 +299,7 @@ try
         if(enhancedSmoke&&frames==50&&!visuals.Active)throw new InvalidOperationException("Enhanced renderer failed after resize.");
         if((smoke||raidSmoke||menuSmoke||optionsSmoke||uiSmoke||caveSmoke||newMapSmoke)&&++frames>=(trafficSmoke?240:60))
         {
-            VisualChecks.Capture(occupantsSmoke?"building-occupants.png":audioSmoke?"audio-smoke.png":problemsSmoke?"city-problems.png":profileSmoke?(args.Contains("--profile-callbacks-smoke")?"profiler-callbacks.png":"profiler-smoke.png"):nightSmoke?"night-village.png":peopleSmoke?"workforce-priorities.png":gameOverSmoke?"gameover-smoke.png":beta105Smoke?"beta105-smoke.png":raidSmoke?"raid-smoke.png":menuSmoke?"menu-smoke.png":optionsSmoke?"options-smoke.png":uiSmoke?"ui-smoke.png":caveSmoke?"cave-smoke.png":newMapSmoke?"newmap-smoke.png":citizenSmoke?"citizen-smoke.png":panelsSmoke?"panels-smoke.png":clockSmoke?"clock-smoke.png":compactSmoke?"compact-smoke.png":terrainSmoke?"terrain-smoke.png":englishSmoke?"english-smoke.png":"smoke-test.png");
+            VisualChecks.Capture(catsSmoke?"cat-inspector.png":occupantsSmoke?"building-occupants.png":audioSmoke?"audio-smoke.png":problemsSmoke?"city-problems.png":profileSmoke?(args.Contains("--profile-callbacks-smoke")?"profiler-callbacks.png":"profiler-smoke.png"):nightSmoke?"night-village.png":peopleSmoke?"workforce-priorities.png":gameOverSmoke?"gameover-smoke.png":beta105Smoke?"beta105-smoke.png":raidSmoke?"raid-smoke.png":menuSmoke?"menu-smoke.png":optionsSmoke?"options-smoke.png":uiSmoke?"ui-smoke.png":caveSmoke?"cave-smoke.png":newMapSmoke?"newmap-smoke.png":citizenSmoke?"citizen-smoke.png":panelsSmoke?"panels-smoke.png":clockSmoke?"clock-smoke.png":compactSmoke?"compact-smoke.png":terrainSmoke?"terrain-smoke.png":englishSmoke?"english-smoke.png":"smoke-test.png");
             if(audioSmoke){Console.WriteLine($"Audio smoke: {audio.LoadedSounds} decoded, {audio.Played} played, {audio.Dropped} rate-limited.");if(audio.LoadedSounds==0||audio.PlayedCount(AudioTrigger.Settlement)==0||audio.PlayedCount(AudioTrigger.BossWave)==0||audio.PlayedCount(AudioTrigger.Footstep)==0)Environment.ExitCode=1;}
             if(uiSmoke&&ui.TestActivationCount!=12){Console.Error.WriteLine("UI activation count mismatch: "+ui.TestActivationCount);Environment.ExitCode=1;}
             Console.WriteLine($"PASS: rendered {frames} frames, loaded {Assets.TextureCount} textures"+(uiSmoke?", activated construction cards 12 times across two zoom levels.":"."));break;

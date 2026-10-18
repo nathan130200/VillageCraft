@@ -1,0 +1,12 @@
+# CatSettings: living cats, taming and daily supplies. Loaded once on startup.
+# One spawn roll at 06:00 per day, from an empty reachable map border.
+DawnSpawnChance = 0.10
+# Requires one food delivered by a farmer and one by a deliveryman per attempt.
+TameChance = 0.25
+# Wild cats leave after this many game days.
+WildStayDays = 1
+# Tamed cats leave after this many days without food or milk.
+SupplyGraceDays = 1
+# Bound living cat population and creeper avoidance radius in tiles.
+MaxCats = 16
+CreeperAvoidRadius = 5

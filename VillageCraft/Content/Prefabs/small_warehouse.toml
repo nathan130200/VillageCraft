@@ -1,7 +1,7 @@
 # Plan: Small warehouse, 1.0.5-beta.
 Id = "small_warehouse"
 Name = "Small warehouse"
-Description = "Small warehouse"
+Description = "Stores physical resources and employs deliverymen. Emeralds and Goods stay in the treasury."
 Category = "Infrastructure"
 Model = "warehouse"
 Cost = { Emeralds = 80, Wood = 20, Stone = 12 }

@@ -57,13 +57,16 @@ public static class BinarySave
             w.Write(c.Rules.BirthChance);w.Write(stats.Births);w.Write(c.Babies.Count);foreach(var baby in c.Babies){w.Write(baby.Home);w.Write(baby.DueDay);}
             w.Write(c.Rules.NightSpawnIntervalMinutes);w.Write(c.LastNightSpawnMinute);w.Write(c.LastEveningSettlementDay);
             w.Write(c.ProfessionPriorities.Count);foreach(var p in c.ProfessionPriorities){Text(w,p.Key);w.Write(p.Value);}
+            var cats=c.Cats.ToArray();w.Write(cats.Length);
+            foreach(var cat in cats){var s=cat.Cat!;w.Write(cat.Id);w.Write(s.Tamed);w.Write(s.Requested);w.Write(s.Leaving);w.Write(s.Farmer);w.Write(s.Courier);w.Write(s.Feeds);w.Write(s.Food);w.Write(s.Milk);w.Write(s.Unsupplied);w.Write(cat.BrainTime);}
+
 
 
         }
         if(payload.Length>MaxBytes)throw new InvalidDataException("Village exceeds save size limit.");
         byte[] bytes=payload.ToArray();string full=Path.GetFullPath(path);Directory.CreateDirectory(Path.GetDirectoryName(full)!);
         using(var file=File.Create(full+".tmp"))using(var w=new BinaryWriter(file,Utf8))
-        {w.Write("VCTY"u8);w.Write((ushort)14);w.Write(bytes.Length);w.Write(SHA256.HashData(bytes));w.Write(bytes);file.Flush(true);}
+        {w.Write("VCTY"u8);w.Write((ushort)15);w.Write(bytes.Length);w.Write(SHA256.HashData(bytes));w.Write(bytes);file.Flush(true);}
         File.Move(full+".tmp",full,true);
     }
     static SaveSummary ReadSummary(BinaryReader r)
@@ -83,7 +86,7 @@ public static class BinarySave
         using var file=File.OpenRead(path);if(file.Length>MaxBytes+42)throw new InvalidDataException("Save exceeds size limit.");
         using var header=new BinaryReader(file,Utf8,true);
         if(!header.ReadBytes(4).AsSpan().SequenceEqual("VCTY"u8))throw new InvalidDataException("Unsupported binary save format.");
-        format=header.ReadUInt16();if(format is not (13 or 14))throw new InvalidDataException("This beta requires save format 13 or 14. Older beta saves are not supported.");
+        format=header.ReadUInt16();if(format is not (13 or 14 or 15))throw new InvalidDataException("This beta requires save format 13, 14 or 15. Older beta saves are not supported.");
         int length=Count(header,MaxBytes);byte[] hash=header.ReadBytes(32);if(file.Length-file.Position!=length)throw new InvalidDataException("Truncated save or unexpected trailing data.");
         byte[] bytes=header.ReadBytes(length);if(!CryptographicOperations.FixedTimeEquals(hash,SHA256.HashData(bytes)))throw new InvalidDataException("Save checksum failed; the file is damaged.");
         return bytes;
@@ -119,6 +122,16 @@ public static class BinarySave
             c.Rules.BirthChance=r.ReadSingle();c.Statistics.Births=r.ReadInt32();n=Count(r,4096);for(int i=0;i<n;i++)c.Babies.Add(new(){Home=r.ReadInt32(),DueDay=r.ReadInt32()});
             c.Rules.NightSpawnIntervalMinutes=r.ReadInt32();c.LastNightSpawnMinute=r.ReadInt64();c.LastEveningSettlementDay=r.ReadInt32();
             if(format>=14){int priorities=Count(r,256);for(int i=0;i<priorities;i++){string id=Text(r);int priority=r.ReadInt32();if(!Catalog.Data.Professions.ContainsKey(id)||priority is <1 or >5||!c.ProfessionPriorities.TryAdd(id,priority))throw new InvalidDataException("Invalid profession priorities.");}}
+            if(format>=15)
+            {
+                int cats=Count(r,128);var seen=new HashSet<int>();
+                for(int i=0;i<cats;i++)
+                {
+                    int id=r.ReadInt32();var cat=c.Animals.FirstOrDefault(a=>a.Id==id&&a.Type==CreatureIds.Cat);
+                    if(cat==null||!seen.Add(id))throw new InvalidDataException("Invalid cat record.");
+                    cat.Cat=new(){Tamed=r.ReadBoolean(),Requested=r.ReadBoolean(),Leaving=r.ReadBoolean(),Farmer=r.ReadInt32(),Courier=r.ReadInt32(),Feeds=r.ReadInt32(),Food=r.ReadSingle(),Milk=r.ReadSingle(),Unsupplied=r.ReadSingle()};cat.BrainTime=r.ReadSingle();
+                }
+            }
             c.PlaySeconds=summary.PlaySeconds;c.SavePreviewPng=summary.Preview;
             if(summary.Day!=c.Day||summary.Emeralds!=c.Stock[ResourceType.Emeralds])throw new InvalidDataException("Save summary does not match the village.");
             if(payload.Position!=payload.Length)throw new InvalidDataException("Unexpected binary records.");return c;

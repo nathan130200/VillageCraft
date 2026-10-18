@@ -1,7 +1,7 @@
 # Plan: Large warehouse, 1.0.5-beta.
 Id = "large_warehouse"
 Name = "Large warehouse"
-Description = "Large warehouse"
+Description = "Stores physical resources and employs deliverymen, with more space than a small warehouse."
 Category = "Infrastructure"
 Model = "large_warehouse"
 Cost = { Emeralds = 200, Wood = 45, Stone = 35, Iron = 8 }

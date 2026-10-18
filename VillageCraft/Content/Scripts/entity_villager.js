@@ -8,6 +8,7 @@ function onVillagerUpdate(v, dt) {
     const defender = job && job.defender.length > 0 && !job.createsGuardian;
     if (defender && defend(v, dt)) return;
     if (personalSupplies(v, dt)) return;
+    if (v.helpCat(dt)) return;
     if (job && job.job === 'Delivery' && (!world.night || v.cargoCount > 0) && deliverResources(v, dt)) return;
     if (repairBuildings(v, dt)) return;
     if (defender && world.night) { patrol(v, dt); return; }
@@ -18,9 +19,9 @@ function onVillagerUpdate(v, dt) {
     v.task = job && target.id === job.id ? tasks.GoingToWork : tasks.GoingHome;
     if (!v.walkTo(target, dt, true)) return;
     if (job && target.id === job.id) {
-        v.task = v.profession === 'citizen' ? tasks.Assisting : tasks.Working;
+        v.task = tasks.Working;
         v.work(dt);
-    } else v.task = v.profession === 'citizen' && !job ? tasks.SupportingFamilies : tasks.Resting;
+    } else v.task = tasks.Resting;
 }
 
 /** @param {ScriptVillager} v @param {number} dt */

@@ -65,12 +65,13 @@ public class Citizen
     public bool HasWorked { get; set; }
     public List<Vector2> Route { get; set; } = [];
     public int RouteTarget { get; set; } = -1;
-    public string Profession {get;set;}="citizen";
+    public string Profession {get;set;}="farmer";
     public float Facing {get;set;}
     [JsonIgnore] public Vector2 Position { get=>new(X,Z);set{X=value.X;Z=value.Y;} }
 }
 public class Creature
 {
+    public CatState? Cat {get;set;}
     public bool LeatherHelmet {get;set;}
     public bool BossWave {get;set;}
     [JsonIgnore] public bool BurningInSun {get;set;}
@@ -92,7 +93,7 @@ public class Creature
     public Vector2 RouteGoal {get;set;}=new(-1,-1);
     [JsonIgnore] public Vector2 Position {get=>new(X,Z);set{X=value.X;Z=value.Y;}}
 }
-public record Shot(Vector2 From,Vector2 To,string Type){public float Life {get;set;}=.3f;}
+
 public partial class City:IDisposable
 {
     public TerrainData Terrain {get;set;}=new();
@@ -315,7 +316,7 @@ public partial class City:IDisposable
         if(DayPhase>=18f/24&&LastNight!=Day){LastNight=Day;Emit(new("onNightStarted"));}
         UpdateNightEncounters();
         foreach(var id in BuildingDamageEffects.Keys.ToArray()){BuildingDamageEffects[id]-=dt;if(BuildingDamageEffects[id]<=0)BuildingDamageEffects.Remove(id);}
-        Shots.ForEach(s=>s.Life-=dt);Shots.RemoveAll(s=>s.Life<=0);
+        UpdateProjectiles(dt);
         using(Profiler.Measure(ProfileArea.Villagers))
         foreach(var v in Citizens.ToArray())
         {
@@ -400,7 +401,7 @@ public partial class City:IDisposable
         float target=30+(fed?30:0)+(watered?25:0)+Math.Min(15,Buildings.Where(b=>b.Enabled&&Connected(b,roads)).Sum(b=>b.Plan.Joy))-Tax*4;
         Happiness=Math.Clamp(Happiness+(target-Happiness)*.25f,0,100);
         Stock[ResourceType.Goods]+=Citizens.Count*Tax*Happiness/100;
-        if(fed&&watered&&Happiness>=55)Growth+=1+Citizens.Count(v=>v.Profession=="citizen"&&v.Work<0)*Catalog.Data.Game.CitizenGrowthSupport;
+        if(fed&&watered&&Happiness>=55)Growth+=1;
         else Growth=Math.Max(0,Growth-.5f);
         Growth=Math.Min(Growth,Catalog.Data.Game.MigrationThreshold*2);
         if(fed&&watered&&Happiness>=55&&Growth>=Catalog.Data.Game.MigrationThreshold&&Citizens.Count<Rules.MaxPopulation)
@@ -419,7 +420,7 @@ public partial class City:IDisposable
     void UpdateAnimals(float dt)
     {
         using var profile=Profiler.Measure(ProfileArea.Animals);
-        foreach(var animal in Animals.ToArray())Scripting.UpdateAnimal(animal,dt);
+        foreach(var animal in Animals.ToArray()){animal.Cooldown=Math.Max(0,animal.Cooldown-dt);Scripting.UpdateAnimal(animal,dt);}
     }
     public void SpawnNight()
     {
@@ -485,7 +486,7 @@ public partial class City:IDisposable
     }
     public Creature? SpawnMonster(string type,float x,float z,string tags="",bool night=false,bool bossWave=false)
     {
-        if(!Catalog.Data.Units.ContainsKey(type)||!float.IsFinite(x)||!float.IsFinite(z)||x<0||z<0||x>=Width||z>=Height||Enemies.Count>=Rules.MaxRaiders||!Walkable((int)MathF.Round(x),(int)MathF.Round(z)))return null;
+        if(type==CreatureIds.Cat||!Catalog.Data.Units.ContainsKey(type)||!float.IsFinite(x)||!float.IsFinite(z)||x<0||z<0||x>=Width||z>=Height||Enemies.Count>=Rules.MaxRaiders||!Walkable((int)MathF.Round(x),(int)MathF.Round(z)))return null;
         EntityTags.Validate(tags);
         var m=new Creature{Id=NextId++,Type=type,X=x,Z=z,Health=Catalog.Data.Units[type].Health,Tags=tags,NightSpawn=night,BossWave=bossWave,LeatherHelmet=Catalog.Data.Units[type].BurnsInSun&&(bossWave||Random.Shared.NextSingle()<Catalog.Data.Sunlight.RegularHelmetChance)};
         Enemies.Add(m);Emit(new("onMonsterSpawned",m));return m;
@@ -554,6 +555,7 @@ public partial class City:IDisposable
     {
         bool finite(float n)=>float.IsFinite(n);
         if(c.Version!=3||c.Width is <32 or >512||c.Height is <32 or >512)throw new InvalidDataException("Unsupported save or map size.");
+        if(c.Cats.Any(cat=>cat.Cat is not {} s||s.Feeds is <0 or >3||new[]{s.Food,s.Milk}.Any(v=>!float.IsFinite(v)||v<0||v>3)||!float.IsFinite(s.Unsupplied)||s.Unsupplied<0||s.Unsupplied>1000000||!float.IsFinite(cat.BrainTime)||cat.BrainTime<0||cat.BrainTime>1000000))throw new InvalidDataException("Invalid cat care state.");
         c.Terrain??=TerrainData.Flat(c.Width,c.Height);
         if(c.Terrain.Elevation.Length==0)c.Terrain=TerrainData.Flat(c.Width,c.Height);
         c.Terrain.Validate(c.Width,c.Height);

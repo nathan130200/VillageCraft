@@ -29,7 +29,7 @@ public partial class City
         {
             Babies.Remove(baby);if(Citizens.Count>=Rules.MaxPopulation)continue;
             var home=Buildings.FirstOrDefault(b=>b.Id==baby.Home&&b.Plan.Homes>Citizens.Count(v=>v.Home==b.Id))??Buildings.FirstOrDefault(b=>b.Plan.Homes>Citizens.Count(v=>v.Home==b.Id));
-            var v=new Citizen{Id=NextId++,Home=home?.Id??-1,X=home?.X??AnchorX,Z=home?.Z??AnchorZ,Profession="citizen"};
+            var v=new Citizen{Id=NextId++,Home=home?.Id??-1,X=home?.X??AnchorX,Z=home?.Z??AnchorZ,Profession="farmer"};
             CitizenNames.Ensure(v);Citizens.Add(v);Statistics.Births++;Statistics.PeakPopulation=Math.Max(Statistics.PeakPopulation,Citizens.Count);
             Emit(new("onVillagerBorn",v));Emit(new("onVillagerSpawned",v,Reason:"born"));
         }

@@ -16,7 +16,7 @@ set_script_type(eST_Mod);                 // mod global
 
 Use somente uma dessas linhas por arquivo. A primeira chamada de set_script_type determina o tipo; chamadas seguintes são ignoradas. Sem chamada, ou com tipo desconhecido, o arquivo é um mod. A declaração deve ocorrer no corpo inicial do arquivo: chamadas dentro de callbacks não alteram o tipo.
 
-O alvo é opcional. Uma IA sem alvo serve como comportamento padrão referenciado por Units/*.toml (Behavior) ou anexado a uma instância. Os arquivos villager.js, guardian.js e animal.js são os padrões dos respectivos grupos. Um script de construção sem alvo pode ser referenciado por Prefabs/*.toml (Script) ou anexado a uma instância. Um alvo explícito substitui o padrão dos TOMLs. Duas substituições explícitas para o mesmo tipo/alvo são rejeitadas com diagnóstico, sem depender da ordem dos arquivos.
+O alvo é opcional. Uma IA sem alvo serve como comportamento padrão referenciado por Units/*.toml (Behavior) ou anexado a uma instância. Os arquivos entity_villager.js, entity_guardian.js e entity_animal.js são os padrões dos respectivos grupos. Um script de construção sem alvo pode ser referenciado por Prefabs/*.toml (Script) ou anexado a uma instância. Um alvo explícito substitui o padrão dos TOMLs. Duas substituições explícitas para o mesmo tipo/alvo são rejeitadas com diagnóstico, sem depender da ordem dos arquivos.
 
 Alvos de IA aceitos: ID de unidade (ex.: "blaze"), ID de profissão (ex.: "farmer") ou "villager" para todos os aldeões. Alvos de construção são IDs de prefab. Uma profissão específica tem preferência sobre "villager". Uma ligação por instância tem preferência sobre os dois.
 
@@ -158,7 +158,7 @@ Se um override estiver ausente, não implementar o callback ou falhar, o runtime
 ## IA de aldeões
 
 ~~~js
-set_script_type(eST_AI, "citizen");
+set_script_type(eST_AI, "farmer");
 function onVillagerUpdate(villager, dt) {
     villager.moveTo(16, 16, dt);
 }
@@ -208,9 +208,9 @@ Os scripts não têm importação de CLR, Node ou acesso ao save. Cada execuçã
 
 ## Comportamentos padrão editáveis
 
-As decisões de trabalho, suprimentos, entregas, floresta, reparos, patrulha e combate dos aldeões estão em `Scripts/villager.js`. Distribuição de empregos está em `employment.js`. Os inimigos usam `melee.js`, `ranged.js` ou `creeper.js`, conforme `Units/<tipo>.toml`. Seleção inicial de alvos e consultas comuns estão em `_ai.js`. Guardiões e animais usam `guardian.js` e `animal.js`.
+As decisões de trabalho, suprimentos, entregas, floresta, reparos, patrulha e combate dos aldeões estão em `Scripts/entity_villager.js`. Distribuição de empregos está em `mod_employment.js`. Os inimigos usam `entity_melee.js`, `entity_ranged.js` ou `entity_creeper.js`, conforme `Units/<tipo>.toml`. Seleção inicial de alvos e consultas comuns estão em `mod_ai_helpers.js`. Guardiões e animais usam `entity_guardian.js` e `entity_animal.js`.
 
-Cada prefab distribuído possui **seu próprio componente**, `Scripts/building_<id>.js`, indicado por `Script` no TOML. Por exemplo: `building_farm.js`, `building_chicken_coop.js`, `building_pig_pen.js`, `building_iron_foundry.js` e `building_oak_tree.js`. Edite um sem alterar os outros. `building.js` fornece somente o fallback genérico para novos conteúdos sem componente próprio. `well.js` continua disponível para ligações antigas.
+Cada prefab distribuído possui **seu próprio componente**, `Scripts/building_<id>.js`, indicado por `Script` no TOML. Por exemplo: `building_farm.js`, `building_chicken_coop.js`, `building_pig_pen.js`, `building_iron_foundry.js` e `building_oak_tree.js`. Edite um sem alterar os outros. `building_default.js` fornece somente o fallback genérico para novos conteúdos sem componente próprio. `well.js` continua disponível para ligações antigas.
 
 C# continua responsável pelas operações da simulação: navegação, colisão, validação de distância/alcance/cooldown, transferências físicas, receitas, dano, persistência e relógio. JavaScript decide qual ação tentar, em quem, quando e com qual prioridade. Efeitos biológicos, economia global e geração de encontros continuam sistemas da simulação, não rotinas de movimento/decisão individuais.
 
@@ -222,7 +222,7 @@ worker.task = tasks.GoingToWork;
 worker.collect(warehouse, resources.Food, 2, dt);
 ~~~
 
-`resources` e `tasks` são objetos constantes e congelados, disponíveis em todos os componentes. Em C#, estoques, receitas, inventários, carga, custos, bônus e estatísticas usam `ResourceType`, não chaves string. Na interface JS e no TOML os nomes continuam legíveis; a ponte valida nomes estritamente e converte para enum. Nomes numéricos ou desconhecidos não criam recursos novos. O beta 1.0.8 usa formato binário 14 (também lê v13 com prioridades padrão) com IDs numéricos de recursos e não carrega os saves beta anteriores a v13.
+`resources` e `tasks` são objetos constantes e congelados, disponíveis em todos os componentes. Em C#, estoques, receitas, inventários, carga, custos, bônus e estatísticas usam `ResourceType`, não chaves string. Na interface JS e no TOML os nomes continuam legíveis; a ponte valida nomes estritamente e converte para enum. Nomes numéricos ou desconhecidos não criam recursos novos. O beta 1.0.9 usa formato binário 15 (também lê v13/v14 para conteúdo compatível) com IDs numéricos de recursos e não carrega os saves beta anteriores a v13.
 
 Para adicionar um **novo tipo de recurso**, adicione um membro com valor explícito e estável em `ResourceType`, sua definição em `resources.toml` e traduções/ícones, depois recompile. Não renumere membros existentes. Construções, profissões e modelos continuam extensíveis por TOML.
 
@@ -283,7 +283,7 @@ Ações: `rewardWork(worker)` concede a contribuição de serviço; `breed()` te
 
 `world.roads()` retorna pontos `{x,z}` conectados, ordenados; `anchorX`, `anchorZ` e `elapsedDay` fornecem centro e segundos do dia atual. `world.resourceNames()` retorna os nomes dos recursos disponíveis.
 
-`employment.js` recebe `onAssignJobs()` quando a simulação solicita redistribuição de empregos. `building.qualified(villager)` consulta elegibilidade de especialista; cidadãos são selecionados pelo script como ajudantes. `world.assignJobs(villagerIds, workplaceIds)` aplica o plano completo atomicamente, validando IDs, vagas, qualificação e conexão. Moradores não incluídos ficam sem trabalho. Edite o algoritmo do componente para mudar prioridades.
+`mod_employment.js` recebe `onAssignJobs()` quando a simulação solicita redistribuição de empregos. `building.qualified(villager)` consulta elegibilidade de especialista; cidadãos são selecionados pelo script como ajudantes. `world.assignJobs(villagerIds, workplaceIds)` aplica o plano completo atomicamente, validando IDs, vagas, qualificação e conexão. Moradores não incluídos ficam sem trabalho. Edite o algoritmo do componente para mudar prioridades.
 
 ### Verificar alterações
 
@@ -304,9 +304,9 @@ Todos os aldeões podem executar `repair(building, dt)`, que exige proximidade, 
 
 `building.availableSupply(resource)` exclui a reserva de Input de fontes não-armazém. Use esta consulta para evitar retirar a alimentação de um cercado como produto excedente. `inputAmount(resource)` permite medir quantos ciclos de suprimento restam. As rotas preferem caminhos e respeitam entradas, com desvio por terreno quando necessário.
 
-`population.js` decide nascimentos em onDayStarted: `world.birthChance` é a probabilidade (0..1), `world.queueBirth(homeId)` agenda um bebê oculto e `world.pendingBirths` consulta a quantidade. Casas expõem `homes` e `pendingBirths`. Cada cama livre recebe uma tentativa diária com probabilidade `world.birthChance`; bebês pendentes reservam vagas. São necessários dois moradores e uma vaga; limites são reavaliados na execução. `onBabyBorn(home)` ocorre ao agendar; `onVillagerBorn(villager)` ocorre ao crescer no dia seguinte. Pendências e probabilidade persistem em saves v14. Não há modelo visível de bebê durante esse período.
+`mod_population.js` decide nascimentos em onDayStarted: `world.birthChance` é a probabilidade (0..1), `world.queueBirth(homeId)` agenda um bebê oculto e `world.pendingBirths` consulta a quantidade. Casas expõem `homes` e `pendingBirths`. Cada cama livre recebe uma tentativa diária com probabilidade `world.birthChance`; bebês pendentes reservam vagas. São necessários dois moradores e uma vaga; limites são reavaliados na execução. `onBabyBorn(home)` ocorre ao agendar; `onVillagerBorn(villager)` ocorre ao crescer no dia seguinte. Pendências e probabilidade persistem em saves v15. Não há modelo visível de bebê durante esse período.
 
-`employment.js` implementa `onReassignProfessions()`, acionado pelo botão em Moradores. `world.getProfessions()`, `building.allowedProfessions`, `villager.setProfession(id)` e `world.assignJobs(...)` permitem adaptar a política. setProfession não cobra treinamento nem reentra na distribuição; o botão é uma reorganização automática explícita.
+`mod_employment.js` implementa `onReassignProfessions()`, acionado pelo botão em Moradores. `world.getProfessions()`, `building.allowedProfessions`, `villager.setProfession(id)` e `world.assignJobs(...)` permitem adaptar a política. setProfession não cobra treinamento nem reentra na distribuição; o botão é uma reorganização automática explícita.
 
 Tochas, oficina de tochas, recurso de tochas e callbacks de iluminação de tochas foram removidos. Use apenas a API atual declarada em game.d.ts.
 
@@ -326,12 +326,22 @@ world.error("Custom behavior could not acquire its target");
 
 `log`, `warn` e `error` sempre gravam em UserData/Logs, inclusive em Release. O arquivo de cada execução identifica o componente e usa horário UTC. Mensagens longas continuam no arquivo; somente mensagens curtas de log também entram no diário da vila. Exceções dos callbacks gravam a stack trace e desativam o componente com falha conforme as regras do runtime. Não é preciso ativar logging de desenvolvimento.
 
-`onNightStarted()` continua sendo um evento de início de noite. Encontros normais agora podem gerar vários grupos entre 18:00 e 05:00; use `onMonsterSpawned` para observar cada criação. Pausa e velocidade usam o mesmo relógio da simulação, e os intervalos persistem no save beta v14.
+`onNightStarted()` continua sendo um evento de início de noite. Encontros normais agora podem gerar vários grupos entre 18:00 e 05:00; use `onMonsterSpawned` para observar cada criação. Pausa e velocidade usam o mesmo relógio da simulação, e os intervalos persistem no save beta v15.
 
 ### Guardian patrol example
 
-`guardian.js` keeps a random reachable road destination per golem, follows it until arrival or timeout, and immediately prioritizes monsters. `MobScriptContext.canReach(x, z)` checks a route without moving; `moveTo(x, z)` follows it through the existing navigation system. Patrol state is transient JavaScript state and is rebuilt after loading.
+`entity_guardian.js` keeps a random reachable road destination per golem, follows it until arrival or timeout, and immediately prioritizes monsters. `MobScriptContext.canReach(x, z)` checks a route without moving; `moveTo(x, z)` follows it through the existing navigation system. Patrol state is transient JavaScript state and is rebuilt after loading.
 
-O componente employment.js consulta world.professionPrioritiesActive e world.getProfessions(): cada profissão inclui priority (1 maior, 5 menor). A política é aplicada ao mudar as prioridades e nas atribuições automáticas posteriores. O mínimo de um entregador conectado é preservado.
+O componente mod_employment.js consulta world.professionPrioritiesActive e world.getProfessions(): cada profissão inclui priority (1 maior, 5 menor). A política é aplicada ao mudar as prioridades e nas atribuições automáticas posteriores. O mínimo de um entregador conectado é preservado.
 
 Guardian AI distributes reachable map-wide threats using target claims. Villager repair AI checks all supplies before waking at night. `ScriptVillager.manualProfession` indicates an inspector-selected profession preserved by the default employment script; its internal `vc_manual_profession` tag is persisted with the entity. The inspector can release that choice back to automatic assignment.
+
+## Gatos e convenções (1.0.9)
+
+Builtin AI files use `entity_<name>.js`; buildings use `building_<name>.js`; world mods use `mod_<scope>.js`. These are filenames/behavior references, not entity IDs. `mod_ai_helpers.js` is injected as a library, not run as a mod. Custom filenames remain supported.
+
+`mod_cats.js` rolls `world.catSettings.dawnSpawnChance` in `onDawn()` and calls `world.queueSpawnCat()`. `entity_cat.js` handles housing approach, taming coordination, feeding and departure. Query cats with `world.getAnimals("cat")`; `tamed`, `tameRequested`, `tameFeeds`, `farmerId`, `courierId`, `food`, `milk`, `unsupplied` and `leaving` are live bindings. `assignCarers`, `attemptTame` and `ScriptVillager.helpCat(dt)` validate workers, distance and inventory. No global stock subtraction replaces physical care. `purr()` emits a cooldown-limited `onAnimalPurr(cat)` event.
+
+Ranged unit attacks enqueue a bounded moving projectile rather than applying instant damage. Projectile kinds and speeds are unit TOML fields. `onProjectileSpawned(shooter)` and `onProjectileHit(target)` observe launch/impact; `onAnimalTamed(cat)`, `onAnimalTamingFailed(cat)` and `onAnimalFed(cat)` observe care. `onVillagerBorn(villager)` in `mod_employment.js` assigns grown babies a specialty for actual city vacancies.
+
+Pending taming pauses wild departure. `helpCat(dt)` returns false when supplies are missing, inventory is full, or that helper has already contributed, allowing ordinary work to resume. The cat waits; supplying food again resumes the same request. `ModelScale` in unit TOML controls the authored creature model size.

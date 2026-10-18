@@ -88,7 +88,7 @@ partial class GameUi
 #if DEBUG
         if(TestTooltip&&IsBuilding)
         {
-            var p=Catalog.Get(Selected);ShowTooltip(L.Name(p)+"\n"+L.Description(p)+"\n"+string.Join(" / ",p.Cost.Where(e=>e.Value>0).Select(e=>L.F("format.resource_amount",e.Value,L.Resource(e.Key)))));
+            var p=Catalog.Get(Selected);ShowTooltip(L.Name(p)+"\n"+L.Description(p)+"\n"+string.Join(" / ",p.Cost.Where(e=>e.Value>0).Select(e=>L.Resource(e.Key))));
         }
         else
 #endif
@@ -102,9 +102,9 @@ partial class GameUi
     void PeoplePanel(City city)
     {
         Title("ui.workforce");ImGui.TextUnformatted(L.F("ui.employed", city.Citizens.Count(v=>v.Work>=0), city.Citizens.Count));ImGui.TextUnformatted(L.F("ui.animals_guardians", city.Animals.Count, city.Defenders.Count));
-        Wrapped(L.T("ui.unemployed_citizens_help_families_attract_residents_they_can"));
+        Wrapped(L.T("people.specialist_help"));
         if(Button(L.T("people.reassign_professions"),new(-1,26)))city.ReassignProfessions();
-        Hint(L.T("ui.assign_specialists_to_connected_workplaces_surplus_villagers_become"));
+        Hint(L.T("people.specialist_assignment"));
         Hint(L.F("people.growing_babies",city.Babies.Count));
         ImGui.Separator();Wrapped(L.T("people.priority_help"));
         var counts=city.Citizens.GroupBy(v=>v.Profession).ToDictionary(g=>g.Key,g=>g.Count());
@@ -130,9 +130,9 @@ partial class GameUi
         ImGui.Separator();Title(L.F("ui.equipment_armor_tools", city.ArmorLevel, city.ToolLevel));
         Hint(L.F("ui.damage_reduction_work_rate_x", city.ArmorReduction*100, city.ToolEfficiency));
         foreach(var u in Catalog.Data.Upgrades.Where(u=>u.Level==(u.Kind==EquipmentKind.Armor?city.ArmorLevel:city.ToolLevel)+1))
-        {if(Button(L.Name(u),new(-1,26)))city.Upgrade(u.Id);Tooltip(string.Join(" / ",u.Cost.Select(e=>L.F("format.resource_amount", e.Value, L.Resource(e.Key))))+L.T("ui.requires_a_staffed_forge"));}
+        {if(Button(L.Name(u),new(-1,26)))city.Upgrade(u.Id);Tooltip(string.Join(" / ",u.Cost.Where(e=>e.Value>0).Select(e=>L.Resource(e.Key)))+L.T("ui.requires_a_staffed_forge"));}
         if(city.EnchantedArmor)Hint("ui.enchantment_active");
-        else {if(Button(L.T("ui.enchant_armor"),new(-1,26)))city.EnchantArmor();Tooltip(string.Join(" / ",Catalog.Data.Economy.EnchantmentCost.Select(e=>L.F("format.resource_amount",e.Value,L.Resource(e.Key))))); }
+        else {if(Button(L.T("ui.enchant_armor"),new(-1,26)))city.EnchantArmor();Tooltip(string.Join(" / ",Catalog.Data.Economy.EnchantmentCost.Where(e=>e.Value>0).Select(e=>L.Resource(e.Key)))); }
         Hint(L.T("ui.a_staffed_mage_hall_and_armor_are_required"));
         ImGui.Separator();Title("ui.animal_care");foreach(string type in new[]{"sheep","pig","chicken","cow"})ImGui.TextUnformatted(L.F("ui.young", L.Entity(type), city.Animals.Count(a=>a.Type==type), city.Animals.Count(a=>a.Type==type&&a.Age<3)));
     }
@@ -153,7 +153,7 @@ partial class GameUi
             if(collision.Hit&&collision.Distance<nearest){nearest=collision.Distance;kind=type;id=entity;}
         }
         foreach(var v in city.Citizens){var pos=Scene.VillagerPosition(city,v);Hit("villager",v.Id,new(pos.X-.18f,0,pos.Y-.18f),new(pos.X+.18f,.6f,pos.Y+.18f));}
-        foreach(var m in city.Enemies.Concat(city.Defenders).Concat(city.IsNight?Enumerable.Empty<Creature>():city.Animals)){var p=Scene.CreaturePosition(city,m);Hit("monster",m.Id,new(p.X-.2f,0,p.Y-.2f),new(p.X+.2f,.85f,p.Y+.2f));}
+        foreach(var m in city.Enemies.Concat(city.Defenders).Concat(city.Animals.Where(a=>!city.IsSleepingAnimal(a)))){var p=Scene.CreaturePosition(city,m);Hit("monster",m.Id,new(p.X-.2f,0,p.Y-.2f),new(p.X+.2f,.85f,p.Y+.2f));}
         // Entities are the more precise target, including residents inside building bounds.
         if(id<0)foreach(var b in city.Buildings.Where(b=>!b.Plan.Path))Hit("building",b.Id,new(b.X-.45f,0,b.Z-.45f),new(b.X+.45f,1.6f,b.Z+.45f));
         if(id>=0){city.TutorialInspected=true;Focus(kind,id);}
@@ -162,7 +162,7 @@ partial class GameUi
     {
         UseInspectTool();CloseTransientPanels();
         var villager=city.Citizens.Where(v=>Vector2.DistanceSquared(Scene.VillagerPosition(city,v),tile)<.35f*.35f).OrderBy(v=>Vector2.DistanceSquared(Scene.VillagerPosition(city,v),tile)).FirstOrDefault();
-        var monster=city.Enemies.Concat(city.Defenders).Concat(city.IsNight?Enumerable.Empty<Creature>():city.Animals).Where(m=>Vector2.DistanceSquared(Scene.CreaturePosition(city,m),tile)<.35f*.35f).OrderBy(m=>Vector2.DistanceSquared(Scene.CreaturePosition(city,m),tile)).FirstOrDefault();
+        var monster=city.Enemies.Concat(city.Defenders).Concat(city.Animals.Where(a=>!city.IsSleepingAnimal(a))).Where(m=>Vector2.DistanceSquared(Scene.CreaturePosition(city,m),tile)<.35f*.35f).OrderBy(m=>Vector2.DistanceSquared(Scene.CreaturePosition(city,m),tile)).FirstOrDefault();
         if(villager!=null){city.TutorialInspected=true;Focus("villager",villager.Id);}
         else if(monster!=null){city.TutorialInspected=true;Focus("monster",monster.Id);}
         else if(city.At((int)MathF.Round(tile.X),(int)MathF.Round(tile.Y)) is {} b){city.TutorialInspected=true;Focus("building",b.Id);}
@@ -174,7 +174,7 @@ partial class GameUi
             foreach(var profession in Catalog.Data.Professions.Values)
             {
                 if(ImGui.Selectable(L.Name(profession),v.Profession==profession.Id))city.Train(v,profession.Id);
-                Tooltip(string.Join(" / ",profession.TrainingCost.Select(e=>L.F("format.resource_amount",e.Value,L.Resource(e.Key)))));
+                Tooltip(string.Join(" / ",profession.TrainingCost.Where(e=>e.Value>0).Select(e=>L.Resource(e.Key))));
             }
             ImGui.EndCombo();
         }

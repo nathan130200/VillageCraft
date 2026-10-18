@@ -2,7 +2,7 @@
 Id = "oak_tree"
 Name = "Oak tree"
 Category = "Infrastructure"
-Description = "A living oak. Woodcutters harvest it once, then wait three days for regrowth."
+Description = "A living oak. Woodcutters harvest its timber, then let it regrow."
 Model = "oak_tree"
 Natural = true
 NeedsPath = false

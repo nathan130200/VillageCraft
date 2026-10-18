@@ -4,7 +4,7 @@ namespace VillageCraft;
 // Main-thread wall-time instrumentation. No timers or allocations on disabled scope paths.
 enum ProfileArea
 {
-    Frame, Input, Update, SimulationStep, DailyTick, Villagers, Animals, Combat, Sunlight,
+    Frame, Input, Update, Projectiles, SimulationStep, DailyTick, Villagers, Animals, Combat, Sunlight,
     Pathfinding, RoadConnectivity, Stock, SupplySearch, Production, ManagedActions, WorldQueries,
     ScriptLookup, ScriptDispatch, ScriptTick, ScriptQueue, ScriptPredicate,
     Render, Terrain, Buildings, Residents, Creatures, Effects, Picking, Thumbnails,

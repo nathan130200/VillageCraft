@@ -15,4 +15,4 @@ Speed = 1
 # Intervalo entre ataques, em segundos de simulação.
 Cooldown = 1
 # Componente de IA padrão (arquivo .js sem extensão). Pode ser substituído por set_script_type(eST_AI, Id).
-Behavior = "creeper"
+Behavior = "entity_creeper"

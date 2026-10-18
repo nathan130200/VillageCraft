@@ -12,7 +12,8 @@ A 3D village builder in C#, combining Minecraft-inspired villages with city mana
 - **Manage a working economy:** assign professions, deliver supplies, store resources and trade for emeralds.
 - **Care for residents:** balance food, water, housing and happiness; inspect villagers and use the yellow exclamation button to review grouped city problems.
 - **Hear the village:** Minecraft creature voices, material footsteps, workplace effects and settlement/raid alerts, with speed-safe playback limits.
-- **Survive the night:** protect the village with defenders and golems against regular encounters and boss waves.
+- **Survive the night:** defend against encounters and boss waves with golems, defenders and moving projectiles.
+- **Welcome cats:** tame visiting cats with a farmer and deliveryman; supply food and milk, and they keep creepers away.
 - **Make it your own:** customize TOML content and JavaScript behaviors with editor type definitions.
 
 The interface supports Brazilian Portuguese by default and English, with adjustable UI scale and display settings. Windows is tested; Linux and macOS remain targets requiring validation. The game is in active beta development, so save formats may change.

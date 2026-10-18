@@ -1,6 +1,6 @@
 namespace VillageCraft;
 
-public enum AudioTrigger { Settlement, BossWave, Construction, Demolition, BuildingDamage, Work, Idle, Step, Hurt, Death, HouseOpen, HouseClose, DayAmbient, NightAmbient, Water, Harvest, Explosion, Footstep, Attack, Fuse }
+public enum AudioTrigger { Purr, Settlement, BossWave, Construction, Demolition, BuildingDamage, Work, Idle, Step, Hurt, Death, HouseOpen, HouseClose, DayAmbient, NightAmbient, Water, Harvest, Explosion, Footstep, Attack, Fuse }
 public enum AudioCategory { Effects, Creatures, Ambience, Alerts, Footsteps }
 public enum AudioSurface { Any, Grass, Stone, Wood, Gravel, Sand, Snow, Water, SoulSand }
 public sealed class SoundCue

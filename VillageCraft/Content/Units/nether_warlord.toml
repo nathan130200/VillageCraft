@@ -15,4 +15,8 @@ Speed = 0.75
 # Intervalo entre ataques, em segundos de simulação.
 Cooldown = 1.4
 # Componente de IA padrão (arquivo .js sem extensão). Pode ser substituído por set_script_type(eST_AI, Id).
-Behavior = "melee"
+Behavior = "entity_melee"
+
+# Moving projectile kind and speed in tiles per simulation second.
+Projectile = "Fireball"
+ProjectileSpeed = 5

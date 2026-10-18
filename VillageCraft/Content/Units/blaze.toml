@@ -16,4 +16,8 @@ Speed = 0.8
 Cooldown = 1.7
 
 # Componente de IA padrão (arquivo .js sem extensão). Pode ser substituído por set_script_type(eST_AI, Id).
-Behavior = "ranged"
+Behavior = "entity_ranged"
+
+# Moving projectile kind and speed in tiles per simulation second.
+Projectile = "Fireball"
+ProjectileSpeed = 5

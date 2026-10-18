@@ -9,8 +9,7 @@ GroundTexture = "block/grass_block_top.png"
 GroundTint = "#92B968"
 DirtTexture = "block/dirt.png"
 MigrationThreshold = 3
-CitizenGrowthSupport = 0.2
-ImmigrationProfessions = ["citizen", "farmer", "miner", "citizen", "explorer", "keeper", "smith", "woodcutter", "citizen", "warrior", "archer", "mage"]
+ImmigrationProfessions = ["farmer", "farmer", "miner", "farmer", "explorer", "keeper", "smith", "woodcutter", "farmer", "warrior", "archer", "mage"]
 InitialStock = { "Leather" = 8, "Milk" = 4, "Goods" = 0, "AncientDebris" = 0, "Diamonds" = 0, "Eggs" = 0, "Emeralds" = 1100, "Food" = 160, "Gold" = 0, "Iron" = 45, "Stone" = 160, "Tools" = 15, "Wood" = 200, "Wool" = 0 }
 Rules = { "BirthChance" = 0.6, "NightMonsters" = true, "NightCount" = 3, "NightSpawnIntervalMinutes" = 60, "AnimalsPerPen" = 8, "DayLength" = 600, "GolemsPerWorkshop" = 2, "MaxPopulation" = 256, "MaxRaiders" = 100, "ProductionCycle" = 2, "RaidInterval" = 30, "RaidsEnabled" = true, "WaveBase" = 6, "WaveGrowth" = 3 }
 
@@ -289,7 +288,7 @@ Z = 9
 [[Starter]]
 Industry = false
 Prefab = "cottage"
-Residents = ["farmer", "woodcutter", "citizen"]
+Residents = ["farmer", "woodcutter", "farmer"]
 Rotation = 0
 X = -4
 Z = -1
@@ -297,7 +296,7 @@ Z = -1
 [[Starter]]
 Industry = false
 Prefab = "cottage"
-Residents = ["miner", "keeper", "citizen"]
+Residents = ["miner", "keeper", "farmer"]
 Rotation = 2
 X = -2
 Z = 1

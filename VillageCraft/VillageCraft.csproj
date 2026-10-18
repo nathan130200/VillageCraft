@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <Version>1.0.8</Version>
+    <Version>1.0.9</Version>
     <TargetFramework>net10.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
@@ -27,9 +27,9 @@
     <PackageReference Include="Tomlyn" Version="2.10.1" />
   </ItemGroup>
 
-  <Target Name="RemoveObsoleteTorchContent" AfterTargets="CopyFilesToOutputDirectory;Publish">
+  <Target Name="RemoveObsoleteContent" AfterTargets="CopyFilesToOutputDirectory;Publish">
     <ItemGroup>
-      <ObsoleteContent Include="Prefabs/torch.toml;Prefabs/torch_workshop.toml;Models/torch.toml;Models/torch_flame.toml;Scripts/building_torch.js;Scripts/building_torch_workshop.js" />
+      <ObsoleteContent Include="Professions/citizen.toml;Scripts/_ai.js;Scripts/animal.js;Scripts/villager.js;Scripts/guardian.js;Scripts/creeper.js;Scripts/melee.js;Scripts/ranged.js;Scripts/cat.js;Scripts/cats.js;Scripts/employment.js;Scripts/population.js;Scripts/building.js;Scripts/well.js;Prefabs/torch.toml;Prefabs/torch_workshop.toml;Models/torch.toml;Models/torch_flame.toml;Scripts/building_torch.js;Scripts/building_torch_workshop.js" />
     </ItemGroup>
     <Delete Files="@(ObsoleteContent->'$(OutDir)Content/%(Identity)')" />
     <Delete Files="@(ObsoleteContent->'$(PublishDir)Content/%(Identity)')" Condition="'$(PublishDir)' != ''" />

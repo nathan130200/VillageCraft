@@ -30,6 +30,9 @@ public sealed class ScriptWorld:ScriptGame
     public ScriptMonster[] getMonsters(JsValue? filter=null){using var profile=Profiler.Measure(ProfileArea.WorldQueries);return city.Enemies.ToArray().Select(m=>new ScriptMonster(city,m)).Where(m=>Match(filter,m,m.id,m.tags,m.type)).ToArray();}
     public ScriptVillager[] getVillagers(JsValue? filter=null){using var profile=Profiler.Measure(ProfileArea.WorldQueries);return city.Citizens.ToArray().Select(v=>new ScriptVillager(city,v)).Where(v=>Match(filter,v,v.id,v.tags,v.profession)).ToArray();}
     public ScriptBuilding[] getBuildings(JsValue? filter=null){using var profile=Profiler.Measure(ProfileArea.WorldQueries);return city.Buildings.ToArray().Select(b=>new ScriptBuilding(city,b)).Where(b=>Match(filter,b,b.id,b.tags,b.prefab)).ToArray();}
+    public ScriptCatSettings catSettings=>new(Catalog.Data.Cats.DawnSpawnChance,Catalog.Data.Cats.WildStayDays,Catalog.Data.Cats.SupplyGraceDays,Catalog.Data.Cats.CreeperAvoidRadius);
+    public bool queueSpawnCat()=>runtime.Queue(()=>city.SpawnCat());
+    public float dayLength=>city.Rules.DayLength;
     public float birthChance=>city.Rules.BirthChance;
     public int pendingBirths=>city.Babies.Count;
     public bool queueBirth(int homeId)=>runtime.Queue(()=>city.ScheduleBirth(homeId));
@@ -107,6 +110,22 @@ public sealed class ScriptMonster
     public ScriptMonster(City city,Creature value){this.city=city;this.value=value;}
     public ScriptBuilding? home=>city.Buildings.FirstOrDefault(b=>b.Id==value.Home) is {} b?new(city,b):null;
     public float age=>value.Age;
+    public bool tamed=>value.Cat?.Tamed==true;
+    public bool tameRequested=>value.Cat?.Requested==true;
+    public int tameFeeds=>value.Cat?.Feeds??0;
+    public bool leaving {get=>value.Cat?.Leaving==true;set{if(value&&this.value.Cat is {} c){c.Leaving=true;c.Requested=false;c.Farmer=c.Courier=-1;}}}
+    public float food {get=>value.Cat?.Food??0;set{if(float.IsFinite(value)&&this.value.Cat is {} c)c.Food=Math.Clamp(value,0,3);}}
+    public float milk {get=>value.Cat?.Milk??0;set{if(float.IsFinite(value)&&this.value.Cat is {} c)c.Milk=Math.Clamp(value,0,3);}}
+    public float unsupplied {get=>value.Cat?.Unsupplied??0;set{if(float.IsFinite(value)&&this.value.Cat is {} c)c.Unsupplied=Math.Clamp(value,0,1000000);}}
+    public int farmerId=>value.Cat?.Farmer??-1;
+    public int courierId=>value.Cat?.Courier??-1;
+    public bool assignCarers(int farmer,int courier)=>city.CatCarers(value,farmer,courier);
+    public bool attemptTame()=>city.ResolveTaming(value);
+    public void purr()
+    {
+        if(value.Type!=CreatureIds.Cat||!city.Animals.Contains(value)||value.Cooldown>0)return;
+        value.Cooldown=3;city.Notify(new("onAnimalPurr",value));
+    }
     public int id=>value.Id;
     public string type=>value.Type;
     public bool leatherHelmet=>value.LeatherHelmet;
@@ -115,7 +134,7 @@ public sealed class ScriptMonster
     public float x=>value.X;
     public float z=>value.Z;
     public float health=>value.Health;
-    public float state {get=>value.BrainTime;set{if(float.IsFinite(value))this.value.BrainTime=Math.Clamp(value,0,3600);}}
+    public float state {get=>value.BrainTime;set{if(float.IsFinite(value))this.value.BrainTime=Math.Clamp(value,0,this.value.Type==CreatureIds.Cat?1000000:3600);}}
     public string tags {get=>value.Tags;set{EntityTags.Validate(value);this.value.Tags=value;}}
     public string tag {get=>tags;set=>tags=value;}
     public bool hasTag(string key)=>EntityTags.Has(tags,key);
@@ -132,3 +151,5 @@ public sealed class ScriptMonster
 public sealed record ScriptPoint(int x,int z);
 
 public sealed record ScriptProfession(string id,string[] jobs,int priority);
+
+public sealed record ScriptCatSettings(float dawnSpawnChance,float wildStayDays,float supplyGraceDays,float creeperAvoidRadius);

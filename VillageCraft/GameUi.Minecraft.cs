@@ -239,7 +239,14 @@ partial class GameUi
         if(monster.BurningInSun)Hint("ui.burning_in_sunlight");
         if(monster.BossWave)Hint("unit.boss_wave");
         HealthBar(monster.Health,max);
-        if(unit!=null)
+        if(monster.Type==CreatureIds.Cat&&monster.Cat is {} cat)
+        {
+            Hint(cat.Leaving?"cat.leaving":cat.Tamed?"cat.tamed":cat.Requested?"cat.taming":"cat.wild");
+            if(!cat.Tamed&&!cat.Leaving&&!cat.Requested&&Button(L.T("cat.tame"),new(-1,26)))city.RequestTame(monster);
+            Wrapped(L.T("cat.help"));
+            if(cat.Tamed){ImGui.ProgressBar(cat.Food/3,new(-1,18),L.Resource(ResourceType.Food));ImGui.ProgressBar(cat.Milk/3,new(-1,18),L.Resource(ResourceType.Milk));}
+        }
+        else if(unit!=null)
         {
             ImGui.TextUnformatted(L.F("ui.damage_range",unit.Damage,unit.Range));
             ImGui.TextUnformatted(L.F("ui.speed_cooldown_s",unit.Speed,monster.Cooldown));
@@ -266,7 +273,7 @@ partial class GameUi
                 if(TestActivatePrefab==p.Id){clicked=true;TestActivatePrefab=null;TestActivationCount++;}
 #endif
                 ImGui.PopStyleColor();Bevel(ImGui.GetItemRectMin(),ImGui.GetItemRectMax(),selected);
-                Tooltip(L.Name(p)+"\n"+L.Description(p)+"\n"+string.Join(" / ",p.Cost.Where(e=>e.Value>0).Select(e=>L.F("format.resource_amount",e.Value,L.Resource(e.Key)))));
+                Tooltip(L.Name(p)+"\n"+L.Description(p)+"\n"+string.Join(" / ",p.Cost.Where(e=>e.Value>0).Select(e=>L.Resource(e.Key))));
                 if(clicked)SelectPrefab(p.Id);
                 ImGui.EndGroup();ImGui.PopID();ImGui.SameLine();
             }

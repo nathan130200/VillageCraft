@@ -20,7 +20,7 @@ static class PopulationChecks
         finally{File.Delete(save);}
         using var none=City.New(generateTerrain:false);none.Rules.NightMonsters=none.Rules.RaidsEnabled=false;none.Rules.BirthChance=0;none.Tick();Check(none.Babies.Count==0,"zero chance disables births");
         using var jobs=City.StartVillage(seed:4,tutorial:false);
-        foreach(var v in jobs.Citizens)v.Profession="citizen";
+        foreach(var v in jobs.Citizens)v.Profession="farmer";
         jobs.ReassignProfessions();
         Check(jobs.Citizens.Any(v=>v.Profession=="deliveryman"&&v.Work>=0)&&jobs.Citizens.Any(v=>v.Profession=="farmer"&&v.Work>=0),"bulk action creates courier and farmer specialists");
         Check(jobs.Citizens.All(v=>v.Work<0||v.Profession!="citizen"),"bulk action fills assigned workplaces with specialists");

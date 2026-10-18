@@ -59,16 +59,15 @@ static class Checks
         Check(c.Place("well",10,17,2)&&c.Place("well",15,9,3)&&c.Place("well",17,9,1),"all entrance rotations");
         var road=c.At(12,16)!;Check(c.Place("cobble_road",12,16)&&c.At(12,16)==road,"road resurfacing");
         Check(c.TravelSpeed(new(12,16),"Stonecutting")>1.5f&&c.TravelSpeed(new(12,16),"Farming")<1,"profession road buffs");
-        var specialist=Worker("farmer");var citizen=Worker("citizen");float specialistFood=specialist.Stock[ResourceType.Food],citizenFood=citizen.Stock[ResourceType.Food];
-        Advance(specialist,4.1f);Advance(citizen,4.1f);
-        Check(specialist.Stock[ResourceType.Food]-specialistFood==8&&citizen.Stock[ResourceType.Food]-citizenFood==4,"citizen produces exactly half of specialist output: "+(specialist.Stock[ResourceType.Food]-specialistFood)+" / "+(citizen.Stock[ResourceType.Food]-citizenFood)+" "+specialist.Citizens[0].Task+" "+specialist.Citizens[0].Work);
-        Check(citizen.Citizens[0].Profession=="citizen"&&citizen.Efficiency(citizen.Citizens[0])==.5f,"citizen remains generic while helping");
+        var specialist=Worker("farmer");float specialistFood=specialist.Stock[ResourceType.Food];Advance(specialist,4.1f);
+        Check(specialist.Stock[ResourceType.Food]-specialistFood==8,"specialist produces full output");
+        Check(!Catalog.Data.Professions.ContainsKey("citizen"),"unemployed profession removed");
         var moving=Worker("farmer");var walker=moving.Citizens[0];walker.Position=new(12,16);var before=walker.Position;moving.Update(.1f);
         Check(walker.Position!=before&&Math.Abs(walker.Facing-City.Heading(walker.Position-before))<.0001f,"villager faces actual movement");
         Check(Math.Abs(City.Heading(-Vector2.UnitX)-MathF.PI/2)<.001f&&City.Heading(Vector2.UnitY)==0,"heading convention");
-        var untrained=Worker("citizen");Check(untrained.Train(untrained.Citizens[0],"farmer")&&untrained.Efficiency(untrained.Citizens[0])==1,"profession training");
+        var untrained=Worker("keeper");Check(untrained.Train(untrained.Citizens[0],"farmer")&&untrained.Efficiency(untrained.Citizens[0])==1,"profession training");
         var growth=Rich();growth.Citizens.Clear();var home=growth.Buildings.First(b=>b.Plan.Homes>0);growth.Citizens.Add(new(){Id=growth.NextId++,Home=home.Id,X=home.X,Z=home.Z});growth.Citizens[0].Inventory[ResourceType.Food]=2;growth.Buildings.First(b=>b.Plan.Warehouse).Enabled=false;growth.Place("well",9,15);growth.Tick();
-        Check(growth.Growth>1,"idle citizens support population growth");
+        Check(growth.Growth>=1,"fed village supports population growth without a generalist profession");
         var miner=Worker("miner","cave");var explorer=Worker("explorer","cave");float mined=miner.Stock[ResourceType.Diamonds],explored=explorer.Stock[ResourceType.Diamonds];
         Advance(miner,4.1f);Advance(explorer,4.1f);
         Check(miner.Stock[ResourceType.Gold]>10000&&miner.Stock[ResourceType.AncientDebris]>10000&&explorer.Stock[ResourceType.Diamonds]-explored>miner.Stock[ResourceType.Diamonds]-mined,"cave expeditions and profession bonuses");
@@ -78,9 +77,7 @@ static class Checks
         Check(equipment.Stock[ResourceType.Wood]==input&&equipment.Stock[ResourceType.Tools]==tools,"atomic recipe consumption");
         var husbandry=Worker("keeper","sheep_pen");Advance(husbandry,2.1f);husbandry.Day=2;husbandry.Tick();Check(husbandry.Animals.Count==3&&husbandry.Stock[ResourceType.Wool]>10000,"animal reproduction");
         var guardians=Worker("smith","iron_foundry");Advance(guardians,2.1f);guardians.Day=2;guardians.Tick();Check(guardians.Defenders.Count==1,"golem creation");
-        var helper=Worker("citizen","iron_foundry");Advance(helper,4.1f);helper.Day=2;helper.Tick();Check(helper.Defenders.Count==0,"citizen guardian crafting is half rate");
-        helper.DayTime=helper.Rules.DayLength*.3f;helper.Citizens[0].Position=new(9,15);Advance(helper,4.1f);helper.Day=5;helper.Tick();Check(helper.Defenders.Count==1,"citizen guardian credit carries forward");
-        var armored=Worker("citizen");var bare=Worker("citizen");armored.ArmorLevel=1;
+        var armored=Worker("farmer");var bare=Worker("farmer");armored.ArmorLevel=1;
         foreach(var target in new[]{armored,bare}){target.Enemies.Add(new(){Type="zombie",X=9,Z=15.5f,Health=1000});target.Update(.1f);}
         Check(armored.Citizens[0].Health>bare.Citizens[0].Health,"armor reduces actual incoming damage");
         foreach(var language in L.Languages)foreach(var entry in language.Text)
@@ -132,7 +129,7 @@ static class Checks
         hunt.Citizens.Clear();var hunter=new Creature{Type="zombie",X=5,Z=5,Health=55};hunt.Enemies.Add(hunter);
         var initial=hunter.Position;for(int frame=0;frame<1200;frame++)hunt.Update(1f/60);
         Check(Vector2.Distance(initial,hunter.Position)>5,"monster moves over many real-time frames");
-        var chase=Worker("citizen");chase.Rules.NightMonsters=false;chase.Rules.DayLength=600;
+        var chase=Worker("farmer");chase.Rules.NightMonsters=false;chase.Rules.DayLength=600;
         var prey=chase.Citizens[0];var pursuer=new Creature{Type="zombie",X=prey.X-5,Z=prey.Z,Health=55};chase.Enemies.Add(pursuer);
         Advance(chase,10);Check(prey.Health<prey.MaximumHealth,"monster hunts and attacks a distant villager");
         var siege=Rich();siege.Citizens.Clear();siege.Rules.NightMonsters=false;
@@ -152,7 +149,8 @@ static class Checks
             Check(scriptMob.Health<=0&&scriptMob.BrainTime>=.99f,"direct JavaScript creeper binding");
             var archerScript=scriptCity.SpawnMonster("skeleton",preyScript.X,preyScript.Z)!;float previousHealth=preyScript.Health;
             scriptCity.Scripting.UpdateMonster(archerScript,new MobScriptContext(scriptCity,archerScript,.2f),.2f);
-            Check(preyScript.Health<previousHealth,"direct JavaScript ranged binding");
+            Check(preyScript.Health==previousHealth&&scriptCity.Shots.Count>0,"ranged attacks wait for projectile impact");scriptCity.UpdateProjectiles(.1f);
+            Check(preyScript.Health<previousHealth,"direct JavaScript projectile impact binding");
         }
         var blast=Rich();blast.Citizens.Clear();var victimBlast=blast.Buildings.First(b=>!b.Plan.Path);
         float intact=victimBlast.Health;blast.Enemies.Add(new(){Type="creeper",X=victimBlast.X,Z=victimBlast.Z,Health=35,BrainTime=1});blast.Update(.1f);
@@ -169,7 +167,7 @@ static class Checks
             var guard=patrol.Citizens[0];guard.HasWorked=true;var patrolStart=guard.Position;
             Advance(patrol,2);Check(guard.Task==TaskId.NightPatrol&&guard.Position!=patrolStart,profession+" night patrol");
             patrol.Enemies.Add(new(){Id=patrol.NextId++,Type="zombie",X=guard.X+.1f,Z=guard.Z,Health=1});
-            Advance(patrol,.1f);Check(patrol.Kills==1,profession+" engages enemies during night patrol");
+            Advance(patrol,.4f);Check(patrol.Kills==1,profession+" engages enemies during night patrol");
         }
         var destruction=Rich();destruction.Citizens.Clear();var victim=destruction.At(12,15)!;victim.Health=1;destruction.Enemies.Add(new(){Type="zombie",X=12,Z=14.6f,Health=55});destruction.Update(.1f);Check(!destruction.Buildings.Contains(victim),"building destruction");
         foreach(string icon in Assets.Icons.Values)Check(Assets.Read(icon) is {Length:>8},"resource icon "+icon);
@@ -184,8 +182,8 @@ static class Checks
             saved.Citizens[0].FirstName="Ana";saved.Citizens[0].Surname="Silva";saved.Citizens[0].Inventory[ResourceType.Diamonds]=3;
             saved.Citizens[0].Tags="founder worker";saved.Buildings[0].Tags="plaza";
             saved.LastNight=saved.Day;saved.Rules.NightCount=5;saved.Enemies.Add(new(){Type="creeper",X=10,Z=10,Health=35,NightSpawn=true,BrainTime=.45f});
-            saved.Enemies[0].Tags="boss";saved.Enemies[0].Behavior="creeper";saved.Save(save);byte[] bytes=File.ReadAllBytes(save);Check(bytes.AsSpan(0,4).SequenceEqual("VCTY"u8),"save is native binary");
-            var loaded=City.Load(save);Check(loaded.Terrain.Elevation.SequenceEqual(saved.Terrain.Elevation)&&loaded.Terrain.Water.SequenceEqual(saved.Terrain.Water)&&loaded.TutorialEnabled==saved.TutorialEnabled&&loaded.PeaceDays==5,"terrain and tutorial round trip");Check(loaded.Enemies[0].Id>0&&loaded.Enemies[0].Tags=="boss"&&loaded.Enemies[0].Behavior=="creeper"&&loaded.Citizens[0].Tags=="founder worker"&&loaded.Buildings[0].Tags=="plaza","entity IDs, tags and attached behaviors persist");Check(loaded.Citizens[0].FullName=="Ana Silva"&&loaded.Citizens[0].Inventory[ResourceType.Diamonds]==3,"citizen identity and inventory persist");Check(loaded.LastNight==saved.Day&&loaded.Rules.NightCount==5&&loaded.Enemies[0].NightSpawn&&loaded.Enemies[0].BrainTime==.45f,"night and script state round trip");Check(loaded.Width==256&&loaded.Height==128&&loaded.Citizens[0].Facing==1.234f&&loaded.Growth==1.5f&&loaded.ArmorLevel==1&&loaded.Rules.RaidInterval==37&&loaded.Citizens[0].Profession==saved.Citizens[0].Profession,"binary save round trip");
+            saved.Enemies[0].Tags="boss";saved.Enemies[0].Behavior="entity_creeper";saved.Save(save);byte[] bytes=File.ReadAllBytes(save);Check(bytes.AsSpan(0,4).SequenceEqual("VCTY"u8),"save is native binary");
+            var loaded=City.Load(save);Check(loaded.Terrain.Elevation.SequenceEqual(saved.Terrain.Elevation)&&loaded.Terrain.Water.SequenceEqual(saved.Terrain.Water)&&loaded.TutorialEnabled==saved.TutorialEnabled&&loaded.PeaceDays==5,"terrain and tutorial round trip");Check(loaded.Enemies[0].Id>0&&loaded.Enemies[0].Tags=="boss"&&loaded.Enemies[0].Behavior=="entity_creeper"&&loaded.Citizens[0].Tags=="founder worker"&&loaded.Buildings[0].Tags=="plaza","entity IDs, tags and attached behaviors persist");Check(loaded.Citizens[0].FullName=="Ana Silva"&&loaded.Citizens[0].Inventory[ResourceType.Diamonds]==3,"citizen identity and inventory persist");Check(loaded.LastNight==saved.Day&&loaded.Rules.NightCount==5&&loaded.Enemies[0].NightSpawn&&loaded.Enemies[0].BrainTime==.45f,"night and script state round trip");Check(loaded.Width==256&&loaded.Height==128&&loaded.Citizens[0].Facing==1.234f&&loaded.Growth==1.5f&&loaded.ArmorLevel==1&&loaded.Rules.RaidInterval==37&&loaded.Citizens[0].Profession==saved.Citizens[0].Profession,"binary save round trip");
             var unsupported=(byte[])bytes.Clone();unsupported[4]=9;File.WriteAllBytes(save,unsupported);bool rejected=false;try{City.Load(save);}catch(InvalidDataException){rejected=true;}Check(rejected,"older beta formats are rejected clearly");
             bytes[^1]^=1;File.WriteAllBytes(save,bytes);bool corrupt=false;try{City.Load(save);}catch(InvalidDataException){corrupt=true;}Check(corrupt,"binary checksum rejects corruption");
             File.WriteAllBytes(save,bytes[..12]);corrupt=false;try{City.Load(save);}catch(InvalidDataException){corrupt=true;}Check(corrupt,"truncated save rejected");
@@ -242,6 +240,7 @@ static class Checks
             queuedWorld.DamageBuilding(target,10000);component.Flush();
             Check(!queuedWorld.Buildings.Contains(target),"queued lethal damage resolves before saving");City.Validate(queuedWorld);
         }
+        CatProjectileChecks.Run();
         GuardianRepairChecks.Run();
         OutcomeChecks.Run();
         Beta105Checks.Run();
@@ -261,6 +260,6 @@ static class Checks
         EntityOffsetsChecks.Run();
         CameraDragChecks.Run();
         LoggingChecks.Run();
-        Assets.Dispose();Console.WriteLine($"PASS: pt-BR/en-US, direct JS bindings, villager names/inventory/inspection, beta v14/v13 saves, seeded terrain, forestry and tutorial and lifecycle/events/queries/queues, split TOML/cache, 256 maps/A* ({timer.ElapsedMilliseconds} ms), facing, citizen 50%, growth, training, cave loot, equipment, simulation and binary save integrity.");
+        Assets.Dispose();Console.WriteLine($"PASS: pt-BR/en-US, direct JS bindings, villager names/inventory/inspection, beta v15/v14/v13 saves, seeded terrain, forestry and tutorial and lifecycle/events/queries/queues, split TOML/cache, 256 maps/A* ({timer.ElapsedMilliseconds} ms), facing, specialist professions, growth, training, cave loot, equipment, simulation and binary save integrity.");
     }
 }

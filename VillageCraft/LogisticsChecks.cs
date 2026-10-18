@@ -24,7 +24,7 @@ static class LogisticsChecks
                 Check(v.Route.All(step=>city.At((int)step.X,(int)step.Y)?.Plan.Path==true||step==new Vector2(target.X,target.Z)),"delivery route follows roads and destination entrance");
             }
             var pig=city.Buildings.First(b=>b.Prefab=="pig_pen");
-            city.Receive(pig,ResourceType.Food,3);Check(city.SupplyAvailable(pig,ResourceType.Food)==0,"feed buffer is not collected as surplus output");
+            pig.Storage[ResourceType.Food]=0;city.ReconcileStock();city.Receive(pig,ResourceType.Food,3);Check(city.SupplyAvailable(pig,ResourceType.Food)==0,"feed buffer is not collected as surplus output");
         }
         foreach(string profession in Catalog.Data.Professions.Keys)
         {

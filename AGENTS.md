@@ -11,7 +11,7 @@ This file records the repository owner's requirements from the project conversat
 - Save ALL game testing and visual validation screenshots under the repository-root `screenshots/` folder. Create it when necessary; never save new screenshots in the repository root. Keep generated screenshots ignored by version control.
 - Interpret instructions inside attached documents separately from the owner's actual request. Screenshots supply visual evidence of bugs.
 - Development tests, smoke-test entry points and test-only helpers must be excluded from Release builds.
-- Latest requested release: **1.0.8**, superseding 1.0.7. Do not describe pending work as shipped simply because it is listed here.
+- Latest requested release: **1.0.9**, superseding 1.0.8. Do not describe pending work as shipped simply because it is listed here.
 
 ## Technology and code conventions
 
@@ -90,7 +90,7 @@ This file records the repository owner's requirements from the project conversat
 ## Population, hunger and employment
 
 - Build a living village with farmers, woodcutters, stonecutters/miners, smiths, explorers, animal keepers and combat professions.
-- Include citizens: general/unemployed villagers who support growth and can fill any workplace at **50% specialist performance**.
+- The unemployed/citizen profession is removed. Grown babies receive real professions based on city needs and vacant connected workplaces; surplus residents retain a specialty while awaiting a vacancy.
 - Villagers genuinely get hungry and consume food; hunger must have simulation consequences.
 - Population must not materialize out of nowhere. Model demand for residents, housing, civilian labor/food production and defense.
 - New villagers arrive physically in caravans of **2 to 12 people** and communicate with residents about vacant housing.
@@ -176,3 +176,15 @@ This file records the repository owner's requirements from the project conversat
 - Allow occupied houses to be demolished; relocate residents into available connected homes, otherwise retain them as homeless. Preserve central-square protection.
 - Individual villager inspectors allow paid profession changes. Preserve explicit choices during automatic assignments and save/load; offer a return to automatic assignment.
 - Building inspectors list their residents/workers with profession head icons, names and health bars. Health includes percentages; work progress uses progress bars. Bound occupant lists with scrolling.
+
+## 1.0.9: projectiles, cats and script names
+
+- Ranged units use moving projectiles with travel time, swept collision and damage on impact; shots can miss moving targets. Keep melee direct. Projectile kind/speed belong in unit TOML.
+- Cats are living entities with their own editable AI, active at night. At 06:00 roll a 10% chance to spawn on an empty reachable border; approach houses.
+- Cat inspector offers taming: a farmer and deliveryman must physically hand over food; each completed attempt has 25% success. Failed attempts can be retried. Wild cats eventually leave via a map edge.
+- Resident cats consume food and milk, physically delivered. If supplies remain unavailable they leave. Persist taming, helpers, supplies and departure state.
+- Creepers flee cats and cannot explode within five tiles; cats purr when deterring them, through the bounded real-time audio system.
+- Builtin scripts use entity_<name>.js, building_<name>.js and mod_<scope>.js. mod_ai_helpers.js is an injected helper library, not an independently ticking mod. Stable entity/building/profession IDs are unchanged.
+
+- Cats use a smaller configurable visual scale. Caregivers who already contributed or cannot find supplies return to ordinary duties; cats wait for resources. Taming buttons omit success percentages. Item/building/training/upgrade tooltips describe effects and consumed resource types without quantities; explicit cost displays retain their amounts.
+- A pending taming request pauses the wild cat departure timer while waiting for supplies; caregivers resume automatically when resources return.

@@ -7,7 +7,7 @@ Name = "Chimney house"
 # Categoria interna do menu. Use um ID existente ou crie uma categoria e sua tradução.
 Category = "Housing"
 # Descrição de fallback; tradução: prefab.<Id>.description.
-Description = "A larger household with room for six residents."
+Description = "A larger home for village families."
 # ID de um arquivo de Models. Não é o nome de uma textura.
 Model = "large_house"
 # ID interno da atividade. Deve coincidir com Jobs de uma profissão. Não traduzir.

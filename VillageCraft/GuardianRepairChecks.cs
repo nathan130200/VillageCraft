@@ -39,7 +39,7 @@ static class GuardianRepairChecks
         {
             city.DayTime=city.Rules.DayLength*22/24;
             var v=city.Citizens.First();city.Citizens.RemoveAll(other=>other!=v);
-            v.ChangeProfession("citizen");v.Work=-1;v.Inventory[ResourceType.Food]=2;
+            v.ChangeProfession("farmer");v.Work=-1;v.Inventory[ResourceType.Food]=2;
             var home=city.Buildings.First(b=>b.Id==v.Home);v.Position=new(home.X,home.Z);
             var damaged=city.Buildings.First(b=>!b.Plan.Indestructible&&b.Id!=home.Id&&!b.Plan.Natural);
             damaged.Health-=5;

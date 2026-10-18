@@ -68,7 +68,7 @@ static class ScriptChecks
                 function onBuildingDamaged(b, amount) { world.addResource("Iron", 9); }
                 """);
             File.WriteAllText(Path.Combine(folder,"villager.js"),"""
-                set_script_type(eST_AI, "citizen");
+                set_script_type(eST_AI, "farmer");
                 function onVillagerUpdate(v, dt) { v.tags = "custom_ai"; v.moveTo(v.x + 1, v.z, dt); }
                 """);
             Scripts.Load(folder);
@@ -96,7 +96,7 @@ static class ScriptChecks
             // Attach behaviors to an individual instance; persisted by the binary save checks.
             Check(other.Attach(second.Enemies[0],"ai"),"instance behavior attachment accepted");other.Flush();
             Check(second.Enemies[0].Behavior=="ai","instance behavior applied at a safe point");
-            Check(!other.Attach(second.Citizens[0],"building"),"wrong behavior type rejected");
+            Check(!other.Attach(second.Citizens[0],BuiltinScripts.Building),"wrong behavior type rejected");
             int accepted=0;for(int i=0;i<2100;i++)if(other.Queue(()=>{}))accepted++;
             Check(accepted==2048,"bounded mutation queue");other.Flush();Check(other.PendingCount==1792,"bounded queue drain");
         }

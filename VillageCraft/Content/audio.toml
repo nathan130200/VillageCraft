@@ -1076,3 +1076,27 @@ Volume = 0.2
 Cooldown = 0.25
 Spatial = true
 Priority = 10
+
+# Cat deterrence vocalization, using the standard bounded real-time audio queue.
+[[Cues]]
+Id = "cat_purr"
+Trigger = "Purr"
+Category = "Creatures"
+Entity = "cat"
+Files = ["minecraft/sounds/mob/cat/purr1.ogg", "minecraft/sounds/mob/cat/purr2.ogg", "minecraft/sounds/mob/cat/purr3.ogg"]
+Volume = 0.45
+Cooldown = 3
+Spatial = true
+Priority = 45
+
+# Living cat idle vocalizations, including at night.
+[[Cues]]
+Id = "cat_idle"
+Trigger = "Idle"
+Category = "Creatures"
+Entity = "cat"
+Files = ["minecraft/sounds/mob/cat/meow1.ogg", "minecraft/sounds/mob/cat/meow2.ogg", "minecraft/sounds/mob/cat/meow3.ogg", "minecraft/sounds/mob/cat/meow4.ogg"]
+Volume = 0.35
+Cooldown = 8
+Spatial = true
+Priority = 20

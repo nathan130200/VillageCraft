@@ -7,7 +7,7 @@ Name = "Village well"
 # Categoria interna do menu. Use um ID existente ou crie uma categoria e sua tradução.
 Category = "Infrastructure"
 # Descrição de fallback; tradução: prefab.<Id>.description.
-Description = "Clean water for sixteen villagers."
+Description = "Provides clean water for the village."
 # ID de um arquivo de Models. Não é o nome de uma textura.
 Model = "well"
 # ID interno da atividade. Deve coincidir com Jobs de uma profissão. Não traduzir.

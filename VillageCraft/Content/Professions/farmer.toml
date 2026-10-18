@@ -10,7 +10,7 @@ Model = "farmer"
 Jobs = ["Farming"]
 # Vida máxima/base desta profissão (1 a 10000).
 BaseHealth = 55
-# Multiplicador de trabalho/combate. Cidadão = 0.5; especialista típico = 1.
+# Multiplicador de trabalho/combate; especialista típico = 1.
 Efficiency = 1
 # Recursos retirados do estoque ao treinar esta profissão.
 TrainingCost = { "Emeralds" = 10, "Tools" = 2 }

@@ -1,0 +1,12 @@
+# UnitFile: living animal, with its own JavaScript behavior.
+Id = "cat"
+Model = "cat"
+Health = 20
+Damage = 1
+Range = 1
+Speed = 0.8
+Cooldown = 2
+Behavior = "entity_cat"
+
+# Visual size relative to the authored model.
+ModelScale = 0.40

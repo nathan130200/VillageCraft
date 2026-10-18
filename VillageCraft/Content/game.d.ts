@@ -1,6 +1,6 @@
 /** VillageCraft live Jint API. Editor declarations only; no imports or CLR/Node APIs required. */
 type ResourceName = 'Emeralds' | 'Food' | 'Wood' | 'Stone' | 'Iron' | 'Tools' | 'Wool' | 'Eggs' | 'Gold' | 'Diamonds' | 'AncientDebris' | 'Goods' | 'Leather' | 'Milk';
-type TaskName = 'Resting' | 'DefendingVillage' | 'NightPatrol' | 'GoingHome' | 'SupportingFamilies' | 'Homeless' | 'ScriptedBehavior' | 'CollectingMilk' | 'CollectingFood' | 'WaitingStorage' | 'Delivering' | 'WaitingDeliveries' | 'CollectingDelivery' | 'WaitingTreeRegrowth' | 'GoingToTrees' | 'ChoppingTree' | 'GoingToWork' | 'Working' | 'Assisting' | 'CaravanTravelling' | 'TalkingToResidents' | 'LeavingVillage' | 'WanderingHomeless' | 'SeekingHome' | 'CollectingRepairSupplies' | 'RepairingBuilding';
+type TaskName = 'TamingCat' | 'FeedingCat' | 'Resting' | 'DefendingVillage' | 'NightPatrol' | 'GoingHome' | 'SupportingFamilies' | 'Homeless' | 'ScriptedBehavior' | 'CollectingMilk' | 'CollectingFood' | 'WaitingStorage' | 'Delivering' | 'WaitingDeliveries' | 'CollectingDelivery' | 'WaitingTreeRegrowth' | 'GoingToTrees' | 'ChoppingTree' | 'GoingToWork' | 'Working' | 'Assisting' | 'CaravanTravelling' | 'TalkingToResidents' | 'LeavingVillage' | 'WanderingHomeless' | 'SeekingHome' | 'CollectingRepairSupplies' | 'RepairingBuilding';
 type EntityFilter<T> = string | number | ((entity: T) => boolean);
 type EffectName = 'Burning' | 'Poison' | 'Slowness' | 'Weakness';
 interface Point { readonly x: number; readonly z: number; }
@@ -16,6 +16,7 @@ interface TaggedEntity extends Point {
 }
 interface ScriptVillager extends TaggedEntity {
     /** BaseHealth of this villager's current profession. */
+    helpCat(dt: number): boolean;
     readonly maximumHealth: number;
     readonly name: string;
     readonly profession: string;
@@ -107,6 +108,18 @@ interface ScriptBuilding extends TaggedEntity {
     repair(amount: number): void;
 }
 interface ScriptMonster extends TaggedEntity {
+    readonly tamed: boolean;
+    readonly tameRequested: boolean;
+    readonly tameFeeds: number;
+    readonly farmerId: number;
+    readonly courierId: number;
+    leaving: boolean;
+    food: number;
+    milk: number;
+    unsupplied: number;
+    assignCarers(farmerId: number, courierId: number): boolean;
+    attemptTame(): boolean;
+    purr(): void;
     readonly type: string;
     readonly home: ScriptBuilding | null;
     readonly age: number;
@@ -139,6 +152,9 @@ interface ScriptGame {
     format(key: string, arguments: unknown[]): string;
 }
 interface ScriptWorld extends ScriptGame {
+    readonly catSettings: { readonly dawnSpawnChance: number; readonly wildStayDays: number; readonly supplyGraceDays: number; readonly creeperAvoidRadius: number };
+    readonly dayLength: number;
+    queueSpawnCat(): boolean;
     readonly anchorX: number;
     readonly anchorZ: number;
     readonly elapsedDay: number;
@@ -273,3 +289,11 @@ declare function onMonsterAttack(monster: ScriptMonster, target: TaggedEntity): 
 declare function onGuardianAttack(guardian: ScriptMonster, target: TaggedEntity): void;
 declare function onVillagerAttack(villager: ScriptVillager, target: ScriptMonster): void;
 declare function onMonsterPrimed(monster: ScriptMonster): void;
+
+/** Cat care and projectile lifecycle notifications. */
+declare function onAnimalPurr(cat: ScriptMonster): void;
+declare function onAnimalTamed(cat: ScriptMonster): void;
+declare function onAnimalTamingFailed(cat: ScriptMonster): void;
+declare function onAnimalFed(cat: ScriptMonster): void;
+declare function onProjectileSpawned(shooter: TaggedEntity): void;
+declare function onProjectileHit(target: TaggedEntity): void;

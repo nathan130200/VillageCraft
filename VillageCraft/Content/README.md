@@ -64,7 +64,7 @@ Enhanced Visuals em Opções adiciona luz solar direcional, sombras projetadas, 
 
 | Profissão/unidade | Vida |
 |---|---:|
-| Cidadão, comerciante | 50 |
+| Comerciante | 50 |
 | Fazendeiro, cuidador de animais | 55 |
 | Entregador, mago | 60 |
 | Lenhador | 65 |
@@ -205,7 +205,7 @@ Binary v9 appends enemy helmet/boss flags, defeat state and lifetime statistics.
 
 
 
-Cada prefab distribuído aponta para um arquivo independente `Scripts/building_<id>.js` por meio de `Script`. Custos, receitas e estatísticas ficam no TOML; decisões de produção, reprodução, regeneração e criação de guardiões ficam no componente. Novas construções podem usar `building.js` como base. Veja a seção de comportamentos padrão em [SCRIPTING.md](SCRIPTING.md).
+Cada prefab distribuído aponta para um arquivo independente `Scripts/building_<id>.js` por meio de `Script`. Custos, receitas e estatísticas ficam no TOML; decisões de produção, reprodução, regeneração e criação de guardiões ficam no componente. Novas construções podem usar `building_default.js` como base. Veja a seção de comportamentos padrão em [SCRIPTING.md](SCRIPTING.md).
 
 
 
@@ -213,9 +213,9 @@ As chaves de recursos nos TOMLs são nomes de `ResourceType`: são convertidas u
 
 
 
-## Beta 1.0.8
+## Beta 1.0.9
 
-Tochas, oficina e conversão de tochas foram removidas. O formato de save atual é binário v14, aceita v13 com prioridades padrão e rejeita versões beta mais antigas sem sobrescrever os arquivos. Cada save inclui uma prévia PNG de 320×180 do mapa renderizado, sem HUD, e um resumo com dias completos, tempo real de jogo ativo e esmeraldas. Pausa e menus não contam no tempo de jogo; a velocidade da simulação não o multiplica. O navegador valida o checksum sem iniciar scripts e mostra os dados antes de carregar ou confirmar uma substituição. Saves criados sem renderizador podem não ter prévia. BirthChance em game.toml/Rules define a chance diária por cama livre em uma casa com dois adultos (0.6 por padrão); a interface permite alterar por vila. O botão de redistribuição de profissões fica em Moradores. Reparos automáticos usam materiais físicos e os parâmetros RepairWorkSeconds, RepairAmount e RepairCost em economy.toml. game.d.ts e jsconfig.json fornecem tipos e autocomplete para os scripts.
+Tochas, oficina e conversão de tochas foram removidas. O formato de save atual é binário v15, aceita v13/v14 para conteúdo compatível com prioridades padrão e rejeita versões beta mais antigas sem sobrescrever os arquivos. Cada save inclui uma prévia PNG de 320×180 do mapa renderizado, sem HUD, e um resumo com dias completos, tempo real de jogo ativo e esmeraldas. Pausa e menus não contam no tempo de jogo; a velocidade da simulação não o multiplica. O navegador valida o checksum sem iniciar scripts e mostra os dados antes de carregar ou confirmar uma substituição. Saves criados sem renderizador podem não ter prévia. BirthChance em game.toml/Rules define a chance diária por cama livre em uma casa com dois adultos (0.6 por padrão); a interface permite alterar por vila. O botão de redistribuição de profissões fica em Moradores. Reparos automáticos usam materiais físicos e os parâmetros RepairWorkSeconds, RepairAmount e RepairCost em economy.toml. game.d.ts e jsconfig.json fornecem tipos e autocomplete para os scripts.
 
 
 ## Traduções, encontros e logs
@@ -236,6 +236,14 @@ The Piglin cuboid UV regions can also be inspected in [Mojang’s geometry refer
 
 Villager models use `entity/villager/villager.png`, `entity/villager/type/plains.png` and a separate `entity/villager/profession/<profession>.png` overlay. A profession overlay is not a complete skin. Full relative texture paths prevent collisions with obsolete skins having the same filename. Geometry regions can be inspected in [Mojang's villager model reference](https://github.com/Mojang/bedrock-samples/blob/main/resource_pack/models/entity/villager_v2.geo.json).
 
-O painel de Moradores exibe uma linha por profissão, contagens e prioridades de 1 (maior) a 5 (menor), sem uma lista por aldeão. Alterações ativam redistribuição automática, mantida ao criar vagas e no início do dia. Um entregador é reservado antes das demais prioridades. Cidadão com prioridade maior pode preencher vagas como generalista a 50% de eficiência. As prioridades são por save.
+O painel de Moradores exibe uma linha por profissão, contagens e prioridades de 1 (maior) a 5 (menor), sem uma lista por aldeão. Alterações ativam redistribuição automática, mantida ao criar vagas e no início do dia. Um entregador é reservado antes das demais prioridades. A profissão de cidadão/desempregado foi removida; aldeões crescidos escolhem especialidades conforme demanda e vagas. As prioridades são por save.
 
 Lenhadores liberam o alvo após cortar uma árvore e escolhem outra árvore madura e alcançável no raio do acampamento. Reservas pertencem apenas a lenhadores indo ao alvo ou cortando; sem árvores disponíveis, o trabalhador retorna ao acampamento enquanto espera.
+
+## Gatos e projéteis (1.0.9)
+
+`cats.toml` configura a chance de visita às 06:00 (10%), domesticação (25%), permanência selvagem, prazo sem suprimentos, limite de gatos e raio de proteção (5 terrenos). Clique no gato para pedir domesticação: um agricultor e um entregador precisam levar uma comida cada até ele. Cada tentativa consome essa comida; após falhar é possível tentar novamente. Enquanto faltam suprimentos, o gato aguarda e seus cuidadores voltam ao trabalho normal. Gatos residentes consomem uma comida e um leite por dia de jogo, transportados por cuidadores. Sem suprimentos durante o prazo configurado, ou após a permanência selvagem, saem pela borda. Continuam ativos à noite, fogem creepers e ronronam quando os afastam. Dados de domesticação e cuidados persistem no save v15.
+
+Unidades definem `Projectile` (`None`, `Arrow`, `Snowball`, `Fireball`, `Magic`) e `ProjectileSpeed` (terrenos por segundo de simulação). O dano ocorre no impacto, com colisão ao longo do deslocamento; alvos móveis podem desviar e edifícios bloqueiam tiros. Projéteis são efeitos transitórios e não são restaurados ao carregar.
+
+Arquivos internos seguem `Scripts/entity_<nome>.js`, `Scripts/building_<nome>.js` e `Scripts/mod_<escopo>.js`. O arquivo `mod_ai_helpers.js` é uma biblioteca injetada nos componentes, sem atualização independente. Os IDs de conteúdo não ganham esses prefixos. Reinicie o jogo após editar os arquivos.

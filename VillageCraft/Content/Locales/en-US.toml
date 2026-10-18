@@ -270,7 +270,7 @@ Name = "English (US)"
 "prefab.barracks.name" = "Warrior barracks"
 
 # Building/road description in the build menu and inspector: cave.
-"prefab.cave.description" = "Miners and explorers search underground for gold, diamonds and ancient debris. Citizens can assist at half efficiency."
+"prefab.cave.description" = "Miners and explorers search underground for gold, diamonds and ancient debris."
 
 # Building/road display name: cave.
 "prefab.cave.name" = "Cave entrance"
@@ -288,7 +288,7 @@ Name = "English (US)"
 "prefab.cobble_road.name" = "Cobblestone road"
 
 # Building/road description in the build menu and inspector: cottage.
-"prefab.cottage.description" = "Four beds, oak walls and a stepped plank roof."
+"prefab.cottage.description" = "An oak home with a stepped plank roof."
 
 # Building/road display name: cottage.
 "prefab.cottage.name" = "Oak cottage"
@@ -300,7 +300,7 @@ Name = "English (US)"
 "prefab.cow_shed.name" = "Cow shed"
 
 # Building/road description in the build menu and inspector: family_house.
-"prefab.family_house.description" = "A larger household with room for six residents."
+"prefab.family_house.description" = "A larger home for village families."
 
 # Building/road display name: family_house.
 "prefab.family_house.name" = "Chimney house"
@@ -336,13 +336,13 @@ Name = "English (US)"
 "prefab.ice_road.name" = "Packed ice road"
 
 # Building/road description in the build menu and inspector: iron_foundry.
-"prefab.iron_foundry.description" = "Every three days, smiths can awaken a golem. Maximum two per foundry."
+"prefab.iron_foundry.description" = "Smiths use materials to awaken iron golems for village defense."
 
 # Building/road display name: iron_foundry.
 "prefab.iron_foundry.name" = "Iron guardian foundry"
 
 # Building/road description in the build menu and inspector: large_warehouse.
-"prefab.large_warehouse.description" = "Stores 10,000 physical resources and employs five deliverymen."
+"prefab.large_warehouse.description" = "Stores physical resources and employs deliverymen, with more space than a small warehouse."
 
 # Building/road display name: large_warehouse.
 "prefab.large_warehouse.name" = "Large warehouse"
@@ -366,7 +366,7 @@ Name = "English (US)"
 "prefab.market.name" = "Trading hall"
 
 # Building/road description in the build menu and inspector: oak_tree.
-"prefab.oak_tree.description" = "A living oak. Woodcutters harvest it once, then wait three days for regrowth."
+"prefab.oak_tree.description" = "A living oak. Woodcutters harvest its timber, then let it regrow."
 
 # Building/road display name: oak_tree.
 "prefab.oak_tree.name" = "Oak tree"
@@ -408,13 +408,13 @@ Name = "English (US)"
 "prefab.sheep_pen.name" = "Shepherd pasture"
 
 # Building/road description in the build menu and inspector: small_warehouse.
-"prefab.small_warehouse.description" = "Stores 2,000 physical resources and employs two deliverymen. Emeralds and Goods stay in the treasury."
+"prefab.small_warehouse.description" = "Stores physical resources and employs deliverymen. Emeralds and Goods stay in the treasury."
 
 # Building/road display name: small_warehouse.
 "prefab.small_warehouse.name" = "Small warehouse"
 
 # Building/road description in the build menu and inspector: snow_shrine.
-"prefab.snow_shrine.description" = "Every three days, a keeper can create a snow golem. Maximum two."
+"prefab.snow_shrine.description" = "Keepers use materials to create snow golems for village defense."
 
 # Building/road display name: snow_shrine.
 "prefab.snow_shrine.name" = "Snow guardian shrine"
@@ -438,7 +438,7 @@ Name = "English (US)"
 "prefab.watchtower.name" = "Archer watchtower"
 
 # Building/road description in the build menu and inspector: well.
-"prefab.well.description" = "Clean water for sixteen villagers."
+"prefab.well.description" = "Provides clean water for the village."
 
 # Building/road display name: well.
 "prefab.well.name" = "Village well"
@@ -446,8 +446,6 @@ Name = "English (US)"
 # Villager profession label in People and inspectors: archer.
 "profession.archer" = "Archer"
 
-# Villager profession label in People and inspectors: citizen.
-"profession.citizen" = "Citizen"
 
 # Villager profession label in People and inspectors: deliveryman.
 "profession.deliveryman" = "Resource deliveryman"
@@ -689,8 +687,6 @@ Name = "English (US)"
 # Game-over screen: Armor / tools
 "ui.armor_tools" = "Armor / tools"
 
-# Interface label, help text or control: Assign specialists to connected workplaces; surplus villagers become citizens.
-"ui.assign_specialists_to_connected_workplaces_surplus_villagers_become" = "Assign specialists to connected workplaces; surplus villagers become citizens."
 
 # Interface label, help text or control: Assisting:
 "ui.assisting" = "Assisting: "
@@ -1370,8 +1366,6 @@ Name = "English (US)"
 # Interface label, help text or control: Unemployed
 "ui.unemployed" = "Unemployed"
 
-# Interface label, help text or control: Unemployed citizens help families attract residents. They can assist any workplace at 50% efficiency...
-"ui.unemployed_citizens_help_families_attract_residents_they_can" = "Unemployed citizens help families attract residents. They can assist any workplace at 50% efficiency. Train specialists using tools and emeralds."
 
 # Interface label, help text or control: ?
 "ui.unknown" = "?"
@@ -1814,3 +1808,39 @@ Name = "English (US)"
 
 # Inspector button: release a manual profession choice back to city priorities.
 "inspector.auto_profession" = "Return to automatic profession"
+
+# Living cats or profession assignment: inspector/status label.
+"people.specialist_help" = "Grown villagers choose a specialty for vacant workplaces and city demand."
+
+# Living cats or profession assignment: inspector/status label.
+"people.specialist_assignment" = "Assign specialists to connected workplaces; residents without vacancies retain their profession."
+
+# Living cats or profession assignment: inspector/status label.
+"entity.cat" = "Cat"
+
+# Cat inspector button: request taming; success chance is configured separately.
+"cat.tame" = "Tame"
+
+# Living cats or profession assignment: inspector/status label.
+"cat.wild" = "Wild cat"
+
+# Living cats or profession assignment: inspector/status label.
+"cat.tamed" = "Tamed cat"
+
+# Living cats or profession assignment: inspector/status label.
+"cat.taming" = "Waiting for the farmer and deliveryman"
+
+# Living cats or profession assignment: inspector/status label.
+"cat.leaving" = "Leaving the village"
+
+# Living cats or profession assignment: inspector/status label.
+"cat.help" = "A farmer and deliveryman must each bring food. Tamed cats need food and milk; unfed cats leave."
+
+# Living cats or profession assignment: inspector/status label.
+"task.TamingCat" = "Taming a cat"
+
+# Living cats or profession assignment: inspector/status label.
+"task.FeedingCat" = "Feeding a cat"
+
+# CPU timing for moving projectiles and swept collision.
+"profile.area.Projectiles" = "Projectile simulation"

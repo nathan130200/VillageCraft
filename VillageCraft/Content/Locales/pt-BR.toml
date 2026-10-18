@@ -270,7 +270,7 @@ Name = "Português (Brasil)"
 "prefab.barracks.name" = "Quartel de guerreiros"
 
 # Building/road description in the build menu and inspector: cave.
-"prefab.cave.description" = "Mineiros e exploradores procuram ouro, diamantes e detritos ancestrais. Cidadãos ajudam com metade da eficiência."
+"prefab.cave.description" = "Mineiros e exploradores procuram ouro, diamantes e detritos ancestrais."
 
 # Building/road display name: cave.
 "prefab.cave.name" = "Entrada da caverna"
@@ -288,7 +288,7 @@ Name = "Português (Brasil)"
 "prefab.cobble_road.name" = "Rua de pedregulho"
 
 # Building/road description in the build menu and inspector: cottage.
-"prefab.cottage.description" = "Quatro camas, paredes de carvalho e telhado em degraus."
+"prefab.cottage.description" = "Uma casa de carvalho com telhado em degraus."
 
 # Building/road display name: cottage.
 "prefab.cottage.name" = "Casa de carvalho"
@@ -300,7 +300,7 @@ Name = "Português (Brasil)"
 "prefab.cow_shed.name" = "Estábulo de vacas"
 
 # Building/road description in the build menu and inspector: family_house.
-"prefab.family_house.description" = "Uma casa maior para seis moradores."
+"prefab.family_house.description" = "Uma casa maior para as famílias da vila."
 
 # Building/road display name: family_house.
 "prefab.family_house.name" = "Casa com chaminé"
@@ -336,13 +336,13 @@ Name = "Português (Brasil)"
 "prefab.ice_road.name" = "Rua de gelo compacto"
 
 # Building/road description in the build menu and inspector: iron_foundry.
-"prefab.iron_foundry.description" = "A cada três dias os ferreiros podem criar um golem de ferro, respeitando o limite configurado."
+"prefab.iron_foundry.description" = "Ferreiros usam materiais para criar golems de ferro e defender a vila."
 
 # Building/road display name: iron_foundry.
 "prefab.iron_foundry.name" = "Fundição de golems"
 
 # Building/road description in the build menu and inspector: large_warehouse.
-"prefab.large_warehouse.description" = "Armazena até 10.000 recursos físicos e emprega cinco entregadores."
+"prefab.large_warehouse.description" = "Armazena recursos físicos e emprega entregadores, com mais espaço que o armazém pequeno."
 
 # Building/road display name: large_warehouse.
 "prefab.large_warehouse.name" = "Armazém grande"
@@ -366,7 +366,7 @@ Name = "Português (Brasil)"
 "prefab.market.name" = "Mercado"
 
 # Building/road description in the build menu and inspector: oak_tree.
-"prefab.oak_tree.description" = "Uma árvore viva. Lenhadores a cortam uma vez; ela cresce novamente em três dias."
+"prefab.oak_tree.description" = "Uma árvore viva. Lenhadores colhem sua madeira e aguardam seu crescimento."
 
 # Building/road display name: oak_tree.
 "prefab.oak_tree.name" = "Carvalho"
@@ -408,13 +408,13 @@ Name = "Português (Brasil)"
 "prefab.sheep_pen.name" = "Aprisco"
 
 # Building/road description in the build menu and inspector: small_warehouse.
-"prefab.small_warehouse.description" = "Armazena até 2.000 recursos físicos. Emprega dois entregadores. Esmeraldas e Bens ficam no tesouro."
+"prefab.small_warehouse.description" = "Armazena recursos físicos e emprega entregadores. Esmeraldas e Bens ficam no tesouro."
 
 # Building/road display name: small_warehouse.
 "prefab.small_warehouse.name" = "Armazém pequeno"
 
 # Building/road description in the build menu and inspector: snow_shrine.
-"prefab.snow_shrine.description" = "A cada três dias um criador pode formar um golem de neve, respeitando o limite configurado."
+"prefab.snow_shrine.description" = "Criadores usam materiais para formar golems de neve e defender a vila."
 
 # Building/road display name: snow_shrine.
 "prefab.snow_shrine.name" = "Santuário de neve"
@@ -438,7 +438,7 @@ Name = "Português (Brasil)"
 "prefab.watchtower.name" = "Torre de vigia"
 
 # Building/road description in the build menu and inspector: well.
-"prefab.well.description" = "Água limpa para dezesseis moradores."
+"prefab.well.description" = "Fornece água limpa para a vila."
 
 # Building/road display name: well.
 "prefab.well.name" = "Poço da vila"
@@ -446,8 +446,6 @@ Name = "Português (Brasil)"
 # Villager profession label in People and inspectors: archer.
 "profession.archer" = "Arqueiro"
 
-# Villager profession label in People and inspectors: citizen.
-"profession.citizen" = "Cidadão"
 
 # Villager profession label in People and inspectors: deliveryman.
 "profession.deliveryman" = "Entregador de recursos"
@@ -689,8 +687,6 @@ Name = "Português (Brasil)"
 # Game-over screen: Armor / tools
 "ui.armor_tools" = "Armadura / ferramentas"
 
-# Interface label, help text or control: Assign specialists to connected workplaces; surplus villagers become citizens.
-"ui.assign_specialists_to_connected_workplaces_surplus_villagers_become" = "Distribui especialistas nos trabalhos conectados; os demais viram cidadãos."
 
 # Interface label, help text or control: Assisting:
 "ui.assisting" = "Ajudando: "
@@ -1370,8 +1366,6 @@ Name = "Português (Brasil)"
 # Interface label, help text or control: Unemployed
 "ui.unemployed" = "Desempregado"
 
-# Interface label, help text or control: Unemployed citizens help families attract residents. They can assist any workplace at 50% efficiency...
-"ui.unemployed_citizens_help_families_attract_residents_they_can" = "Cidadãos desempregados ajudam a vila a crescer. Podem trabalhar em qualquer função com 50% de eficiência. Treine especialistas com ferramentas e esmeraldas."
 
 # Interface label, help text or control: ?
 "ui.unknown" = "?"
@@ -1814,3 +1808,39 @@ Name = "Português (Brasil)"
 
 # Inspector button: release a manual profession choice back to city priorities.
 "inspector.auto_profession" = "Retornar à profissão automática"
+
+# Living cats or profession assignment: inspector/status label.
+"people.specialist_help" = "Aldeões crescidos escolhem uma profissão conforme as vagas e necessidades da cidade."
+
+# Living cats or profession assignment: inspector/status label.
+"people.specialist_assignment" = "Distribui especialistas nos locais conectados; moradores sem vaga mantêm sua profissão."
+
+# Living cats or profession assignment: inspector/status label.
+"entity.cat" = "Gato"
+
+# Cat inspector button: request taming; success chance is configured separately.
+"cat.tame" = "Domesticar"
+
+# Living cats or profession assignment: inspector/status label.
+"cat.wild" = "Gato selvagem"
+
+# Living cats or profession assignment: inspector/status label.
+"cat.tamed" = "Gato domesticado"
+
+# Living cats or profession assignment: inspector/status label.
+"cat.taming" = "Aguardando agricultor e entregador"
+
+# Living cats or profession assignment: inspector/status label.
+"cat.leaving" = "Saindo da vila"
+
+# Living cats or profession assignment: inspector/status label.
+"cat.help" = "Um agricultor e um entregador precisam trazer comida. Gatos domesticados precisam de comida e leite; sem suprimentos, vão embora."
+
+# Living cats or profession assignment: inspector/status label.
+"task.TamingCat" = "Domesticando um gato"
+
+# Living cats or profession assignment: inspector/status label.
+"task.FeedingCat" = "Alimentando um gato"
+
+# CPU timing for moving projectiles and swept collision.
+"profile.area.Projectiles" = "Simulação de projéteis"

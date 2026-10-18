@@ -26,7 +26,7 @@ public sealed class ScriptRuntime:IDisposable
     public ScriptRuntime(City city)
     {
         this.city=city;city.runtime?.Dispose();city.runtime=this;city.EnsureEntityIds();city.Changed+=OnEvent;
-        foreach(var pair in Scripts.Sources.Where(p=>!p.Key.StartsWith("_")))
+        foreach(var pair in Scripts.Sources.Where(p=>!p.Key.StartsWith("_")&&p.Key!=BuiltinScripts.Helpers))
         {
             var engine=new Engine(o=>o.MaxStatements(200000).LimitMemory(32_000_000).TimeoutInterval(TimeSpan.FromMilliseconds(250)));
             var script=new Component{Id=pair.Key,Engine=engine};
@@ -45,7 +45,7 @@ public sealed class ScriptRuntime:IDisposable
             engine.Execute("const resources = Object.freeze(Object.fromEntries(Array.from(__resourceIds).map(id => [id, id])));");
             engine.SetValue("__taskIds",Enum.GetNames<TaskId>());
             engine.Execute("const tasks = Object.freeze(Object.fromEntries(Array.from(__taskIds).map(id => [id, id])));");
-            try{if(Scripts.Sources.TryGetValue("_ai",out var library))engine.Execute(library);engine.Execute(pair.Value);}catch(Exception e){Fail(script,e);}
+            try{if(Scripts.Sources.TryGetValue(BuiltinScripts.Helpers,out var library))engine.Execute(library);engine.Execute(pair.Value);}catch(Exception e){Fail(script,e);}
             registrationOpen=false;
         }
         foreach(var c in components.Values.Where(c=>!c.Failed))
@@ -138,10 +138,10 @@ public sealed class ScriptRuntime:IDisposable
         return !string.IsNullOrEmpty(fallback)&&components.TryGetValue(fallback,out var data)&&data.Type==type&&!data.Failed?data:null;
     }
     Component? ResolveMonster(Creature m)=>Resolve(ScriptType.AI,m.Behavior,m.Type,Catalog.Data.Units[m.Type].Behavior);
-    Component? ResolveGuardian(Creature m)=>Resolve(ScriptType.AI,m.Behavior,m.Type,"guardian","guardian");
-    Component? ResolveAnimal(Creature m)=>Resolve(ScriptType.AI,m.Behavior,m.Type,"animal","animal");
-    Component? ResolveVillager(Citizen v)=>Resolve(ScriptType.AI,v.Behavior,v.Profession,"villager","villager");
-    Component? ResolveBuilding(Building b)=>Resolve(ScriptType.Building,b.Behavior,b.Prefab,string.IsNullOrEmpty(b.Plan.Script)?"building":b.Plan.Script);
+    Component? ResolveGuardian(Creature m)=>Resolve(ScriptType.AI,m.Behavior,m.Type,BuiltinScripts.Guardian,"guardian");
+    Component? ResolveAnimal(Creature m)=>Resolve(ScriptType.AI,m.Behavior,m.Type,BuiltinScripts.Animal,"animal");
+    Component? ResolveVillager(Citizen v)=>Resolve(ScriptType.AI,v.Behavior,v.Profession,BuiltinScripts.Villager,"villager");
+    Component? ResolveBuilding(Building b)=>Resolve(ScriptType.Building,b.Behavior,b.Prefab,string.IsNullOrEmpty(b.Plan.Script)?BuiltinScripts.Building:b.Plan.Script);
     // Fallback runs the shipped JS component, never a second hidden C# decision tree.
     bool UpdateAI(Component? chosen,string fallback,string callback,object context,float dt)
     {
@@ -155,18 +155,18 @@ public sealed class ScriptRuntime:IDisposable
         return false;
     }
     public bool UpdateMonster(Creature mob,MobScriptContext ctx,float dt)=>UpdateAI(ResolveMonster(mob),Catalog.Data.Units[mob.Type].Behavior,"onMonsterUpdate",ctx,dt);
-    public bool UpdateVillager(Citizen v,float dt)=>UpdateAI(ResolveVillager(v),"villager","onVillagerUpdate",new ScriptVillager(city,v),dt);
-    public bool UpdateGuardian(Creature mob,float dt)=>UpdateAI(ResolveGuardian(mob),"guardian","onGuardianUpdate",new MobScriptContext(city,mob,dt),dt);
-    public bool UpdateAnimal(Creature mob,float dt)=>UpdateAI(ResolveAnimal(mob),"animal","onAnimalUpdate",new MobScriptContext(city,mob,dt),dt);
-    public void ReassignProfessions(){if(components.TryGetValue("employment",out var script))Invoke(script,"onReassignProfessions");}
+    public bool UpdateVillager(Citizen v,float dt)=>UpdateAI(ResolveVillager(v),BuiltinScripts.Villager,"onVillagerUpdate",new ScriptVillager(city,v),dt);
+    public bool UpdateGuardian(Creature mob,float dt)=>UpdateAI(ResolveGuardian(mob),BuiltinScripts.Guardian,"onGuardianUpdate",new MobScriptContext(city,mob,dt),dt);
+    public bool UpdateAnimal(Creature mob,float dt)=>UpdateAI(ResolveAnimal(mob),BuiltinScripts.Animal,"onAnimalUpdate",new MobScriptContext(city,mob,dt),dt);
+    public void ReassignProfessions(){if(components.TryGetValue(BuiltinScripts.Employment,out var script))Invoke(script,"onReassignProfessions");}
     public void AssignJobs()
     {
-        if(components.TryGetValue("employment",out var script))Invoke(script,"onAssignJobs");
+        if(components.TryGetValue(BuiltinScripts.Employment,out var script))Invoke(script,"onAssignJobs");
     }
     Component? DefaultBuilding(Building b)
     {
         if(!string.IsNullOrEmpty(b.Plan.Script)&&components.TryGetValue(b.Plan.Script,out var specific)&&!specific.Failed)return specific;
-        return components.GetValueOrDefault("building");
+        return components.GetValueOrDefault(BuiltinScripts.Building);
     }
     public bool Produce(Building b,Citizen worker)
     {

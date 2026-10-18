@@ -1,16 +1,16 @@
 set_script_type(eST_Mod);
 
 // Called whenever placement, demolition, training or a new day changes employment.
-// One worker per workplace before extra slots; specialists first, citizens assist.
+// One qualified specialist per workplace before extra slots.
 function onAssignJobs() {
     if (world.professionPrioritiesActive) return onReassignProfessions();
     const available = Array.from(world.getVillagers());
     // A town with an active warehouse must retain a courier, including older saves.
     if (available.length > 1 && world.getWorkplaces().some(b => b.enabled && b.connected && b.job === 'Delivery') && !available.some(v => v.profession === 'deliveryman')) {
-        const recruit = available.find(v => !v.manualProfession && v.profession === 'citizen') || available.find(v => !v.manualProfession && !v.workplace) || available.find(v => !v.manualProfession);
+        const recruit = available.find(v => !v.manualProfession && !v.workplace) || available.find(v => !v.manualProfession);
         if (recruit) recruit.setProfession('deliveryman');
     }
-    available.sort((a, b) => Number(a.profession === 'citizen') - Number(b.profession === 'citizen') || a.id - b.id);
+    available.sort((a,b)=>a.id-b.id);
     const workplaces = world.getWorkplaces().filter(b => b.enabled && b.connected);
     workplaces.sort((a, b) => b.priority - a.priority || a.id - b.id);
     const people = [], jobs = [];
@@ -18,8 +18,7 @@ function onAssignJobs() {
     for (let slot = 0; slot < maxSlots; slot++) {
         for (const building of workplaces) {
             if (slot >= building.jobs) continue;
-            let index = available.findIndex(v => v.profession !== 'citizen' && building.qualified(v));
-            if (index < 0) index = available.findIndex(v => v.profession === 'citizen');
+            let index = available.findIndex(v => building.qualified(v));
             if (index < 0) continue;
             people.push(available[index].id); jobs.push(building.id);
             available.splice(index, 1);
@@ -35,8 +34,8 @@ function onReassignProfessions() {
     const professions = world.getProfessions();
     const openings = [];
     for (const building of buildings) {
-        const eligible = professions.filter(p => p.id === 'citizen' || p.jobs.includes(building.job) || building.allowedProfessions.includes(p.id));
-        eligible.sort((a,b) => a.priority - b.priority || Number(a.id === 'citizen') - Number(b.id === 'citizen'));
+        const eligible = professions.filter(p => p.jobs.includes(building.job) || building.allowedProfessions.includes(p.id));
+        eligible.sort((a,b) => a.priority - b.priority);
         const profession = eligible[0];
         if (!profession) continue;
         for (let slot=0; slot<building.jobs; slot++) openings.push({building, profession, slot});
@@ -62,6 +61,34 @@ function onReassignProfessions() {
         const person = people.splice(index, 1)[0];person.setProfession(profession.id);
         assignedPeople.push(person.id);assignedJobs.push(building.id);
     }
-    for (const person of people) person.setProfession('citizen');
+    // Surplus residents retain a real profession while waiting for a workplace.
     world.assignJobs(assignedPeople, assignedJobs);
+}
+
+// A grown villager receives a specialty for an actual vacancy, without retraining the whole city.
+function onVillagerBorn(person) { assignNewResident(person); }
+function assignNewResident(person) {
+    const people=world.getVillagers();
+    const professions=world.getProfessions();
+    const occupants=people.filter(v=>v.id!==person.id);
+    const workers=b=>occupants.filter(v=>v.workplace&&v.workplace.id===b.id).length;
+    const defenseNeeded=world.getMonsters().length>world.getGuardians().length+occupants.filter(v=>v.workplace&&v.workplace.defender.length>0).length;
+    const specialtyPriority=b=>Math.min(...professions.filter(p=>p.jobs.includes(b.job)||b.allowedProfessions.includes(p.id)).map(p=>p.priority),5);
+    const openings=world.getWorkplaces().filter(b=>b.enabled&&b.connected&&workers(b)<b.jobs);
+    openings.sort((a,b)=>Number(b.job==='Delivery'&&!people.some(v=>v.profession==='deliveryman'))-Number(a.job==='Delivery'&&!people.some(v=>v.profession==='deliveryman'))
+        || Number(b.job==='Farming'&&world.stock(resources.Food)<people.length*3)-Number(a.job==='Farming'&&world.stock(resources.Food)<people.length*3)
+        || Number(defenseNeeded&&b.defender.length>0&&!b.createsGuardian)-Number(defenseNeeded&&a.defender.length>0&&!a.createsGuardian)
+        || Number(workers(b)===0)-Number(workers(a)===0)||specialtyPriority(a)-specialtyPriority(b)
+        || b.priority-a.priority||a.id-b.id);
+    for(const building of openings) {
+        const eligible=professions.filter(p=>p.jobs.includes(building.job)||building.allowedProfessions.includes(p.id));
+        eligible.sort((a,b)=>a.priority-b.priority);
+        if(eligible.length===0)continue;
+        person.setProfession(eligible[0].id);
+        const assigned=people.filter(v=>v.id!==person.id&&v.workplace);
+        world.assignJobs(assigned.map(v=>v.id).concat(person.id),assigned.map(v=>v.workplace.id).concat(building.id));
+        return;
+    }
+    // No vacant workplace: keep a real specialty, never an unemployed profession.
+    person.setProfession(people.filter(v=>v.profession==='farmer').length<2?'farmer':'deliveryman');
 }

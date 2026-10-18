@@ -4,7 +4,7 @@ namespace VillageCraft;
 
 // Closed simulation states are typed; human-readable strings remain at content/UI/JS boundaries.
 [JsonConverter(typeof(TaskIdConverter))]
-public enum TaskId { Resting, DefendingVillage, NightPatrol, GoingHome, SupportingFamilies, Homeless, ScriptedBehavior, CollectingMilk, CollectingFood, WaitingStorage, Delivering, WaitingDeliveries, CollectingDelivery, WaitingTreeRegrowth, GoingToTrees, ChoppingTree, GoingToWork, Working, Assisting, CaravanTravelling, TalkingToResidents, LeavingVillage, WanderingHomeless, SeekingHome, CollectingRepairSupplies, RepairingBuilding }
+public enum TaskId { TamingCat, FeedingCat, Resting, DefendingVillage, NightPatrol, GoingHome, SupportingFamilies, Homeless, ScriptedBehavior, CollectingMilk, CollectingFood, WaitingStorage, Delivering, WaitingDeliveries, CollectingDelivery, WaitingTreeRegrowth, GoingToTrees, ChoppingTree, GoingToWork, Working, Assisting, CaravanTravelling, TalkingToResidents, LeavingVillage, WanderingHomeless, SeekingHome, CollectingRepairSupplies, RepairingBuilding }
 public enum CaravanState { Entering, Talking, Departing }
 public enum PillageState { Looting, Retreating }
 public enum EquipmentKind { Armor, Tools }
