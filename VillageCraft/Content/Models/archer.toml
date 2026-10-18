@@ -36,11 +36,11 @@ UvSize = [4, 12, 4]
 
 [[Parts]]
 Position = [0, 0.54, 0]
-Size = [0.24, 0.36, 0.18]
+Size = [0.234, 0.354, 0.174]
 Color = "#775540"
 Texture = "entity/villager/villager.png"
 UvOrigin = [16, 20]
-UvSize = [8, 12, 6]
+UvSize = [7.994, 11.994, 5.994]
 
 [[Parts]]
 Position = [0, 0.45, 0]
@@ -110,11 +110,11 @@ UvSize = [4, 12, 4]
 
 [[Parts]]
 Position = [0, 0.54, 0]
-Size = [0.244, 0.364, 0.184]
+Size = [0.238, 0.358, 0.178]
 Color = "#775540"
 Texture = "entity/villager/type/plains.png"
 UvOrigin = [16, 20]
-UvSize = [8, 12, 6]
+UvSize = [7.994, 11.994, 5.994]
 
 [[Parts]]
 Position = [0, 0.45, 0]
@@ -160,35 +160,35 @@ UvSize = [8, 10, 8]
 
 [[Parts]]
 Position = [0, 0.87, 0]
-Size = [0.248, 0.308, 0.248]
+Size = [0.254, 0.314, 0.254]
 Color = "#B48B6C"
 Texture = "entity/villager/profession/fletcher.png"
 UvOrigin = [0, 0]
-UvSize = [8, 10, 8]
+UvSize = [8.006, 10.006, 8.006]
 
 [[Parts]]
 Position = [0, 0.75, 0.15]
-Size = [0.068, 0.128, 0.068]
+Size = [0.074, 0.134, 0.074]
 Color = "#B48B6C"
 Texture = "entity/villager/profession/fletcher.png"
 UvOrigin = [24, 0]
-UvSize = [2, 4, 2]
+UvSize = [2.006, 4.006, 2.006]
 
 [[Parts]]
 Position = [-0.06, 0.18, 0]
-Size = [0.128, 0.368, 0.128]
+Size = [0.134, 0.374, 0.134]
 Color = "#775540"
 Texture = "entity/villager/profession/fletcher.png"
 UvOrigin = [0, 22]
-UvSize = [4, 12, 4]
+UvSize = [4.006, 12.006, 4.006]
 
 [[Parts]]
 Position = [0.06, 0.18, 0]
-Size = [0.128, 0.368, 0.128]
+Size = [0.134, 0.374, 0.134]
 Color = "#775540"
 Texture = "entity/villager/profession/fletcher.png"
 UvOrigin = [0, 22]
-UvSize = [4, 12, 4]
+UvSize = [4.006, 12.006, 4.006]
 
 [[Parts]]
 Position = [0, 0.54, 0]
@@ -200,45 +200,45 @@ UvSize = [8, 12, 6]
 
 [[Parts]]
 Position = [0, 0.45, 0]
-Size = [0.248, 0.548, 0.188]
+Size = [0.254, 0.554, 0.194]
 Color = "#775540"
 Texture = "entity/villager/profession/fletcher.png"
 UvOrigin = [0, 38]
-UvSize = [8, 18, 6]
+UvSize = [8.006, 18.006, 6.006]
 
 [[Parts]]
 Position = [-0.18, 0.59, 0.08]
-Size = [0.128, 0.248, 0.128]
+Size = [0.134, 0.254, 0.134]
 Color = "#775540"
 Texture = "entity/villager/profession/fletcher.png"
 UvOrigin = [44, 22]
-UvSize = [4, 8, 4]
+UvSize = [4.006, 8.006, 4.006]
 Pitch = -43
 
 [[Parts]]
 Position = [0.18, 0.59, 0.08]
-Size = [0.128, 0.248, 0.128]
+Size = [0.134, 0.254, 0.134]
 Color = "#775540"
 Texture = "entity/villager/profession/fletcher.png"
 UvOrigin = [44, 22]
-UvSize = [4, 8, 4]
+UvSize = [4.006, 8.006, 4.006]
 Pitch = -43
 
 [[Parts]]
 Position = [0, 0.49, 0.17]
-Size = [0.248, 0.128, 0.128]
+Size = [0.254, 0.134, 0.134]
 Color = "#B48B6C"
 Texture = "entity/villager/profession/fletcher.png"
 UvOrigin = [40, 38]
-UvSize = [8, 4, 4]
+UvSize = [8.006, 4.006, 4.006]
 
 [[Parts]]
 Position = [0, 0.87, 0]
-Size = [0.256, 0.316, 0.256]
+Size = [0.262, 0.322, 0.262]
 Color = "#775540"
 Texture = "entity/villager/profession/fletcher.png"
 UvOrigin = [32, 0]
-UvSize = [8, 10, 8]
+UvSize = [8.006, 10.006, 8.006]
 
 [[Parts]]
 Position = [0, 1, 0]

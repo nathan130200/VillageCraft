@@ -36,11 +36,11 @@ UvSize = [4, 12, 4]
 
 [[Parts]]
 Position = [0, 0.54, 0]
-Size = [0.24, 0.36, 0.18]
+Size = [0.234, 0.354, 0.174]
 Color = "#775540"
 Texture = "entity/villager/villager.png"
 UvOrigin = [16, 20]
-UvSize = [8, 12, 6]
+UvSize = [7.994, 11.994, 5.994]
 
 [[Parts]]
 Position = [0, 0.45, 0]
@@ -110,11 +110,11 @@ UvSize = [4, 12, 4]
 
 [[Parts]]
 Position = [0, 0.54, 0]
-Size = [0.244, 0.364, 0.184]
+Size = [0.238, 0.358, 0.178]
 Color = "#775540"
 Texture = "entity/villager/type/plains.png"
 UvOrigin = [16, 20]
-UvSize = [8, 12, 6]
+UvSize = [7.994, 11.994, 5.994]
 
 [[Parts]]
 Position = [0, 0.45, 0]

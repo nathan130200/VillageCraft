@@ -17,3 +17,6 @@ SheltersFromSun = true
 
 # JavaScript component for this prefab type.
 Script = "building_small_warehouse"
+
+# Hide residents once inside this enclosed workplace/home; keep route coordinates unchanged.
+Indoor = true

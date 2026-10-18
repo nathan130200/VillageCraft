@@ -58,3 +58,6 @@ Script = "building_mage_hall"
 
 # A roof or canopy blocks direct sunlight on this tile.
 SheltersFromSun = true
+
+# Hide residents once inside this enclosed workplace/home; keep route coordinates unchanged.
+Indoor = true
