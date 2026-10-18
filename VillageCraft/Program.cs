@@ -54,9 +54,7 @@ if(smoke||uiSmoke)Raylib.TraceLog(TraceLogLevel.Warning,"Visual check renderer l
 Rlgl.SetClipPlanes(.1,10000);
 rlImGui.Setup(true);
 string font=Path.Combine(AppContext.BaseDirectory,"Content","Fonts","mojangles.ttf");
-UiFonts.Load(font);rlImGui.ReloadFonts();
-Rlgl.TextureParameters((uint)ImGui.GetIO().Fonts.TexID,0x2800,0x2600);
-Rlgl.TextureParameters((uint)ImGui.GetIO().Fonts.TexID,0x2801,0x2600);
+UiFonts.Load(font);
 #if DEBUG
 if(compactSmoke)Raylib.SetWindowSize(1024,640);
 if(modelsSmoke)
@@ -191,11 +189,15 @@ try
         }
 #if DEBUG
         if(args.Contains("--scale-smoke")&&frames==5)Raylib.SetMousePosition(Raylib.GetScreenWidth()-30,Raylib.GetScreenHeight()-30);
+        if(args.Contains("--scale-smoke")&&frames is 20 or 40)
+            GraphicsOptions.Current.UiScale=frames==20?2:1;
 #endif
         using(Profiler.Measure(ProfileArea.Ui))
         {
         ui.BeginFrame();
 #if DEBUG
+        if(args.Contains("--scale-smoke")&&Math.Abs(ImGui.GetFont().FontSize-16*GraphicsOptions.Current.UiScale)>.01f)
+            throw new InvalidOperationException("Font atlas resolution does not match HUD scale.");
         if(args.Contains("--scale-smoke")&&frames==10&&Vector2.Distance(ImGui.GetIO().MousePos,Raylib.GetMousePosition()/GraphicsOptions.Current.UiScale)>2)
             throw new InvalidOperationException("Scaled mouse input does not match UI coordinates.");
 #endif

@@ -10,6 +10,7 @@ partial class GameUi
     public void BeginFrame()
     {
         frameScale=GraphicsOptions.Current.UiScale;
+        UiFonts.EnsureScale(frameScale);
         // Keep layout and input in logical pixels; scale the finished draw lists together.
         Raylib.SetMouseScale(1/frameScale,1/frameScale);
         rlImGui.Begin();
