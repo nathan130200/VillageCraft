@@ -10,7 +10,7 @@ A 3D village builder in C#, combining Minecraft-inspired villages with city mana
 
 - **Build with prefabs:** connect homes, farms, workshops and defenses with roads.
 - **Manage a working economy:** assign professions, deliver supplies, store resources and trade for emeralds.
-- **Care for residents:** balance food, water, housing and happiness; inspect villagers and their inventories.
+- **Care for residents:** balance food, water, housing and happiness; inspect villagers and use the yellow exclamation button to review grouped city problems.
 - **Survive the night:** protect the village with defenders and golems against regular encounters and boss waves.
 - **Make it your own:** customize TOML content and JavaScript behaviors with editor type definitions.
 
@@ -42,7 +42,7 @@ Captured in-game with separately supplied Minecraft 1.16 assets. The screenshots
 
 ## Run the game
 
-Requires **.NET 10 SDK**, **OpenGL 3.3**, and separately supplied Minecraft assets. Development uses **Minecraft Java 1.16 textures**, which are **not included in this repository**. Supply `mojangles.ttf` at the repository root if absent.
+Requires **.NET 10 SDK**, **OpenGL 3.3**, and separately supplied Minecraft assets. Development uses **Minecraft Java 1.16 textures**, which are **not included in this repository**. The custom UI uses `mojangles.ttf` when supplied; otherwise it falls back to a system font, then ImGui's built-in font.
 
 Extract textures into the root `textures/` folder, preserving paths such as `textures/entity/piglin/piglin.png`. Alternatively, point `VILLAGECRAFT_ASSETS` to your external asset directory; indexed assets are also supported.
 
@@ -59,6 +59,8 @@ Saves, options and logs live in `UserData/` beside the executable. Used Minecraf
 ## Controls
 
 **WASD** pans, **Q/E** rotates, **Shift** rotates faster, and the **mouse wheel** zooms. Click to inspect or build; **R** rotates a prefab. **Space** pauses, **1–4** changes speed, and **Esc** opens the save/load and options menu.
+
+Press **F3** for the [performance profiler](VillageCraft/Content/PROFILING.md), including script callbacks, pathfinding, rendering, allocations and CSV exports.
 
 ## Modding
 

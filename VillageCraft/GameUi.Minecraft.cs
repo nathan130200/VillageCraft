@@ -120,6 +120,7 @@ partial class GameUi
     int hudHeight=58;
     void DrawTopBar(City city,int w)
     {
+        RefreshProblems(city);
         var resources=Catalog.Resources.ToArray();
         float rowWidth=0;int rows=1;
         foreach(ResourceType id in resources){float size=18+6+ImGui.CalcTextSize(city.Stock[id].ToString("0")).X+8;if(rowWidth+size>w-36){rows++;rowWidth=0;}rowWidth+=size;}
@@ -140,12 +141,14 @@ partial class GameUi
         Stat("water",$"{city.Water}/{city.Citizens.Count}",L.T("ui.water"));
         Stat("raid",city.Enemies.Count>0?city.Enemies.Count.ToString():city.RaidIn<0?"-":city.RaidIn.ToString(),city.Enemies.Count>0?L.T("ui.hostiles_3"):L.T("ui.days_until_raid")+(city.Day<=city.PeaceDays?"\n"+L.F("hud.peaceful_nights",city.PeaceDays+1):string.Empty));
         Stat("map",$"{city.Width}x{city.Height}",L.T("ui.map_size"));
-        ImGui.SetCursorScreenPos(new(w-176,32+(rows-1)*22+(separateMenus?26:0)));
+        ImGui.SetCursorScreenPos(new(w-204,32+(rows-1)*22+(separateMenus?26:0)));
         foreach(var (tab,icon) in new[]{("People","people"),("Economy","economy"),("Defense","shield"),("Journal","book")})
         {
             if(IconButton("open_"+tab,icon,L.Ui(tab),page==tab,24)){page=page==tab?"Build":tab;}
             ImGui.SameLine(0,4);
         }
+        if(IconButton("problems","warning",L.F("problem.button",cityProblems.Sum(p=>p.Count)),page=="Problems",24))page=page=="Problems"?"Build":"Problems";
+        ImGui.SameLine(0,4);
         if(IconButton("menu","menu",L.T("ui.menu_esc"),false,24))Escape();
         ImGui.End();
     }
@@ -191,6 +194,7 @@ partial class GameUi
             if(tab=="People")PeoplePanel(city);
             if(tab=="Economy")EconomyPanel(city);
             if(tab=="Defense")DefensePanel(city);
+            if(tab=="Problems")ProblemsPanel(city);
             if(tab=="Journal"){foreach(string entry in city.Events){Wrapped(entry);ImGui.Separator();}}
             ImGui.End();
             if(!open){pinnedManagement.Remove(tab);if(page==tab)page="Build";}

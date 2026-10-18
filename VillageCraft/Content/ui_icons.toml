@@ -556,3 +556,25 @@ Pixels = [
  "...WWWW..WWW....",
  "................"
 ]
+
+# City problems: an original yellow exclamation mark, not an external texture.
+[[Icons]]
+Id = "warning"
+Pixels = [
+  "................",
+  "......DDDD......",
+  ".....DYYYYD.....",
+  ".....DYYYYD.....",
+  ".....DYYYYD.....",
+  ".....DYYYYD.....",
+  ".....DYYYYD.....",
+  "......DYYD......",
+  "......DYYD......",
+  ".......DD.......",
+  "................",
+  "......DDDD......",
+  ".....DYYYYD.....",
+  ".....DYYYYD.....",
+  "......DDDD......",
+  "................",
+]

@@ -4,9 +4,10 @@ namespace VillageCraft;
 // Validated simulation actions. Scheduling, priorities and target choice live in Content/Scripts.
 public partial class City
 {
-    internal bool ScriptWalk(Citizen v,Building b,float dt,bool roads)=>WalkTo(v,b,dt,roads,.025f);
+    internal bool ScriptWalk(Citizen v,Building b,float dt,bool roads){using var profile=Profiler.Measure(ProfileArea.ManagedActions);return WalkTo(v,b,dt,roads,.025f);}
     internal bool ScriptWork(Citizen v,float dt)
     {
+        using var profile=Profiler.Measure(ProfileArea.ManagedActions);
         var b=Buildings.FirstOrDefault(b=>b.Id==v.Work&&b.Enabled&&Connected(b,Roads()));
         if(b==null||Vector2.Distance(v.Position,new(b.X,b.Z))>.05f)return false;
         v.WorkTime+=dt*Efficiency(v)*ToolEfficiency;b.Attendance+=dt;b.WorkEffort+=dt*Efficiency(v)*ToolEfficiency;
@@ -15,6 +16,7 @@ public partial class City
     }
     internal bool ScriptChop(Citizen v,Building tree,float dt)
     {
+        using var profile=Profiler.Measure(ProfileArea.ManagedActions);
         var camp=Buildings.FirstOrDefault(b=>b.Id==v.Work&&b.Enabled&&Connected(b,Roads())&&b.Plan.HarvestSource==tree.Prefab);
         if(camp==null||tree.GrowthDays>0||Vector2.Distance(v.Position,new(tree.X,tree.Z))>.45f||Vector2.Distance(new(camp.X,camp.Z),new(tree.X,tree.Z))>camp.Plan.HarvestRadius)return false;
         v.WorkTime+=dt*Efficiency(v)*ToolEfficiency;camp.Attendance+=dt;camp.WorkEffort+=dt*Efficiency(v)*ToolEfficiency;
@@ -25,6 +27,7 @@ public partial class City
     }
     internal bool ScriptRepair(Citizen v,Building b,float dt)
     {
+        using var profile=Profiler.Measure(ProfileArea.ManagedActions);
         var settings=Catalog.Data.Economy;
         if(!Buildings.Contains(b)||b.Plan.Natural||b.Plan.Indestructible||b.Health<=0||b.Health>=b.Plan.Health||Vector2.Distance(v.Position,new(b.X,b.Z))>.25f||settings.RepairCost.Any(e=>v.Inventory.GetValueOrDefault(e.Key)<e.Value))return false;
         v.RepairTime+=dt*Efficiency(v)*ToolEfficiency;
@@ -36,11 +39,13 @@ public partial class City
     }
     internal bool ScriptDrinkMilk(Citizen v)
     {
+        using var profile=Profiler.Measure(ProfileArea.ManagedActions);
         if(v.Inventory.GetValueOrDefault(ResourceType.Milk)<1)return false;
         v.Inventory[ResourceType.Milk]--;v.Effects.Clear();v.Health=Math.Min(50,v.Health+Catalog.Data.Economy.MilkHealing);return true;
     }
     internal bool ScriptPickup(Citizen v,Building from,Building to,ResourceType resource)
     {
+        using var profile=Profiler.Measure(ProfileArea.ManagedActions);
         if(!from.Enabled||!to.Enabled||Currency(resource)||!Catalog.Resources.Contains(resource)||Vector2.Distance(v.Position,new(from.X,from.Z))>.18f||v.Cargo.Values.Sum()>0||!Connected(to,Roads()))return false;
         float amount=Math.Min(Math.Min(SupplyAvailable(from,resource),StorageFree(to)),Catalog.Data.Economy.DeliveryCapacity*Efficiency(v));
         if(to.Plan.Input.ContainsKey(resource))amount=Math.Min(amount,Math.Max(0,InputTarget(to,resource)-Stored(to,resource)));
@@ -51,27 +56,31 @@ public partial class City
     }
     internal bool ScriptDeliver(Citizen v,Building to)
     {
+        using var profile=Profiler.Measure(ProfileArea.ManagedActions);
         if(!to.Enabled||Vector2.Distance(v.Position,new(to.X,to.Z))>.18f||StorageFree(to)<=0||v.Cargo.Values.Sum()<=0)return false;
         float moved=0;
         foreach(var item in v.Cargo.ToArray()){float n=Receive(to,item.Key,item.Value);v.Cargo[item.Key]-=n;moved+=n;if(v.Cargo[item.Key]<.001f)v.Cargo.Remove(item.Key);}
         if(moved<=0)return false;
         Stock[ResourceType.Goods]+=Catalog.Data.Economy.GoodsPerWorkCycle;v.HasWorked=true;Statistics.Deliveries++;Emit(new("onDeliveryCompleted",v,Source:to));return true;
     }
-    internal bool ScriptCollect(Citizen v,Building b,ResourceType resource,float amount,float dt)=>!Currency(resource)&&Catalog.Resources.Contains(resource)&&float.IsFinite(amount)&&amount>0&&amount<=32&&Collect(v,b,resource,amount,dt);
-    internal bool ScriptReach(Vector2 from,Vector2 to)=>MathF.Round(from.X)==MathF.Round(to.X)&&MathF.Round(from.Y)==MathF.Round(to.Y)||Route(from,to,false).Count>0;
+    internal bool ScriptCollect(Citizen v,Building b,ResourceType resource,float amount,float dt){using var profile=Profiler.Measure(ProfileArea.ManagedActions);return !Currency(resource)&&Catalog.Resources.Contains(resource)&&float.IsFinite(amount)&&amount>0&&amount<=32&&Collect(v,b,resource,amount,dt);}
+    internal bool ScriptReach(Vector2 from,Vector2 to){using var profile=Profiler.Measure(ProfileArea.ManagedActions);return MathF.Round(from.X)==MathF.Round(to.X)&&MathF.Round(from.Y)==MathF.Round(to.Y)||Route(from,to,false).Count>0;}
     internal void ScriptMove(Creature mob,Vector2 to,float dt)
     {
+        using var profile=Profiler.Measure(ProfileArea.ManagedActions);
         float speed=Catalog.Data.Units.TryGetValue(mob.Type,out var unit)?unit.Speed:.2f;
         MoveCreature(mob,to,speed*dt);
     }
     internal void ScriptPatrol(Citizen v,float x,float z,float dt)
     {
+        using var profile=Profiler.Measure(ProfileArea.ManagedActions);
         var b=Buildings.FirstOrDefault(b=>b.Id==v.Work);float speed=b!=null&&Catalog.Data.Units.TryGetValue(b.Plan.Defender,out var unit)?unit.Speed:.9f;
         var route=PreferRoads(v.Position,new(x,z));if(route.Count>0)Move(v,Toward(v.Position,route[0],dt*speed*TravelSpeed(v.Position,v.Profession)));v.Route.Clear();
     }
-    internal bool ScriptSight(Vector2 from,Vector2 to)=>Sight(from,to);
+    internal bool ScriptSight(Vector2 from,Vector2 to){using var profile=Profiler.Measure(ProfileArea.ManagedActions);return Sight(from,to);}
     internal bool ScriptAttack(Citizen v,Creature enemy)
     {
+        using var profile=Profiler.Measure(ProfileArea.ManagedActions);
         var b=Buildings.FirstOrDefault(b=>b.Id==v.Work&&b.Enabled&&Connected(b,Roads()));
         if(b==null||b.Plan.CreatesGuardian||!Catalog.Data.Units.TryGetValue(b.Plan.Defender,out var unit)||enemy.Health<=0||v.Cooldown>0||Vector2.Distance(v.Position,enemy.Position)>unit.Range||!Sight(v.Position,enemy.Position))return false;
         DamageMonster(enemy,unit.Damage*Efficiency(v)*(v.Effects.ContainsKey("Weakness")?.7f:1)*(EnchantedArmor?1+Catalog.Data.Economy.EnchantmentDamage:1),v);
@@ -79,6 +88,7 @@ public partial class City
     }
     internal bool ScriptAttack(Creature mob,object target)
     {
+        using var profile=Profiler.Measure(ProfileArea.ManagedActions);
         if(!Catalog.Data.Units.TryGetValue(mob.Type,out var unit)||mob.Health<=0||mob.Cooldown>0)return false;
         Vector2 point=target switch{Citizen v=>v.Position,Creature c=>c.Position,Building b=>new(b.X,b.Z),_=>new(-1,-1)};
         if(Vector2.Distance(mob.Position,point)>unit.Range||!Sight(mob.Position,point))return false;
@@ -91,6 +101,7 @@ public partial class City
     }
     internal bool ScriptExplode(Creature mob,Vector2 target)
     {
+        using var profile=Profiler.Measure(ProfileArea.ManagedActions);
         if(!Enemies.Contains(mob)||mob.Health<=0||!Catalog.Data.Units.TryGetValue(mob.Type,out var unit)||Vector2.Distance(mob.Position,target)>2.5f)return false;
         foreach(var b in Buildings.Where(b=>Vector2.Distance(mob.Position,new(b.X,b.Z))<=2).ToArray())DamageBuilding(b,unit.Damage,mob);
         foreach(var v in Citizens.Where(v=>Vector2.Distance(mob.Position,v.Position)<=2).ToArray())DamageVillager(v,unit.Damage*(1-ArmorReduction),mob);
@@ -186,22 +197,26 @@ public partial class City
 {
     internal bool ScriptBreed(Building b)
     {
+        using var profile=Profiler.Measure(ProfileArea.ManagedActions);
         var herd=Animals.Where(a=>a.Home==b.Id).ToArray();
         if(!Buildings.Contains(b)||!b.Enabled||string.IsNullOrEmpty(b.Plan.Animal)||herd.Count(a=>a.Age>=3)<2||herd.Length>=Rules.AnimalsPerPen||b.ServiceCredit<.999f||!ConsumeLocal(b,new(){[ResourceType.Food]=2}))return false;
         b.ServiceCredit=Math.Max(0,b.ServiceCredit-1);var baby=new Creature{Id=NextId++,Type=b.Plan.Animal,Home=b.Id,X=b.X,Z=b.Z,Health=20,Age=0};Animals.Add(baby);Emit(new("onAnimalSpawned",baby));Log(L.F("message.animal_born",L.Entity(b.Plan.Animal)));return true;
     }
     internal bool ScriptAnimalProduct(Building b,ResourceType resource,float amount)
     {
+        using var profile=Profiler.Measure(ProfileArea.ManagedActions);
         if(!Buildings.Contains(b)||!b.Enabled||string.IsNullOrEmpty(b.Plan.Animal)||Currency(resource)||!Catalog.Resources.Contains(resource)||!float.IsFinite(amount)||amount<=0||amount>100)return false;
         RecordProduction(resource,Receive(b,resource,amount));return true;
     }
     internal bool ScriptCreateGuardian(Building b)
     {
+        using var profile=Profiler.Measure(ProfileArea.ManagedActions);
         if(!Buildings.Contains(b)||!b.Enabled||!b.Plan.CreatesGuardian||!Catalog.Data.Units.TryGetValue(b.Plan.Defender,out var unit)||Defenders.Count(d=>d.Home==b.Id)>=Rules.GolemsPerWorkshop||b.ServiceCredit<.999f||!ConsumeLocal(b,b.Plan.Input))return false;
         b.ServiceCredit=Math.Max(0,b.ServiceCredit-1);var guardian=new Creature{Id=NextId++,Type=b.Plan.Defender,Home=b.Id,X=b.X,Z=b.Z,Health=unit.Health};Defenders.Add(guardian);Emit(new("onGuardianSpawned",guardian));Log(L.F("ui.awakened",L.Entity(guardian.Type)));return true;
     }
     internal bool ScriptAssignJobs(int[] people,int[] workplaces)
     {
+        using var profile=Profiler.Measure(ProfileArea.ManagedActions);
         if(people.Length!=workplaces.Length||people.Length>Citizens.Count||people.Distinct().Count()!=people.Length)return false;
         var assignments=new Dictionary<int,int>();var slots=new Dictionary<int,int>();
         for(int i=0;i<people.Length;i++)
@@ -244,6 +259,7 @@ public sealed class MobScriptContext
         selected=kind switch{"villager"=>city.Citizens.FirstOrDefault(v=>v.Id==id&&v.Health>0),"building"=>city.Buildings.FirstOrDefault(b=>b.Id==id&&!b.Plan.Natural&&!b.Plan.Indestructible),"guardian"=>city.Defenders.FirstOrDefault(d=>d.Id==id&&d.Health>0),"monster"=>city.Enemies.FirstOrDefault(e=>e.Id==id&&e.Health>0),_=>null};
         return selected!=null;
     }
+    public bool canReach(float x,float z)=>float.IsFinite(x)&&float.IsFinite(z)&&x>=0&&z>=0&&x<city.Width&&z<city.Height&&city.ScriptReach(mob.Position,new(x,z));
     public bool canSee(float x,float z)=>float.IsFinite(x)&&float.IsFinite(z)&&city.ScriptSight(mob.Position,new(x,z));
     public bool moveTo(float x,float z)
     {

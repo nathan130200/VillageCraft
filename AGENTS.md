@@ -146,3 +146,10 @@ This file records the repository owner's requirements from the project conversat
 - Nether enemies must use their matching skins and cuboid UV layouts. Never reuse ordinary pig skins for Piglins or obsolete pigman paths for modern variants; log missing textures and validate models from multiple directions.
 
 - Cache only referenced/used external Minecraft assets in executable-relative UserData/cache.zip. Load the archive once at startup, resolve cache misses from external sources, and keep cached proprietary files out of Git and distributions.
+
+- Provide an independent profiling window with accurate monotonic nested timings, per-script/callback breakdowns, idle activity, pathfinding, rendering/presentation, allocations/GC and exports. Distinguish wall time, process CPU, GPU execution and waits; never invent idle/yield timings or claim Jint self time is pure JavaScript execution. Keep production profiling available in Release and test hooks excluded.
+- If the custom UI font is unavailable, try a system font, then the built-in font. Missing Mojangles must not prevent builds or startup.
+
+- Golems patrol reachable random destinations across the village instead of staying tethered to their forge. Preserve combat priority and keep the behavior editable in JavaScript.
+- Resolve structured texture paths exactly; a same-named profession overlay must not replace a full-body skin. Use modern villager base/clothing/profession layers and validate each profession from front and rear.
+- Add a yellow exclamation button beside the journal for current city problems. Group equivalent problems with occurrence counts, remove resolved entries and avoid repeated workplace-shortage messages.

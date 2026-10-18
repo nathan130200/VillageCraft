@@ -184,6 +184,8 @@ interface MobScriptContext extends Point {
     readonly targetBuilding: ScriptBuilding | null;
     readonly targetGuardian: ScriptMonster | null;
     selectTarget(kind: 'villager' | 'building' | 'guardian' | 'monster', id: number): boolean;
+    /** Check a walkable route without moving. */
+    canReach(x: number, z: number): boolean;
     canSee(x: number, z: number): boolean;
     moveTo(x: number, z: number): boolean;
     move(): void;

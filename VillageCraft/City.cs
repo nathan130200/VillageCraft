@@ -175,6 +175,7 @@ public partial class City:IDisposable
     public void Log(string text){Message=text;Events.Insert(0,L.F("format.day_details",Day,text));if(Events.Count>40)Events.RemoveAt(Events.Count-1);}
     public HashSet<(int,int)> Roads()
     {
+        using var profile=Profiler.Measure(ProfileArea.RoadConnectivity);
         if(indexedCount!=Buildings.Count)At(-1,-1);
         if(connectedRoads!=null)return connectedRoads;
         var paths=Buildings.Where(b=>b.Plan.Path).Select(b=>b.Cell).ToHashSet();var found=new HashSet<(int,int)>();var q=new Queue<(int,int)>();
@@ -295,11 +296,13 @@ public partial class City:IDisposable
         if(GameOver){runtime?.Flush();return;}
         if(dt<=0||!float.IsFinite(dt))return;
         if(dt>.2f){while(dt>.2f){Update(.2f);dt-=.2f;}if(dt>0)Update(dt);return;}
+        using var profile=Profiler.Measure(ProfileArea.SimulationStep);
         var scripts=Scripting;scripts.Flush();ReconcileStock();
         Statistics.SimulatedSeconds+=dt;DayTime+=dt;SettleAtDawn();UpdateSunlight(dt);
         if(DayPhase>=18f/24&&LastNight!=Day){LastNight=Day;Emit(new("onNightStarted"));}
         UpdateNightEncounters();
         Shots.ForEach(s=>s.Life-=dt);Shots.RemoveAll(s=>s.Life<=0);
+        using(Profiler.Measure(ProfileArea.Villagers))
         foreach(var v in Citizens.ToArray())
         {
             if(v.Health<=0)continue;
@@ -319,6 +322,7 @@ public partial class City:IDisposable
     static void Move(Creature v,Vector2 to){var delta=to-v.Position;if(delta.LengthSquared()>.0000001f)v.Facing=Heading(delta);v.Position=to;}
     public List<Vector2> Route(Vector2 from,Vector2 to,bool roadsOnly)
     {
+        using var profile=Profiler.Measure(ProfileArea.Pathfinding);
         var start=((int)MathF.Round(from.X),(int)MathF.Round(from.Y));var goal=((int)MathF.Round(to.X),(int)MathF.Round(to.Y));
         if(!Walkable(start.Item1,start.Item2)||!Walkable(goal.Item1,goal.Item2))return [];
         var roads=roadsOnly?Roads():null;var blocked=Buildings.Where(b=>b.Plan.BlocksRaiders||!b.Plan.Path&&!b.Plan.Natural).Select(b=>b.Cell).ToHashSet();
@@ -348,12 +352,13 @@ public partial class City:IDisposable
     }
     internal bool ProduceRecipe(Building b,Citizen worker)
     {
+        using var profile=Profiler.Measure(ProfileArea.Production);
         var profession=Catalog.Data.Professions[worker.Profession];
         float output=b.Plan.Output.Where(e=>!Currency(e.Key)).Sum(e=>e.Value*profession.ResourceBonus.GetValueOrDefault(e.Key,1));
         if(output>StorageFree(b)+b.Plan.Input.Where(e=>!Currency(e.Key)).Sum(e=>e.Value))return false;
         if(!ConsumeLocal(b,b.Plan.Input))
         {
-            if(!b.WaitingForSupplies)Message=b.Plan.Input.Any(e=>Stock[e.Key]<e.Value)?L.F("message.building_missing_resources",L.Name(b.Plan),string.Join(", ",b.Plan.Input.Keys.Select(L.Resource))):L.F("message.building_waiting_delivery",L.Name(b.Plan));
+            // Current input shortages are grouped in the Problems panel, not repeated in the hotbar.
             b.WaitingForSupplies=true;return false;
         }
         b.WaitingForSupplies=false;
@@ -363,6 +368,7 @@ public partial class City:IDisposable
     }
     public void Tick()
     {
+        using var profile=Profiler.Measure(ProfileArea.DailyTick);
         if(GameOver)return;
         var scripts=Scripting;ReconcileStock();
         Day++;MatureBabies();
@@ -398,6 +404,7 @@ public partial class City:IDisposable
     }
     void UpdateAnimals(float dt)
     {
+        using var profile=Profiler.Measure(ProfileArea.Animals);
         foreach(var animal in Animals.ToArray())Scripting.UpdateAnimal(animal,dt);
     }
     public void SpawnNight()
@@ -421,6 +428,7 @@ public partial class City:IDisposable
     }
     void Combat(float dt)
     {
+        using var profile=Profiler.Measure(ProfileArea.Combat);
         foreach(var d in Defenders.Where(d=>d.Health>0).ToArray())
         {d.Cooldown-=dt;Scripting.UpdateGuardian(d,dt);}
         foreach(var e in Enemies.Where(e=>e.Health>0).ToArray())

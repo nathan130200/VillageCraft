@@ -241,6 +241,8 @@ static class Checks
         AiChecks.Run();
         LogisticsChecks.Run();
         PopulationChecks.Run();
+        VillageImprovementsChecks.Run();
+        ProfilerChecks.Run();
         AssetCacheChecks.Run();
         LocalizationChecks.Run();
         NightChecks.Run();

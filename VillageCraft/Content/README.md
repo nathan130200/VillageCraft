@@ -207,6 +207,10 @@ Cada execução grava um log UTF-8 em UserData/Logs, ao lado do executável. Log
 
 ### Nether model skins
 
-Piglin variants use distinct `entity/piglin/piglin.png`, `piglin_brute.png` and `zombified_piglin.png` skins (64�64); Blaze uses `entity/blaze.png` (64�32). Supply these externally. The Programmer Art pack in a standard asset index may omit Piglin skins. Missing skins are logged and use model fallback colors.
+Piglin variants use distinct `entity/piglin/piglin.png`, `piglin_brute.png` and `zombified_piglin.png` skins (64×64); Blaze uses `entity/blaze.png` (64×32). Supply these externally. The Programmer Art pack in a standard asset index may omit Piglin skins. Missing skins are logged and use model fallback colors.
 
-The Piglin cuboid UV regions can also be inspected in [Mojang�s geometry reference](https://github.com/Mojang/bedrock-samples/blob/main/resource_pack/models/entity/piglin.geo.json). The game uses its own TOML models, including separate limb regions, snout, tusks and clothing layers. No proprietary skin is bundled.
+The Piglin cuboid UV regions can also be inspected in [Mojang’s geometry reference](https://github.com/Mojang/bedrock-samples/blob/main/resource_pack/models/entity/piglin.geo.json). The game uses its own TOML models, including separate limb regions, snout, tusks and clothing layers. No proprietary skin is bundled.
+
+### Villager skin layers
+
+Villager models use `entity/villager/villager.png`, `entity/villager/type/plains.png` and a separate `entity/villager/profession/<profession>.png` overlay. A profession overlay is not a complete skin. Full relative texture paths prevent collisions with obsolete skins having the same filename. Geometry regions can be inspected in [Mojang's villager model reference](https://github.com/Mojang/bedrock-samples/blob/main/resource_pack/models/entity/villager_v2.geo.json).

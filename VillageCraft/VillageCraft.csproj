@@ -17,7 +17,7 @@
   <ItemGroup>
     <PackageReference Include="Jint" Version="4.17.0" />
     <PackageReference Include="rlImgui-cs" Version="3.2.0" />
-    <Content Include="../mojangles.ttf" Link="Content/Fonts/mojangles.ttf" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
+    <Content Include="../mojangles.ttf" Condition="Exists('../mojangles.ttf')" Link="Content/Fonts/mojangles.ttf" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
     <Content Include="Content/**/*.md" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
     <Content Include="Content/**/*.example" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
     <Content Include="Content/**/*.d.ts" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />

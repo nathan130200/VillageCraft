@@ -51,7 +51,8 @@ static class Assets
             {
                 if(!Directory.Exists(folder))continue;
                 foreach(var file in Directory.EnumerateFiles(folder,"*.png",SearchOption.AllDirectories))
-                {string rel=Path.GetRelativePath(folder,file).Replace('\\','/');loose.TryAdd(rel,file);loose.TryAdd(Path.GetFileName(file),file);}
+                // Keep full relative paths: a profession overlay must not impersonate a legacy full-body skin by basename.
+                {string rel=Path.GetRelativePath(folder,file).Replace('\\','/');loose.TryAdd(rel,file);}
             }
             foreach(string indexPath in new[]{Path.Combine(root,"assets_index.json"),Path.Combine(root,"assets","assets_index.json")})
             {
@@ -85,6 +86,7 @@ static class Assets
     }
     public static byte[]? Read(string name)
     {
+        using var profile=Profiler.Measure(ProfileArea.AssetRead);
         if(name=="block/dirt_path.png")name="block/grass_path_top.png";
         Discover();string logical=name.StartsWith("minecraft/")?name:"minecraft/textures/"+name;
         return cache!.Read(logical,()=>ReadSource(name,logical));

@@ -26,6 +26,7 @@ public static class BinarySave
     {int n=Count(r,max);var list=new List<Creature>(n);for(int i=0;i<n;i++)list.Add(new(){Type=Text(r),Home=r.ReadInt32(),X=r.ReadSingle(),Z=r.ReadSingle(),Health=r.ReadSingle(),Cooldown=r.ReadSingle(),Age=r.ReadSingle(),Facing=r.ReadSingle()});return list;}
     public static void Write(string path,City c)
     {
+        using var profile=Profiler.Measure(ProfileArea.Save);
         c.EnsureEntityIds();c.Terrain.Validate(c.Width,c.Height);
         using var payload=new MemoryStream();
         using(var w=new BinaryWriter(payload,Utf8,true))
@@ -63,6 +64,7 @@ public static class BinarySave
     }
     public static City Read(string path)
     {
+        using var profile=Profiler.Measure(ProfileArea.Load);
         try
         {
             using var file=File.OpenRead(path);if(file.Length>MaxBytes+42)throw new InvalidDataException("Save exceeds size limit.");

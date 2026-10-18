@@ -15,6 +15,35 @@ static class VisualChecks
         finally{Raylib.UnloadImage(image);}
     }
 
+    public static void Villagers()
+    {
+        string[] models=["villager","farmer","woodcutter","miner","explorer","smith_worker","warrior","archer","mage_worker","herder","deliveryman"];
+        var target=Raylib.LoadRenderTexture(304,235);Raylib.SetWindowSize(1280,840);
+        try
+        {
+            for(int view=0;view<2;view++)
+            {
+                for(int frame=0;frame<5;frame++)
+                {
+                    Raylib.BeginDrawing();Raylib.ClearBackground(new Color(24,37,43,255));
+                    for(int i=0;i<models.Length;i++)
+                    {
+                        var camera=new Camera3D{Position=new(2,2.8f,6.8f),Target=new(0,2,0),Up=Vector3.UnitY,FovY=42,Projection=CameraProjection.Perspective};
+                        Raylib.BeginTextureMode(target);Raylib.ClearBackground(new Color(182,199,202,255));Raylib.BeginMode3D(camera);
+                        Raylib.DrawPlane(Vector3.Zero,new(8,8),new Color(122,147,101,255));Scene.Model(models[i],0,0,heading:view*MathF.PI);
+                        Raylib.EndMode3D();Raylib.EndTextureMode();
+                        int x=8+i%4*318,y=8+i/4*274;
+                        Raylib.DrawText(models[i],x,y,18,Color.White);Raylib.DrawTextureRec(target.Texture,new(0,0,304,-235),new Vector2(x,y+25),Color.White);
+                    }
+                    Raylib.EndDrawing();
+                }
+                Capture(view==0?"villager-skins-front.png":"villager-skins-rear.png");
+            }
+            Console.WriteLine("PASS: all villager profession models rendered from front and rear.");
+        }
+        finally{Raylib.UnloadRenderTexture(target);}
+    }
+
     public static void Nether()
     {
         string[] models=["piglin","piglin_brute","zombified_piglin","blaze","nether_warlord"];

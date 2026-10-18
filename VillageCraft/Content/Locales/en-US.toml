@@ -1495,3 +1495,253 @@ Name = "English (US)"
 
 # Options: help describing the recurring night-monster schedule.
 "options.night_spawn_window" = "Encounters repeat from 18:00 until 05:00. The hostile cap and peaceful nights still apply."
+
+
+# Performance profiler: title. Keep all numbered format arguments.
+"profile.title" = "Performance profiler [F3]"
+
+# Performance profiler: capture. Keep all numbered format arguments.
+"profile.capture" = "Capture"
+
+# Performance profiler: freeze. Keep all numbered format arguments.
+"profile.freeze" = "Freeze samples"
+
+# Performance profiler: reset. Keep all numbered format arguments.
+"profile.reset" = "Reset"
+
+# Performance profiler: export. Keep all numbered format arguments.
+"profile.export" = "Export CSV"
+
+# Performance profiler: summary. Keep all numbered format arguments.
+"profile.summary" = "Window: {0}/{1} frames | Timer tick: {2:0.###} ns"
+
+# Performance profiler: memory. Keep all numbered format arguments.
+"profile.memory" = "Main-thread allocation/frame: {0:0.0} KiB | Heap: {1:0.0} MiB | GC since reset: {2}/{3}/{4}"
+
+# Performance profiler: cpu. Keep all numbered format arguments.
+"profile.cpu" = "Process CPU/frame (~1 s sample, all threads): {0:0.000} ms | Collector (last): {1:0.000} ms"
+
+# Performance profiler: accuracy. Keep all numbered format arguments.
+"profile.accuracy" = "Wall-clock ms, not GPU timings. Self subtracts instrumented child scopes; inclusive rows overlap. Jint self includes interpreter, interop and uninstrumented CLR access. Present/pacing combines submission, swap, polling and FPS waits. Profiling has overhead."
+
+# Performance profiler: activity. Keep all numbered format arguments.
+"profile.activity" = "Scripts: {0} active, {1} idle, {2} failed | Queued commands: {3}"
+
+# Performance profiler: idle help. Keep all numbered format arguments.
+"profile.idle_help" = "Idle means no callback invoked in the last completed frame. Failed scripts are also idle. Synchronous scripts do not yield or accumulate idle execution time. Game pause is separate from profiler freeze."
+
+# Performance profiler: hotspot. Keep all numbered format arguments.
+"profile.hotspot" = "Largest measured self-time: {0} ({1:0.000} ms/frame)"
+
+# Performance profiler: callbacks. Keep all numbered format arguments.
+"profile.callbacks" = "Show individual script callbacks"
+
+# Performance profiler: components. Keep all numbered format arguments.
+"profile.components" = "Script activity (last completed frame)"
+
+# Performance profiler: active. Keep all numbered format arguments.
+"profile.active" = "Active"
+
+# Performance profiler: idle. Keep all numbered format arguments.
+"profile.idle" = "Idle"
+
+# Performance profiler: failed. Keep all numbered format arguments.
+"profile.failed" = "Failed"
+
+# Performance profiler: scope. Keep all numbered format arguments.
+"profile.scope" = "Scope"
+
+# Performance profiler: last. Keep all numbered format arguments.
+"profile.last" = "Last ms"
+
+# Performance profiler: mean. Keep all numbered format arguments.
+"profile.mean" = "Mean ms"
+
+# Performance profiler: self. Keep all numbered format arguments.
+"profile.self" = "Self ms"
+
+# Performance profiler: p95. Keep all numbered format arguments.
+"profile.p95" = "p95 ms/frame"
+
+# Performance profiler: max. Keep all numbered format arguments.
+"profile.max" = "Max ms/frame"
+
+# Performance profiler: per call. Keep all numbered format arguments.
+"profile.per_call" = "ms/call"
+
+# Performance profiler: calls. Keep all numbered format arguments.
+"profile.calls" = "Calls/window"
+
+# Performance profiler: allocation. Keep all numbered format arguments.
+"profile.allocation" = "Self KiB/frame"
+
+# Performance profiler: exported. Keep all numbered format arguments.
+"profile.exported" = "Saved to UserData/Profiles/{0}"
+
+# Performance profiler: export failed. Keep all numbered format arguments.
+"profile.export_failed" = "Could not export profile; see the log."
+
+# Timing scope name in the performance profiler: Frame.
+"profile.area.Frame" = "Captured frame"
+
+# Timing scope name in the performance profiler: Input.
+"profile.area.Input" = "Frame preparation (includes update)"
+
+# Timing scope name in the performance profiler: Update.
+"profile.area.Update" = "Simulation update"
+
+# Timing scope name in the performance profiler: SimulationStep.
+"profile.area.SimulationStep" = "Simulation substep"
+
+# Timing scope name in the performance profiler: DailyTick.
+"profile.area.DailyTick" = "Daily settlement"
+
+# Timing scope name in the performance profiler: Villagers.
+"profile.area.Villagers" = "Villager updates"
+
+# Timing scope name in the performance profiler: Animals.
+"profile.area.Animals" = "Animal updates"
+
+# Timing scope name in the performance profiler: Combat.
+"profile.area.Combat" = "Combat updates"
+
+# Timing scope name in the performance profiler: Sunlight.
+"profile.area.Sunlight" = "Sunlight damage"
+
+# Timing scope name in the performance profiler: Pathfinding.
+"profile.area.Pathfinding" = "Pathfinding / A*"
+
+# Timing scope name in the performance profiler: RoadConnectivity.
+"profile.area.RoadConnectivity" = "Road connectivity"
+
+# Timing scope name in the performance profiler: Stock.
+"profile.area.Stock" = "Stock reconciliation"
+
+# Timing scope name in the performance profiler: SupplySearch.
+"profile.area.SupplySearch" = "Supply source search"
+
+# Timing scope name in the performance profiler: Production.
+"profile.area.Production" = "Production recipes"
+
+# Timing scope name in the performance profiler: ManagedActions.
+"profile.area.ManagedActions" = "Managed game actions"
+
+# Timing scope name in the performance profiler: WorldQueries.
+"profile.area.WorldQueries" = "Managed world queries"
+
+# Timing scope name in the performance profiler: ScriptLookup.
+"profile.area.ScriptLookup" = "Script callback lookup"
+
+# Timing scope name in the performance profiler: ScriptDispatch.
+"profile.area.ScriptDispatch" = "Script event dispatch"
+
+# Timing scope name in the performance profiler: ScriptTick.
+"profile.area.ScriptTick" = "Global/building script updates"
+
+# Timing scope name in the performance profiler: ScriptQueue.
+"profile.area.ScriptQueue" = "Script command queue"
+
+# Timing scope name in the performance profiler: ScriptPredicate.
+"profile.area.ScriptPredicate" = "Jint query predicates"
+
+# Timing scope name in the performance profiler: Render.
+"profile.area.Render" = "3D CPU rendering/submission"
+
+# Timing scope name in the performance profiler: Terrain.
+"profile.area.Terrain" = "Terrain rendering"
+
+# Timing scope name in the performance profiler: Buildings.
+"profile.area.Buildings" = "Building rendering"
+
+# Timing scope name in the performance profiler: Residents.
+"profile.area.Residents" = "Villager rendering"
+
+# Timing scope name in the performance profiler: Creatures.
+"profile.area.Creatures" = "Creature rendering"
+
+# Timing scope name in the performance profiler: Effects.
+"profile.area.Effects" = "Effects, previews and selection"
+
+# Timing scope name in the performance profiler: Picking.
+"profile.area.Picking" = "Mouse terrain picking"
+
+# Timing scope name in the performance profiler: Thumbnails.
+"profile.area.Thumbnails" = "Building thumbnails"
+
+# Timing scope name in the performance profiler: Ui.
+"profile.area.Ui" = "UI construction"
+
+# Timing scope name in the performance profiler: UiSubmit.
+"profile.area.UiSubmit" = "ImGui CPU submission"
+
+# Timing scope name in the performance profiler: PresentAndPacing.
+"profile.area.PresentAndPacing" = "Presentation / FPS pacing / wait"
+
+# Timing scope name in the performance profiler: DisplayChanges.
+"profile.area.DisplayChanges" = "Display mode changes"
+
+# Timing scope name in the performance profiler: ProfilerUi.
+"profile.area.ProfilerUi" = "Profiler UI overhead"
+
+# Timing scope name in the performance profiler: AssetRead.
+"profile.area.AssetRead" = "Asset resolution / cache reads"
+
+# Timing scope name in the performance profiler: Save.
+"profile.area.Save" = "Save serialization / I/O"
+
+# Timing scope name in the performance profiler: Load.
+"profile.area.Load" = "Load deserialization / I/O"
+
+# Performance profiler: split. Preserve numbered format arguments.
+"profile.split" = "Self ms/frame: Jint + interop {0:0.000} | Outside Jint {1:0.000} | Present/pacing {2:0.000}"
+
+# Performance profiler: peak_call. Preserve numbered format arguments.
+"profile.peak_call" = "Peak call ms"
+
+# Performance profiler: CPU sample is unavailable until roughly one second has been captured.
+"profile.cpu_pending" = "Process CPU: collecting the first sample (~1 s)."
+
+# City problems panel: ui.problems. Preserve numbered format arguments.
+"ui.problems" = "City problems"
+
+# City problems panel: problem.button. Preserve numbered format arguments.
+"problem.button" = "City problems: {0} current occurrences"
+
+# City problems panel: problem.none. Preserve numbered format arguments.
+"problem.none" = "No current problems detected."
+
+# City problems panel: problem.help. Preserve numbered format arguments.
+"problem.help" = "Current problems are grouped below. Expand a row and select an affected object to inspect it. Counts update automatically."
+
+# City problems panel: problem.group. Preserve numbered format arguments.
+"problem.group" = "[{0}x] {1}"
+
+# City problems panel: problem.MissingInput. Preserve numbered format arguments.
+"problem.MissingInput" = "Buildings need {0}"
+
+# City problems panel: problem.Disconnected. Preserve numbered format arguments.
+"problem.Disconnected" = "Buildings need a connected entrance"
+
+# City problems panel: problem.Unstaffed. Preserve numbered format arguments.
+"problem.Unstaffed" = "Workplaces have no workers"
+
+# City problems panel: problem.Damaged. Preserve numbered format arguments.
+"problem.Damaged" = "Buildings need repairs"
+
+# City problems panel: problem.Homeless. Preserve numbered format arguments.
+"problem.Homeless" = "Villagers need housing"
+
+# City problems panel: problem.Hungry. Preserve numbered format arguments.
+"problem.Hungry" = "Villagers need to collect food"
+
+# City problems panel: problem.WaterShortage. Preserve numbered format arguments.
+"problem.WaterShortage" = "Villagers need more water capacity"
+
+# City problems panel: problem.Hostiles. Preserve numbered format arguments.
+"problem.Hostiles" = "Hostile creatures in the village"
+
+# City problems panel: problem.FullStorage. Preserve numbered format arguments.
+"problem.FullStorage" = "Warehouses are full"
+
+# City problems panel: profile.area.Diagnostics. Preserve numbered format arguments.
+"profile.area.Diagnostics" = "City diagnostics"

@@ -33,6 +33,7 @@ public partial class City
     }
     void UpdateSunlight(float dt)
     {
+        using var profile=Profiler.Measure(ProfileArea.Sunlight);
         foreach(var monster in Enemies.ToArray())
         {
             monster.BurningInSun=Catalog.Data.Units[monster.Type].BurnsInSun&&!monster.LeatherHelmet&&ExposedToSun(monster);

@@ -10,6 +10,7 @@ public sealed class ScriptRuntime:IDisposable
 {
     sealed class Component
     {
+        public readonly Dictionary<string,Profiler.Metric> Timings=[];
         public required string Id;public required Engine Engine;
         public ScriptType Type;public string Target=string.Empty;public bool Failed,Registered;
     }
@@ -21,6 +22,7 @@ public sealed class ScriptRuntime:IDisposable
     public IReadOnlyList<string> Errors=>errors;
     readonly List<string> errors=[];
     public int PendingCount=>pending.Count;
+    internal IEnumerable<(string Id,bool Failed)> ProfileScripts=>components.Values.Select(c=>(c.Id,c.Failed));
     public ScriptRuntime(City city)
     {
         this.city=city;city.runtime?.Dispose();city.runtime=this;city.EnsureEntityIds();city.Changed+=OnEvent;
@@ -73,11 +75,21 @@ public sealed class ScriptRuntime:IDisposable
         c.Failed=true;string message=$"Script {c.Id}: {error.Message}";
         errors.Add(message);if(errors.Count>40)errors.RemoveAt(0);GameLog.Script(c.Id,GameLogLevel.Error,error.ToString());
     }
-    bool Has(Component c,string callback)=>!c.Failed&&c.Engine.GetValue(callback) is Jint.Native.Function.Function;
+    bool Has(Component c,string callback)
+    {
+        using var profile=Profiler.Measure(ProfileArea.ScriptLookup);
+        return !c.Failed&&c.Engine.GetValue(callback) is Jint.Native.Function.Function;
+    }
     JsValue Invoke(Component c,string callback,params object?[] args)
     {
         if(disposed||!Has(c,callback))return JsValue.Undefined;
+        using var profile=Profiler.Active?Profiler.Measure(Timing(c,callback)):default;
         try{return c.Engine.Invoke(callback,args);}catch(Exception e){Fail(c,e);return JsValue.Undefined;}
+    }
+    static Profiler.Metric Timing(Component c,string callback)
+    {
+        if(c.Timings.TryGetValue(callback,out var metric))return metric;
+        metric=Profiler.GetScript(c.Id,callback);c.Timings.Add(callback,metric);return metric;
     }
     public bool Queue(Action mutation)
     {
@@ -102,6 +114,7 @@ public sealed class ScriptRuntime:IDisposable
     }
     void Dispatch(WorldEvent evt)
     {
+        using var profile=Profiler.Measure(ProfileArea.ScriptDispatch);
         foreach(var c in components.Values.Where(c=>!c.Failed&&Matches(c,evt)))
         {
             if(evt.Name=="onBuildingDay"&&c.Type!=ScriptType.Mod)continue;
@@ -175,6 +188,7 @@ public sealed class ScriptRuntime:IDisposable
     });
     public void Tick(float dt)
     {
+        using var profile=Profiler.Measure(ProfileArea.ScriptTick);
         if(disposed)return;Flush();
         foreach(var c in components.Values)Invoke(c,"onUpdate",dt);
         foreach(var b in city.Buildings.Where(b=>b.Enabled).ToArray())
@@ -185,7 +199,8 @@ public sealed class ScriptRuntime:IDisposable
     }
     public void Flush()
     {
-        if(disposed||draining||starting)return;draining=true;
+        if(disposed||draining||starting)return;
+        using var profile=Profiler.Measure(ProfileArea.ScriptQueue);draining=true;
         try{for(int i=0;i<WorkPerFlush&&pending.TryDequeue(out var work);i++)try{work();}catch(Exception e){GameLog.Write(GameLogLevel.Error,"Script queued command failed: "+e);}}
         finally{try{city.ResolveDeaths();}finally{draining=false;}}
     }

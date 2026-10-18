@@ -16,7 +16,7 @@ public sealed class ScriptWorld:ScriptGame
     bool Match(JsValue? filter,object entity,int id,string tags,string key)
     {
         if(filter==null||filter.IsUndefined()||filter.IsNull())return true;
-        if(filter is Jint.Native.Function.Function)return TypeConverter.ToBoolean(engine.Invoke(filter,entity));
+        if(filter is Jint.Native.Function.Function){using var profile=Profiler.Measure(ProfileArea.ScriptPredicate);return TypeConverter.ToBoolean(engine.Invoke(filter,entity));}
         if(filter.IsNumber())return id==filter.AsNumber();
         if(!filter.IsString())return false;
         string text=filter.AsString();if(string.IsNullOrEmpty(text)||text=="*")return true;
@@ -27,27 +27,28 @@ public sealed class ScriptWorld:ScriptGame
         if(text.StartsWith("profession:"))return key==text[11..];
         return key==text||EntityTags.Has(tags,text)||id.ToString(System.Globalization.CultureInfo.InvariantCulture)==text;
     }
-    public ScriptMonster[] getMonsters(JsValue? filter=null)=>city.Enemies.ToArray().Select(m=>new ScriptMonster(city,m)).Where(m=>Match(filter,m,m.id,m.tags,m.type)).ToArray();
-    public ScriptVillager[] getVillagers(JsValue? filter=null)=>city.Citizens.ToArray().Select(v=>new ScriptVillager(city,v)).Where(v=>Match(filter,v,v.id,v.tags,v.profession)).ToArray();
-    public ScriptBuilding[] getBuildings(JsValue? filter=null)=>city.Buildings.ToArray().Select(b=>new ScriptBuilding(city,b)).Where(b=>Match(filter,b,b.id,b.tags,b.prefab)).ToArray();
+    public ScriptMonster[] getMonsters(JsValue? filter=null){using var profile=Profiler.Measure(ProfileArea.WorldQueries);return city.Enemies.ToArray().Select(m=>new ScriptMonster(city,m)).Where(m=>Match(filter,m,m.id,m.tags,m.type)).ToArray();}
+    public ScriptVillager[] getVillagers(JsValue? filter=null){using var profile=Profiler.Measure(ProfileArea.WorldQueries);return city.Citizens.ToArray().Select(v=>new ScriptVillager(city,v)).Where(v=>Match(filter,v,v.id,v.tags,v.profession)).ToArray();}
+    public ScriptBuilding[] getBuildings(JsValue? filter=null){using var profile=Profiler.Measure(ProfileArea.WorldQueries);return city.Buildings.ToArray().Select(b=>new ScriptBuilding(city,b)).Where(b=>Match(filter,b,b.id,b.tags,b.prefab)).ToArray();}
     public float birthChance=>city.Rules.BirthChance;
     public int pendingBirths=>city.Babies.Count;
     public bool queueBirth(int homeId)=>runtime.Queue(()=>city.ScheduleBirth(homeId));
-    public ScriptProfession[] getProfessions()=>Catalog.Data.Professions.Values.Select(p=>new ScriptProfession(p.Id,p.Jobs)).ToArray();
-    public ScriptBuilding[] getWorkplaces()=>city.Buildings.Where(b=>b.Plan.Jobs>0).Select(b=>new ScriptBuilding(city,b)).ToArray();
+    public ScriptProfession[] getProfessions(){using var profile=Profiler.Measure(ProfileArea.WorldQueries);return Catalog.Data.Professions.Values.Select(p=>new ScriptProfession(p.Id,p.Jobs)).ToArray();}
+    public ScriptBuilding[] getWorkplaces(){using var profile=Profiler.Measure(ProfileArea.WorldQueries);return city.Buildings.Where(b=>b.Plan.Jobs>0).Select(b=>new ScriptBuilding(city,b)).ToArray();}
     public bool assignJobs(int[] villagers,int[] workplaces)=>city.ScriptAssignJobs(villagers,workplaces);
-    public ScriptBuilding[] getStores()=>city.Buildings.Where(b=>b.Plan.Warehouse||b.Storage.Count>0||b.Plan.Input.Count>0||b.Plan.Output.Count>0||!string.IsNullOrEmpty(b.Plan.Animal)||b.RequestedResource!=ResourceType.None).Select(b=>new ScriptBuilding(city,b)).ToArray();
-    public ScriptBuilding[] getDamagedBuildings()=>city.Buildings.Where(b=>!b.Plan.Natural&&!b.Plan.Indestructible&&b.Health>0&&b.Health<b.Plan.Health).Select(b=>new ScriptBuilding(city,b)).ToArray();
-    public ScriptBuilding[] getAttackableBuildings()=>city.Buildings.Where(b=>!b.Plan.Natural&&!b.Plan.Indestructible&&(!b.Plan.Path||b.Plan.BlocksRaiders)).Select(b=>new ScriptBuilding(city,b)).ToArray();
+    public ScriptBuilding[] getStores(){using var profile=Profiler.Measure(ProfileArea.WorldQueries);return city.Buildings.Where(b=>b.Plan.Warehouse||b.Storage.Count>0||b.Plan.Input.Count>0||b.Plan.Output.Count>0||!string.IsNullOrEmpty(b.Plan.Animal)||b.RequestedResource!=ResourceType.None).Select(b=>new ScriptBuilding(city,b)).ToArray();}
+    public ScriptBuilding[] getDamagedBuildings(){using var profile=Profiler.Measure(ProfileArea.WorldQueries);return city.Buildings.Where(b=>!b.Plan.Natural&&!b.Plan.Indestructible&&b.Health>0&&b.Health<b.Plan.Health).Select(b=>new ScriptBuilding(city,b)).ToArray();}
+    public ScriptBuilding[] getAttackableBuildings(){using var profile=Profiler.Measure(ProfileArea.WorldQueries);return city.Buildings.Where(b=>!b.Plan.Natural&&!b.Plan.Indestructible&&(!b.Plan.Path||b.Plan.BlocksRaiders)).Select(b=>new ScriptBuilding(city,b)).ToArray();}
     public ScriptBuilding[] getHarvestSources(string prefab,float x,float z,float radius)
     {
+        using var profile=Profiler.Measure(ProfileArea.WorldQueries);
         if(!float.IsFinite(x)||!float.IsFinite(z)||!float.IsFinite(radius)||radius<0||radius>32)return [];
         return city.Buildings.Where(b=>b.Prefab==prefab&&System.Numerics.Vector2.DistanceSquared(new(x,z),new(b.X,b.Z))<=radius*radius).Select(b=>new ScriptBuilding(city,b)).ToArray();
     }
-    public ScriptMonster[] getGuardians(JsValue? filter=null)=>city.Defenders.ToArray().Select(m=>new ScriptMonster(city,m)).Where(m=>Match(filter,m,m.id,m.tags,m.type)).ToArray();
-    public ScriptMonster[] getAnimals(JsValue? filter=null)=>city.Animals.ToArray().Select(m=>new ScriptMonster(city,m)).Where(m=>Match(filter,m,m.id,m.tags,m.type)).ToArray();
-    public object[] roads()=>city.Roads().OrderBy(p=>p.Item1).ThenBy(p=>p.Item2).Select(p=>(object)new ScriptPoint(p.Item1,p.Item2)).ToArray();
-    public string[] resourceNames()=>Catalog.Resources.Select(ResourceIds.Name).ToArray();
+    public ScriptMonster[] getGuardians(JsValue? filter=null){using var profile=Profiler.Measure(ProfileArea.WorldQueries);return city.Defenders.ToArray().Select(m=>new ScriptMonster(city,m)).Where(m=>Match(filter,m,m.id,m.tags,m.type)).ToArray();}
+    public ScriptMonster[] getAnimals(JsValue? filter=null){using var profile=Profiler.Measure(ProfileArea.WorldQueries);return city.Animals.ToArray().Select(m=>new ScriptMonster(city,m)).Where(m=>Match(filter,m,m.id,m.tags,m.type)).ToArray();}
+    public object[] roads(){using var profile=Profiler.Measure(ProfileArea.WorldQueries);return city.Roads().OrderBy(p=>p.Item1).ThenBy(p=>p.Item2).Select(p=>(object)new ScriptPoint(p.Item1,p.Item2)).ToArray();}
+    public string[] resourceNames(){using var profile=Profiler.Measure(ProfileArea.WorldQueries);return Catalog.Resources.Select(ResourceIds.Name).ToArray();}
     public int anchorX=>city.AnchorX;
     public int anchorZ=>city.AnchorZ;
     public float elapsedDay=>city.DayTime;

@@ -327,3 +327,7 @@ world.error("Custom behavior could not acquire its target");
 `log`, `warn` e `error` sempre gravam em UserData/Logs, inclusive em Release. O arquivo de cada execução identifica o componente e usa horário UTC. Mensagens longas continuam no arquivo; somente mensagens curtas de log também entram no diário da vila. Exceções dos callbacks gravam a stack trace e desativam o componente com falha conforme as regras do runtime. Não é preciso ativar logging de desenvolvimento.
 
 `onNightStarted()` continua sendo um evento de início de noite. Encontros normais agora podem gerar vários grupos entre 18:00 e 05:00; use `onMonsterSpawned` para observar cada criação. Pausa e velocidade usam o mesmo relógio da simulação, e os intervalos persistem no save beta v11.
+
+### Guardian patrol example
+
+`guardian.js` keeps a random reachable road destination per golem, follows it until arrival or timeout, and immediately prioritizes monsters. `MobScriptContext.canReach(x, z)` checks a route without moving; `moveTo(x, z)` follows it through the existing navigation system. Patrol state is transient JavaScript state and is rebuilt after loading.

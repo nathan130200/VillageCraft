@@ -1495,3 +1495,253 @@ Name = "Português (Brasil)"
 
 # Options: help describing the recurring night-monster schedule.
 "options.night_spawn_window" = "Encontros se repetem das 18:00 até 05:00, respeitando o limite de monstros e as noites de paz."
+
+
+# Performance profiler: title. Keep all numbered format arguments.
+"profile.title" = "Analisador de desempenho [F3]"
+
+# Performance profiler: capture. Keep all numbered format arguments.
+"profile.capture" = "Capturar"
+
+# Performance profiler: freeze. Keep all numbered format arguments.
+"profile.freeze" = "Congelar amostras"
+
+# Performance profiler: reset. Keep all numbered format arguments.
+"profile.reset" = "Reiniciar"
+
+# Performance profiler: export. Keep all numbered format arguments.
+"profile.export" = "Exportar CSV"
+
+# Performance profiler: summary. Keep all numbered format arguments.
+"profile.summary" = "Janela: {0}/{1} quadros | Tick do timer: {2:0.###} ns"
+
+# Performance profiler: memory. Keep all numbered format arguments.
+"profile.memory" = "Alocação da thread principal/quadro: {0:0.0} KiB | Heap: {1:0.0} MiB | GC desde reinício: {2}/{3}/{4}"
+
+# Performance profiler: cpu. Keep all numbered format arguments.
+"profile.cpu" = "CPU do processo/quadro (amostra ~1 s, todas as threads): {0:0.000} ms | Coletor (último): {1:0.000} ms"
+
+# Performance profiler: accuracy. Keep all numbered format arguments.
+"profile.accuracy" = "Milissegundos de tempo decorrido, não tempo de GPU. Próprio desconta escopos filhos; linhas inclusivas se sobrepõem. Jint próprio inclui interpretador, interoperabilidade e acessos CLR não instrumentados. Apresentação inclui envio, troca, eventos e espera do FPS. Medir tem custo."
+
+# Performance profiler: activity. Keep all numbered format arguments.
+"profile.activity" = "Scripts: {0} ativos, {1} ociosos, {2} com falha | Comandos na fila: {3}"
+
+# Performance profiler: idle help. Keep all numbered format arguments.
+"profile.idle_help" = "Ocioso significa nenhum callback executado no último quadro concluido. Scripts com falha também sao ociosos. Scripts síncronos não cedem execucao nem acumulam tempo ocioso. Pausar o jogo é diferente de congelar o profiler."
+
+# Performance profiler: hotspot. Keep all numbered format arguments.
+"profile.hotspot" = "Maior tempo próprio medido: {0} ({1:0.000} ms/quadro)"
+
+# Performance profiler: callbacks. Keep all numbered format arguments.
+"profile.callbacks" = "Mostrar callbacks individuais"
+
+# Performance profiler: components. Keep all numbered format arguments.
+"profile.components" = "Atividade dos scripts (último quadro concluido)"
+
+# Performance profiler: active. Keep all numbered format arguments.
+"profile.active" = "Ativo"
+
+# Performance profiler: idle. Keep all numbered format arguments.
+"profile.idle" = "Ocioso"
+
+# Performance profiler: failed. Keep all numbered format arguments.
+"profile.failed" = "Falhou"
+
+# Performance profiler: scope. Keep all numbered format arguments.
+"profile.scope" = "Escopo"
+
+# Performance profiler: last. Keep all numbered format arguments.
+"profile.last" = "Último ms"
+
+# Performance profiler: mean. Keep all numbered format arguments.
+"profile.mean" = "Média ms"
+
+# Performance profiler: self. Keep all numbered format arguments.
+"profile.self" = "Próprio ms"
+
+# Performance profiler: p95. Keep all numbered format arguments.
+"profile.p95" = "p95 ms/quadro"
+
+# Performance profiler: max. Keep all numbered format arguments.
+"profile.max" = "Max ms/quadro"
+
+# Performance profiler: per call. Keep all numbered format arguments.
+"profile.per_call" = "ms/chamada"
+
+# Performance profiler: calls. Keep all numbered format arguments.
+"profile.calls" = "Chamadas/janela"
+
+# Performance profiler: allocation. Keep all numbered format arguments.
+"profile.allocation" = "Próprio KiB/quadro"
+
+# Performance profiler: exported. Keep all numbered format arguments.
+"profile.exported" = "Salvo em UserData/Profiles/{0}"
+
+# Performance profiler: export failed. Keep all numbered format arguments.
+"profile.export_failed" = "Nao foi possível exportar; consulte o log."
+
+# Timing scope name in the performance profiler: Frame.
+"profile.area.Frame" = "Quadro capturado"
+
+# Timing scope name in the performance profiler: Input.
+"profile.area.Input" = "Preparacao do quadro (inclui atualização)"
+
+# Timing scope name in the performance profiler: Update.
+"profile.area.Update" = "Atualização da simulação"
+
+# Timing scope name in the performance profiler: SimulationStep.
+"profile.area.SimulationStep" = "Subpasso da simulação"
+
+# Timing scope name in the performance profiler: DailyTick.
+"profile.area.DailyTick" = "Processamento diario"
+
+# Timing scope name in the performance profiler: Villagers.
+"profile.area.Villagers" = "Atualização de aldeoes"
+
+# Timing scope name in the performance profiler: Animals.
+"profile.area.Animals" = "Atualização de animais"
+
+# Timing scope name in the performance profiler: Combat.
+"profile.area.Combat" = "Atualização de combate"
+
+# Timing scope name in the performance profiler: Sunlight.
+"profile.area.Sunlight" = "Dano solar"
+
+# Timing scope name in the performance profiler: Pathfinding.
+"profile.area.Pathfinding" = "Rotas / A*"
+
+# Timing scope name in the performance profiler: RoadConnectivity.
+"profile.area.RoadConnectivity" = "Conectividade de estradas"
+
+# Timing scope name in the performance profiler: Stock.
+"profile.area.Stock" = "Reconciliação de estoque"
+
+# Timing scope name in the performance profiler: SupplySearch.
+"profile.area.SupplySearch" = "Busca de suprimentos"
+
+# Timing scope name in the performance profiler: Production.
+"profile.area.Production" = "Receitas de produção"
+
+# Timing scope name in the performance profiler: ManagedActions.
+"profile.area.ManagedActions" = "Ações gerenciadas do jogo"
+
+# Timing scope name in the performance profiler: WorldQueries.
+"profile.area.WorldQueries" = "Consultas gerenciadas ao mundo"
+
+# Timing scope name in the performance profiler: ScriptLookup.
+"profile.area.ScriptLookup" = "Busca de callback de script"
+
+# Timing scope name in the performance profiler: ScriptDispatch.
+"profile.area.ScriptDispatch" = "Despacho de eventos de script"
+
+# Timing scope name in the performance profiler: ScriptTick.
+"profile.area.ScriptTick" = "Atualização global/de prédios"
+
+# Timing scope name in the performance profiler: ScriptQueue.
+"profile.area.ScriptQueue" = "Fila de comandos de script"
+
+# Timing scope name in the performance profiler: ScriptPredicate.
+"profile.area.ScriptPredicate" = "Predicados Jint de consultas"
+
+# Timing scope name in the performance profiler: Render.
+"profile.area.Render" = "Renderização/envio 3D pela CPU"
+
+# Timing scope name in the performance profiler: Terrain.
+"profile.area.Terrain" = "Renderização de terreno"
+
+# Timing scope name in the performance profiler: Buildings.
+"profile.area.Buildings" = "Renderização de prédios"
+
+# Timing scope name in the performance profiler: Residents.
+"profile.area.Residents" = "Renderização de aldeoes"
+
+# Timing scope name in the performance profiler: Creatures.
+"profile.area.Creatures" = "Renderização de criaturas"
+
+# Timing scope name in the performance profiler: Effects.
+"profile.area.Effects" = "Efeitos, previas e seleção"
+
+# Timing scope name in the performance profiler: Picking.
+"profile.area.Picking" = "Selecao de terreno pelo mouse"
+
+# Timing scope name in the performance profiler: Thumbnails.
+"profile.area.Thumbnails" = "Miniaturas de prédios"
+
+# Timing scope name in the performance profiler: Ui.
+"profile.area.Ui" = "Construção da interface"
+
+# Timing scope name in the performance profiler: UiSubmit.
+"profile.area.UiSubmit" = "Envio ImGui pela CPU"
+
+# Timing scope name in the performance profiler: PresentAndPacing.
+"profile.area.PresentAndPacing" = "Apresentação / ritmo FPS / espera"
+
+# Timing scope name in the performance profiler: DisplayChanges.
+"profile.area.DisplayChanges" = "Alterações de video"
+
+# Timing scope name in the performance profiler: ProfilerUi.
+"profile.area.ProfilerUi" = "Custo da interface do profiler"
+
+# Timing scope name in the performance profiler: AssetRead.
+"profile.area.AssetRead" = "Resolução de assets / cache"
+
+# Timing scope name in the performance profiler: Save.
+"profile.area.Save" = "Serialização / gravação"
+
+# Timing scope name in the performance profiler: Load.
+"profile.area.Load" = "Desserialização / leitura"
+
+# Performance profiler: split. Preserve numbered format arguments.
+"profile.split" = "Próprio ms/quadro: Jint + interop {0:0.000} | Fora do Jint {1:0.000} | Apresentação/espera {2:0.000}"
+
+# Performance profiler: peak_call. Preserve numbered format arguments.
+"profile.peak_call" = "Pico/cham. ms"
+
+# Performance profiler: CPU sample is unavailable until roughly one second has been captured.
+"profile.cpu_pending" = "CPU do processo: coletando a primeira amostra (~1 s)."
+
+# City problems panel: ui.problems. Preserve numbered format arguments.
+"ui.problems" = "Problemas da cidade"
+
+# City problems panel: problem.button. Preserve numbered format arguments.
+"problem.button" = "Problemas da cidade: {0} ocorrências atuais"
+
+# City problems panel: problem.none. Preserve numbered format arguments.
+"problem.none" = "Nenhum problema atual encontrado."
+
+# City problems panel: problem.help. Preserve numbered format arguments.
+"problem.help" = "Os problemas atuais estão agrupados abaixo. Expanda uma linha e selecione um objeto para inspecionar. As contagens se atualizam automaticamente."
+
+# City problems panel: problem.group. Preserve numbered format arguments.
+"problem.group" = "[{0}x] {1}"
+
+# City problems panel: problem.MissingInput. Preserve numbered format arguments.
+"problem.MissingInput" = "Prédios precisam de {0}"
+
+# City problems panel: problem.Disconnected. Preserve numbered format arguments.
+"problem.Disconnected" = "Prédios precisam de entrada conectada"
+
+# City problems panel: problem.Unstaffed. Preserve numbered format arguments.
+"problem.Unstaffed" = "Locais de trabalho sem trabalhadores"
+
+# City problems panel: problem.Damaged. Preserve numbered format arguments.
+"problem.Damaged" = "Prédios precisam de reparos"
+
+# City problems panel: problem.Homeless. Preserve numbered format arguments.
+"problem.Homeless" = "Aldeões precisam de moradia"
+
+# City problems panel: problem.Hungry. Preserve numbered format arguments.
+"problem.Hungry" = "Aldeões precisam buscar comida"
+
+# City problems panel: problem.WaterShortage. Preserve numbered format arguments.
+"problem.WaterShortage" = "Aldeões precisam de mais água"
+
+# City problems panel: problem.Hostiles. Preserve numbered format arguments.
+"problem.Hostiles" = "Criaturas hostis na vila"
+
+# City problems panel: problem.FullStorage. Preserve numbered format arguments.
+"problem.FullStorage" = "Armazéns estão cheios"
+
+# City problems panel: profile.area.Diagnostics. Preserve numbered format arguments.
+"profile.area.Diagnostics" = "Diagnóstico da cidade"

@@ -29,6 +29,7 @@ partial class GameUi
     const ImGuiWindowFlags Fixed=ImGuiWindowFlags.NoTitleBar|ImGuiWindowFlags.NoResize|ImGuiWindowFlags.NoCollapse|ImGuiWindowFlags.NoMove|ImGuiWindowFlags.NoSavedSettings|ImGuiWindowFlags.NoScrollbar|ImGuiWindowFlags.NoScrollWithMouse;
     public void BuildThumbnails()
     {
+        using var profile=Profiler.Measure(ProfileArea.Thumbnails);
         var previousWorld=Scene.World;var previousLight=Scene.Daylight;Scene.World=null;Scene.Daylight=1;
         foreach(var t in thumbnails.Values)Raylib.UnloadRenderTexture(t);thumbnails.Clear();
         var camera=new Camera3D{Position=new(7,6,7),Target=new(0,2,0),Up=Vector3.UnitY,FovY=7.8f,Projection=CameraProjection.Orthographic};

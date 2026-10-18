@@ -50,6 +50,7 @@ public partial class City
     }
     public void ReconcileStock()
     {
+        using var profile=Profiler.Measure(ProfileArea.Stock);
         EnsureStorage();
         // Keep explicit script/admin stock grants compatible. Ordinary production uses local stores.
         foreach(ResourceType resource in Catalog.Resources.Where(r=>!Currency(r)))
@@ -91,6 +92,7 @@ public partial class City
     }
     public Building? FindSupply(Citizen villager,ResourceType resource,int exclude=-1)
     {
+        using var profile=Profiler.Measure(ProfileArea.SupplySearch);
         // Warehouses take priority, then original sources; only reachable supplies qualify.
         foreach(var b in Buildings.Where(b=>b.Id!=exclude&&b.Enabled&&SupplyAvailable(b,resource)>.001f)
             .OrderByDescending(b=>b.Plan.Warehouse).ThenBy(b=>Vector2.DistanceSquared(villager.Position,new(b.X,b.Z))).ThenBy(b=>b.Id))
