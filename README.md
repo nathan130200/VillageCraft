@@ -61,7 +61,9 @@ The save browser shows a compressed map snapshot, completed days, active playtim
 
 ## Controls
 
-**WASD** pans, **Q/E** rotates, **Shift** rotates faster, and the **mouse wheel** zooms. Click to inspect or build; **R** rotates a prefab. **Space** pauses, **1–4** changes speed, and **Esc** opens the save/load and options menu.
+**WASD** or **LMB drag** pans; **Q/E** or **RMB drag** rotates. **Shift** rotates faster, and the **mouse wheel** zooms. Click to inspect or build; **R** rotates a prefab. **Space** pauses, **1–4** changes speed, and **Esc** opens the save/load and options menu. **Enhanced Visuals** adds sunlight, cast shadows, reflective animated water, haze and bloom; **Smooth shadows** softens shadow edges. The HUD stays sharp.
+
+The workforce panel assigns profession priorities (**1 highest, 5 lowest**) instead of listing every villager. Housing limits births: each free bed in a home with two adults gets a daily roll, with babies reserving beds until the next day.
 
 Press **F3** for the [performance profiler](VillageCraft/Content/PROFILING.md), including script callbacks, pathfinding, rendering, allocations and CSV exports.
 

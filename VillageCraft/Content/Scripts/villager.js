@@ -9,7 +9,7 @@ function onVillagerUpdate(v, dt) {
     if (defender && defend(v, dt)) return;
     if (personalSupplies(v, dt)) return;
     if (job && job.job === 'Delivery' && (!world.night || v.cargoCount > 0) && deliverResources(v, dt)) return;
-    if (!world.night && repairBuildings(v, dt)) return;
+    if (repairBuildings(v, dt)) return;
     if (defender && world.night) { patrol(v, dt); return; }
     const workTime = !world.night && (world.timeOfDay < 17 / 24 || !v.hasWorked);
     if (job && job.harvestSource.length > 0 && workTime) { harvestTrees(v, job, dt); return; }
@@ -61,18 +61,21 @@ function personalSupplies(v, dt) {
 /** @param {ScriptVillager} v @param {ScriptBuilding} camp @param {number} dt */
 function harvestTrees(v, camp, dt) {
     let tree = world.building(v.resourceTarget);
-    if (!tree || tree.prefab !== camp.harvestSource || tree.growthDays > 0) {
-        const reserved = new Set(world.getVillagers().filter(other => other.id !== v.id).map(other => other.resourceTarget));
+    if (!tree || tree.prefab !== camp.harvestSource || tree.growthDays > 0 || ai.distance(camp, tree) > camp.harvestRadius) {
+        const reserved = new Set(world.getVillagers().filter(other => other.id !== v.id && (other.task === tasks.GoingToTrees || other.task === tasks.ChoppingTree)).map(other => other.resourceTarget));
         const trees = world.getHarvestSources(camp.harvestSource, camp.x, camp.z, camp.harvestRadius).filter(b => b.growthDays === 0 && !reserved.has(b.id) && ai.distance(camp, b) <= camp.harvestRadius);
         trees.sort((a, b) => ai.distance(v, a) - ai.distance(v, b));
         tree = trees.find(b => v.canReach(b));
         v.resourceTarget = tree ? tree.id : -1;
     }
-    if (!tree) { v.task = tasks.WaitingTreeRegrowth; v.hasWorked = true; return; }
+    if (!tree) { v.resourceTarget = -1; v.walkTo(camp, dt, true); v.task = tasks.WaitingTreeRegrowth; v.hasWorked = true; return; }
     if (ai.distance(v, tree) > 0.4) { v.task = tasks.GoingToTrees; v.walkTo(tree, dt); return; }
     v.task = tasks.ChoppingTree;
     v.chop(tree, dt);
-    if (tree.growthDays > 0) v.resourceTarget = -1;
+    if (tree.growthDays > 0) {
+        v.resourceTarget = -1;
+        v.task = tasks.GoingToTrees; // Re-query other grown trees on the next update, not this stump.
+    }
 }
 
 /** @param {ScriptVillager} v @param {number} dt */
@@ -130,13 +133,20 @@ function deliverResources(v, dt) {
 // Every profession can help repair. Reserve one worker per building to avoid crowds.
 /** @param {ScriptVillager} v @param {number} dt */
 function repairBuildings(v, dt) {
+    // Check the complete recipe before leaving home, not just the first material.
+    const stores = world.getStores();
+    function supplied(b) {
+        return Array.from(b.repairInputs).every(r => v.inventory(r) + stores
+            .filter(s => s.enabled && s.availableSupply(r) > 0 && v.canReach(s))
+            .reduce((sum,s) => sum + s.availableSupply(r), 0) >= b.repairCost(r));
+    }
     let building = world.building(v.repairTarget);
-    if (!building || building.health >= building.maximumHealth || !v.canReach(building)) {
+    if (!building || building.health >= building.maximumHealth || !v.canReach(building) || !supplied(building)) {
         v.repairTarget = -1;
         const reserved = new Set(world.getVillagers().filter(other => other.id !== v.id).map(other => other.repairTarget));
         const damaged = world.getDamagedBuildings().filter(b => !reserved.has(b.id));
         damaged.sort((a, b) => a.health / a.maximumHealth - b.health / b.maximumHealth || ai.distance(v, a) - ai.distance(v, b));
-        building = damaged.find(b => v.canReach(b));
+        building = damaged.find(b => v.canReach(b) && supplied(b));
         if (building) v.repairTarget = building.id;
     }
     if (!building) return false;

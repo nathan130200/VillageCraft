@@ -22,6 +22,8 @@ interface ScriptVillager extends TaggedEntity {
     readonly home: ScriptBuilding | null;
     readonly workplace: ScriptBuilding | null;
     task: TaskName;
+    /** Inspector-selected profession; automatic policies preserve it. */
+    readonly manualProfession: boolean;
     hasWorked: boolean;
     resourceTarget: number;
     repairTarget: number;
@@ -69,6 +71,7 @@ interface ScriptBuilding extends TaggedEntity {
     readonly job: string;
     readonly jobs: number;
     readonly homes: number;
+    readonly pendingBirths: number;
     readonly allowedProfessions: string[];
     readonly animal: string;
     readonly adultAnimals: number;
@@ -153,7 +156,8 @@ interface ScriptWorld extends ScriptGame {
     getDamagedBuildings(): ScriptBuilding[];
     getAttackableBuildings(): ScriptBuilding[];
     getHarvestSources(prefab: string, x: number, z: number, radius: number): ScriptBuilding[];
-    getProfessions(): { readonly id: string; readonly jobs: string[] }[];
+    readonly professionPrioritiesActive: boolean;
+    getProfessions(): { readonly id: string; readonly jobs: string[]; readonly priority: number }[];
     roads(): Point[];
     resourceNames(): ResourceName[];
     assignJobs(villagers: number[], workplaces: number[]): boolean;

@@ -7,13 +7,20 @@ public sealed class GrowingBaby
 }
 public partial class City
 {
+    public Dictionary<string,int> ProfessionPriorities {get;set;}=[];
+    public int ProfessionPriority(string id)=>ProfessionPriorities.GetValueOrDefault(id,3);
+    public void SetProfessionPriority(string id,int priority)
+    {
+        if(!Catalog.Data.Professions.ContainsKey(id)||priority is <1 or >5)throw new ArgumentException("Invalid profession priority.");
+        ProfessionPriorities[id]=priority;ReassignProfessions();
+    }
     public List<GrowingBaby> Babies {get;set;}=[];
     public bool ScheduleBirth(int homeId)
     {
-        if(GameOver||Citizens.Count+Babies.Count>=Rules.MaxPopulation||Babies.Any(b=>b.Home==homeId))return false;
+        if(GameOver||Citizens.Count+Babies.Count>=Rules.MaxPopulation)return false;
         var home=Buildings.FirstOrDefault(b=>b.Id==homeId&&b.Enabled&&b.Plan.Homes>0&&Connected(b,Roads()));
         int parents=Citizens.Count(v=>v.Home==homeId&&v.Health>0);
-        if(home==null||parents<2||parents>=home.Plan.Homes)return false;
+        if(home==null||parents<2||parents+Babies.Count(b=>b.Home==homeId)>=home.Plan.Homes)return false;
         Babies.Add(new(){Home=homeId,DueDay=Day+1});Emit(new("onBabyBorn",home));return true;
     }
     void MatureBabies()

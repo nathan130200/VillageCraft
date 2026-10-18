@@ -33,7 +33,8 @@ public sealed class ScriptWorld:ScriptGame
     public float birthChance=>city.Rules.BirthChance;
     public int pendingBirths=>city.Babies.Count;
     public bool queueBirth(int homeId)=>runtime.Queue(()=>city.ScheduleBirth(homeId));
-    public ScriptProfession[] getProfessions(){using var profile=Profiler.Measure(ProfileArea.WorldQueries);return Catalog.Data.Professions.Values.Select(p=>new ScriptProfession(p.Id,p.Jobs)).ToArray();}
+    public bool professionPrioritiesActive=>city.ProfessionPriorities.Count>0;
+    public ScriptProfession[] getProfessions(){using var profile=Profiler.Measure(ProfileArea.WorldQueries);return Catalog.Data.Professions.Values.Select(p=>new ScriptProfession(p.Id,p.Jobs,city.ProfessionPriority(p.Id))).ToArray();}
     public ScriptBuilding[] getWorkplaces(){using var profile=Profiler.Measure(ProfileArea.WorldQueries);return city.Buildings.Where(b=>b.Plan.Jobs>0).Select(b=>new ScriptBuilding(city,b)).ToArray();}
     public bool assignJobs(int[] villagers,int[] workplaces)=>city.ScriptAssignJobs(villagers,workplaces);
     public ScriptBuilding[] getStores(){using var profile=Profiler.Measure(ProfileArea.WorldQueries);return city.Buildings.Where(b=>b.Plan.Warehouse||b.Storage.Count>0||b.Plan.Input.Count>0||b.Plan.Output.Count>0||!string.IsNullOrEmpty(b.Plan.Animal)||b.RequestedResource!=ResourceType.None).Select(b=>new ScriptBuilding(city,b)).ToArray();}
@@ -130,4 +131,4 @@ public sealed class ScriptMonster
 
 public sealed record ScriptPoint(int x,int z);
 
-public sealed record ScriptProfession(string id,string[] jobs);
+public sealed record ScriptProfession(string id,string[] jobs,int priority);

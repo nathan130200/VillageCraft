@@ -17,6 +17,7 @@ public class Plan
 {
     public int StorageCapacity {get;set;}=200;
     public bool SheltersFromSun {get;set;}
+    public bool Indoor {get;set;}
     public bool Warehouse {get;set;}
     public bool Indestructible {get;set;}
     public bool Natural {get;set;}
@@ -106,6 +107,7 @@ public class Catalog
         Require(data.Prefabs.Count>0&&data.Prefabs.Count<=256,"expected 1..256 prefabs");
         Require(data.Game.FormatVersion==1,"unsupported content version");
         Require(float.IsFinite(data.Rendering.AlphaCutoff)&&data.Rendering.AlphaCutoff>0&&data.Rendering.AlphaCutoff<1&&!string.IsNullOrWhiteSpace(data.Rendering.CutoutFragment),"invalid cutout rendering settings");
+        Require(System.Text.RegularExpressions.Regex.IsMatch(data.Rendering.WaterTint,@"^#[0-9A-Fa-f]{6}$")&&!string.IsNullOrWhiteSpace(data.Rendering.WaterFragment),"invalid water rendering settings");
         Require(data.Prefabs.Select(p=>p.Id).Distinct().Count()==data.Prefabs.Count,"duplicate prefab ids");
         foreach(var model in data.Models.Values)foreach(var p in model)
         {
@@ -171,7 +173,7 @@ public class Catalog
     public static Plan Get(string id)=>Data.byId.TryGetValue(id,out var plan)?plan:throw new InvalidDataException("Unknown prefab: "+id);
 }
 public class ModelFile {public string Id {get;set;}=string.Empty;public List<Part> Parts {get;set;}=[];}
-public class RenderingSettings {public float NightAmbient {get;set;}= .4f;public float AlphaCutoff {get;set;}=.1f;public string CutoutFragment {get;set;}=string.Empty;}
+public class RenderingSettings {public float NightAmbient {get;set;}= .4f;public float AlphaCutoff {get;set;}=.1f;public string CutoutFragment {get;set;}=string.Empty;public string EnhancedFragment {get;set;}=string.Empty;public string LightingVertex {get;set;}=string.Empty;public string LightingFragment {get;set;}=string.Empty;public string ShadowFragment {get;set;}=string.Empty;public string WaterFragment {get;set;}=string.Empty;public string WaterTint {get;set;}="#3F76E4";}
 public class UnitFile:UnitPlan {public string Id {get;set;}=string.Empty;}
 public class ResourceFile {public List<ResourcePlan> Resources {get;set;}=[];}
 public class UpgradeFile {public List<UpgradePlan> Upgrades {get;set;}=[];}

@@ -119,6 +119,14 @@ static class Checks
             var ray=new Raylib_cs.Ray{Position=new(visual.X*Scene.Scale,8,visual.Y*Scene.Scale),Direction=-Vector3.UnitY};
             toolsUi.InspectRay(pickWorld,ray,visual);
             Check(toolsUi.InspectedCitizen==worker.Id,"picking uses the villager rendered position outside workplace");
+            var building=pickWorld.Buildings.First(b=>b.Id==worker.Work);
+            worker.Work=-1;worker.Position=new(building.X,building.Z);
+            visual=Scene.VillagerPosition(pickWorld,worker);
+            ray=new Raylib_cs.Ray{Position=new(visual.X*Scene.Scale,12,visual.Y*Scene.Scale),Direction=-Vector3.UnitY};
+            toolsUi.InspectRay(pickWorld,ray,visual);
+            Check(toolsUi.InspectedCitizen==worker.Id,"entity inside building bounds takes inspection priority over the roof");
+            pickWorld.Citizens.Clear();toolsUi.InspectRay(pickWorld,ray,visual);
+            Check(toolsUi.Inspected==building.Id,"building remains selectable where no entity is hit");
         }
         var hunt=Rich();hunt.Rules.NightMonsters=false;hunt.Rules.DayLength=600;
         hunt.Citizens.Clear();var hunter=new Creature{Type="zombie",X=5,Z=5,Health=55};hunt.Enemies.Add(hunter);
@@ -234,6 +242,7 @@ static class Checks
             queuedWorld.DamageBuilding(target,10000);component.Flush();
             Check(!queuedWorld.Buildings.Contains(target),"queued lethal damage resolves before saving");City.Validate(queuedWorld);
         }
+        GuardianRepairChecks.Run();
         OutcomeChecks.Run();
         Beta105Checks.Run();
         TerrainChecks.Run();
@@ -249,7 +258,9 @@ static class Checks
         NightChecks.Run();
         SavePreviewChecks.Run();
         VillagerHealthChecks.Run();
+        EntityOffsetsChecks.Run();
+        CameraDragChecks.Run();
         LoggingChecks.Run();
-        Assets.Dispose();Console.WriteLine($"PASS: pt-BR/en-US, direct JS bindings, villager names/inventory/inspection, beta v13 saves, seeded terrain, forestry and tutorial and lifecycle/events/queries/queues, split TOML/cache, 256 maps/A* ({timer.ElapsedMilliseconds} ms), facing, citizen 50%, growth, training, cave loot, equipment, simulation and binary save integrity.");
+        Assets.Dispose();Console.WriteLine($"PASS: pt-BR/en-US, direct JS bindings, villager names/inventory/inspection, beta v14/v13 saves, seeded terrain, forestry and tutorial and lifecycle/events/queries/queues, split TOML/cache, 256 maps/A* ({timer.ElapsedMilliseconds} ms), facing, citizen 50%, growth, training, cave loot, equipment, simulation and binary save integrity.");
     }
 }

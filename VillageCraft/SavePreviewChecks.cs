@@ -11,6 +11,14 @@ static class SavePreviewChecks
             city.Save(path);var summary=BinarySave.Summary(path);
             Check(summary.Day==12&&summary.PlaySeconds==3723.5&&summary.Emeralds==123.5f&&summary.Preview.Length==0,"summary reads without a renderer or script engine");
             using var loaded=City.Load(path);Check(loaded.PlaySeconds==city.PlaySeconds,"real playtime survives loading");
+            // A v13 file has the same records, without the trailing empty priority map.
+            var legacy=File.ReadAllBytes(path)[..^4];
+            System.Buffers.Binary.BinaryPrimitives.WriteUInt16LittleEndian(legacy.AsSpan(4),13);
+            System.Buffers.Binary.BinaryPrimitives.WriteInt32LittleEndian(legacy.AsSpan(6),legacy.Length-42);
+            System.Security.Cryptography.SHA256.HashData(legacy.AsSpan(42)).CopyTo(legacy.AsSpan(10,32));
+            string oldPath=path+".old";
+            try{File.WriteAllBytes(oldPath,legacy);using var older=City.Load(oldPath);Check(older.PlaySeconds==city.PlaySeconds&&older.ProfessionPriorities.Count==0,"v13 saves still load with default profession priorities");}
+            finally{File.Delete(oldPath);}
             var bytes=File.ReadAllBytes(path);bytes[^1]^=1;File.WriteAllBytes(path,bytes);
             bool rejected=false;try{BinarySave.Summary(path);}catch(InvalidDataException){rejected=true;}
             Check(rejected,"browser rejects checksum damage instead of displaying trusted statistics");

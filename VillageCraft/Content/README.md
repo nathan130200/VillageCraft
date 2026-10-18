@@ -56,6 +56,10 @@ Os arquivos são carregados uma única vez na inicialização. Reinicie o jogo a
 
 8. Para permitir imigrantes dessa profissão, adicione "herbalist" em ImmigrationProfessions de game.toml.
 
+### Gráficos e seleção
+
+Enhanced Visuals em Opções adiciona luz solar direcional, sombras projetadas, água animada com reflexos do céu e brilho especular, névoa à distância, bloom e gradação de cores. Smooth shadows controla a filtragem suave das sombras. São efeitos próprios do jogo, sem suporte a shader packs Java, ray tracing ou iluminação global. A interface é desenhada depois e permanece nítida. Shaders e WaterTint ficam em rendering.toml; a cor padrão da água é a de uma região temperada (#3F76E4), sem gerar biomas. O profiler separa VisualEffects e ShadowMap como tempo de CPU para envio, não execução de GPU. Aldeões e combatentes usam pequenos offsets fixos por ID em relação às coordenadas da rota. Não há empurrões, física de colisão ou procura de posições livres; vizinhos não alteram os offsets. Indoor = true nos prefabs oculta moradores no interior e suaviza o offset perto da entrada. Animais são excluídos e dormem escondidos e silenciosos à noite. Os offsets reduzem sobreposição visual, sem reservar terrenos exclusivos para entidades.
+
 ### Vida base — equilíbrio 1.0.7
 
 | Profissão/unidade | Vida |
@@ -209,9 +213,9 @@ As chaves de recursos nos TOMLs são nomes de `ResourceType`: são convertidas u
 
 
 
-## Beta 1.0.7
+## Beta 1.0.8
 
-Tochas, oficina e conversão de tochas foram removidas. O formato de save atual é binário v13 e rejeita versões beta anteriores sem sobrescrever os arquivos. Cada save inclui uma prévia PNG de 320×180 do mapa renderizado, sem HUD, e um resumo com dias completos, tempo real de jogo ativo e esmeraldas. Pausa e menus não contam no tempo de jogo; a velocidade da simulação não o multiplica. O navegador valida o checksum sem iniciar scripts e mostra os dados antes de carregar ou confirmar uma substituição. Saves criados sem renderizador podem não ter prévia. BirthChance em game.toml/Rules define a chance diária por casa elegível (0.6 por padrão); a interface permite alterar por vila. O botão de redistribuição de profissões fica em Moradores. Reparos automáticos usam materiais físicos e os parâmetros RepairWorkSeconds, RepairAmount e RepairCost em economy.toml. game.d.ts e jsconfig.json fornecem tipos e autocomplete para os scripts.
+Tochas, oficina e conversão de tochas foram removidas. O formato de save atual é binário v14, aceita v13 com prioridades padrão e rejeita versões beta mais antigas sem sobrescrever os arquivos. Cada save inclui uma prévia PNG de 320×180 do mapa renderizado, sem HUD, e um resumo com dias completos, tempo real de jogo ativo e esmeraldas. Pausa e menus não contam no tempo de jogo; a velocidade da simulação não o multiplica. O navegador valida o checksum sem iniciar scripts e mostra os dados antes de carregar ou confirmar uma substituição. Saves criados sem renderizador podem não ter prévia. BirthChance em game.toml/Rules define a chance diária por cama livre em uma casa com dois adultos (0.6 por padrão); a interface permite alterar por vila. O botão de redistribuição de profissões fica em Moradores. Reparos automáticos usam materiais físicos e os parâmetros RepairWorkSeconds, RepairAmount e RepairCost em economy.toml. game.d.ts e jsconfig.json fornecem tipos e autocomplete para os scripts.
 
 
 ## Traduções, encontros e logs
@@ -231,3 +235,7 @@ The Piglin cuboid UV regions can also be inspected in [Mojang’s geometry refer
 ### Villager skin layers
 
 Villager models use `entity/villager/villager.png`, `entity/villager/type/plains.png` and a separate `entity/villager/profession/<profession>.png` overlay. A profession overlay is not a complete skin. Full relative texture paths prevent collisions with obsolete skins having the same filename. Geometry regions can be inspected in [Mojang's villager model reference](https://github.com/Mojang/bedrock-samples/blob/main/resource_pack/models/entity/villager_v2.geo.json).
+
+O painel de Moradores exibe uma linha por profissão, contagens e prioridades de 1 (maior) a 5 (menor), sem uma lista por aldeão. Alterações ativam redistribuição automática, mantida ao criar vagas e no início do dia. Um entregador é reservado antes das demais prioridades. Cidadão com prioridade maior pode preencher vagas como generalista a 50% de eficiência. As prioridades são por save.
+
+Lenhadores liberam o alvo após cortar uma árvore e escolhem outra árvore madura e alcançável no raio do acampamento. Reservas pertencem apenas a lenhadores indo ao alvo ou cortando; sem árvores disponíveis, o trabalhador retorna ao acampamento enquanto espera.

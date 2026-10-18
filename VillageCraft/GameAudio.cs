@@ -20,7 +20,7 @@ sealed class GameAudio:IDisposable
     Vector2 listener,right=Vector2.UnitX;
     double nextCreature,nextAmbience,nextWater,nextMovement,nextHouse;
     bool ready,disposed;
-    sealed class Voice {public Sound Sound;public required SoundCue Cue;public Vector2 Position;public float Gain;}
+    sealed class Voice {public Sound Sound;public required SoundCue Cue;public Vector2 Position;public float Gain;public int Source;}
     readonly record struct Request(SoundCue Cue,Vector2 Position,int Source);
     readonly record struct Movement(Vector2 Position,float Distance,double Next);
     readonly long[] playsByTrigger=new long[Enum.GetValues<AudioTrigger>().Length];
@@ -106,6 +106,7 @@ sealed class GameAudio:IDisposable
         }
         else if(evt.Subject is Creature m)
         {
+            if(city!.IsNight&&(city.Animals.Contains(m)||evt.Name.StartsWith("onAnimal",StringComparison.Ordinal)))return;
             AudioTrigger? trigger=evt.Name switch{"onMonsterAttack" or "onGuardianAttack"=>AudioTrigger.Attack,"onMonsterPrimed"=>AudioTrigger.Fuse,"onMonsterDamaged" or "onGuardianDamaged" or "onAnimalDamaged"=>AudioTrigger.Hurt,"onMonsterRemoved" or "onGuardianRemoved" or "onAnimalRemoved" when evt.Reason=="killed"=>AudioTrigger.Death,_=>null};
             if(trigger is {} kind)Enqueue(Find(kind,m.Type),m.Position,m.Id);
         }
@@ -135,8 +136,9 @@ sealed class GameAudio:IDisposable
     void SampleMovement(double now)
     {
         foreach(var v in city!.Citizens)if(v.Health>0)Moved(v.Id,v.Position,"villager",now);
-        foreach(var m in city.Enemies.Concat(city.Defenders).Concat(city.Animals))
+        foreach(var m in city.Enemies.Concat(city.Defenders).Concat(city.IsNight?Enumerable.Empty<Creature>():city.Animals))
             if(m.Health>0&&m.Type!="blaze")Moved(m.Id,m.Position,m.Type,now);
+        if(city.IsNight)foreach(var animal in city.Animals)movement.Remove(animal.Id);
         if(movement.Count>city.Citizens.Count+city.Enemies.Count+city.Defenders.Count+city.Animals.Count+32)
         {
             var ids=city.Citizens.Select(v=>v.Id).Concat(city.Enemies.Concat(city.Defenders).Concat(city.Animals).Select(m=>m.Id)).ToHashSet();
@@ -162,7 +164,7 @@ sealed class GameAudio:IDisposable
     }
     void SampleCreature()
     {
-        var nearby=city!.Enemies.Concat(city.Animals).Where(m=>m.Health>0&&Vector2.DistanceSquared(m.Position,listener)<settings.HearingRadius*settings.HearingRadius).ToArray();
+        var nearby=city!.Enemies.Concat(city.IsNight?Enumerable.Empty<Creature>():city.Animals).Where(m=>m.Health>0&&Vector2.DistanceSquared(m.Position,listener)<settings.HearingRadius*settings.HearingRadius).ToArray();
         bool villager=nearby.Length==0||Random.Shared.Next(3)==0;
         if(villager)
         {
@@ -187,6 +189,7 @@ sealed class GameAudio:IDisposable
         for(int i=voices.Count-1;i>=0;i--)
         {
             var voice=voices[i];
+            if(current.IsNight&&current.Animals.Any(a=>a.Id==voice.Source)){Raylib.StopSound(voice.Sound);Raylib.UnloadSoundAlias(voice.Sound);voices.RemoveAt(i);continue;}
             float attenuation=voice.Cue.Spatial?MathF.Pow(Math.Clamp(1-Vector2.Distance(listener,voice.Position)/settings.HearingRadius,0,1),2):1;
             float target=quiet?0:voice.Cue.Volume*GraphicsOptions.Current.MasterVolume*CategoryVolume(voice.Cue.Category)*attenuation;
             voice.Gain+=(target-voice.Gain)*Math.Min(1,Math.Max(0,dt)*12);
@@ -213,6 +216,7 @@ sealed class GameAudio:IDisposable
     }
     void Play(Request request,double now)
     {
+        if(city!.IsNight&&city.Animals.Any(a=>a.Id==request.Source))return;
         var cue=request.Cue;
         if(CategoryVolume(cue.Category)<=0)return;
         float attenuation=cue.Spatial?MathF.Pow(Math.Clamp(1-Vector2.Distance(listener,request.Position)/settings.HearingRadius,0,1),2):1;
@@ -231,7 +235,7 @@ sealed class GameAudio:IDisposable
         float gain=cue.Volume*GraphicsOptions.Current.MasterVolume*CategoryVolume(cue.Category)*attenuation;
         Raylib.SetSoundVolume(sound,gain);Raylib.SetSoundPitch(sound,1); // Simulation speed never changes audio pitch.
         Raylib.SetSoundPan(sound,cue.Spatial?Math.Clamp(.5f+Vector2.Dot(request.Position-listener,right)/settings.HearingRadius*.45f,.05f,.95f):.5f);
-        Raylib.PlaySound(sound);voices.Add(new(){Sound=sound,Cue=cue,Position=request.Position,Gain=gain});Played++;playsByTrigger[(int)cue.Trigger]++;
+        Raylib.PlaySound(sound);voices.Add(new(){Sound=sound,Cue=cue,Position=request.Position,Gain=gain,Source=request.Source});Played++;playsByTrigger[(int)cue.Trigger]++;
     }
     void StopVoices(){foreach(var voice in voices){Raylib.StopSound(voice.Sound);Raylib.UnloadSoundAlias(voice.Sound);}voices.Clear();}
     public void Dispose()

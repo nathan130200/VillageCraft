@@ -4,6 +4,22 @@ Id = "en-US"
 Name = "English (US)"
 
 [Text]
+# Graphics toggle: weighted soft filtering of the sun shadow map.
+"ui.smooth_shadows" = "Smooth shadows"
+# Tooltip for soft shadow filtering, enabled with enhanced visuals and shadows.
+"ui.smooth_shadows_help" = "Soften shadow edges with weighted filtering. Requires Enhanced Visuals and ground shadows; uses more GPU time."
+# Workforce priorities: 1 is highest, 5 lowest; one courier is reserved and changes apply automatically.
+"people.priority_help" = "Profession priorities: 1 = highest, 5 = lowest. Changes automatically reassign workers; at least one deliveryman is reserved. Click villagers in the world to inspect them."
+# Profiler CPU time submitting the sun shadow map, not GPU execution time.
+"profile.area.ShadowMap" = "Sun shadow map submission"
+# Profiler: CPU time resolving visual spacing among nearby entities.
+"profile.area.EntitySpacing" = "Entity visual spacing"
+# Profiler: CPU submission of world postprocessing, not GPU execution time.
+"profile.area.VisualEffects" = "Visual effects submission"
+# Graphics option: enables world-only bloom, color grading and edge smoothing.
+"ui.enhanced_visuals" = "Enhanced Visuals"
+# Tooltip for the enhanced graphics option; HUD remains sharp.
+"ui.enhanced_visuals_help" = "Directional sunlight, cast shadows, animated reflective water, distance haze, bloom and color grading. Uses more GPU time; interface text stays sharp."
 # Save browser summary: {0} completed days, {1} real active playtime HH:MM:SS, {2} emerald balance.
 "save.details" = "Days: {0} | Played: {1} | Emeralds: {2:0.##}"
 # Save browser: unreadable, damaged or unsupported save.
@@ -221,7 +237,7 @@ Name = "English (US)"
 "message.water_shortage" = "Water shortage! Build more connected wells."
 
 # Options slider for the daily birth probability of an eligible home.
-"options.birth_chance" = "Daily birth chance"
+"options.birth_chance" = "Daily birth chance per vacant bed"
 
 # People panel counter. {0}: number of hidden babies waiting to mature.
 "people.growing_babies" = "Growing babies: {0}"
@@ -736,8 +752,8 @@ Name = "English (US)"
 # Interface label, help text or control: Cattle keeping
 "ui.cattle_keeping" = "Cattle keeping"
 
-# Village status or journal: Central square and occupied homes are protected.
-"ui.central_square_and_occupied_homes_are_protected" = "Central square and occupied homes are protected."
+# Village status or journal: The central square is protected.
+"ui.central_square_and_occupied_homes_are_protected" = "The central square is protected."
 
 # Interface label, help text or control: Choose 32–512 tiles on each axis. Default: {0}x{1}. No world generation: a flat grass surface and th...
 "ui.choose_32512_tiles_on_each_axis_default_x" = "Choose 32–512 tiles on each axis. Default: {0}x{1}. No world generation: a flat grass surface and the starter village only. Creating a map replaces the unsaved session; saved villages remain available."
@@ -1166,7 +1182,7 @@ Name = "English (US)"
 "ui.quality" = "Quality"
 
 # Interface label, help text or control: R rotate / Tab inspect / Right click inspect / Shift+Q/E fast camera
-"ui.r_rotate_tab_inspect_right_click_inspect_shift" = "R rotate / Tab inspect / Right click inspect / Shift+Q/E fast camera"
+"ui.r_rotate_tab_inspect_right_click_inspect_shift" = "LMB drag pan / RMB drag rotate / Click inspect / R rotate building / Shift faster rotation"
 
 # Village status or journal: RAID {0}! {1} hostiles led by a Nether warlord are attacking.
 "ui.raid_hostiles_led_by_a_nether_warlord_are" = "RAID {0}! {1} hostiles led by a Nether warlord are attacking."
@@ -1783,3 +1799,18 @@ Name = "English (US)"
 
 # Audio diagnostics counters in profiler. Keep all numbered format arguments.
 "profile.audio" = "Audio: {0} clips, {1} voices, {2} starts, {3} rate/voice/queue rejections"
+
+# Building/villager inspector label.
+"inspector.profession" = "Profession"
+
+# Building/villager inspector label.
+"inspector.residents" = "Residents"
+
+# Building/villager inspector label.
+"inspector.workers" = "Workers"
+
+# Building/villager inspector label.
+"inspector.no_people" = "Nobody assigned."
+
+# Inspector button: release a manual profession choice back to city priorities.
+"inspector.auto_profession" = "Return to automatic profession"

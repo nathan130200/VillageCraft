@@ -36,6 +36,12 @@ static class TerrainChecks
             var stump=forest.Buildings.First(b=>b.Plan.Harvest.Count>0&&b.GrowthDays>0);
             var worker=forest.Citizens.First(v=>v.Profession=="woodcutter");worker.Position=new(stump.X,stump.Z);
             Check(!forest.HarvestTree(stump,worker),"cannot harvest depleted tree twice");
+            var camp=forest.Buildings.First(b=>b.Id==worker.Work);
+            var next=forest.Buildings.First(b=>b.Id!=stump.Id&&b.Plan.Harvest.Count>0&&System.Numerics.Vector2.Distance(new(b.X,b.Z),new(camp.X,camp.Z))<=camp.Plan.HarvestRadius);
+            next.GrowthDays=0;foreach(var person in forest.Citizens)person.ResourceTarget=-1;
+            worker.ResourceTarget=stump.Id;worker.Inventory[ResourceType.Food]=2;worker.Health=worker.MaximumHealth;
+            forest.Scripting.UpdateVillager(worker,.1f);
+            Check(worker.ResourceTarget>0&&worker.ResourceTarget!=stump.Id&&worker.Task is TaskId.GoingToTrees or TaskId.ChoppingTree,"woodcutter releases a stump and immediately selects another grown tree");
             for(int i=0;i<stump.Plan.RegrowDays;i++)forest.Tick();
             Check(stump.GrowthDays==0&&forest.HarvestTree(stump,worker),"tree regrows and can be harvested again");
             Check(forest.TutorialTreesHarvested>0&&forest.TutorialGoalMet("trees"),"tutorial observes actual harvest");

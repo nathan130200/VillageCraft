@@ -7,6 +7,7 @@ using VillageCraft;
 GameLog.Initialize();
 try{Catalog.Load();}catch(Exception e){GameLog.Write(GameLogLevel.Critical,"Cannot load TOML content: "+e);Environment.ExitCode=1;return;}
 #if DEBUG
+if(args.Contains("--spacing-test")){try{EntityOffsetsChecks.Run();CameraDragChecks.Run();}catch(Exception e){Console.Error.WriteLine(e);Environment.ExitCode=1;}return;}
 if(args.Contains("--health-test")){try{VillagerHealthChecks.Run();}catch(Exception e){Console.Error.WriteLine(e);Environment.ExitCode=1;}return;}
 if(args.Contains("--save-preview-test")){try{SavePreviewChecks.Run();LocalizationChecks.Run();}catch(Exception e){Console.Error.WriteLine(e);Environment.ExitCode=1;}return;}
 if(args.Contains("--audio-test")){try{AudioChecks.Run();}catch(Exception e){Console.Error.WriteLine(e);Environment.ExitCode=1;}finally{Assets.Dispose();}return;}
@@ -20,6 +21,8 @@ if(args.Contains("--logistics-test")){try{LogisticsChecks.Run();}catch(Exception
 if(args.Contains("--self-test")){try{Checks.Run();}catch(Exception e){Console.Error.WriteLine(e);Environment.ExitCode=1;}return;}
 bool smoke=args.Contains("--smoke-test"),raidSmoke=args.Contains("--raid-smoke");
 bool savePreviewSmoke=args.Contains("--save-preview-smoke");if(savePreviewSmoke)smoke=true;
+bool enhancedSmoke=args.Contains("--enhanced-smoke");if(enhancedSmoke)smoke=true;
+bool trafficSmoke=args.Contains("--traffic-smoke");bool crowdSmoke=args.Contains("--crowd-smoke")||trafficSmoke;if(crowdSmoke)smoke=true;
 bool audioSmoke=args.Contains("--audio-smoke");if(audioSmoke)smoke=true;
 bool problemsSmoke=args.Contains("--problems-smoke");if(problemsSmoke)smoke=true;
 bool profileSmoke=args.Contains("--profile-smoke")||args.Contains("--profile-callbacks-smoke");if(profileSmoke)smoke=true;
@@ -39,6 +42,7 @@ bool beta105Smoke=args.Contains("--beta105-smoke");if(beta105Smoke)smoke=true;
 bool terrainSmoke=args.Contains("--terrain-smoke");if(terrainSmoke)smoke=true;
 bool displaySmoke=args.Contains("--display-smoke");if(displaySmoke){smoke=true;optionsSmoke=true;}
 bool compactSmoke=args.Contains("--compact-smoke");if(compactSmoke)smoke=true;
+bool occupantsSmoke=args.Contains("--occupants-smoke");if(occupantsSmoke)smoke=true;
 bool panelsSmoke=args.Contains("--panels-smoke"),clockSmoke=args.Contains("--clock-smoke");if(panelsSmoke||clockSmoke)smoke=true;
 bool citizenSmoke=args.Contains("--citizen-smoke");if(englishSmoke)smoke=true;
 bool nightSmoke=args.Contains("--night-smoke");if(citizenSmoke)smoke=true;if(nightSmoke)smoke=true;
@@ -50,11 +54,11 @@ GraphicsOptions.Load();Assets.Prepare();
 #endif
 GameLog.CaptureRenderer();
 Raylib.SetConfigFlags(ConfigFlags.ResizableWindow|ConfigFlags.Msaa4xHint);
-Raylib.InitWindow(1024,640,"VillageCraft 1.0.7 | The Living Overworld");DisplaySettings.Apply(false);Raylib.SetTargetFPS(GraphicsOptions.Current.Fps);Raylib.SetExitKey(KeyboardKey.Null);
+Raylib.InitWindow(1024,640,"VillageCraft 1.0.8 | The Living Overworld");DisplaySettings.Apply(false);Raylib.SetTargetFPS(GraphicsOptions.Current.Fps);Raylib.SetExitKey(KeyboardKey.Null);
 #if DEBUG
 if(smoke||uiSmoke)Raylib.TraceLog(TraceLogLevel.Warning,"Visual check renderer logging is active.");
 #endif
-Rlgl.SetClipPlanes(.1,10000);
+Rlgl.SetClipPlanes(1,10000);
 rlImGui.Setup(true);
 string font=Path.Combine(AppContext.BaseDirectory,"Content","Fonts","mojangles.ttf");
 UiFonts.Load(font);
@@ -77,11 +81,26 @@ if(newMapSmoke){ui.MenuOpen=true;ui.MenuPage="New Game";}
 var city=args.Contains("--demo")||raidSmoke||caveSmoke?City.New():City.StartVillage();if(args.Contains("--demo")||raidSmoke||caveSmoke)Checks.Demo(city);
 if(compactSmoke){ui.SelectPrefab("farm");ui.Inspected=city.Buildings.First(b=>b.Prefab=="farm").Id;ui.Paused=true;}
 if(citizenSmoke){ui.InspectMode=true;ui.InspectedCitizen=city.Citizens[0].Id;ui.Paused=true;}
+if(occupantsSmoke)
+{
+    city.TutorialEnabled=false;ui.Paused=true;
+    ui.Inspected=city.Buildings.First(b=>b.Plan.Homes>0).Id;ui.PinCurrent();
+    ui.Inspected=city.Buildings.First(b=>b.Plan.Jobs>0&&city.Citizens.Any(v=>v.Work==b.Id)).Id;
+}
 if(panelsSmoke){ui.InspectedCitizen=city.Citizens[0].Id;ui.PinCurrent();var m=city.SpawnMonster("zombie",city.AnchorX-3,city.AnchorZ+3)!;ui.InspectAt(city,m.Position);ui.Paused=true;}
 if(problemsSmoke){ui.ShowProblems();ui.Paused=true;foreach(var b in city.Buildings.Where(b=>b.Plan.Input.Count>0||!string.IsNullOrEmpty(b.Plan.Animal)))b.Storage.Clear();}
 if(peopleSmoke){city.Rules.BirthChance=1;city.Tick();ui.ShowPeople();ui.Paused=true;}
 if(clockSmoke)ui.Paused=true;
 if(nightSmoke){city.Day=6;city.DayTime=city.Rules.DayLength*.9f;ui.Paused=true;city.SpawnNight();}
+if(enhancedSmoke)ui.Paused=true;
+if(crowdSmoke)
+{
+    var road=city.Buildings.Where(b=>b.Plan.Path).OrderBy(b=>Math.Abs(b.X-city.AnchorX)+Math.Abs(b.Z-city.AnchorZ)).First();
+    foreach(var v in city.Citizens.Take(4)){v.Position=new(road.X,road.Z);v.Work=-1;}
+    var pen=city.Buildings.First(b=>!string.IsNullOrEmpty(b.Plan.Animal));
+    foreach(var a in city.Animals.Where(a=>a.Home==pen.Id))a.Position=new(pen.X,pen.Z);
+    ui.Paused=true;city.TutorialEnabled=false;
+}
 if(caveSmoke){ui.SelectPrefab("cave");ui.Inspected=city.Buildings.First(b=>b.Prefab=="cave").Id;}
 if(beta105Smoke)
 {
@@ -106,8 +125,12 @@ if(gameOverSmoke)
 
 #endif
 float yaw=.85f,distance=102,time=0;var focus=new Vector3(city.AnchorX*4,0,city.AnchorZ*4);City cameraCity=city;
+var cameraDrag=new CameraDrag();
+var visuals=new EnhancedVisuals();
 #if DEBUG
 int frames=0;distance=peopleSmoke||nightSmoke||beta105Smoke?62:terrainSmoke?145:102;
+Raylib_cs.Color[]? shadowBaseline=null;
+if(crowdSmoke)distance=36;
 #endif
 try
 {
@@ -135,7 +158,23 @@ try
 #endif
         using(Profiler.Measure(ProfileArea.Update))
         if(!ui.Paused&&!ui.MenuOpen&&!city.GameOver){city.PlaySeconds+=Raylib.GetFrameTime();city.Update(dt*ui.Speed);}
+#if DEBUG
+        if(trafficSmoke)
+        {
+            int index=0;
+            foreach(var v in city.Citizens.Take(8))
+            {
+                float t=frames*.012f-1.44f;v.Work=-1;
+                v.Position=(index%4) switch{0=>new(city.AnchorX+t,city.AnchorZ+index/4*.4f),1=>new(city.AnchorX-t,city.AnchorZ+index/4*.4f),2=>new(city.AnchorX+index/4*.4f,city.AnchorZ+t),_=>new(city.AnchorX+index/4*.4f,city.AnchorZ-t)};
+                index++;
+            }
+        }
+#endif
+#if DEBUG
+        if(trafficSmoke)RenderEffectsChecks.TrackCrowd(city,frames,dt);
+#endif
         mouse=Raylib.GetMousePosition();capture=city.GameOver||ui.OverUi(mouse)||ImGui.GetIO().WantCaptureMouse;
+        cameraDrag.Update(mouse,Raylib.IsMouseButtonDown(MouseButton.Left),Raylib.IsMouseButtonDown(MouseButton.Right),capture);
         if(!city.GameOver&&!ImGui.GetIO().WantCaptureKeyboard&&!ui.MenuOpen)
         {
             var forward=new Vector3(-MathF.Cos(yaw),0,-MathF.Sin(yaw));var right=new Vector3(-forward.Z,0,forward.X);
@@ -154,6 +193,13 @@ try
             if(Raylib.IsKeyPressed(KeyboardKey.Three))ui.SetSpeed(3);
             if(Raylib.IsKeyPressed(KeyboardKey.Four))ui.SetSpeed(4);
         }
+        if(!capture)
+        {
+            var forward=new Vector3(-MathF.Cos(yaw),0,-MathF.Sin(yaw));var right=new Vector3(-forward.Z,0,forward.X);
+            float units=distance*1.0507f/Math.Max(1,Raylib.GetScreenHeight());
+            focus+=(-right*cameraDrag.Pan.X+forward*cameraDrag.Pan.Y*1.626f)*units;
+            yaw+=cameraDrag.Rotation*.006f*(Raylib.IsKeyDown(KeyboardKey.LeftShift)||Raylib.IsKeyDown(KeyboardKey.RightShift)?3:1);
+        }
         if(!capture)distance=Math.Clamp(distance-Raylib.GetMouseWheelMove()*Math.Max(7,distance*.06f),25,Math.Max(city.Width,city.Height)*5);
         focus.X=Math.Clamp(focus.X,0,(city.Width-1)*4);focus.Z=Math.Clamp(focus.Z,0,(city.Height-1)*4);
         camera=new Camera3D{Position=focus+new Vector3(MathF.Cos(yaw)*distance,distance*.78f,MathF.Sin(yaw)*distance),Target=focus,Up=Vector3.UnitY,FovY=45,Projection=CameraProjection.Perspective};
@@ -161,8 +207,8 @@ try
         hx=(int)MathF.Floor(hit.X+.5f);hz=(int)MathF.Floor(hit.Z+.5f);
         if(!capture)
         {
-            if(Raylib.IsMouseButtonPressed(MouseButton.Right)||(ui.InspectMode&&Raylib.IsMouseButtonPressed(MouseButton.Left)))ui.InspectRay(city,ray,new Vector2(hit.X,hit.Z));
-            else if(ui.IsBuilding&&Raylib.IsMouseButtonPressed(MouseButton.Left))city.Place(ui.Selected,hx,hz,ui.Rotation);
+            if(cameraDrag.RightClick||(ui.InspectMode&&cameraDrag.LeftClick))ui.InspectRay(city,ray,new Vector2(hit.X,hit.Z));
+            else if(ui.IsBuilding&&cameraDrag.LeftClick)city.Place(ui.Selected,hx,hz,ui.Rotation);
         }
         if(ui.RefreshThumbnails)ui.BuildThumbnails();Scene.Time=time;
         Scene.Daylight=city.Daylight;
@@ -170,7 +216,8 @@ try
         }
         using(Profiler.Measure(ProfileArea.Render))
         {
-        Raylib.BeginDrawing();Raylib.ClearBackground(new Color((int)(159*city.Daylight),(int)(191*city.Daylight),(int)(196*city.Daylight),255));Raylib.BeginMode3D(camera);Scene.World=city;TerrainScene.ViewCenter=new(focus.X/Scene.Scale,focus.Z/Scene.Scale);TerrainScene.ViewRadius=Math.Min(45,distance/Scene.Scale*1.2f);
+        TerrainScene.ViewCenter=new(focus.X/Scene.Scale,focus.Z/Scene.Scale);TerrainScene.ViewRadius=Math.Min(45,distance/Scene.Scale*1.2f);
+        Raylib.BeginDrawing();visuals.Begin(city,focus,camera.Position);Raylib.ClearBackground(new Color((int)(159*city.Daylight),(int)(191*city.Daylight),(int)(196*city.Daylight),255));Raylib.BeginMode3D(camera);Scene.World=city;
         using(Profiler.Measure(ProfileArea.Terrain))Scene.Terrain(city);
         var roads=city.Roads();
         using(Profiler.Measure(ProfileArea.Buildings))foreach(var b in city.Buildings)Scene.Build(city,b,roads);
@@ -184,11 +231,12 @@ try
         var inspected=city.Buildings.FirstOrDefault(b=>b.Id==ui.Inspected);
         if(inspected!=null)Raylib.DrawCubeWires(new Vector3(inspected.X,.6f+city.SurfaceY(inspected.X,inspected.Z),inspected.Z)*4,4,5,4,Scene.ColorOf("#E8C478"));
         var selectedCitizen=city.Citizens.FirstOrDefault(v=>v.Id==ui.InspectedCitizen);
-        if(selectedCitizen!=null){var pos=Scene.VillagerPosition(city,selectedCitizen);Raylib.DrawCubeWires(new Vector3(pos.X,.3f+city.SurfaceY(pos.X,pos.Y),pos.Y)*4,1.1f,2.4f,1.1f,Scene.ColorOf("#E8C478"));}
-        var selectedMonster=city.Enemies.Concat(city.Defenders).Concat(city.Animals).FirstOrDefault(m=>m.Id==ui.InspectedMonster);
-        if(selectedMonster!=null)Raylib.DrawCubeWires(new Vector3(selectedMonster.X,.4f+city.SurfaceY(selectedMonster.X,selectedMonster.Z),selectedMonster.Z)*4,1.4f,3.2f,1.4f,Scene.ColorOf("#E8C478"));
+        if(selectedCitizen!=null&&Scene.VillagerVisible(city,selectedCitizen)){var pos=Scene.VillagerPosition(city,selectedCitizen);Raylib.DrawCubeWires(new Vector3(pos.X,.3f+city.SurfaceY(pos.X,pos.Y),pos.Y)*4,1.1f,2.4f,1.1f,Scene.ColorOf("#E8C478"));}
+        var selectedMonster=city.Enemies.Concat(city.Defenders).Concat(city.IsNight?Enumerable.Empty<Creature>():city.Animals).FirstOrDefault(m=>m.Id==ui.InspectedMonster);
+        if(selectedMonster!=null){var p=Scene.CreaturePosition(city,selectedMonster);Raylib.DrawCubeWires(new Vector3(p.X,.4f+city.SurfaceY(p.X,p.Y),p.Y)*4,1.4f,3.2f,1.4f,Scene.ColorOf("#E8C478"));}
         }
         Raylib.EndMode3D();Scene.World=null;
+        visuals.End(city.Daylight);
         }
 #if DEBUG
         if(args.Contains("--scale-smoke")&&frames==5)Raylib.SetMousePosition(Raylib.GetScreenWidth()-30,Raylib.GetScreenHeight()-30);
@@ -225,9 +273,23 @@ try
         if(uiSmoke&&frames==29)VisualChecks.Capture("ui-near-smoke.png");
         if(savePreviewSmoke&&frames==30)VisualChecks.Capture("save-browser.png");
         if(savePreviewSmoke&&frames==55)VisualChecks.Capture("save-overwrite.png");
-        if((smoke||raidSmoke||menuSmoke||optionsSmoke||uiSmoke||caveSmoke||newMapSmoke)&&++frames>=60)
+        if(crowdSmoke&&frames==55)VisualChecks.Capture("crowd-spacing.png");
+        if(trafficSmoke&&frames is 50 or 100 or 150 or 200)VisualChecks.Capture("traffic-"+frames+".png");
+        if(enhancedSmoke&&frames==5)GraphicsOptions.Current.EnhancedVisuals=true;
+        if(enhancedSmoke&&frames==6)city.DayTime=city.Rules.DayLength*.5f;
+        if(enhancedSmoke&&frames==8)GraphicsOptions.Current.Shadows=false;
+        if(enhancedSmoke&&frames==10){shadowBaseline=RenderEffectsChecks.ReadFrame();VisualChecks.Capture("enhanced-no-shadows.png");}
+        if(enhancedSmoke&&frames==11)GraphicsOptions.Current.Shadows=true;
+        if(enhancedSmoke&&frames==11)GraphicsOptions.Current.SmoothShadows=false;
+        if(enhancedSmoke&&frames==14){if(!visuals.LightingReady)throw new InvalidOperationException("World lighting failed to load.");RenderEffectsChecks.Shadows(shadowBaseline!,RenderEffectsChecks.ReadFrame());VisualChecks.Capture("enhanced-with-shadows.png");}
+        if(enhancedSmoke&&frames==16)GraphicsOptions.Current.SmoothShadows=true;
+        if(enhancedSmoke&&frames==20){if(!visuals.Active)throw new InvalidOperationException("Enhanced renderer failed to activate.");VisualChecks.Capture("enhanced-day.png");city.DayTime=city.Rules.DayLength*.9f;}
+        if(enhancedSmoke&&frames==30){VisualChecks.Capture("enhanced-night.png");GraphicsOptions.Current.EnhancedVisuals=false;}
+        if(enhancedSmoke&&frames==40){if(visuals.Active)throw new InvalidOperationException("Enhanced renderer failed to disable.");GraphicsOptions.Current.EnhancedVisuals=true;Raylib.SetWindowSize(1100,680);}
+        if(enhancedSmoke&&frames==50&&!visuals.Active)throw new InvalidOperationException("Enhanced renderer failed after resize.");
+        if((smoke||raidSmoke||menuSmoke||optionsSmoke||uiSmoke||caveSmoke||newMapSmoke)&&++frames>=(trafficSmoke?240:60))
         {
-            VisualChecks.Capture(audioSmoke?"audio-smoke.png":problemsSmoke?"city-problems.png":profileSmoke?(args.Contains("--profile-callbacks-smoke")?"profiler-callbacks.png":"profiler-smoke.png"):nightSmoke?"night-village.png":peopleSmoke?"people-beta106.png":gameOverSmoke?"gameover-smoke.png":beta105Smoke?"beta105-smoke.png":raidSmoke?"raid-smoke.png":menuSmoke?"menu-smoke.png":optionsSmoke?"options-smoke.png":uiSmoke?"ui-smoke.png":caveSmoke?"cave-smoke.png":newMapSmoke?"newmap-smoke.png":citizenSmoke?"citizen-smoke.png":panelsSmoke?"panels-smoke.png":clockSmoke?"clock-smoke.png":compactSmoke?"compact-smoke.png":terrainSmoke?"terrain-smoke.png":englishSmoke?"english-smoke.png":"smoke-test.png");
+            VisualChecks.Capture(occupantsSmoke?"building-occupants.png":audioSmoke?"audio-smoke.png":problemsSmoke?"city-problems.png":profileSmoke?(args.Contains("--profile-callbacks-smoke")?"profiler-callbacks.png":"profiler-smoke.png"):nightSmoke?"night-village.png":peopleSmoke?"workforce-priorities.png":gameOverSmoke?"gameover-smoke.png":beta105Smoke?"beta105-smoke.png":raidSmoke?"raid-smoke.png":menuSmoke?"menu-smoke.png":optionsSmoke?"options-smoke.png":uiSmoke?"ui-smoke.png":caveSmoke?"cave-smoke.png":newMapSmoke?"newmap-smoke.png":citizenSmoke?"citizen-smoke.png":panelsSmoke?"panels-smoke.png":clockSmoke?"clock-smoke.png":compactSmoke?"compact-smoke.png":terrainSmoke?"terrain-smoke.png":englishSmoke?"english-smoke.png":"smoke-test.png");
             if(audioSmoke){Console.WriteLine($"Audio smoke: {audio.LoadedSounds} decoded, {audio.Played} played, {audio.Dropped} rate-limited.");if(audio.LoadedSounds==0||audio.PlayedCount(AudioTrigger.Settlement)==0||audio.PlayedCount(AudioTrigger.BossWave)==0||audio.PlayedCount(AudioTrigger.Footstep)==0)Environment.ExitCode=1;}
             if(uiSmoke&&ui.TestActivationCount!=12){Console.Error.WriteLine("UI activation count mismatch: "+ui.TestActivationCount);Environment.ExitCode=1;}
             Console.WriteLine($"PASS: rendered {frames} frames, loaded {Assets.TextureCount} textures"+(uiSmoke?", activated construction cards 12 times across two zoom levels.":"."));break;
@@ -237,8 +299,12 @@ try
         finally{Profiler.EndFrame();}
     }
 }
+#if DEBUG
+catch(Exception e)when(smoke||raidSmoke||menuSmoke||optionsSmoke||uiSmoke||caveSmoke||newMapSmoke)
+{GameLog.Write(GameLogLevel.Error,"Validation failed: "+e);Environment.ExitCode=1;}
+#endif
 finally{
 #if DEBUG
 if(previewSave!=null)SaveStore.Delete(previewSave);
 #endif
-audio.Dispose();city.Dispose();ui.Dispose();Assets.Dispose();rlImGui.Shutdown();Raylib.CloseWindow();}
+visuals.Dispose();TerrainScene.Dispose();audio.Dispose();city.Dispose();ui.Dispose();Assets.Dispose();rlImGui.Shutdown();Raylib.CloseWindow();}

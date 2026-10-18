@@ -106,16 +106,18 @@ partial class GameUi
         if(Button(L.T("people.reassign_professions"),new(-1,26)))city.ReassignProfessions();
         Hint(L.T("ui.assign_specialists_to_connected_workplaces_surplus_villagers_become"));
         Hint(L.F("people.growing_babies",city.Babies.Count));
-        ImGui.Separator();foreach(var v in city.Citizens)
+        ImGui.Separator();Wrapped(L.T("people.priority_help"));
+        var counts=city.Citizens.GroupBy(v=>v.Profession).ToDictionary(g=>g.Key,g=>g.Count());
+        if(ImGui.BeginTable("Profession priorities",2,ImGuiTableFlags.SizingStretchProp)){
+        ImGui.TableSetupColumn("Profession",ImGuiTableColumnFlags.WidthStretch,2);ImGui.TableSetupColumn("Priority",ImGuiTableColumnFlags.WidthStretch,1);
+        foreach(var profession in Catalog.Data.Professions.Values)
         {
-            ImGui.PushID(v.Id);if(ImGui.Selectable(L.F("villager.name_health", v.FullName, v.Health))){Focus("villager",v.Id);}
-            var profession=Catalog.Data.Professions[v.Profession];
-            if(ImGui.BeginCombo("##profession",L.Name(profession)+" / "+(city.Efficiency(v)*100).ToString("0")+"%"))
-            {
-        foreach(var p in Catalog.Data.Professions.Values){if(ImGui.Selectable(L.Name(p),p.Id==v.Profession))city.Train(v,p.Id);Tooltip(string.Join(" / ",p.TrainingCost.Select(e=>L.F("format.resource_amount", e.Value, L.Resource(e.Key)))));}ImGui.EndCombo();
-            }
-            Hint(L.Task(v.Task));ImGui.PopID();
+            ImGui.TableNextRow();ImGui.TableSetColumnIndex(0);ImGui.PushID(profession.Id);Wrapped(L.Name(profession)+" ("+counts.GetValueOrDefault(profession.Id)+")");
+            ImGui.TableSetColumnIndex(1);ImGui.SetNextItemWidth(-1);int priority=city.ProfessionPriority(profession.Id);
+            if(ImGui.SliderInt("##priority",ref priority,1,5))city.SetProfessionPriority(profession.Id,Math.Clamp(priority,1,5));
+            ImGui.PopID();
         }
+        ImGui.EndTable();}
     }
     void EconomyPanel(City city)
     {
@@ -150,26 +152,39 @@ partial class GameUi
             var collision=Raylib.GetRayCollisionBox(ray,new BoundingBox(min*Scene.Scale,max*Scene.Scale));
             if(collision.Hit&&collision.Distance<nearest){nearest=collision.Distance;kind=type;id=entity;}
         }
-        foreach(var b in city.Buildings.Where(b=>!b.Plan.Path))Hit("building",b.Id,new(b.X-.45f,0,b.Z-.45f),new(b.X+.45f,1.6f,b.Z+.45f));
         foreach(var v in city.Citizens){var pos=Scene.VillagerPosition(city,v);Hit("villager",v.Id,new(pos.X-.18f,0,pos.Y-.18f),new(pos.X+.18f,.6f,pos.Y+.18f));}
-        foreach(var m in city.Enemies.Concat(city.Defenders).Concat(city.Animals))Hit("monster",m.Id,new(m.X-.2f,0,m.Z-.2f),new(m.X+.2f,.85f,m.Z+.2f));
+        foreach(var m in city.Enemies.Concat(city.Defenders).Concat(city.IsNight?Enumerable.Empty<Creature>():city.Animals)){var p=Scene.CreaturePosition(city,m);Hit("monster",m.Id,new(p.X-.2f,0,p.Y-.2f),new(p.X+.2f,.85f,p.Y+.2f));}
+        // Entities are the more precise target, including residents inside building bounds.
+        if(id<0)foreach(var b in city.Buildings.Where(b=>!b.Plan.Path))Hit("building",b.Id,new(b.X-.45f,0,b.Z-.45f),new(b.X+.45f,1.6f,b.Z+.45f));
         if(id>=0){city.TutorialInspected=true;Focus(kind,id);}
     }
     public void InspectAt(City city,Vector2 tile)
     {
         UseInspectTool();CloseTransientPanels();
         var villager=city.Citizens.Where(v=>Vector2.DistanceSquared(Scene.VillagerPosition(city,v),tile)<.35f*.35f).OrderBy(v=>Vector2.DistanceSquared(Scene.VillagerPosition(city,v),tile)).FirstOrDefault();
-        var monster=city.Enemies.Concat(city.Defenders).Concat(city.Animals).Where(m=>Vector2.DistanceSquared(m.Position,tile)<.35f*.35f).OrderBy(m=>Vector2.DistanceSquared(m.Position,tile)).FirstOrDefault();
+        var monster=city.Enemies.Concat(city.Defenders).Concat(city.IsNight?Enumerable.Empty<Creature>():city.Animals).Where(m=>Vector2.DistanceSquared(Scene.CreaturePosition(city,m),tile)<.35f*.35f).OrderBy(m=>Vector2.DistanceSquared(Scene.CreaturePosition(city,m),tile)).FirstOrDefault();
         if(villager!=null){city.TutorialInspected=true;Focus("villager",villager.Id);}
         else if(monster!=null){city.TutorialInspected=true;Focus("monster",monster.Id);}
         else if(city.At((int)MathF.Round(tile.X),(int)MathF.Round(tile.Y)) is {} b){city.TutorialInspected=true;Focus("building",b.Id);}
     }
     void VillagerInspector(City city,Citizen v,int w,int h)
     {
-        ImGui.TextUnformatted(L.Name(Catalog.Data.Professions[v.Profession]));
-        ImGui.TextUnformatted(L.F("building.health",v.Health,v.MaximumHealth));ImGui.ProgressBar(v.Health/v.MaximumHealth,new(-1,10),string.Empty);
+        if(ImGui.BeginCombo(L.T("inspector.profession"),L.Name(Catalog.Data.Professions[v.Profession])))
+        {
+            foreach(var profession in Catalog.Data.Professions.Values)
+            {
+                if(ImGui.Selectable(L.Name(profession),v.Profession==profession.Id))city.Train(v,profession.Id);
+                Tooltip(string.Join(" / ",profession.TrainingCost.Select(e=>L.F("format.resource_amount",e.Value,L.Resource(e.Key)))));
+            }
+            ImGui.EndCombo();
+        }
+        if(v.ManualProfession&&Button(L.T("inspector.auto_profession")))
+        {
+            v.Tags=string.Join(" ",v.Tags.Split([' ', ',', ';'],StringSplitOptions.RemoveEmptyEntries).Where(t=>t!=Citizen.ManualProfessionTag));city.Assign();
+        }
+        HealthBar(v.Health,v.MaximumHealth);
         Hint(L.Task(v.Task));ImGui.TextUnformatted(L.F("ui.efficiency", city.Efficiency(v)*100));
-        ImGui.TextUnformatted(L.F("ui.work_progress_s", v.WorkTime, city.Rules.ProductionCycle));
+        ImGui.ProgressBar(Math.Clamp(v.WorkTime/city.Rules.ProductionCycle,0,1),new(-1,18),L.F("ui.work_progress_s",v.WorkTime,city.Rules.ProductionCycle));
         ImGui.TextUnformatted(L.F("ui.damage_reduction_work_rate_x", city.ArmorReduction*100, city.ToolEfficiency));
         var home=city.Buildings.FirstOrDefault(b=>b.Id==v.Home);var work=city.Buildings.FirstOrDefault(b=>b.Id==v.Work);
         Wrapped(L.F("ui.home",home==null?L.T("ui.homeless"):L.Name(home.Plan)));
@@ -187,11 +202,14 @@ partial class GameUi
     {
         Hint(L.F("ui.tile", b.X, b.Z));
         Wrapped(L.Description(b.Plan));ImGui.Separator();
+        HealthBar(b.Health,b.Plan.Health);
+        if(Button(L.T("ui.repair_2_wood_2_stone"),new(-1,26)))city.Repair(b);
+
+        if(b.Plan.Homes>0)BuildingPeople(city,b,true);
+        if(b.Plan.Jobs>0)BuildingPeople(city,b,false);
         if(b.Plan.StorageCapacity>0){Title("ui.storage");Hint(L.F("ui.storage_2",b.Storage.Values.Sum(),b.Plan.StorageCapacity));foreach(var item in b.Storage.Where(e=>e.Value>0))Wrapped(L.F("format.resource_stock",L.Resource(item.Key),item.Value));}
         if(b.Plan.Harvest.Count>0)Hint(b.GrowthDays==0?L.T("ui.ready_to_harvest"):L.F("ui.regrows_in_days",b.GrowthDays));
         Colored(city.Connected(b,city.Roads())?Accent:Gold,city.Connected(b,city.Roads())?L.T("ui.connected"):L.T("ui.entrance_disconnected"));
-        ImGui.TextUnformatted(L.F("building.health", b.Health, b.Plan.Health));ImGui.ProgressBar(b.Health/b.Plan.Health,new(-1,10),string.Empty);
-        if(Button(L.T("ui.repair_2_wood_2_stone"),new(-1,26)))city.Repair(b);
         if(b.Plan.Path){ImGui.TextUnformatted(L.F("ui.base_travel_speed_x", b.Plan.MoveSpeed));foreach(var e in b.Plan.JobSpeed)Wrapped(L.F("ui.x", L.Activity(e.Key), b.Plan.MoveSpeed*e.Value));}
         else
         {
@@ -200,6 +218,42 @@ partial class GameUi
             foreach(var e in b.Plan.Input)ImGui.TextUnformatted(L.F("ui.uses_cycle", e.Value, L.Resource(e.Key)));foreach(var e in b.Plan.Output)ImGui.TextUnformatted(L.F("ui.makes_cycle", e.Value, L.Resource(e.Key)));
         }
         if(!b.Plan.Indestructible&&Button(L.T("ui.demolish_half_emerald_refund"),new(-1,26))){city.Remove(b);if(!city.Buildings.Contains(b))Inspected=-1;}
+    }
+    static void HealthBar(float health,float maximum)
+    {
+        float ratio=maximum>0?Math.Clamp(health/maximum,0,1):0;
+        ImGui.ProgressBar(ratio,new(-1,18),L.F("building.health",health,maximum)+" ("+(ratio*100).ToString("0")+"%)");
+    }
+    void BuildingPeople(City city,Building building,bool residents)
+    {
+        ImGui.Separator();Title(residents?"inspector.residents":"inspector.workers");
+        var people=city.Citizens.Where(v=>residents?v.Home==building.Id:v.Work==building.Id).ToArray();
+        if(people.Length==0){Hint("inspector.no_people");return;}
+        // Only this building's occupants are listed, with a bounded scrolling area.
+        if(ImGui.BeginChild(residents?"Residents":"Workers",new Vector2(0,Math.Min(people.Length*(residents?80:106),240)),ImGuiChildFlags.None))
+        foreach(var person in people)
+        {
+            ImGui.PushID(person.Id);
+            var start=ImGui.GetCursorScreenPos();
+            var skin=Assets.Get("entity/villager/villager.png");
+            if(skin.Id!=0)
+            {
+                ImGui.Image((IntPtr)skin.Id,new(24,30),new(8f/skin.Width,8f/skin.Height),new(16f/skin.Width,18f/skin.Height));
+                // Render head layers from the profession model over the base face.
+                if(Catalog.Data.Models.TryGetValue(person.Profession,out var parts))
+                foreach(var path in parts.Select(p=>p.Texture).Where(t=>t.StartsWith("entity/villager/")&&t!="entity/villager/villager.png").Distinct())
+                {
+                    var layer=Assets.Get(path);if(layer.Id!=0)ImGui.GetWindowDrawList().AddImage((IntPtr)layer.Id,start,start+new Vector2(24,30),new(8f/layer.Width,8f/layer.Height),new(16f/layer.Width,18f/layer.Height));
+                }
+                ImGui.SameLine();
+            }
+            if(ImGui.Selectable(person.FullName+"##person"))Focus("villager",person.Id);
+            ImGui.TextUnformatted(L.Name(Catalog.Data.Professions[person.Profession]));
+            HealthBar(person.Health,person.MaximumHealth);
+            if(!residents)ImGui.ProgressBar(Math.Clamp(person.WorkTime/city.Rules.ProductionCycle,0,1),new(-1,16),L.F("ui.work_progress_s",person.WorkTime,city.Rules.ProductionCycle));
+            ImGui.Separator();ImGui.PopID();
+        }
+        ImGui.EndChild();
     }
     void Save(City city,string name)
     {city.SavePreviewPng=SavePreview.Capture();city.Save(SaveStore.PathFor(name));currentSave=Path.GetFileNameWithoutExtension(SaveStore.PathFor(name));city.Log(L.F("ui.saved_as",currentSave));ClearSavePreview();MenuOpen=false;ImGui.CloseCurrentPopup();}
@@ -300,6 +354,11 @@ partial class GameUi
         bool textures=g.Textures;if(ImGui.Checkbox(L.T("ui.minecraft_textures"),ref textures)){g.Textures=textures;RefreshThumbnails=true;}
         bool shadows=g.Shadows;if(ImGui.Checkbox(L.T("ui.ground_shadows"),ref shadows))g.Shadows=shadows;
         bool water=g.AnimateWater;if(ImGui.Checkbox(L.T("ui.animated_water"),ref water))g.AnimateWater=water;
+        bool enhanced=g.EnhancedVisuals;if(ImGui.Checkbox(L.T("ui.enhanced_visuals"),ref enhanced))g.EnhancedVisuals=enhanced;
+        Tooltip(L.T("ui.enhanced_visuals_help"));
+        ImGui.BeginDisabled(!g.EnhancedVisuals||!g.Shadows);
+        bool smooth=g.SmoothShadows;if(ImGui.Checkbox(L.T("ui.smooth_shadows"),ref smooth))g.SmoothShadows=smooth;
+        Tooltip(L.T("ui.smooth_shadows_help"));ImGui.EndDisabled();
         int fps=Array.IndexOf(new[]{30,60,120,0},g.Fps);if(ImGui.Combo(L.T("ui.frame_limit"),ref fps,"30 FPS\0"+"60 FPS\0"+"120 FPS\0"+L.T("ui.unlimited")+"\0")){g.Fps=new[]{30,60,120,0}[fps];Raylib.SetTargetFPS(g.Fps);}
         if(Button(L.T("ui.save_graphics_preferences"),new(-1,26))){g.Save();menuError=L.T("ui.graphics_preferences_saved");}
         ImGui.Separator();Title("audio.options");

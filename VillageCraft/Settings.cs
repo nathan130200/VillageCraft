@@ -43,6 +43,8 @@ public class GraphicsOptions
     public bool Textures {get;set;}=true;
     public bool Shadows {get;set;}=true;
     public bool AnimateWater {get;set;}=true;
+    public bool EnhancedVisuals {get;set;}
+    public bool SmoothShadows {get;set;}=true;
     public float MasterVolume {get;set;}=.75f;
     public float EffectsVolume {get;set;}=.8f;
     public float CreaturesVolume {get;set;}=.7f;

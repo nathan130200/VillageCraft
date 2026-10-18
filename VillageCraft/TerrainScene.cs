@@ -4,6 +4,8 @@ namespace VillageCraft;
 
 static class TerrainScene
 {
+    static Shader waterShader;
+    public static void Dispose(){if(waterShader.Id!=0&&waterShader.Id!=Rlgl.GetShaderIdDefault())Raylib.UnloadShader(waterShader);waterShader=default;}
     readonly record struct Quad(Vector3 A,Vector3 B,Vector3 C,Vector3 D,float U,float V,float Shade);
     static City? cached;
     static readonly Dictionary<string,List<Quad>> surfaces=[];
@@ -82,20 +84,29 @@ static class TerrainScene
         {
             bool water=surface.Key=="block/water_still.png";var texture=Assets.Get(surface.Key);
             var tint=surface.Key==Catalog.Data.Game.GroundTexture?Scene.ColorOf(Catalog.Data.Game.GroundTint):Color.White;
-            if(water)tint=new(90,151,235,215);
+            if(water)tint=Scene.ColorOf(Catalog.Data.Rendering.WaterTint);
+            if(water&&WorldLighting.Current?.ShadowPass==true)continue;
             for(int begin=0;begin<surface.Value.Count;begin+=512)
             {
                 int end=Math.Min(begin+512,surface.Value.Count);
                 Rlgl.CheckRenderBatchLimit((end-begin)*4);
+                if(WorldLighting.Current is {} lighting)lighting.Bind(water);
+                else if(water)
+                {
+                    if(waterShader.Id==0)waterShader=Raylib.LoadShaderFromMemory(null,Catalog.Data.Rendering.WaterFragment);
+                    Raylib.BeginShaderMode(waterShader);
+                }
                 Rlgl.SetTexture(GraphicsOptions.Current.Textures?texture.Id:0);Rlgl.Begin((int)DrawMode.Quads);
                 for(int i=begin;i<end;i++)
                 {
                     var q=surface.Value[i];
+                    var normal=Vector3.Normalize(Vector3.Cross(q.B-q.A,q.C-q.A));Rlgl.Normal3f(normal.X,normal.Y,normal.Z);
                     float flow=water&&GraphicsOptions.Current.AnimateWater?Scene.Time*.015f:0;
-                    void Vertex(Vector3 v,float u,float t){float light=Scene.LightAt(v.X/Scene.Scale,v.Z/Scene.Scale)*q.Shade;Rlgl.Color4ub((byte)(tint.R*light),(byte)(tint.G*light),(byte)(tint.B*light),tint.A);Rlgl.TexCoord2f(u+flow,t+flow);Rlgl.Vertex3f(v.X,v.Y,v.Z);}
+                    void Vertex(Vector3 v,float u,float t){float light=Scene.LightAt(v.X/Scene.Scale,v.Z/Scene.Scale)*(WorldLighting.Active?1:q.Shade);Rlgl.Color4ub((byte)(tint.R*light),(byte)(tint.G*light),(byte)(tint.B*light),tint.A);Rlgl.TexCoord2f(u+flow,t+flow);Rlgl.Vertex3f(v.X,v.Y,v.Z);}
                     Vertex(q.A,0,q.V);Vertex(q.B,q.U,q.V);Vertex(q.C,q.U,0);Vertex(q.D,0,0);
                 }
                 Rlgl.End();Rlgl.SetTexture(0);
+                if(WorldLighting.Active||water)Raylib.EndShaderMode();
             }
         }
         // Decoration is culled once it becomes subpixel at a distance.

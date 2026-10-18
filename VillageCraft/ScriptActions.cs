@@ -128,6 +128,7 @@ public sealed partial class ScriptVillager
         if(!Active||!Catalog.Data.Professions.ContainsKey(profession)||citizen.Profession==profession)return false;
         citizen.ChangeProfession(profession);citizen.WorkTime=0;city.Notify(new("onVillagerProfessionChanged",citizen));return true;
     }
+    public bool manualProfession=>citizen.ManualProfession;
     public bool hasWorked {get=>citizen.HasWorked;set{if(Active)citizen.HasWorked=value;}}
     public string task {get=>citizen.Task.ToString();set{if(Active&&Enum.TryParse<TaskId>(value,out var id)&&Enum.IsDefined(id))citizen.Task=id;}}
     public int resourceTarget {get=>citizen.ResourceTarget;set{if(Active)citizen.ResourceTarget=value;}}
@@ -157,6 +158,7 @@ public sealed partial class ScriptBuilding
     public float efficiency=>value.Attendance>0?value.WorkEffort/value.Attendance:1;
     public float serviceCredit {get=>value.ServiceCredit;set{if(float.IsFinite(value))this.value.ServiceCredit=Math.Clamp(value,0,2);}}
     public int homes=>value.Plan.Homes;
+    public int pendingBirths=>city.Babies.Count(b=>b.Home==value.Id);
     public string[] allowedProfessions=>value.Plan.Professions;
     public int jobs=>value.Plan.Jobs;
     public string animal=>value.Plan.Animal;

@@ -238,7 +238,7 @@ partial class GameUi
         if(monster.LeatherHelmet)Hint("ui.leather_helmet_sunlight_protection");
         if(monster.BurningInSun)Hint("ui.burning_in_sunlight");
         if(monster.BossWave)Hint("unit.boss_wave");
-        ImGui.TextUnformatted(L.F("building.health",monster.Health,max));ImGui.ProgressBar(monster.Health/max,new(-1,8),string.Empty);
+        HealthBar(monster.Health,max);
         if(unit!=null)
         {
             ImGui.TextUnformatted(L.F("ui.damage_range",unit.Damage,unit.Range));

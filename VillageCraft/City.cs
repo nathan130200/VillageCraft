@@ -42,6 +42,8 @@ public class Citizen
     public Dictionary<ResourceType,float> Inventory {get;set;}=[];
     [JsonIgnore] public string FullName {get{CitizenNames.Ensure(this);return FirstName+" "+Surname;}}
 
+    internal const string ManualProfessionTag="vc_manual_profession";
+    [JsonIgnore] public bool ManualProfession=>EntityTags.Has(Tags,ManualProfessionTag);
     [JsonIgnore] public int RepairTarget {get;set;}=-1;
     [JsonIgnore] public float RepairTime {get;set;}
     public int Id { get; set; }
@@ -154,6 +156,7 @@ public partial class City:IDisposable
     public int Kills {get;set;}
     public string Message {get;set;}="Build a farm and well. Rotate entrances toward connected paths.";
     [JsonIgnore] public List<Shot> Shots {get;}=[];
+    [JsonIgnore] public Dictionary<int,float> BuildingDamageEffects {get;}=[];
     [JsonIgnore] public int Capacity=>Buildings.Sum(b=>b.Plan.Homes);
     [JsonIgnore] public int Water {get{var roads=Roads();return Buildings.Where(b=>Connected(b,roads)&&b.Enabled).Sum(b=>b.Plan.Water);}}
     [JsonIgnore] public int RaidIn=>Rules.RaidsEnabled?Rules.RaidInterval-Day%Rules.RaidInterval:-1;
@@ -245,14 +248,14 @@ public partial class City:IDisposable
     {
         if(b.Plan.Indestructible)return;
         if(destroyed&&!b.Plan.Natural)Statistics.BuildingsDestroyed++;
-        if(!destroyed&&(b.Cell==(AnchorX,AnchorZ)||Citizens.Any(v=>v.Home==b.Id))){Message=L.T("ui.central_square_and_occupied_homes_are_protected");return;}
+        if(!destroyed&&b.Cell==(AnchorX,AnchorZ)){Message=L.T("ui.central_square_and_occupied_homes_are_protected");return;}
         if(!destroyed)Stock[ResourceType.Emeralds]+=b.Plan.Cost.GetValueOrDefault(ResourceType.Emeralds)/2;
         foreach(var item in b.Storage)Stock[item.Key]-=item.Value;
         Buildings.Remove(b);Animals.RemoveAll(a=>a.Home==b.Id);
         InvalidateTopology();
         foreach(var v in Citizens)
         {
-            if(v.Home==b.Id){var home=Buildings.FirstOrDefault(h=>h.Plan.Homes>Citizens.Count(c=>c.Home==h.Id));v.Home=home?.Id??-1;}
+            if(v.Home==b.Id){var home=Buildings.FirstOrDefault(h=>h.Enabled&&Connected(h,Roads())&&h.Plan.Homes>Citizens.Count(c=>c.Home==h.Id));v.Home=home?.Id??-1;}
             v.Route.Clear();
         }
         Assign();Emit(new("onBuildingRemoved",b,Reason:reason??(destroyed?"destroyed":"demolished")));Log(destroyed?L.F("message.building_destroyed",L.Name(b.Plan)):L.F("message.building_removed",L.Name(b.Plan)));
@@ -270,8 +273,11 @@ public partial class City:IDisposable
     {
         if(!Catalog.Data.Professions.TryGetValue(profession,out var plan))return false;
         if(v.Profession==profession)return false;
+        if(!v.ManualProfession&&v.Tags.Length+Citizen.ManualProfessionTag.Length+1>256)return false;
         if(!Spend(plan.TrainingCost)){Message=L.T("ui.not_enough_supplies_for_training");return false;}
-        v.ChangeProfession(profession);v.WorkTime=0;Assign();Emit(new("onVillagerProfessionChanged",v));Log(L.F("ui.trained_as",v.FullName,L.Name(plan)));return true;
+        if(!v.ManualProfession)v.Tags=(v.Tags+" "+Citizen.ManualProfessionTag).Trim();
+        v.ChangeProfession(profession);v.WorkTime=0;
+        Assign();Emit(new("onVillagerProfessionChanged",v));Log(L.F("ui.trained_as",v.FullName,L.Name(plan)));return true;
     }
     public bool Give(Citizen v,ResourceType resource,float amount)
     {
@@ -308,6 +314,7 @@ public partial class City:IDisposable
         Statistics.SimulatedSeconds+=dt;DayTime+=dt;SettleAtDawn();UpdateSunlight(dt);
         if(DayPhase>=18f/24&&LastNight!=Day){LastNight=Day;Emit(new("onNightStarted"));}
         UpdateNightEncounters();
+        foreach(var id in BuildingDamageEffects.Keys.ToArray()){BuildingDamageEffects[id]-=dt;if(BuildingDamageEffects[id]<=0)BuildingDamageEffects.Remove(id);}
         Shots.ForEach(s=>s.Life-=dt);Shots.RemoveAll(s=>s.Life<=0);
         using(Profiler.Measure(ProfileArea.Villagers))
         foreach(var v in Citizens.ToArray())
@@ -498,7 +505,8 @@ public partial class City:IDisposable
     public void DamageBuilding(Building b,float amount,object? source=null)
     {
         if(b.Plan.Indestructible||!Buildings.Contains(b)||!float.IsFinite(amount)||amount<=0||b.Health<=0)return;
-        float damage=Math.Min(b.Health,amount);b.Health-=damage;Emit(new("onBuildingDamaged",b,damage,Source:source));
+        float damage=Math.Min(b.Health,amount);b.Health-=damage;
+        if(BuildingDamageEffects.Count<128||BuildingDamageEffects.ContainsKey(b.Id))BuildingDamageEffects[b.Id]=.7f;Emit(new("onBuildingDamaged",b,damage,Source:source));
     }
     public void DamageVillager(Citizen v,float amount,object? source=null)
     {

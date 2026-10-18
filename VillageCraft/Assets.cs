@@ -135,6 +135,7 @@ static class Assets
     public static void RefreshFilters(){foreach(var e in textures)if(e.Value.Id!=0)Filter(e.Value,e.Key);}
     public static void BeginCutouts()
     {
+        if(WorldLighting.Current is {} lighting){lighting.Bind();Rlgl.DisableBackfaceCulling();return;}
         if(cutoutShader.Id==0)
         {
             cutoutShader=Raylib.LoadShaderFromMemory(null,Catalog.Data.Rendering.CutoutFragment);
@@ -161,6 +162,7 @@ static class Assets
             float angle=heading+MathF.PI/4+face*MathF.PI/2;
             var side=new Vector3(MathF.Cos(angle)*size.X*.5f,0,MathF.Sin(angle)*size.Z*.5f);
             var up=new Vector3(0,size.Y*.5f,0);
+            Rlgl.Normal3f(-MathF.Sin(angle),0,MathF.Cos(angle));
             Vector3[] points=[center-side-up,center+side-up,center+side+up,center-side+up];
             Vector2[] uv=[new(0,1),new(1,1),new(1,0),new(0,0)];
             for(int i=0;i<4;i++){Rlgl.TexCoord2f(uv[i].X,uv[i].Y);Rlgl.Vertex3f(points[i].X,points[i].Y,points[i].Z);}
@@ -188,7 +190,11 @@ static class Assets
                 u=px/texture.Width;v=py/texture.Height;w=pw/texture.Width;h=ph/texture.Height;
             }
             Vector2[] uv=[new(u,v+h),new(u+w,v+h),new(u+w,v),new(u,v)];
-            float light=shade[face];Rlgl.Color4ub((byte)(tint.R*light),(byte)(tint.G*light),(byte)(tint.B*light),tint.A);
+            Vector3 normal=face switch{0=>Vector3.UnitZ,1=>-Vector3.UnitZ,2=>-Vector3.UnitX,3=>Vector3.UnitX,4=>Vector3.UnitY,_=>-Vector3.UnitY};
+            (normal.Y,normal.Z)=(normal.Y*tiltCos-normal.Z*tiltSin,normal.Y*tiltSin+normal.Z*tiltCos);
+            (normal.X,normal.Z)=(normal.X*cosine-normal.Z*sine,normal.X*sine+normal.Z*cosine);
+            Rlgl.Normal3f(normal.X,normal.Y,normal.Z);
+            float light=WorldLighting.Active?1:shade[face];Rlgl.Color4ub((byte)(tint.R*light),(byte)(tint.G*light),(byte)(tint.B*light),tint.A);
             for(int i=0;i<4;i++)
             {
                 var p=vertices[faces[face][i]]*size*.5f;
