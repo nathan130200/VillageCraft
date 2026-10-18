@@ -1745,3 +1745,33 @@ Name = "Português (Brasil)"
 
 # City problems panel: profile.area.Diagnostics. Preserve numbered format arguments.
 "profile.area.Diagnostics" = "Diagnóstico da cidade"
+
+# Audio preferences/profiler label: audio.options.
+"audio.options" = "Áudio"
+
+# Audio preferences/profiler label: audio.master.
+"audio.master" = "Volume geral"
+
+# Audio preferences/profiler label: audio.effects.
+"audio.effects" = "Efeitos e passos"
+
+# Audio preferences/profiler label: audio.creatures.
+"audio.creatures" = "Aldeões e criaturas"
+
+# Audio preferences/profiler label: audio.ambience.
+"audio.ambience" = "Ambiente"
+
+# Audio preferences/profiler label: audio.alerts.
+"audio.alerts" = "Avisos de conversão e ataques"
+
+# Audio preferences/profiler label: audio.save.
+"audio.save" = "Salvar preferências de áudio"
+
+# Audio preferences/profiler label: audio.saved.
+"audio.saved" = "Preferências de áudio salvas."
+
+# Audio preferences/profiler label: profile.area.Audio.
+"profile.area.Audio" = "Agendamento / envio de áudio"
+
+# Audio diagnostics counters in profiler. Keep all numbered format arguments.
+"profile.audio" = "Áudio: {0} arquivos, {1} vozes, {2} inícios, {3} limitados por taxa/vozes/fila"

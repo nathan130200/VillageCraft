@@ -72,6 +72,7 @@ public class Catalog
     public List<ResourcePlan> ResourceDefinitions {get;set;}=[];
     public List<UpgradePlan> Upgrades {get;set;}=[];
     public GameDefaults Game {get;set;}=new();
+    public AudioSettings Audio {get;set;}=new();
     public RenderingSettings Rendering {get;set;}=new();
     public SunlightSettings Sunlight {get;set;}=new();
     public EconomySettings Economy {get;set;}=new();
@@ -89,6 +90,7 @@ public class Catalog
         data.Terrain=TomlFile.Read<TerrainSettings>(Path.Combine(path,"terrain.toml"));
         data.Sunlight=TomlFile.Read<SunlightSettings>(Path.Combine(path,"sunlight.toml"));
         data.Economy=TomlFile.Read<EconomySettings>(Path.Combine(path,"economy.toml"));
+        data.Audio=TomlFile.Read<AudioSettings>(Path.Combine(path,"audio.toml"));data.Audio.Validate();
         data.Rendering=TomlFile.Read<RenderingSettings>(Path.Combine(path,"rendering.toml"));
         data.ResourceDefinitions=TomlFile.Read<ResourceFile>(Path.Combine(path,"resources.toml")).Resources;
         foreach(var file in Directory.GetFiles(Path.Combine(path,"Prefabs"),"*.toml").Order())data.Prefabs.Add(TomlFile.Read<Plan>(file));

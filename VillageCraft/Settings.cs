@@ -43,8 +43,14 @@ public class GraphicsOptions
     public bool Textures {get;set;}=true;
     public bool Shadows {get;set;}=true;
     public bool AnimateWater {get;set;}=true;
+    public float MasterVolume {get;set;}=.75f;
+    public float EffectsVolume {get;set;}=.8f;
+    public float CreaturesVolume {get;set;}=.7f;
+    public float AmbienceVolume {get;set;}=.45f;
+    public float AlertsVolume {get;set;}=.8f;
     public int Fps {get;set;}=60;
-    public void Validate(){UiScale=float.IsFinite(UiScale)?Math.Clamp(UiScale,1,2):1;DisplayMode=Math.Clamp(DisplayMode,0,2);DisplayWidth=Math.Clamp(DisplayWidth,640,7680);DisplayHeight=Math.Clamp(DisplayHeight,480,4320);Quality=Math.Clamp(Quality,0,2);if(Fps is not (0 or 30 or 60 or 120))Fps=60;}
+    public void Validate(){MasterVolume=Volume(MasterVolume);EffectsVolume=Volume(EffectsVolume);CreaturesVolume=Volume(CreaturesVolume);AmbienceVolume=Volume(AmbienceVolume);AlertsVolume=Volume(AlertsVolume);UiScale=float.IsFinite(UiScale)?Math.Clamp(UiScale,1,2):1;DisplayMode=Math.Clamp(DisplayMode,0,2);DisplayWidth=Math.Clamp(DisplayWidth,640,7680);DisplayHeight=Math.Clamp(DisplayHeight,480,4320);Quality=Math.Clamp(Quality,0,2);if(Fps is not (0 or 30 or 60 or 120))Fps=60;}
+    static float Volume(float value)=>float.IsFinite(value)?Math.Clamp(value,0,1):.75f;
     public static void Load()
     {
         try{if(File.Exists(SaveStore.OptionsPath))Current=TomlFile.Read<GraphicsOptions>(SaveStore.OptionsPath);Current.Validate();L.Set(Current.Language);}

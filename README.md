@@ -11,6 +11,7 @@ A 3D village builder in C#, combining Minecraft-inspired villages with city mana
 - **Build with prefabs:** connect homes, farms, workshops and defenses with roads.
 - **Manage a working economy:** assign professions, deliver supplies, store resources and trade for emeralds.
 - **Care for residents:** balance food, water, housing and happiness; inspect villagers and use the yellow exclamation button to review grouped city problems.
+- **Hear the village:** Minecraft creature voices, material footsteps, workplace effects and settlement/raid alerts, with speed-safe playback limits.
 - **Survive the night:** protect the village with defenders and golems against regular encounters and boss waves.
 - **Make it your own:** customize TOML content and JavaScript behaviors with editor type definitions.
 
@@ -42,7 +43,7 @@ Captured in-game with separately supplied Minecraft 1.16 assets. The screenshots
 
 ## Run the game
 
-Requires **.NET 10 SDK**, **OpenGL 3.3**, and separately supplied Minecraft assets. Development uses **Minecraft Java 1.16 textures**, which are **not included in this repository**. The custom UI uses `mojangles.ttf` when supplied; otherwise it falls back to a system font, then ImGui's built-in font.
+Requires **.NET 10 SDK**, **OpenGL 3.3**, and separately supplied Minecraft assets. Development uses **Minecraft Java 1.16 textures and sounds**, which are **not included in this repository**. The custom UI uses `mojangles.ttf` when supplied; otherwise it falls back to a system font, then ImGui's built-in font.
 
 Extract textures into the root `textures/` folder, preserving paths such as `textures/entity/piglin/piglin.png`. Alternatively, point `VILLAGECRAFT_ASSETS` to your external asset directory; indexed assets are also supported.
 
@@ -69,4 +70,5 @@ Buildings, professions, models and balance use editable TOML files. JavaScript c
 - [Content guide](VillageCraft/Content/README.md)
 - [JavaScript API](VillageCraft/Content/SCRIPTING.md)
 - [Editor type definitions](VillageCraft/Content/game.d.ts)
+- [Audio guide](VillageCraft/Content/AUDIO.md)
 - [Localization guide](VillageCraft/Content/Locales/README.md)

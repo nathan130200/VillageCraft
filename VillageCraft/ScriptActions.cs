@@ -84,6 +84,7 @@ public partial class City
         var b=Buildings.FirstOrDefault(b=>b.Id==v.Work&&b.Enabled&&Connected(b,Roads()));
         if(b==null||b.Plan.CreatesGuardian||!Catalog.Data.Units.TryGetValue(b.Plan.Defender,out var unit)||enemy.Health<=0||v.Cooldown>0||Vector2.Distance(v.Position,enemy.Position)>unit.Range||!Sight(v.Position,enemy.Position))return false;
         DamageMonster(enemy,unit.Damage*Efficiency(v)*(v.Effects.ContainsKey("Weakness")?.7f:1)*(EnchantedArmor?1+Catalog.Data.Economy.EnchantmentDamage:1),v);
+        Emit(new("onVillagerAttack",v,Source:enemy));
         v.Cooldown=unit.Cooldown;Shots.Add(new(v.Position,enemy.Position,b.Plan.Defender));return true;
     }
     internal bool ScriptAttack(Creature mob,object target)
@@ -95,8 +96,9 @@ public partial class City
         bool hostile=Enemies.Contains(mob);
         bool valid=hostile?target switch {Citizen person=>Citizens.Contains(person),Creature guardian=>Defenders.Contains(guardian),Building structure=>Buildings.Contains(structure)&&!structure.Plan.Natural&&!structure.Plan.Indestructible,_=>false}:target is Creature enemy&&Enemies.Contains(enemy);
         if(!valid)return false;
+        Emit(new(hostile?"onMonsterAttack":"onGuardianAttack",mob,Source:target));
         mob.Cooldown=unit.Cooldown;Shots.Add(new(mob.Position,point,mob.Type));
-        switch(target){case Citizen v:DamageVillager(v,unit.Damage*(1-ArmorReduction),mob);break;case Building b:DamageBuilding(b,unit.Damage,mob);break;case Creature c:if(hostile)c.Health-=unit.Damage*(1-ArmorReduction);else DamageMonster(c,unit.Damage,mob);break;}
+        switch(target){case Citizen v:DamageVillager(v,unit.Damage*(1-ArmorReduction),mob);break;case Building b:DamageBuilding(b,unit.Damage,mob);break;case Creature c:if(hostile){float damage=unit.Damage*(1-ArmorReduction);c.Health-=damage;Emit(new("onGuardianDamaged",c,Amount:damage,Source:mob));}else DamageMonster(c,unit.Damage,mob);break;}
         return true;
     }
     internal bool ScriptExplode(Creature mob,Vector2 target)
@@ -106,6 +108,7 @@ public partial class City
         foreach(var b in Buildings.Where(b=>Vector2.Distance(mob.Position,new(b.X,b.Z))<=2).ToArray())DamageBuilding(b,unit.Damage,mob);
         foreach(var v in Citizens.Where(v=>Vector2.Distance(mob.Position,v.Position)<=2).ToArray())DamageVillager(v,unit.Damage*(1-ArmorReduction),mob);
         foreach(var d in Defenders.Where(d=>Vector2.Distance(mob.Position,d.Position)<=2))d.Health-=unit.Damage*(1-ArmorReduction);
+        Emit(new("onExplosion",mob));
         Shots.Add(new(mob.Position,target,"blaze"));DamageMonster(mob,mob.Health,mob);return true;
     }
 }
@@ -243,7 +246,7 @@ public sealed class MobScriptContext
     public float x=>mob.X;
     public float z=>mob.Z;
     public float health=>mob.Health;
-    public float state {get=>mob.BrainTime;set{if(float.IsFinite(value))mob.BrainTime=Math.Clamp(value,0,3600);}}
+    public float state {get=>mob.BrainTime;set{if(float.IsFinite(value)){if(mob.Type=="creeper"&&mob.BrainTime<=0&&value>0)city.Notify(new("onMonsterPrimed",mob));mob.BrainTime=Math.Clamp(value,0,3600);}}}
     public float dt {get;}
     Vector2 point=>selected switch{Citizen v=>v.Position,Creature c=>c.Position,Building b=>new(b.X,b.Z),_=>new(city.AnchorX,city.AnchorZ)};
     public float distance=>Vector2.Distance(mob.Position,point);

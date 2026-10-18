@@ -120,9 +120,9 @@ public sealed class ScriptRuntime:IDisposable
             if(evt.Name=="onBuildingDay"&&c.Type!=ScriptType.Mod)continue;
             if(evt.Name=="onCommandFailed")Invoke(c,evt.Name,evt.Reason);
             else if(evt.Name.EndsWith("Damaged")||evt.Name=="onBuildingRepaired")Invoke(c,evt.Name,Bind(evt.Subject),evt.Amount,Bind(evt.Source));
-            else if(evt.Name=="onGoodsConverted")Invoke(c,evt.Name,evt.Amount);
+            else if(evt.Name is "onGoodsConverted" or "onBossWaveStarted")Invoke(c,evt.Name,evt.Amount);
             else if(evt.Name=="onResourceCollected")Invoke(c,evt.Name,Bind(evt.Subject),evt.Amount,Bind(evt.Source));
-            else if(evt.Name=="onDeliveryCompleted")Invoke(c,evt.Name,Bind(evt.Subject),Bind(evt.Source));
+            else if(evt.Name.EndsWith("Attack")||evt.Name is "onDeliveryCompleted" or "onBuildingWork")Invoke(c,evt.Name,Bind(evt.Subject),Bind(evt.Source));
             else if(evt.Name=="onTreeHarvested")Invoke(c,evt.Name,Bind(evt.Subject),Bind(evt.Source));
             else if(evt.Name.EndsWith("Removed"))Invoke(c,evt.Name,Bind(evt.Subject),evt.Reason);
             else if(evt.Subject==null)Invoke(c,evt.Name);
@@ -181,11 +181,7 @@ public sealed class ScriptRuntime:IDisposable
         if(c!=null&&Has(c,"onBuildingDay")){Invoke(c,"onBuildingDay",new ScriptBuilding(city,b));if(!c.Failed)return;}
         var basic=DefaultBuilding(b);if(basic!=null&&basic!=c)Invoke(basic,"onBuildingDay",new ScriptBuilding(city,b));
     }
-    public void BuildingWork(Building b,Citizen worker)=>Queue(()=>
-    {
-        var c=ResolveBuilding(b);if(c!=null)Invoke(c,"onBuildingWork",new ScriptBuilding(city,b),new ScriptVillager(city,worker));
-        foreach(var mod in components.Values.Where(c=>c.Type==ScriptType.Mod))Invoke(mod,"onBuildingWork",new ScriptBuilding(city,b),new ScriptVillager(city,worker));
-    });
+    public void BuildingWork(Building b,Citizen worker)=>city.Notify(new("onBuildingWork",b,Source:worker));
     public void Tick(float dt)
     {
         using var profile=Profiler.Measure(ProfileArea.ScriptTick);

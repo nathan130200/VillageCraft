@@ -424,6 +424,7 @@ public partial class City:IDisposable
     {
         Waves++;int count=Math.Max(0,Math.Min(Rules.MaxRaiders-Enemies.Count,Rules.WaveBase+Waves*Rules.WaveGrowth));string[] types=["zombie","skeleton","creeper","piglin","piglin_brute","zombified_piglin","blaze"];
         for(int i=0;i<count;i++){string type=i==0?"nether_warlord":types[(i-1)%types.Length];SpawnMonster(type,Math.Max(0,AnchorX-18),Math.Clamp(AnchorZ-12+i*2%26,0,Height-1),bossWave:true);}
+        Emit(new("onBossWaveStarted",Amount:Waves));
         Log(L.F("ui.raid_hostiles_led_by_a_nether_warlord_are",Waves,count));
     }
     void Combat(float dt)
@@ -438,7 +439,7 @@ public partial class City:IDisposable
     public void ResolveDeaths()
     {
         int dead=Enemies.Count(e=>e.Health<=0);if(dead>0){int burned=Enemies.Count(e=>e.Health<=0&&e.SunKilled);Statistics.SunDeaths+=burned;Kills+=dead;Stock[ResourceType.Goods]+=(dead-burned)*Catalog.Data.Economy.GoodsPerKill;foreach(var m in Enemies.Where(e=>e.Health<=0).ToArray())RemoveMonster(m,"killed");if(Enemies.Count==0)Log(L.T("ui.hostiles_defeated_repair_and_prepare_for_the_next"));}
-        Defenders.RemoveAll(d=>d.Health<=0);
+        foreach(var d in Defenders.Where(d=>d.Health<=0).ToArray()){Defenders.Remove(d);Emit(new("onGuardianRemoved",d,Reason:"killed"));}
         var fallen=Citizens.Where(v=>v.Health<=0).ToArray();int lost=fallen.Length;foreach(var v in fallen)RemoveVillager(v,"killed");if(lost>0){Log(L.F("ui.villagers_fell_during_the_raid",lost));Assign();}
         foreach(var b in Buildings.Where(b=>b.Health<=0).ToArray())Remove(b,true);
     }

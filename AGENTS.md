@@ -153,3 +153,7 @@ This file records the repository owner's requirements from the project conversat
 - Golems patrol reachable random destinations across the village instead of staying tethered to their forge. Preserve combat priority and keep the behavior editable in JavaScript.
 - Resolve structured texture paths exactly; a same-named profession overlay must not replace a full-body skin. Use modern villager base/clothing/profession layers and validate each profession from front and rear.
 - Add a yellow exclamation button beside the journal for current city problems. Group equivalent problems with occurrence counts, remove resolved entries and avoid repeated workplace-shortage messages.
+
+- Use only externally supplied Minecraft sound files, primarily resolved through assets_index.json. Include referenced sounds in UserData/cache.zip; never bundle original sounds.
+- Add 06:00 conversion and boss-wave cues, matching creatures/villagers, housing/workplace/water effects, day/night ambience and surface-dependent footsteps. Use actual movement/work/events.
+- Audio must use real-time cooldowns, bounded/deduplicated queues and voice/start limits so simulation speed cannot cause spam or alter pitch. Provide saved volume controls, spatial attenuation, pause/load cleanup and graceful missing-asset/device handling. Keep audio profiling and test hooks correctly separated in Release.

@@ -7,6 +7,7 @@ using VillageCraft;
 GameLog.Initialize();
 try{Catalog.Load();}catch(Exception e){GameLog.Write(GameLogLevel.Critical,"Cannot load TOML content: "+e);Environment.ExitCode=1;return;}
 #if DEBUG
+if(args.Contains("--audio-test")){try{AudioChecks.Run();}catch(Exception e){Console.Error.WriteLine(e);Environment.ExitCode=1;}finally{Assets.Dispose();}return;}
 if(args.Contains("--village-improvements-test")){try{VillageImprovementsChecks.Run();}catch(Exception e){Console.Error.WriteLine(e);Environment.ExitCode=1;}return;}
 if(args.Contains("--profile-test")){try{ProfilerChecks.Run();}catch(Exception e){Console.Error.WriteLine(e);Environment.ExitCode=1;}return;}
 if(args.Contains("--profile-benchmark")){try{ProfilerChecks.Benchmark();}catch(Exception e){Console.Error.WriteLine(e);Environment.ExitCode=1;}return;}
@@ -16,6 +17,7 @@ if(args.Contains("--population-test")){try{PopulationChecks.Run();}catch(Excepti
 if(args.Contains("--logistics-test")){try{LogisticsChecks.Run();}catch(Exception e){Console.Error.WriteLine(e);Environment.ExitCode=1;}return;}
 if(args.Contains("--self-test")){try{Checks.Run();}catch(Exception e){Console.Error.WriteLine(e);Environment.ExitCode=1;}return;}
 bool smoke=args.Contains("--smoke-test"),raidSmoke=args.Contains("--raid-smoke");
+bool audioSmoke=args.Contains("--audio-smoke");if(audioSmoke)smoke=true;
 bool problemsSmoke=args.Contains("--problems-smoke");if(problemsSmoke)smoke=true;
 bool profileSmoke=args.Contains("--profile-smoke")||args.Contains("--profile-callbacks-smoke");if(profileSmoke)smoke=true;
 bool peopleSmoke=args.Contains("--people-smoke");if(peopleSmoke)smoke=true;
@@ -38,7 +40,7 @@ bool panelsSmoke=args.Contains("--panels-smoke"),clockSmoke=args.Contains("--clo
 bool citizenSmoke=args.Contains("--citizen-smoke");if(englishSmoke)smoke=true;
 bool nightSmoke=args.Contains("--night-smoke");if(citizenSmoke)smoke=true;if(nightSmoke)smoke=true;
 if(smoke||raidSmoke||menuSmoke||optionsSmoke||uiSmoke||caveSmoke||newMapSmoke||modelsSmoke)Raylib.SetTraceLogLevel(TraceLogLevel.Warning);
-GraphicsOptions.Load();if(args.Contains("--scale-smoke")){GraphicsOptions.Current.UiScale=1.5f;smoke=true;}if(englishSmoke)L.Set("en-US");Assets.Prepare();
+GraphicsOptions.Load();if(audioSmoke)GraphicsOptions.Current.MasterVolume=.04f;if(args.Contains("--scale-smoke")){GraphicsOptions.Current.UiScale=1.5f;smoke=true;}if(englishSmoke)L.Set("en-US");Assets.Prepare();
 #else
 if(args.Length>0){Console.Error.WriteLine("Development command-line modes require a Debug build.");Environment.ExitCode=1;return;}
 GraphicsOptions.Load();Assets.Prepare();
@@ -62,6 +64,7 @@ if(modelsSmoke)
     try{if(villagerModels)VisualChecks.Villagers();else if(netherModels)VisualChecks.Nether();else if(sunlightModels)VisualChecks.Sunlight();else if(materialsSmoke)VisualChecks.Materials(beta105Models);else VisualChecks.Models();}finally{Assets.Dispose();rlImGui.Shutdown();Raylib.CloseWindow();}return;
 }
 #endif
+using var audio=new GameAudio(Catalog.Data.Audio);audio.Initialize();
 var ui=new GameUi();ui.Theme();
 #if DEBUG
 if(profileSmoke)ui.ToggleProfiler();
@@ -90,7 +93,7 @@ if(beta105Smoke)
 #else
 var city=City.StartVillage();
 #endif
-_=city.Scripting;city.Scripting.Flush();
+_=city.Scripting;city.Scripting.Flush();audio.Bind(city);
 #if DEBUG
 if(raidSmoke)for(int i=0;i<240;i++)city.Update(.1f);
 string? previewSave=null;
@@ -117,7 +120,7 @@ try
         using(Profiler.Measure(ProfileArea.Input))
         {
         dt=Math.Min(Raylib.GetFrameTime(),.1f);time+=dt;
-        if(!ReferenceEquals(cameraCity,city)){cameraCity.Dispose();_=city.Scripting;city.Scripting.Flush();focus=new(city.AnchorX*4,0,city.AnchorZ*4);distance=102;cameraCity=city;}
+        if(!ReferenceEquals(cameraCity,city)){audio.Bind(city);cameraCity.Dispose();_=city.Scripting;city.Scripting.Flush();focus=new(city.AnchorX*4,0,city.AnchorZ*4);distance=102;cameraCity=city;}
 #if DEBUG
         if(clockSmoke)city.DayTime=city.Rules.DayLength*frames/64f;
         ui.TestTooltip=(uiSmoke&&frames>=50)||compactSmoke;
@@ -125,6 +128,10 @@ try
         if(uiSmoke&&frames%5==0){ui.ShowBuildCategory("Roads");ui.TestActivatePrefab=Catalog.Data.Prefabs.Where(p=>p.Category=="Roads").ElementAt(frames/5%6).Id;distance=frames<30?55:145;}
 #endif
         if(Raylib.IsKeyPressed(KeyboardKey.Escape))ui.Escape();
+#if DEBUG
+        if(audioSmoke&&frames==12){city.DayTime=city.Rules.DayLength*.25f-.001f;city.LastSettlementDay=city.Day-1;city.Stock[ResourceType.Goods]=5;}
+        if(audioSmoke&&frames==36)city.SpawnWave();
+#endif
         using(Profiler.Measure(ProfileArea.Update))
         if(!ui.Paused&&!ui.MenuOpen)city.Update(dt*ui.Speed);
         mouse=Raylib.GetMousePosition();capture=city.GameOver||ui.OverUi(mouse)||ImGui.GetIO().WantCaptureMouse;
@@ -158,6 +165,7 @@ try
         }
         if(ui.RefreshThumbnails)ui.BuildThumbnails();Scene.Time=time;
         Scene.Daylight=city.Daylight;
+        audio.Update(city,new(focus.X/Scene.Scale,focus.Z/Scene.Scale),new(MathF.Sin(yaw),-MathF.Cos(yaw)),dt,ui.Paused||ui.MenuOpen);
         }
         using(Profiler.Measure(ProfileArea.Render))
         {
@@ -191,7 +199,7 @@ try
         if(args.Contains("--scale-smoke")&&frames==10&&Vector2.Distance(ImGui.GetIO().MousePos,Raylib.GetMousePosition()/GraphicsOptions.Current.UiScale)>2)
             throw new InvalidOperationException("Scaled mouse input does not match UI coordinates.");
 #endif
-        ui.Draw(ref city,hx,hz);ui.DrawProfiler(city);
+        ui.Draw(ref city,hx,hz);ui.DrawProfiler(city,audio);
         }
         using(Profiler.Measure(ProfileArea.UiSubmit))ui.EndFrame();
         using(Profiler.Measure(ProfileArea.PresentAndPacing))Raylib.EndDrawing();
@@ -210,7 +218,8 @@ try
         if(uiSmoke&&frames==29)VisualChecks.Capture("ui-near-smoke.png");
         if((smoke||raidSmoke||menuSmoke||optionsSmoke||uiSmoke||caveSmoke||newMapSmoke)&&++frames>=60)
         {
-            VisualChecks.Capture(problemsSmoke?"city-problems.png":profileSmoke?(args.Contains("--profile-callbacks-smoke")?"profiler-callbacks.png":"profiler-smoke.png"):nightSmoke?"night-village.png":peopleSmoke?"people-beta106.png":gameOverSmoke?"gameover-smoke.png":beta105Smoke?"beta105-smoke.png":raidSmoke?"raid-smoke.png":menuSmoke?"menu-smoke.png":optionsSmoke?"options-smoke.png":uiSmoke?"ui-smoke.png":caveSmoke?"cave-smoke.png":newMapSmoke?"newmap-smoke.png":citizenSmoke?"citizen-smoke.png":panelsSmoke?"panels-smoke.png":clockSmoke?"clock-smoke.png":compactSmoke?"compact-smoke.png":terrainSmoke?"terrain-smoke.png":englishSmoke?"english-smoke.png":"smoke-test.png");
+            VisualChecks.Capture(audioSmoke?"audio-smoke.png":problemsSmoke?"city-problems.png":profileSmoke?(args.Contains("--profile-callbacks-smoke")?"profiler-callbacks.png":"profiler-smoke.png"):nightSmoke?"night-village.png":peopleSmoke?"people-beta106.png":gameOverSmoke?"gameover-smoke.png":beta105Smoke?"beta105-smoke.png":raidSmoke?"raid-smoke.png":menuSmoke?"menu-smoke.png":optionsSmoke?"options-smoke.png":uiSmoke?"ui-smoke.png":caveSmoke?"cave-smoke.png":newMapSmoke?"newmap-smoke.png":citizenSmoke?"citizen-smoke.png":panelsSmoke?"panels-smoke.png":clockSmoke?"clock-smoke.png":compactSmoke?"compact-smoke.png":terrainSmoke?"terrain-smoke.png":englishSmoke?"english-smoke.png":"smoke-test.png");
+            if(audioSmoke){Console.WriteLine($"Audio smoke: {audio.LoadedSounds} decoded, {audio.Played} played, {audio.Dropped} rate-limited.");if(audio.LoadedSounds==0||audio.PlayedCount(AudioTrigger.Settlement)==0||audio.PlayedCount(AudioTrigger.BossWave)==0||audio.PlayedCount(AudioTrigger.Footstep)==0)Environment.ExitCode=1;}
             if(uiSmoke&&ui.TestActivationCount!=12){Console.Error.WriteLine("UI activation count mismatch: "+ui.TestActivationCount);Environment.ExitCode=1;}
             Console.WriteLine($"PASS: rendered {frames} frames, loaded {Assets.TextureCount} textures"+(uiSmoke?", activated construction cards 12 times across two zoom levels.":"."));break;
         }
@@ -223,4 +232,4 @@ finally{
 #if DEBUG
 if(previewSave!=null)SaveStore.Delete(previewSave);
 #endif
-city.Dispose();ui.Dispose();Assets.Dispose();rlImGui.Shutdown();Raylib.CloseWindow();}
+audio.Dispose();city.Dispose();ui.Dispose();Assets.Dispose();rlImGui.Shutdown();Raylib.CloseWindow();}

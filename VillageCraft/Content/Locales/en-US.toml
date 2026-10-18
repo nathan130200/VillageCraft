@@ -1745,3 +1745,33 @@ Name = "English (US)"
 
 # City problems panel: profile.area.Diagnostics. Preserve numbered format arguments.
 "profile.area.Diagnostics" = "City diagnostics"
+
+# Audio preferences/profiler label: audio.options.
+"audio.options" = "Audio"
+
+# Audio preferences/profiler label: audio.master.
+"audio.master" = "Master volume"
+
+# Audio preferences/profiler label: audio.effects.
+"audio.effects" = "Effects and footsteps"
+
+# Audio preferences/profiler label: audio.creatures.
+"audio.creatures" = "Villagers and creatures"
+
+# Audio preferences/profiler label: audio.ambience.
+"audio.ambience" = "Ambience"
+
+# Audio preferences/profiler label: audio.alerts.
+"audio.alerts" = "Settlement and raid alerts"
+
+# Audio preferences/profiler label: audio.save.
+"audio.save" = "Save audio preferences"
+
+# Audio preferences/profiler label: audio.saved.
+"audio.saved" = "Audio preferences saved."
+
+# Audio preferences/profiler label: profile.area.Audio.
+"profile.area.Audio" = "Audio scheduling / submission"
+
+# Audio diagnostics counters in profiler. Keep all numbered format arguments.
+"profile.audio" = "Audio: {0} clips, {1} voices, {2} starts, {3} rate/voice/queue rejections"

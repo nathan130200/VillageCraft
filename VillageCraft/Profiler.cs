@@ -8,7 +8,7 @@ enum ProfileArea
     Pathfinding, RoadConnectivity, Stock, SupplySearch, Production, ManagedActions, WorldQueries,
     ScriptLookup, ScriptDispatch, ScriptTick, ScriptQueue, ScriptPredicate,
     Render, Terrain, Buildings, Residents, Creatures, Effects, Picking, Thumbnails,
-    Ui, UiSubmit, PresentAndPacing, DisplayChanges, ProfilerUi, AssetRead, Save, Load, Diagnostics
+    Ui, UiSubmit, PresentAndPacing, DisplayChanges, ProfilerUi, AssetRead, Save, Load, Diagnostics, Audio
 }
 
 static class Profiler

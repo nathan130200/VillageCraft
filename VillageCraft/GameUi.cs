@@ -294,6 +294,14 @@ partial class GameUi
         bool water=g.AnimateWater;if(ImGui.Checkbox(L.T("ui.animated_water"),ref water))g.AnimateWater=water;
         int fps=Array.IndexOf(new[]{30,60,120,0},g.Fps);if(ImGui.Combo(L.T("ui.frame_limit"),ref fps,"30 FPS\0"+"60 FPS\0"+"120 FPS\0"+L.T("ui.unlimited")+"\0")){g.Fps=new[]{30,60,120,0}[fps];Raylib.SetTargetFPS(g.Fps);}
         if(Button(L.T("ui.save_graphics_preferences"),new(-1,26))){g.Save();menuError=L.T("ui.graphics_preferences_saved");}
+        ImGui.Separator();Title("audio.options");
+        float master=g.MasterVolume,effects=g.EffectsVolume,creatures=g.CreaturesVolume,ambience=g.AmbienceVolume,alerts=g.AlertsVolume;
+        if(ImGui.SliderFloat(L.T("audio.master"),ref master,0,1,"%.2f"))g.MasterVolume=master;
+        if(ImGui.SliderFloat(L.T("audio.effects"),ref effects,0,1,"%.2f"))g.EffectsVolume=effects;
+        if(ImGui.SliderFloat(L.T("audio.creatures"),ref creatures,0,1,"%.2f"))g.CreaturesVolume=creatures;
+        if(ImGui.SliderFloat(L.T("audio.ambience"),ref ambience,0,1,"%.2f"))g.AmbienceVolume=ambience;
+        if(ImGui.SliderFloat(L.T("audio.alerts"),ref alerts,0,1,"%.2f"))g.AlertsVolume=alerts;
+        if(Button(L.T("audio.save"))){g.Save();menuError=L.T("audio.saved");}
         ImGui.Separator();Title("ui.village_rules_saved_with_this_village");var r=city.Rules;
         bool raids=r.RaidsEnabled;if(ImGui.Checkbox(L.T("ui.enable_raids"),ref raids))r.RaidsEnabled=raids;
         bool nights=r.NightMonsters;if(ImGui.Checkbox(L.T("ui.nighttime_monsters"),ref nights))r.NightMonsters=nights;

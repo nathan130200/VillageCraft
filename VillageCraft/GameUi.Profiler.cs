@@ -20,7 +20,7 @@ partial class GameUi
         if(profilerOpen){Profiler.Enabled=true;Profiler.Paused=false;}
         else Profiler.Enabled=false;
     }
-    public void DrawProfiler(City city)
+    public void DrawProfiler(City city,GameAudio? audio=null)
     {
         if(!profilerOpen)return;
         using var timing=Profiler.Measure(ProfileArea.ProfilerUi);
@@ -40,6 +40,7 @@ partial class GameUi
         {profileRows=Profiler.Snapshot();profileSampleCount=Profiler.Samples;profileRefresh=now;}
         ImGui.TextUnformatted(L.F("profile.summary",profileSampleCount,Profiler.History,Profiler.TimerNanoseconds));
         ImGui.TextUnformatted(L.F("profile.memory",Profiler.FrameAllocatedBytes/1024d,Profiler.HeapBytes/1048576d,Profiler.Gc0,Profiler.Gc1,Profiler.Gc2));
+        if(audio!=null)ImGui.TextUnformatted(L.F("profile.audio",audio.LoadedSounds,audio.ActiveVoices,audio.Played,audio.Dropped));
         ImGui.TextUnformatted(Profiler.CpuReady?L.F("profile.cpu",Profiler.ProcessCpuMsPerFrame,Profiler.CollectorMs):L.T("profile.cpu_pending"));
         ImGui.TextWrapped(L.T("profile.accuracy"));
         var scripts=city.Scripting.ProfileScripts.ToArray();

@@ -257,3 +257,13 @@ declare function onDeliveryCompleted(villager: ScriptVillager, destination: Scri
 declare function onTreeHarvested(tree: ScriptBuilding, villager: ScriptVillager): void;
 declare function onArmorEnchanted(): void;
 declare function onGameOver(): void;
+
+/** Boss wave number; emitted once after the wave is spawned. */
+declare function onBossWaveStarted(wave: number): void;
+declare function onGuardianDamaged(guardian: ScriptMonster, damage: number, source: TaggedEntity | null): void;
+declare function onExplosion(monster: ScriptMonster): void;
+
+declare function onMonsterAttack(monster: ScriptMonster, target: TaggedEntity): void;
+declare function onGuardianAttack(guardian: ScriptMonster, target: TaggedEntity): void;
+declare function onVillagerAttack(villager: ScriptVillager, target: ScriptMonster): void;
+declare function onMonsterPrimed(monster: ScriptMonster): void;

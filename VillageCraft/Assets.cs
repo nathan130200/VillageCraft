@@ -30,6 +30,7 @@ static class Assets
         foreach(string name in names.Where(n=>!string.IsNullOrWhiteSpace(n)).Distinct(StringComparer.OrdinalIgnoreCase))Read(name);
         cache!.Save();
     }
+    public static void FlushCache()=>cache?.Save();
     static void DiscoverSources()
     {
         if(roots.Count>0)return;
@@ -47,10 +48,13 @@ static class Assets
         }
         foreach(var root in roots.ToArray())
         {
+            foreach(string soundRoot in new[]{Path.Combine(root,"sounds"),Path.Combine(root,"assets","minecraft","sounds")})
+                if(Directory.Exists(soundRoot))foreach(string file in Directory.EnumerateFiles(soundRoot,"*.ogg",SearchOption.AllDirectories))
+                    loose.TryAdd("minecraft/sounds/"+Path.GetRelativePath(soundRoot,file).Replace('\\','/'),file);
             foreach(var folder in new[]{Path.Combine(root,"textures"),Path.Combine(root,"assets"),Path.Combine(root,"Content","Assets")})
             {
                 if(!Directory.Exists(folder))continue;
-                foreach(var file in Directory.EnumerateFiles(folder,"*.png",SearchOption.AllDirectories))
+                foreach(var file in Directory.EnumerateFiles(folder,"*",SearchOption.AllDirectories).Where(f=>f.EndsWith(".png",StringComparison.OrdinalIgnoreCase)||f.EndsWith(".ogg",StringComparison.OrdinalIgnoreCase)))
                 // Keep full relative paths: a profession overlay must not impersonate a legacy full-body skin by basename.
                 {string rel=Path.GetRelativePath(folder,file).Replace('\\','/');loose.TryAdd(rel,file);}
             }
@@ -88,7 +92,7 @@ static class Assets
     {
         using var profile=Profiler.Measure(ProfileArea.AssetRead);
         if(name=="block/dirt_path.png")name="block/grass_path_top.png";
-        Discover();string logical=name.StartsWith("minecraft/")?name:"minecraft/textures/"+name;
+        Discover();string logical=name.StartsWith("minecraft/")?name:name.StartsWith("sounds/")?"minecraft/"+name:"minecraft/textures/"+name;
         return cache!.Read(logical,()=>ReadSource(name,logical));
     }
     static byte[]? ReadSource(string name,string logical)

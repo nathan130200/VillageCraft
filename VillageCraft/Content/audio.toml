@@ -1,0 +1,1078 @@
+# AudioSettings: Minecraft 1.16 OGG assets only, loaded once. All intervals are REAL seconds, unaffected by game speed.
+# Maximum simultaneous native voices; higher-priority alerts can replace quiet effects.
+MaxVoices = 12
+# Maximum starts in a sliding one-second real-time window.
+MaxStartsPerSecond = 8
+# Starts reserved for settlement and boss alerts; ordinary effects cannot consume them.
+ReservedAlertStarts = 2
+# Maximum pending, deduplicated event requests; stale requests are never carried into another frame.
+QueueLimit = 48
+# Maximum spatial hearing distance in map tiles around the camera focus.
+HearingRadius = 22
+# Minimum real seconds between ordinary sound starts.
+MinimumSpacing = 0.12
+# Minimum real seconds between creature vocalizations.
+CreatureSpacing = 0.7
+# Minimum real seconds between ambient effects.
+AmbienceSpacing = 5
+# Real seconds between nearby creature samples (slightly randomized).
+CreatureInterval = 3
+# Real seconds between daytime/nighttime ambience checks.
+AmbienceInterval = 16
+# Real seconds between checks for a nearby flowing well.
+WaterInterval = 6
+
+# Footstep interval: minimum REAL seconds per moving entity.
+FootstepInterval = 0.45
+# Minimum real-time gap between audible crowd footsteps.
+FootstepSpacing = 0.2
+# Road prefab ID -> actual walking surface. Unknown roads fall back to stone.
+RoadSurfaces = { path = "Gravel", cobble_road = "Stone", gravel_road = "Gravel", ice_road = "Stone", plank_road = "Wood", soul_road = "SoulSand", gate = "Wood" }
+# Building prefab ID -> material under residents/workers inside the building footprint.
+BuildingSurfaces = { cottage = "Wood", family_house = "Wood", small_warehouse = "Wood", large_warehouse = "Wood", lumber = "Wood", forge = "Stone", iron_foundry = "Stone", cave = "Stone", quarry = "Stone", well = "Stone" }
+
+# settlement: Settlement; entity/job/prefab filters are optional exact content IDs.
+[[Cues]]
+Id = "settlement"
+Trigger = "Settlement"
+Category = "Alerts"
+Entity = ""
+Job = ""
+Prefab = ""
+Files = ["minecraft/sounds/random/levelup.ogg"]
+Volume = 0.65
+Cooldown = 2.5
+Spatial = false
+Priority = 100
+
+# boss_wave: BossWave; entity/job/prefab filters are optional exact content IDs.
+[[Cues]]
+Id = "boss_wave"
+Trigger = "BossWave"
+Category = "Alerts"
+Entity = ""
+Job = ""
+Prefab = ""
+Files = ["minecraft/sounds/item/totem/use_totem.ogg"]
+Volume = 0.75
+Cooldown = 3
+Spatial = false
+Priority = 100
+
+# construction: Construction; entity/job/prefab filters are optional exact content IDs.
+[[Cues]]
+Id = "construction"
+Trigger = "Construction"
+Category = "Effects"
+Entity = ""
+Job = ""
+Prefab = ""
+Files = ["minecraft/sounds/dig/wood1.ogg", "minecraft/sounds/dig/wood2.ogg", "minecraft/sounds/dig/wood3.ogg", "minecraft/sounds/dig/wood4.ogg"]
+Volume = 0.4
+Cooldown = 0.45
+Spatial = true
+Priority = 20
+
+# demolition: Demolition; entity/job/prefab filters are optional exact content IDs.
+[[Cues]]
+Id = "demolition"
+Trigger = "Demolition"
+Category = "Effects"
+Entity = ""
+Job = ""
+Prefab = ""
+Files = ["minecraft/sounds/dig/wood1.ogg", "minecraft/sounds/dig/wood2.ogg", "minecraft/sounds/dig/wood3.ogg", "minecraft/sounds/dig/wood4.ogg"]
+Volume = 0.45
+Cooldown = 0.8
+Spatial = true
+Priority = 20
+
+# building_damage: BuildingDamage; entity/job/prefab filters are optional exact content IDs.
+[[Cues]]
+Id = "building_damage"
+Trigger = "BuildingDamage"
+Category = "Effects"
+Entity = ""
+Job = ""
+Prefab = ""
+Files = ["minecraft/sounds/dig/stone1.ogg", "minecraft/sounds/dig/stone2.ogg", "minecraft/sounds/dig/stone3.ogg", "minecraft/sounds/dig/stone4.ogg"]
+Volume = 0.3
+Cooldown = 1.5
+Spatial = true
+Priority = 35
+
+# farm: Work; entity/job/prefab filters are optional exact content IDs.
+[[Cues]]
+Id = "farm"
+Trigger = "Work"
+Category = "Effects"
+Entity = ""
+Job = "Farming"
+Prefab = ""
+Files = ["minecraft/sounds/item/plant/crop1.ogg", "minecraft/sounds/item/plant/crop2.ogg", "minecraft/sounds/item/plant/crop3.ogg", "minecraft/sounds/item/plant/crop4.ogg", "minecraft/sounds/dig/grass1.ogg", "minecraft/sounds/dig/grass2.ogg"]
+Volume = 0.35
+Cooldown = 3
+Spatial = true
+Priority = 20
+
+# quarry: Work; entity/job/prefab filters are optional exact content IDs.
+[[Cues]]
+Id = "quarry"
+Trigger = "Work"
+Category = "Effects"
+Entity = ""
+Job = "Stonecutting"
+Prefab = ""
+Files = ["minecraft/sounds/dig/stone1.ogg", "minecraft/sounds/dig/stone2.ogg", "minecraft/sounds/dig/stone3.ogg", "minecraft/sounds/dig/stone4.ogg"]
+Volume = 0.4
+Cooldown = 3
+Spatial = true
+Priority = 20
+
+# forge: Work; entity/job/prefab filters are optional exact content IDs.
+[[Cues]]
+Id = "forge"
+Trigger = "Work"
+Category = "Effects"
+Entity = ""
+Job = "Forging"
+Prefab = ""
+Files = ["minecraft/sounds/random/anvil_use.ogg", "minecraft/sounds/liquid/lavapop.ogg"]
+Volume = 0.35
+Cooldown = 4
+Spatial = true
+Priority = 20
+
+# golem_forge: Work; entity/job/prefab filters are optional exact content IDs.
+[[Cues]]
+Id = "golem_forge"
+Trigger = "Work"
+Category = "Effects"
+Entity = ""
+Job = "Golem forging"
+Prefab = ""
+Files = ["minecraft/sounds/random/anvil_use.ogg", "minecraft/sounds/liquid/lavapop.ogg"]
+Volume = 0.35
+Cooldown = 4
+Spatial = true
+Priority = 20
+
+# lumber: Work; entity/job/prefab filters are optional exact content IDs.
+[[Cues]]
+Id = "lumber"
+Trigger = "Work"
+Category = "Effects"
+Entity = ""
+Job = "Woodcutting"
+Prefab = ""
+Files = ["minecraft/sounds/dig/wood1.ogg", "minecraft/sounds/dig/wood2.ogg", "minecraft/sounds/dig/wood3.ogg", "minecraft/sounds/dig/wood4.ogg"]
+Volume = 0.35
+Cooldown = 4
+Spatial = true
+Priority = 20
+
+# harvest: Harvest; entity/job/prefab filters are optional exact content IDs.
+[[Cues]]
+Id = "harvest"
+Trigger = "Harvest"
+Category = "Effects"
+Entity = ""
+Job = ""
+Prefab = ""
+Files = ["minecraft/sounds/dig/wood1.ogg", "minecraft/sounds/dig/wood2.ogg", "minecraft/sounds/dig/wood3.ogg", "minecraft/sounds/dig/wood4.ogg"]
+Volume = 0.35
+Cooldown = 2
+Spatial = true
+Priority = 20
+
+# home_open: HouseOpen; entity/job/prefab filters are optional exact content IDs.
+[[Cues]]
+Id = "home_open"
+Trigger = "HouseOpen"
+Category = "Effects"
+Entity = ""
+Job = ""
+Prefab = ""
+Files = ["minecraft/sounds/block/wooden_door/open.ogg"]
+Volume = 0.25
+Cooldown = 3
+Spatial = true
+Priority = 20
+
+# home_close: HouseClose; entity/job/prefab filters are optional exact content IDs.
+[[Cues]]
+Id = "home_close"
+Trigger = "HouseClose"
+Category = "Effects"
+Entity = ""
+Job = ""
+Prefab = ""
+Files = ["minecraft/sounds/block/wooden_door/close.ogg"]
+Volume = 0.25
+Cooldown = 3
+Spatial = true
+Priority = 20
+
+# well: Water; entity/job/prefab filters are optional exact content IDs.
+[[Cues]]
+Id = "well"
+Trigger = "Water"
+Category = "Ambience"
+Entity = ""
+Job = ""
+Prefab = "well"
+Files = ["minecraft/sounds/liquid/water.ogg"]
+Volume = 0.2
+Cooldown = 6
+Spatial = true
+Priority = 20
+
+# day_birds: DayAmbient; entity/job/prefab filters are optional exact content IDs.
+[[Cues]]
+Id = "day_birds"
+Trigger = "DayAmbient"
+Category = "Ambience"
+Entity = ""
+Job = ""
+Prefab = ""
+Files = ["minecraft/sounds/mob/parrot/idle1.ogg", "minecraft/sounds/mob/parrot/idle2.ogg", "minecraft/sounds/mob/parrot/idle3.ogg"]
+Volume = 0.11
+Cooldown = 24
+Spatial = true
+Priority = 20
+
+# night_cave: NightAmbient; entity/job/prefab filters are optional exact content IDs.
+[[Cues]]
+Id = "night_cave"
+Trigger = "NightAmbient"
+Category = "Ambience"
+Entity = ""
+Job = ""
+Prefab = "cave"
+Files = ["minecraft/sounds/ambient/cave/cave1.ogg", "minecraft/sounds/ambient/cave/cave2.ogg"]
+Volume = 0.1
+Cooldown = 45
+Spatial = true
+Priority = 20
+
+# explosion: Explosion; entity/job/prefab filters are optional exact content IDs.
+[[Cues]]
+Id = "explosion"
+Trigger = "Explosion"
+Category = "Effects"
+Entity = ""
+Job = ""
+Prefab = ""
+Files = ["minecraft/sounds/random/explode1.ogg", "minecraft/sounds/random/explode2.ogg"]
+Volume = 0.55
+Cooldown = 1.5
+Spatial = true
+Priority = 75
+
+# villager_idle: Idle; entity/job/prefab filters are optional exact content IDs.
+[[Cues]]
+Id = "villager_idle"
+Trigger = "Idle"
+Category = "Creatures"
+Entity = "villager"
+Job = ""
+Prefab = ""
+Files = ["minecraft/sounds/mob/villager/idle1.ogg", "minecraft/sounds/mob/villager/idle2.ogg", "minecraft/sounds/mob/villager/idle3.ogg"]
+Volume = 0.3
+Cooldown = 5
+Spatial = true
+Priority = 20
+
+# villager_hurt: Hurt; entity/job/prefab filters are optional exact content IDs.
+[[Cues]]
+Id = "villager_hurt"
+Trigger = "Hurt"
+Category = "Creatures"
+Entity = "villager"
+Job = ""
+Prefab = ""
+Files = ["minecraft/sounds/mob/villager/hit1.ogg", "minecraft/sounds/mob/villager/hit2.ogg"]
+Volume = 0.4
+Cooldown = 1
+Spatial = true
+Priority = 45
+
+# villager_death: Death; entity/job/prefab filters are optional exact content IDs.
+[[Cues]]
+Id = "villager_death"
+Trigger = "Death"
+Category = "Creatures"
+Entity = "villager"
+Job = ""
+Prefab = ""
+Files = ["minecraft/sounds/mob/villager/death.ogg"]
+Volume = 0.4
+Cooldown = 1.5
+Spatial = true
+Priority = 50
+
+# zombie_idle: Idle; entity/job/prefab filters are optional exact content IDs.
+[[Cues]]
+Id = "zombie_idle"
+Trigger = "Idle"
+Category = "Creatures"
+Entity = "zombie"
+Job = ""
+Prefab = ""
+Files = ["minecraft/sounds/mob/zombie/say1.ogg", "minecraft/sounds/mob/zombie/say2.ogg", "minecraft/sounds/mob/zombie/say3.ogg"]
+Volume = 0.3
+Cooldown = 5
+Spatial = true
+Priority = 20
+
+# zombie_hurt: Hurt; entity/job/prefab filters are optional exact content IDs.
+[[Cues]]
+Id = "zombie_hurt"
+Trigger = "Hurt"
+Category = "Creatures"
+Entity = "zombie"
+Job = ""
+Prefab = ""
+Files = ["minecraft/sounds/mob/zombie/hurt1.ogg", "minecraft/sounds/mob/zombie/hurt2.ogg"]
+Volume = 0.4
+Cooldown = 1
+Spatial = true
+Priority = 45
+
+# zombie_death: Death; entity/job/prefab filters are optional exact content IDs.
+[[Cues]]
+Id = "zombie_death"
+Trigger = "Death"
+Category = "Creatures"
+Entity = "zombie"
+Job = ""
+Prefab = ""
+Files = ["minecraft/sounds/mob/zombie/death.ogg"]
+Volume = 0.4
+Cooldown = 1.5
+Spatial = true
+Priority = 50
+
+# skeleton_idle: Idle; entity/job/prefab filters are optional exact content IDs.
+[[Cues]]
+Id = "skeleton_idle"
+Trigger = "Idle"
+Category = "Creatures"
+Entity = "skeleton"
+Job = ""
+Prefab = ""
+Files = ["minecraft/sounds/mob/skeleton/say1.ogg", "minecraft/sounds/mob/skeleton/say2.ogg", "minecraft/sounds/mob/skeleton/say3.ogg"]
+Volume = 0.3
+Cooldown = 5
+Spatial = true
+Priority = 20
+
+# skeleton_hurt: Hurt; entity/job/prefab filters are optional exact content IDs.
+[[Cues]]
+Id = "skeleton_hurt"
+Trigger = "Hurt"
+Category = "Creatures"
+Entity = "skeleton"
+Job = ""
+Prefab = ""
+Files = ["minecraft/sounds/mob/skeleton/hurt1.ogg", "minecraft/sounds/mob/skeleton/hurt2.ogg"]
+Volume = 0.4
+Cooldown = 1
+Spatial = true
+Priority = 45
+
+# skeleton_death: Death; entity/job/prefab filters are optional exact content IDs.
+[[Cues]]
+Id = "skeleton_death"
+Trigger = "Death"
+Category = "Creatures"
+Entity = "skeleton"
+Job = ""
+Prefab = ""
+Files = ["minecraft/sounds/mob/skeleton/death.ogg"]
+Volume = 0.4
+Cooldown = 1.5
+Spatial = true
+Priority = 50
+
+# creeper_hurt: Hurt; entity/job/prefab filters are optional exact content IDs.
+[[Cues]]
+Id = "creeper_hurt"
+Trigger = "Hurt"
+Category = "Creatures"
+Entity = "creeper"
+Job = ""
+Prefab = ""
+Files = ["minecraft/sounds/mob/creeper/say1.ogg", "minecraft/sounds/mob/creeper/say2.ogg"]
+Volume = 0.4
+Cooldown = 1
+Spatial = true
+Priority = 45
+
+# creeper_death: Death; entity/job/prefab filters are optional exact content IDs.
+[[Cues]]
+Id = "creeper_death"
+Trigger = "Death"
+Category = "Creatures"
+Entity = "creeper"
+Job = ""
+Prefab = ""
+Files = ["minecraft/sounds/mob/creeper/death.ogg"]
+Volume = 0.4
+Cooldown = 1.5
+Spatial = true
+Priority = 50
+
+# piglin_idle: Idle; entity/job/prefab filters are optional exact content IDs.
+[[Cues]]
+Id = "piglin_idle"
+Trigger = "Idle"
+Category = "Creatures"
+Entity = "piglin"
+Job = ""
+Prefab = ""
+Files = ["minecraft/sounds/mob/piglin/idle1.ogg", "minecraft/sounds/mob/piglin/idle2.ogg", "minecraft/sounds/mob/piglin/idle3.ogg"]
+Volume = 0.3
+Cooldown = 5
+Spatial = true
+Priority = 20
+
+# piglin_hurt: Hurt; entity/job/prefab filters are optional exact content IDs.
+[[Cues]]
+Id = "piglin_hurt"
+Trigger = "Hurt"
+Category = "Creatures"
+Entity = "piglin"
+Job = ""
+Prefab = ""
+Files = ["minecraft/sounds/mob/piglin/hurt1.ogg", "minecraft/sounds/mob/piglin/hurt2.ogg"]
+Volume = 0.4
+Cooldown = 1
+Spatial = true
+Priority = 45
+
+# piglin_death: Death; entity/job/prefab filters are optional exact content IDs.
+[[Cues]]
+Id = "piglin_death"
+Trigger = "Death"
+Category = "Creatures"
+Entity = "piglin"
+Job = ""
+Prefab = ""
+Files = ["minecraft/sounds/mob/piglin/death1.ogg", "minecraft/sounds/mob/piglin/death2.ogg"]
+Volume = 0.4
+Cooldown = 1.5
+Spatial = true
+Priority = 50
+
+# piglin_brute_idle: Idle; entity/job/prefab filters are optional exact content IDs.
+[[Cues]]
+Id = "piglin_brute_idle"
+Trigger = "Idle"
+Category = "Creatures"
+Entity = "piglin_brute"
+Job = ""
+Prefab = ""
+Files = ["minecraft/sounds/mob/piglin_brute/idle1.ogg", "minecraft/sounds/mob/piglin_brute/idle2.ogg", "minecraft/sounds/mob/piglin_brute/idle3.ogg"]
+Volume = 0.3
+Cooldown = 5
+Spatial = true
+Priority = 20
+
+# piglin_brute_hurt: Hurt; entity/job/prefab filters are optional exact content IDs.
+[[Cues]]
+Id = "piglin_brute_hurt"
+Trigger = "Hurt"
+Category = "Creatures"
+Entity = "piglin_brute"
+Job = ""
+Prefab = ""
+Files = ["minecraft/sounds/mob/piglin_brute/hurt1.ogg", "minecraft/sounds/mob/piglin_brute/hurt2.ogg"]
+Volume = 0.4
+Cooldown = 1
+Spatial = true
+Priority = 45
+
+# piglin_brute_death: Death; entity/job/prefab filters are optional exact content IDs.
+[[Cues]]
+Id = "piglin_brute_death"
+Trigger = "Death"
+Category = "Creatures"
+Entity = "piglin_brute"
+Job = ""
+Prefab = ""
+Files = ["minecraft/sounds/mob/piglin_brute/death1.ogg", "minecraft/sounds/mob/piglin_brute/death2.ogg"]
+Volume = 0.4
+Cooldown = 1.5
+Spatial = true
+Priority = 50
+
+# nether_warlord_idle: Idle; entity/job/prefab filters are optional exact content IDs.
+[[Cues]]
+Id = "nether_warlord_idle"
+Trigger = "Idle"
+Category = "Creatures"
+Entity = "nether_warlord"
+Job = ""
+Prefab = ""
+Files = ["minecraft/sounds/mob/piglin_brute/idle1.ogg", "minecraft/sounds/mob/piglin_brute/idle2.ogg"]
+Volume = 0.3
+Cooldown = 5
+Spatial = true
+Priority = 20
+
+# nether_warlord_hurt: Hurt; entity/job/prefab filters are optional exact content IDs.
+[[Cues]]
+Id = "nether_warlord_hurt"
+Trigger = "Hurt"
+Category = "Creatures"
+Entity = "nether_warlord"
+Job = ""
+Prefab = ""
+Files = ["minecraft/sounds/mob/piglin_brute/hurt1.ogg", "minecraft/sounds/mob/piglin_brute/hurt2.ogg"]
+Volume = 0.4
+Cooldown = 1
+Spatial = true
+Priority = 45
+
+# nether_warlord_death: Death; entity/job/prefab filters are optional exact content IDs.
+[[Cues]]
+Id = "nether_warlord_death"
+Trigger = "Death"
+Category = "Creatures"
+Entity = "nether_warlord"
+Job = ""
+Prefab = ""
+Files = ["minecraft/sounds/mob/piglin_brute/death1.ogg", "minecraft/sounds/mob/piglin_brute/death2.ogg"]
+Volume = 0.4
+Cooldown = 1.5
+Spatial = true
+Priority = 50
+
+# zombified_piglin_idle: Idle; entity/job/prefab filters are optional exact content IDs.
+[[Cues]]
+Id = "zombified_piglin_idle"
+Trigger = "Idle"
+Category = "Creatures"
+Entity = "zombified_piglin"
+Job = ""
+Prefab = ""
+Files = ["minecraft/sounds/mob/zombified_piglin/zpig1.ogg", "minecraft/sounds/mob/zombified_piglin/zpig2.ogg", "minecraft/sounds/mob/zombified_piglin/zpig3.ogg"]
+Volume = 0.3
+Cooldown = 5
+Spatial = true
+Priority = 20
+
+# zombified_piglin_hurt: Hurt; entity/job/prefab filters are optional exact content IDs.
+[[Cues]]
+Id = "zombified_piglin_hurt"
+Trigger = "Hurt"
+Category = "Creatures"
+Entity = "zombified_piglin"
+Job = ""
+Prefab = ""
+Files = ["minecraft/sounds/mob/zombified_piglin/zpighurt1.ogg", "minecraft/sounds/mob/zombified_piglin/zpighurt2.ogg"]
+Volume = 0.4
+Cooldown = 1
+Spatial = true
+Priority = 45
+
+# zombified_piglin_death: Death; entity/job/prefab filters are optional exact content IDs.
+[[Cues]]
+Id = "zombified_piglin_death"
+Trigger = "Death"
+Category = "Creatures"
+Entity = "zombified_piglin"
+Job = ""
+Prefab = ""
+Files = ["minecraft/sounds/mob/zombified_piglin/zpigdeath.ogg"]
+Volume = 0.4
+Cooldown = 1.5
+Spatial = true
+Priority = 50
+
+# blaze_idle: Idle; entity/job/prefab filters are optional exact content IDs.
+[[Cues]]
+Id = "blaze_idle"
+Trigger = "Idle"
+Category = "Creatures"
+Entity = "blaze"
+Job = ""
+Prefab = ""
+Files = ["minecraft/sounds/mob/blaze/breathe1.ogg", "minecraft/sounds/mob/blaze/breathe2.ogg", "minecraft/sounds/mob/blaze/breathe3.ogg"]
+Volume = 0.3
+Cooldown = 5
+Spatial = true
+Priority = 20
+
+# blaze_hurt: Hurt; entity/job/prefab filters are optional exact content IDs.
+[[Cues]]
+Id = "blaze_hurt"
+Trigger = "Hurt"
+Category = "Creatures"
+Entity = "blaze"
+Job = ""
+Prefab = ""
+Files = ["minecraft/sounds/mob/blaze/hit1.ogg", "minecraft/sounds/mob/blaze/hit2.ogg"]
+Volume = 0.4
+Cooldown = 1
+Spatial = true
+Priority = 45
+
+# blaze_death: Death; entity/job/prefab filters are optional exact content IDs.
+[[Cues]]
+Id = "blaze_death"
+Trigger = "Death"
+Category = "Creatures"
+Entity = "blaze"
+Job = ""
+Prefab = ""
+Files = ["minecraft/sounds/mob/blaze/death.ogg"]
+Volume = 0.4
+Cooldown = 1.5
+Spatial = true
+Priority = 50
+
+# cow_idle: Idle; entity/job/prefab filters are optional exact content IDs.
+[[Cues]]
+Id = "cow_idle"
+Trigger = "Idle"
+Category = "Creatures"
+Entity = "cow"
+Job = ""
+Prefab = ""
+Files = ["minecraft/sounds/mob/cow/say1.ogg", "minecraft/sounds/mob/cow/say2.ogg", "minecraft/sounds/mob/cow/say3.ogg"]
+Volume = 0.3
+Cooldown = 5
+Spatial = true
+Priority = 20
+
+# cow_hurt: Hurt; entity/job/prefab filters are optional exact content IDs.
+[[Cues]]
+Id = "cow_hurt"
+Trigger = "Hurt"
+Category = "Creatures"
+Entity = "cow"
+Job = ""
+Prefab = ""
+Files = ["minecraft/sounds/mob/cow/hurt1.ogg", "minecraft/sounds/mob/cow/hurt2.ogg"]
+Volume = 0.4
+Cooldown = 1
+Spatial = true
+Priority = 45
+
+# cow_death: Death; entity/job/prefab filters are optional exact content IDs.
+[[Cues]]
+Id = "cow_death"
+Trigger = "Death"
+Category = "Creatures"
+Entity = "cow"
+Job = ""
+Prefab = ""
+Files = ["minecraft/sounds/mob/cow/hurt1.ogg"]
+Volume = 0.4
+Cooldown = 1.5
+Spatial = true
+Priority = 50
+
+# pig_idle: Idle; entity/job/prefab filters are optional exact content IDs.
+[[Cues]]
+Id = "pig_idle"
+Trigger = "Idle"
+Category = "Creatures"
+Entity = "pig"
+Job = ""
+Prefab = ""
+Files = ["minecraft/sounds/mob/pig/say1.ogg", "minecraft/sounds/mob/pig/say2.ogg", "minecraft/sounds/mob/pig/say3.ogg"]
+Volume = 0.3
+Cooldown = 5
+Spatial = true
+Priority = 20
+
+# pig_hurt: Hurt; entity/job/prefab filters are optional exact content IDs.
+[[Cues]]
+Id = "pig_hurt"
+Trigger = "Hurt"
+Category = "Creatures"
+Entity = "pig"
+Job = ""
+Prefab = ""
+Files = ["minecraft/sounds/mob/pig/say1.ogg"]
+Volume = 0.4
+Cooldown = 1
+Spatial = true
+Priority = 45
+
+# pig_death: Death; entity/job/prefab filters are optional exact content IDs.
+[[Cues]]
+Id = "pig_death"
+Trigger = "Death"
+Category = "Creatures"
+Entity = "pig"
+Job = ""
+Prefab = ""
+Files = ["minecraft/sounds/mob/pig/death.ogg"]
+Volume = 0.4
+Cooldown = 1.5
+Spatial = true
+Priority = 50
+
+# sheep_idle: Idle; entity/job/prefab filters are optional exact content IDs.
+[[Cues]]
+Id = "sheep_idle"
+Trigger = "Idle"
+Category = "Creatures"
+Entity = "sheep"
+Job = ""
+Prefab = ""
+Files = ["minecraft/sounds/mob/sheep/say1.ogg", "minecraft/sounds/mob/sheep/say2.ogg", "minecraft/sounds/mob/sheep/say3.ogg"]
+Volume = 0.3
+Cooldown = 5
+Spatial = true
+Priority = 20
+
+# sheep_hurt: Hurt; entity/job/prefab filters are optional exact content IDs.
+[[Cues]]
+Id = "sheep_hurt"
+Trigger = "Hurt"
+Category = "Creatures"
+Entity = "sheep"
+Job = ""
+Prefab = ""
+Files = ["minecraft/sounds/mob/sheep/say1.ogg"]
+Volume = 0.4
+Cooldown = 1
+Spatial = true
+Priority = 45
+
+# sheep_death: Death; entity/job/prefab filters are optional exact content IDs.
+[[Cues]]
+Id = "sheep_death"
+Trigger = "Death"
+Category = "Creatures"
+Entity = "sheep"
+Job = ""
+Prefab = ""
+Files = ["minecraft/sounds/mob/sheep/say2.ogg"]
+Volume = 0.4
+Cooldown = 1.5
+Spatial = true
+Priority = 50
+
+# chicken_idle: Idle; entity/job/prefab filters are optional exact content IDs.
+[[Cues]]
+Id = "chicken_idle"
+Trigger = "Idle"
+Category = "Creatures"
+Entity = "chicken"
+Job = ""
+Prefab = ""
+Files = ["minecraft/sounds/mob/chicken/say1.ogg", "minecraft/sounds/mob/chicken/say2.ogg", "minecraft/sounds/mob/chicken/say3.ogg"]
+Volume = 0.3
+Cooldown = 5
+Spatial = true
+Priority = 20
+
+# chicken_hurt: Hurt; entity/job/prefab filters are optional exact content IDs.
+[[Cues]]
+Id = "chicken_hurt"
+Trigger = "Hurt"
+Category = "Creatures"
+Entity = "chicken"
+Job = ""
+Prefab = ""
+Files = ["minecraft/sounds/mob/chicken/hurt1.ogg", "minecraft/sounds/mob/chicken/hurt2.ogg"]
+Volume = 0.4
+Cooldown = 1
+Spatial = true
+Priority = 45
+
+# chicken_death: Death; entity/job/prefab filters are optional exact content IDs.
+[[Cues]]
+Id = "chicken_death"
+Trigger = "Death"
+Category = "Creatures"
+Entity = "chicken"
+Job = ""
+Prefab = ""
+Files = ["minecraft/sounds/mob/chicken/hurt1.ogg"]
+Volume = 0.4
+Cooldown = 1.5
+Spatial = true
+Priority = 50
+
+# iron_golem_hurt: Hurt; entity/job/prefab filters are optional exact content IDs.
+[[Cues]]
+Id = "iron_golem_hurt"
+Trigger = "Hurt"
+Category = "Creatures"
+Entity = "iron_golem"
+Job = ""
+Prefab = ""
+Files = ["minecraft/sounds/mob/irongolem/damage1.ogg", "minecraft/sounds/mob/irongolem/damage2.ogg"]
+Volume = 0.4
+Cooldown = 1
+Spatial = true
+Priority = 45
+
+# iron_golem_death: Death; entity/job/prefab filters are optional exact content IDs.
+[[Cues]]
+Id = "iron_golem_death"
+Trigger = "Death"
+Category = "Creatures"
+Entity = "iron_golem"
+Job = ""
+Prefab = ""
+Files = ["minecraft/sounds/mob/irongolem/death.ogg"]
+Volume = 0.4
+Cooldown = 1.5
+Spatial = true
+Priority = 50
+
+# snow_golem_hurt: Hurt; entity/job/prefab filters are optional exact content IDs.
+[[Cues]]
+Id = "snow_golem_hurt"
+Trigger = "Hurt"
+Category = "Creatures"
+Entity = "snow_golem"
+Job = ""
+Prefab = ""
+Files = ["minecraft/sounds/entity/snowman/hurt1.ogg", "minecraft/sounds/entity/snowman/hurt2.ogg"]
+Volume = 0.4
+Cooldown = 1
+Spatial = true
+Priority = 45
+
+# snow_golem_death: Death; entity/job/prefab filters are optional exact content IDs.
+[[Cues]]
+Id = "snow_golem_death"
+Trigger = "Death"
+Category = "Creatures"
+Entity = "snow_golem"
+Job = ""
+Prefab = ""
+Files = ["minecraft/sounds/entity/snowman/death1.ogg", "minecraft/sounds/entity/snowman/death2.ogg"]
+Volume = 0.4
+Cooldown = 1.5
+Spatial = true
+Priority = 50
+
+# iron_step: Step; entity/job/prefab filters are optional exact content IDs.
+[[Cues]]
+Id = "iron_step"
+Trigger = "Step"
+Category = "Creatures"
+Entity = "iron_golem"
+Job = ""
+Prefab = ""
+Files = ["minecraft/sounds/mob/irongolem/walk1.ogg", "minecraft/sounds/mob/irongolem/walk2.ogg"]
+Volume = 0.3
+Cooldown = 3
+Spatial = true
+Priority = 20
+
+# snow_step: Step; entity/job/prefab filters are optional exact content IDs.
+[[Cues]]
+Id = "snow_step"
+Trigger = "Step"
+Category = "Creatures"
+Entity = "snow_golem"
+Job = ""
+Prefab = ""
+Files = ["minecraft/sounds/step/snow1.ogg", "minecraft/sounds/step/snow2.ogg"]
+Volume = 0.2
+Cooldown = 3
+Spatial = true
+Priority = 20
+
+# Grass footsteps; coalesced from actual displacement, never simulation ticks.
+[[Cues]]
+Id = "footstep_grass"
+Trigger = "Footstep"
+Category = "Footsteps"
+Surface = "Grass"
+Files = ["minecraft/sounds/step/grass1.ogg", "minecraft/sounds/step/grass2.ogg"]
+Volume = 0.2
+Cooldown = 0.25
+Spatial = true
+Priority = 10
+
+# Stone footsteps; coalesced from actual displacement, never simulation ticks.
+[[Cues]]
+Id = "footstep_stone"
+Trigger = "Footstep"
+Category = "Footsteps"
+Surface = "Stone"
+Files = ["minecraft/sounds/step/stone1.ogg", "minecraft/sounds/step/stone2.ogg"]
+Volume = 0.2
+Cooldown = 0.25
+Spatial = true
+Priority = 10
+
+# Wood footsteps; coalesced from actual displacement, never simulation ticks.
+[[Cues]]
+Id = "footstep_wood"
+Trigger = "Footstep"
+Category = "Footsteps"
+Surface = "Wood"
+Files = ["minecraft/sounds/step/wood1.ogg", "minecraft/sounds/step/wood2.ogg"]
+Volume = 0.2
+Cooldown = 0.25
+Spatial = true
+Priority = 10
+
+# Gravel footsteps; coalesced from actual displacement, never simulation ticks.
+[[Cues]]
+Id = "footstep_gravel"
+Trigger = "Footstep"
+Category = "Footsteps"
+Surface = "Gravel"
+Files = ["minecraft/sounds/step/gravel1.ogg", "minecraft/sounds/step/gravel2.ogg"]
+Volume = 0.2
+Cooldown = 0.25
+Spatial = true
+Priority = 10
+
+# Sand footsteps; coalesced from actual displacement, never simulation ticks.
+[[Cues]]
+Id = "footstep_sand"
+Trigger = "Footstep"
+Category = "Footsteps"
+Surface = "Sand"
+Files = ["minecraft/sounds/step/sand1.ogg", "minecraft/sounds/step/sand2.ogg"]
+Volume = 0.2
+Cooldown = 0.25
+Spatial = true
+Priority = 10
+
+# Snow footsteps; coalesced from actual displacement, never simulation ticks.
+[[Cues]]
+Id = "footstep_snow"
+Trigger = "Footstep"
+Category = "Footsteps"
+Surface = "Snow"
+Files = ["minecraft/sounds/step/snow1.ogg", "minecraft/sounds/step/snow2.ogg"]
+Volume = 0.2
+Cooldown = 0.25
+Spatial = true
+Priority = 10
+
+# Water footsteps; coalesced from actual displacement, never simulation ticks.
+[[Cues]]
+Id = "footstep_water"
+Trigger = "Footstep"
+Category = "Footsteps"
+Surface = "Water"
+Files = ["minecraft/sounds/liquid/swim1.ogg", "minecraft/sounds/liquid/swim2.ogg"]
+Volume = 0.2
+Cooldown = 0.25
+Spatial = true
+Priority = 10
+
+# skeleton_bow: actual attack/fuse transition, rate-limited in real time.
+[[Cues]]
+Id = "skeleton_bow"
+Trigger = "Attack"
+Category = "Effects"
+Entity = "skeleton"
+Files = ["minecraft/sounds/random/bow.ogg"]
+Volume = 0.35
+Cooldown = 0.8
+Spatial = true
+Priority = 55
+
+# archer_bow: actual attack/fuse transition, rate-limited in real time.
+[[Cues]]
+Id = "archer_bow"
+Trigger = "Attack"
+Category = "Effects"
+Entity = "archer"
+Files = ["minecraft/sounds/random/bow.ogg"]
+Volume = 0.35
+Cooldown = 0.8
+Spatial = true
+Priority = 55
+
+# mage_spell: actual attack/fuse transition, rate-limited in real time.
+[[Cues]]
+Id = "mage_spell"
+Trigger = "Attack"
+Category = "Effects"
+Entity = "mage"
+Files = ["minecraft/sounds/mob/ghast/fireball4.ogg"]
+Volume = 0.35
+Cooldown = 0.8
+Spatial = true
+Priority = 55
+
+# blaze_fire: actual attack/fuse transition, rate-limited in real time.
+[[Cues]]
+Id = "blaze_fire"
+Trigger = "Attack"
+Category = "Effects"
+Entity = "blaze"
+Files = ["minecraft/sounds/mob/ghast/fireball4.ogg"]
+Volume = 0.35
+Cooldown = 0.8
+Spatial = true
+Priority = 55
+
+# iron_throw: actual attack/fuse transition, rate-limited in real time.
+[[Cues]]
+Id = "iron_throw"
+Trigger = "Attack"
+Category = "Effects"
+Entity = "iron_golem"
+Files = ["minecraft/sounds/mob/irongolem/throw.ogg"]
+Volume = 0.35
+Cooldown = 0.8
+Spatial = true
+Priority = 55
+
+# snow_throw: actual attack/fuse transition, rate-limited in real time.
+[[Cues]]
+Id = "snow_throw"
+Trigger = "Attack"
+Category = "Effects"
+Entity = "snow_golem"
+Files = ["minecraft/sounds/random/bow.ogg"]
+Volume = 0.35
+Cooldown = 0.8
+Spatial = true
+Priority = 55
+
+# warrior_strike: actual attack/fuse transition, rate-limited in real time.
+[[Cues]]
+Id = "warrior_strike"
+Trigger = "Attack"
+Category = "Effects"
+Entity = "warrior"
+Files = ["minecraft/sounds/entity/player/attack/strong1.ogg"]
+Volume = 0.35
+Cooldown = 0.8
+Spatial = true
+Priority = 55
+
+# creeper_fuse: actual attack/fuse transition, rate-limited in real time.
+[[Cues]]
+Id = "creeper_fuse"
+Trigger = "Fuse"
+Category = "Effects"
+Entity = "creeper"
+Files = ["minecraft/sounds/random/fuse.ogg"]
+Volume = 0.35
+Cooldown = 3
+Spatial = true
+Priority = 65
+
+# Soul sand has its own vanilla 1.16 footstep samples.
+[[Cues]]
+Id = "footstep_soul_sand"
+Trigger = "Footstep"
+Category = "Footsteps"
+Surface = "SoulSand"
+Files = ["minecraft/sounds/block/soul_sand/step1.ogg", "minecraft/sounds/block/soul_sand/step2.ogg"]
+Volume = 0.2
+Cooldown = 0.25
+Spatial = true
+Priority = 10
