@@ -11,14 +11,16 @@ const ai = {
         }
         return best;
     },
-    // Preserve the original priorities, but expose every threshold for mod authors.
+    // Seek the closest opponent across the map; visibility only gates attacks.
     chooseHostileTarget(ctx) {
-        const guard = ai.nearest(ctx, world.getGuardians(), g => ctx.canSee(g.x, g.z));
-        if (guard && ai.distance(ctx, guard) < 6) return ctx.selectTarget('guardian', guard.id);
-        const resident = ai.nearest(ctx, world.getVillagers(), v => v.health > 0 && ctx.canSee(v.x, v.z));
-        if (resident && ai.distance(ctx, resident) < 12) return ctx.selectTarget('villager', resident.id);
-        const building = ai.nearest(ctx, world.getAttackableBuildings());
-        return building ? ctx.selectTarget('building', building.id) : false;
+        let best = null, kind = '', distance = Infinity;
+        for (const [type, list] of [['guardian', world.getGuardians()], ['villager', world.getVillagers()], ['building', world.getAttackableBuildings()]]) {
+            const candidate = ai.nearest(ctx, list, item => item.health > 0);
+            if (candidate && ai.distance(ctx, candidate) < distance) {
+                best = candidate; kind = type; distance = ai.distance(ctx, candidate);
+            }
+        }
+        return best ? ctx.selectTarget(kind, best.id) : false;
     },
     supply(v, resource, exclude) {
         const candidates = world.getStores().filter(b => b.id !== exclude && b.enabled && b.availableSupply(resource) > 0.001);

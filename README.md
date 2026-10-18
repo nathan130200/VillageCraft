@@ -57,6 +57,8 @@ PowerShell users can also run `./run.ps1`.
 
 Saves, options and logs live in `UserData/` beside the executable. Used Minecraft assets are cached in `UserData/cache.zip`; delete it while the game is closed to refresh changed textures. External assets are read directly without copying their folders on every build.
 
+The save browser shows a compressed map snapshot, completed days, active playtime and emeralds before loading or overwriting a village.
+
 ## Controls
 
 **WASD** pans, **Q/E** rotates, **Shift** rotates faster, and the **mouse wheel** zooms. Click to inspect or build; **R** rotates a prefab. **Space** pauses, **1–4** changes speed, and **Esc** opens the save/load and options menu.

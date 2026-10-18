@@ -24,6 +24,8 @@ public partial class City
 {
     public bool GameOver {get;set;}
     public VillageStatistics Statistics {get;set;}=new();
+    public double PlaySeconds {get;set;}
+    public byte[] SavePreviewPng {get;set;}=[];
     public bool ExposedToSun(Creature monster)
     {
         // Burning uses solar strength, independent of the visual ambient-light setting.

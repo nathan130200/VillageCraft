@@ -5,6 +5,29 @@ static class NightChecks
     static void At(City c,int day,float hour){c.Day=day;c.DayTime=c.Rules.DayLength*hour/24;c.Update(.001f);}
     public static void Run()
     {
+        using(var edge=City.New(generateTerrain:false))
+        {
+            edge.Day=6;edge.Rules.MaxRaiders=100;edge.Rules.NightCount=12;
+            edge.Buildings.Add(new(){Id=edge.NextId++,Prefab="cobble_road",X=0,Z=0});
+            edge.Terrain.Water[1]=1;
+            edge.SpawnNight();edge.SpawnWave();
+            Check(edge.Enemies.Any(m=>m.NightSpawn)&&edge.Enemies.Any(m=>m.BossWave),"both encounter types spawn");
+            Check(edge.Enemies.All(m=>(m.X==0||m.X==edge.Width-1||m.Z==0||m.Z==edge.Height-1)&&edge.At((int)m.X,(int)m.Z)==null&&edge.Walkable((int)m.X,(int)m.Z)),"all encounters spawn on empty dry border tiles");
+            edge.Terrain.Water[1]=0;
+            var mob=edge.Enemies[0];var start=mob.Position;
+            for(int i=0;i<10;i++)edge.Scripting.UpdateMonster(mob,new MobScriptContext(edge,mob,.1f),.1f);
+            Check(mob.Position!=start,"border monster approaches the village from outside detection range");
+            edge.Rules.NightMonsters=edge.Rules.RaidsEnabled=false;
+            edge.LastSettlementDay=edge.Day;edge.DayTime=edge.Rules.DayLength*.75f-.001f;
+            edge.Stock[ResourceType.Goods]=7;float money=edge.Stock[ResourceType.Emeralds];
+            edge.Update(.01f);
+            Check(edge.Stock[ResourceType.Goods]==0&&edge.Stock[ResourceType.Emeralds]==money+7*Catalog.Data.Economy.EmeraldsPerGood,"18:00 converts Goods without repeating daily upkeep");
+            edge.Stock[ResourceType.Goods]=3;edge.Update(.01f);
+            Check(edge.Stock[ResourceType.Goods]==3,"evening conversion is not repeated every frame");
+            string save=Path.Combine(Path.GetTempPath(),"villagecraft-evening-"+Guid.NewGuid()+".vcs");
+            try{edge.Save(save);using var reload=City.Load(save);reload.Update(.01f);Check(reload.LastEveningSettlementDay==edge.Day&&reload.Stock[ResourceType.Goods]==3,"evening settlement phase survives save/load");}
+            finally{File.Delete(save);}
+        }
         using var city=City.New(generateTerrain:false);city.Rules.RaidsEnabled=false;city.Rules.NightCount=1;city.Rules.NightSpawnIntervalMinutes=60;
         At(city,5,18);Check(city.Enemies.Count==0,"peaceful nights suppress the complete first five nights");
         At(city,6,1);Check(city.Enemies.Count==0,"night five remains peaceful after midnight");

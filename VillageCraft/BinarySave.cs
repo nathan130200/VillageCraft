@@ -31,6 +31,9 @@ public static class BinarySave
         using var payload=new MemoryStream();
         using(var w=new BinaryWriter(payload,Utf8,true))
         {
+            SavePreview.Validate(c.SavePreviewPng);
+            if(!double.IsFinite(c.PlaySeconds)||c.PlaySeconds<0||c.PlaySeconds>TimeSpan.MaxValue.TotalSeconds)throw new InvalidDataException("Invalid playtime.");
+            w.Write(c.Day);w.Write(c.PlaySeconds);w.Write(c.Stock[ResourceType.Emeralds]);w.Write(c.SavePreviewPng.Length);w.Write(c.SavePreviewPng);
             w.Write(c.Width);w.Write(c.Height);w.Write(c.Day);w.Write(c.DayTime);w.Write(c.Tax);w.Write(c.Happiness);w.Write(c.Balance);w.Write(c.NextId);w.Write(c.Waves);w.Write(c.Kills);w.Write(c.ArmorLevel);w.Write(c.ToolLevel);w.Write(c.Growth);Text(w,c.Message);Rules(w,c.Rules);Map(w,c.Stock);
             w.Write(c.Buildings.Count);foreach(var b in c.Buildings){w.Write(b.Id);Text(w,b.Prefab);w.Write(b.X);w.Write(b.Z);w.Write(b.Rotation);w.Write(b.Health);w.Write(b.Priority);w.Write(b.Enabled);w.Write(b.Worked);w.Write(b.WorkEffort);w.Write(b.Attendance);w.Write(b.ServiceCredit);}
             w.Write(c.Citizens.Count);foreach(var v in c.Citizens){w.Write(v.Id);w.Write(v.Home);w.Write(v.Work);w.Write(v.X);w.Write(v.Z);w.Write(v.Health);Text(w,Tasks.Label(v.Task));w.Write(v.Cooldown);w.Write(v.WorkTime);w.Write(v.HasWorked);Text(w,v.Profession);w.Write(v.Facing);}
@@ -52,28 +55,46 @@ public static class BinarySave
             w.Write(c.GameOver);var stats=c.Statistics;
             w.Write(stats.RecordedSinceDay);w.Write(stats.SimulatedSeconds);w.Write(stats.PeakPopulation);w.Write(stats.Arrivals);w.Write(stats.VillagersLost);w.Write(stats.BuildingsPlaced);w.Write(stats.BuildingsDestroyed);w.Write(stats.Deliveries);w.Write(stats.SunDeaths);w.Write(stats.EmeraldsFromGoods);Map(w,stats.Production);
             w.Write(c.Rules.BirthChance);w.Write(stats.Births);w.Write(c.Babies.Count);foreach(var baby in c.Babies){w.Write(baby.Home);w.Write(baby.DueDay);}
-            w.Write(c.Rules.NightSpawnIntervalMinutes);w.Write(c.LastNightSpawnMinute);
+            w.Write(c.Rules.NightSpawnIntervalMinutes);w.Write(c.LastNightSpawnMinute);w.Write(c.LastEveningSettlementDay);
 
 
         }
         if(payload.Length>MaxBytes)throw new InvalidDataException("Village exceeds save size limit.");
         byte[] bytes=payload.ToArray();string full=Path.GetFullPath(path);Directory.CreateDirectory(Path.GetDirectoryName(full)!);
         using(var file=File.Create(full+".tmp"))using(var w=new BinaryWriter(file,Utf8))
-        {w.Write("VCTY"u8);w.Write((ushort)11);w.Write(bytes.Length);w.Write(SHA256.HashData(bytes));w.Write(bytes);file.Flush(true);}
+        {w.Write("VCTY"u8);w.Write((ushort)13);w.Write(bytes.Length);w.Write(SHA256.HashData(bytes));w.Write(bytes);file.Flush(true);}
         File.Move(full+".tmp",full,true);
+    }
+    static SaveSummary ReadSummary(BinaryReader r)
+    {
+        int day=r.ReadInt32();double seconds=r.ReadDouble();float emeralds=r.ReadSingle();int size=Count(r,SavePreview.MaxBytes);
+        byte[] png=r.ReadBytes(size);if(png.Length!=size)throw new InvalidDataException("Truncated save preview.");
+        if(day<1||!double.IsFinite(seconds)||seconds<0||seconds>TimeSpan.MaxValue.TotalSeconds||!float.IsFinite(emeralds))throw new InvalidDataException("Invalid save summary.");
+        SavePreview.Validate(png);return new(day,seconds,emeralds,png);
+    }
+    public static SaveSummary Summary(string path)
+    {
+        try{using var r=new BinaryReader(new MemoryStream(ReadPayload(path),false),Utf8);return ReadSummary(r);}
+        catch(EndOfStreamException e){throw new InvalidDataException("Truncated save summary.",e);}
+    }
+    static byte[] ReadPayload(string path)
+    {
+        using var file=File.OpenRead(path);if(file.Length>MaxBytes+42)throw new InvalidDataException("Save exceeds size limit.");
+        using var header=new BinaryReader(file,Utf8,true);
+        if(!header.ReadBytes(4).AsSpan().SequenceEqual("VCTY"u8))throw new InvalidDataException("Unsupported binary save format.");
+        ushort format=header.ReadUInt16();if(format!=13)throw new InvalidDataException("This beta requires save format 13. Older beta saves are not supported.");
+        int length=Count(header,MaxBytes);byte[] hash=header.ReadBytes(32);if(file.Length-file.Position!=length)throw new InvalidDataException("Truncated save or unexpected trailing data.");
+        byte[] bytes=header.ReadBytes(length);if(!CryptographicOperations.FixedTimeEquals(hash,SHA256.HashData(bytes)))throw new InvalidDataException("Save checksum failed; the file is damaged.");
+        return bytes;
     }
     public static City Read(string path)
     {
         using var profile=Profiler.Measure(ProfileArea.Load);
         try
         {
-            using var file=File.OpenRead(path);if(file.Length>MaxBytes+42)throw new InvalidDataException("Save exceeds size limit.");
-            using var header=new BinaryReader(file,Utf8,true);
-            if(!header.ReadBytes(4).AsSpan().SequenceEqual("VCTY"u8))throw new InvalidDataException("Unsupported binary save format.");
-            ushort format=header.ReadUInt16();if(format!=11)throw new InvalidDataException("This beta requires save format 11. Older beta saves are not supported.");
-            int length=Count(header,MaxBytes);byte[] hash=header.ReadBytes(32);if(file.Length-file.Position!=length)throw new InvalidDataException("Truncated save or unexpected trailing data.");
-            byte[] bytes=header.ReadBytes(length);if(!CryptographicOperations.FixedTimeEquals(hash,SHA256.HashData(bytes)))throw new InvalidDataException("Save checksum failed; the file is damaged.");
+            byte[] bytes=ReadPayload(path);
             using var payload=new MemoryStream(bytes,false);using var r=new BinaryReader(payload,Utf8);
+            var summary=ReadSummary(r);
             var c=new City{PeaceDays=0,Version=3,Width=r.ReadInt32(),Height=r.ReadInt32(),Day=r.ReadInt32(),DayTime=r.ReadSingle(),Tax=r.ReadSingle(),Happiness=r.ReadSingle(),Balance=r.ReadSingle(),NextId=r.ReadInt32(),Waves=r.ReadInt32(),Kills=r.ReadInt32(),ArmorLevel=r.ReadInt32(),ToolLevel=r.ReadInt32(),Growth=r.ReadSingle(),Message=Text(r),Rules=Rules(r),Stock=Map(r)};
             int n=Count(r,512*512);for(int i=0;i<n;i++)c.Buildings.Add(new(){Id=r.ReadInt32(),Prefab=Text(r),X=r.ReadInt32(),Z=r.ReadInt32(),Rotation=r.ReadInt32(),Health=r.ReadSingle(),Priority=r.ReadInt32(),Enabled=r.ReadBoolean(),Worked=r.ReadBoolean(),WorkEffort=r.ReadSingle(),Attendance=r.ReadSingle(),ServiceCredit=r.ReadSingle()});
             n=Count(r,4096);for(int i=0;i<n;i++)c.Citizens.Add(new(){Id=r.ReadInt32(),Home=r.ReadInt32(),Work=r.ReadInt32(),X=r.ReadSingle(),Z=r.ReadSingle(),Health=r.ReadSingle(),Task=Tasks.Parse(Text(r)),Cooldown=r.ReadSingle(),WorkTime=r.ReadSingle(),HasWorked=r.ReadBoolean(),Profession=Text(r),Facing=r.ReadSingle()});
@@ -95,7 +116,9 @@ public static class BinarySave
             foreach(var m in c.Enemies){m.LeatherHelmet=r.ReadBoolean();m.BossWave=r.ReadBoolean();}
             c.GameOver=r.ReadBoolean();c.Statistics=new(){RecordedSinceDay=r.ReadInt32(),SimulatedSeconds=r.ReadDouble(),PeakPopulation=r.ReadInt32(),Arrivals=r.ReadInt32(),VillagersLost=r.ReadInt32(),BuildingsPlaced=r.ReadInt32(),BuildingsDestroyed=r.ReadInt32(),Deliveries=r.ReadInt32(),SunDeaths=r.ReadInt32(),EmeraldsFromGoods=r.ReadSingle(),Production=Map(r)};
             c.Rules.BirthChance=r.ReadSingle();c.Statistics.Births=r.ReadInt32();n=Count(r,4096);for(int i=0;i<n;i++)c.Babies.Add(new(){Home=r.ReadInt32(),DueDay=r.ReadInt32()});
-            c.Rules.NightSpawnIntervalMinutes=r.ReadInt32();c.LastNightSpawnMinute=r.ReadInt64();
+            c.Rules.NightSpawnIntervalMinutes=r.ReadInt32();c.LastNightSpawnMinute=r.ReadInt64();c.LastEveningSettlementDay=r.ReadInt32();
+            c.PlaySeconds=summary.PlaySeconds;c.SavePreviewPng=summary.Preview;
+            if(summary.Day!=c.Day||summary.Emeralds!=c.Stock[ResourceType.Emeralds])throw new InvalidDataException("Save summary does not match the village.");
             if(payload.Position!=payload.Length)throw new InvalidDataException("Unexpected binary records.");return c;
         }
         catch(Exception e)when(e is EndOfStreamException or DecoderFallbackException){throw new InvalidDataException("Truncated or invalid binary save.",e);}

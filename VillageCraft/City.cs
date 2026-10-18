@@ -49,7 +49,14 @@ public class Citizen
     public int Work { get; set; } = -1;
     public float X { get; set; }
     public float Z { get; set; }
-    public float Health { get; set; } = 50;
+    float? health;
+    [JsonIgnore] public float MaximumHealth=>Catalog.Data.Professions.TryGetValue(Profession,out var plan)?plan.BaseHealth:50;
+    public float Health {get=>health??=MaximumHealth;set=>health=value;}
+    public void ChangeProfession(string profession)
+    {
+        float fraction=Math.Clamp(Health/MaximumHealth,0,1);
+        Profession=profession;Health=fraction*MaximumHealth;
+    }
     public TaskId Task { get; set; } = TaskId.Resting;
     public float Cooldown { get; set; }
     public float WorkTime { get; set; }
@@ -264,7 +271,7 @@ public partial class City:IDisposable
         if(!Catalog.Data.Professions.TryGetValue(profession,out var plan))return false;
         if(v.Profession==profession)return false;
         if(!Spend(plan.TrainingCost)){Message=L.T("ui.not_enough_supplies_for_training");return false;}
-        v.Profession=profession;v.WorkTime=0;Assign();Emit(new("onVillagerProfessionChanged",v));Log(L.F("ui.trained_as",v.FullName,L.Name(plan)));return true;
+        v.ChangeProfession(profession);v.WorkTime=0;Assign();Emit(new("onVillagerProfessionChanged",v));Log(L.F("ui.trained_as",v.FullName,L.Name(plan)));return true;
     }
     public bool Give(Citizen v,ResourceType resource,float amount)
     {
@@ -396,7 +403,7 @@ public partial class City:IDisposable
         }
         foreach(var a in Animals)a.Age++;
         foreach(var b in Buildings){b.Worked=false;b.WorkEffort=0;b.Attendance=0;}
-        foreach(var v in Citizens){v.HasWorked=false;if(fed&&watered)v.Health=Math.Min(50,v.Health+3);}
+        foreach(var v in Citizens){v.HasWorked=false;if(fed&&watered)v.Health=Math.Min(v.MaximumHealth,v.Health+3);}
         if(Rules.RaidsEnabled&&Day%Rules.RaidInterval==0)SpawnWave();
         else if(!fed)Message=L.T(Stock[ResourceType.Food]>=Citizens.Count?"message.villagers_collecting_food":"message.food_shortage");
         else if(!watered)Message=L.T("message.water_shortage");
@@ -411,21 +418,30 @@ public partial class City:IDisposable
     {
         string[] types=["zombie","skeleton","creeper"];
         if(Day<=PeaceDays)return;
-        var sites=Buildings.Where(b=>!b.Plan.Path&&!b.Plan.Natural&&!b.Plan.Indestructible).ToArray();if(sites.Length==0)return;
+        var sites=BorderSpawnSites();if(sites.Count==0)return;
         int count=Math.Min(Rules.NightCount,Math.Max(0,Rules.MaxRaiders-Enemies.Count));
         for(int i=0;i<count;i++)
         {
-            var b=sites[(Day+i*7)%sites.Length];string type=types[(Day+i)%types.Length];
-            SpawnMonster(type,Math.Clamp(b.X+(i%2==0?-2:2),0,Width-1),Math.Clamp(b.Z+2,0,Height-1),night:true);
+            var p=sites[Random.Shared.Next(sites.Count)];string type=types[(Day+i)%types.Length];
+            SpawnMonster(type,p.X,p.Y,night:true);
         }
         if(count>0)Log(L.F("message.night_monsters",count));
     }
     public void SpawnWave()
     {
         Waves++;int count=Math.Max(0,Math.Min(Rules.MaxRaiders-Enemies.Count,Rules.WaveBase+Waves*Rules.WaveGrowth));string[] types=["zombie","skeleton","creeper","piglin","piglin_brute","zombified_piglin","blaze"];
-        for(int i=0;i<count;i++){string type=i==0?"nether_warlord":types[(i-1)%types.Length];SpawnMonster(type,Math.Max(0,AnchorX-18),Math.Clamp(AnchorZ-12+i*2%26,0,Height-1),bossWave:true);}
+        var sites=BorderSpawnSites();if(sites.Count==0)count=0;
+        for(int i=0;i<count;i++){string type=i==0?"nether_warlord":types[(i-1)%types.Length];var p=sites[Random.Shared.Next(sites.Count)];SpawnMonster(type,p.X,p.Y,bossWave:true);}
         Emit(new("onBossWaveStarted",Amount:Waves));
         Log(L.F("ui.raid_hostiles_led_by_a_nether_warlord_are",Waves,count));
+    }
+    List<Vector2> BorderSpawnSites()
+    {
+        var sites=new List<Vector2>();
+        for(int x=0;x<Width;x++){Add(x,0);Add(x,Height-1);}
+        for(int z=1;z<Height-1;z++){Add(0,z);Add(Width-1,z);}
+        return sites;
+        void Add(int x,int z){if(Walkable(x,z)&&At(x,z)==null)sites.Add(new(x,z));}
     }
     void Combat(float dt)
     {
@@ -552,6 +568,7 @@ public partial class City:IDisposable
             Catalog.Resources.Any(r=>!c.Stock.ContainsKey(r)||!finite(c.Stock[r]))||c.Citizens.Select(v=>v.Id).Distinct().Count()!=c.Citizens.Count||c.Citizens.Any(v=>c.Buildings.Any(b=>b.Id==v.Id))||c.ArmorLevel<0||c.ToolLevel<0||c.ArmorLevel>Catalog.Data.Upgrades.Where(u=>u.Kind==EquipmentKind.Armor).Select(u=>u.Level).DefaultIfEmpty().Max()||c.ToolLevel>Catalog.Data.Upgrades.Where(u=>u.Kind==EquipmentKind.Tools).Select(u=>u.Level).DefaultIfEmpty().Max()||!finite(c.Balance)||!finite(c.Growth)||c.LastNight<0||c.LastNight>c.Day||c.Enemies.Any(e=>!finite(e.BrainTime)||e.BrainTime<0)||!finite(c.DayTime)||c.DayTime<0||c.DayTime>=c.Rules.DayLength||!finite(c.Happiness)||!finite(c.Tax)||c.Day<1)
             throw new InvalidDataException("Invalid village data");
         c.EnsureEntityIds();
+        foreach(var v in c.Citizens)v.Health=Math.Min(v.Health,v.MaximumHealth);
         var ids=c.Buildings.Select(b=>b.Id).Concat(c.Citizens.Select(v=>v.Id)).Concat(c.Animals.Concat(c.Defenders).Concat(c.Enemies).Select(m=>m.Id)).ToArray();
         if(ids.Distinct().Count()!=ids.Length||ids.Any(id=>id<=0||id>1000000000))throw new InvalidDataException("Invalid entity IDs");
         foreach(var data in c.Buildings.Select(b=>(b.Tags,b.Behavior)).Concat(c.Citizens.Select(v=>(v.Tags,v.Behavior))).Concat(c.Animals.Concat(c.Defenders).Concat(c.Enemies).Select(m=>(m.Tags,m.Behavior))))

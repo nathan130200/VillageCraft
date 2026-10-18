@@ -197,7 +197,7 @@ Os scripts não têm importação de CLR, Node ou acesso ao save. Cada execuçã
 
 ## 1.0.5-beta
 
-- `onGoodsConverted(emeralds)` fires once at the 06:00 settlement; `onDawn()` follows.
+- `onGoodsConverted(emeralds)` fires at the 06:00 and 18:00 settlements; `onDawn()` follows only the morning settlement. Upkeep is charged once, at 06:00.
 - `onResourceCollected(villager, amount, sourceBuilding)` and `onDeliveryCompleted(villager, destinationBuilding)` report physical collection/delivery.
 - `villager.cargo(resource)` reads in-transit delivery items. `villager.effect(name)` reads remaining seconds; `applyEffect(name, seconds)` supports Burning, Poison, Slowness and Weakness. Milk clears all effects.
 - `onArmorEnchanted()` reports the city-wide equipment enchantment.
@@ -222,7 +222,7 @@ worker.task = tasks.GoingToWork;
 worker.collect(warehouse, resources.Food, 2, dt);
 ~~~
 
-`resources` e `tasks` são objetos constantes e congelados, disponíveis em todos os componentes. Em C#, estoques, receitas, inventários, carga, custos, bônus e estatísticas usam `ResourceType`, não chaves string. Na interface JS e no TOML os nomes continuam legíveis; a ponte valida nomes estritamente e converte para enum. Nomes numéricos ou desconhecidos não criam recursos novos. O beta 1.0.6 usa formato binário 11 com IDs numéricos de recursos e não carrega os saves beta anteriores.
+`resources` e `tasks` são objetos constantes e congelados, disponíveis em todos os componentes. Em C#, estoques, receitas, inventários, carga, custos, bônus e estatísticas usam `ResourceType`, não chaves string. Na interface JS e no TOML os nomes continuam legíveis; a ponte valida nomes estritamente e converte para enum. Nomes numéricos ou desconhecidos não criam recursos novos. O beta 1.0.7 usa formato binário 13 com IDs numéricos de recursos e não carrega os saves beta anteriores.
 
 Para adicionar um **novo tipo de recurso**, adicione um membro com valor explícito e estável em `ResourceType`, sua definição em `resources.toml` e traduções/ícones, depois recompile. Não renumere membros existentes. Construções, profissões e modelos continuam extensíveis por TOML.
 
@@ -296,7 +296,7 @@ dotnet run --project VillageCraft -c Debug -- --self-test
 Os checks e modos de captura não são compilados em Release. Capturas de teste ficam em `screenshots/` na raiz do projeto. Reinicie o jogo depois de editar scripts: não há hot reload. Estado global JS não é persistido; use tags, os campos de tarefa/destino e o estado numérico de monstros quando precisar de continuidade após carregar.
 
 
-## Modding com tipos, reparos e população (1.0.6)
+## Modding com tipos, reparos e população (1.0.7)
 
 `game.d.ts` declara a API viva completa e os callbacks. `jsconfig.json` é configuração apenas do editor, não um arquivo carregado pelo jogo. Abra Content no VS Code ou outro editor TypeScript para autocomplete; valide com `tsc --project VillageCraft/Content/jsconfig.json`. Os componentes distribuídos têm JSDoc nos callbacks. Scripts continuam JavaScript normal: não importe os tipos em tempo de execução.
 
@@ -304,7 +304,7 @@ Todos os aldeões podem executar `repair(building, dt)`, que exige proximidade, 
 
 `building.availableSupply(resource)` exclui a reserva de Input de fontes não-armazém. Use esta consulta para evitar retirar a alimentação de um cercado como produto excedente. `inputAmount(resource)` permite medir quantos ciclos de suprimento restam. As rotas preferem caminhos e respeitam entradas, com desvio por terreno quando necessário.
 
-`population.js` decide nascimentos em onDayStarted: `world.birthChance` é a probabilidade (0..1), `world.queueBirth(homeId)` agenda um bebê oculto e `world.pendingBirths` consulta a quantidade. Casas expõem `homes`. São necessários dois moradores e uma vaga; limites são reavaliados na execução. `onBabyBorn(home)` ocorre ao agendar; `onVillagerBorn(villager)` ocorre ao crescer no dia seguinte. Pendências e probabilidade persistem em saves v11. Não há modelo visível de bebê durante esse período.
+`population.js` decide nascimentos em onDayStarted: `world.birthChance` é a probabilidade (0..1), `world.queueBirth(homeId)` agenda um bebê oculto e `world.pendingBirths` consulta a quantidade. Casas expõem `homes`. São necessários dois moradores e uma vaga; limites são reavaliados na execução. `onBabyBorn(home)` ocorre ao agendar; `onVillagerBorn(villager)` ocorre ao crescer no dia seguinte. Pendências e probabilidade persistem em saves v13. Não há modelo visível de bebê durante esse período.
 
 `employment.js` implementa `onReassignProfessions()`, acionado pelo botão em Moradores. `world.getProfessions()`, `building.allowedProfessions`, `villager.setProfession(id)` e `world.assignJobs(...)` permitem adaptar a política. setProfession não cobra treinamento nem reentra na distribuição; o botão é uma reorganização automática explícita.
 
@@ -326,7 +326,7 @@ world.error("Custom behavior could not acquire its target");
 
 `log`, `warn` e `error` sempre gravam em UserData/Logs, inclusive em Release. O arquivo de cada execução identifica o componente e usa horário UTC. Mensagens longas continuam no arquivo; somente mensagens curtas de log também entram no diário da vila. Exceções dos callbacks gravam a stack trace e desativam o componente com falha conforme as regras do runtime. Não é preciso ativar logging de desenvolvimento.
 
-`onNightStarted()` continua sendo um evento de início de noite. Encontros normais agora podem gerar vários grupos entre 18:00 e 05:00; use `onMonsterSpawned` para observar cada criação. Pausa e velocidade usam o mesmo relógio da simulação, e os intervalos persistem no save beta v11.
+`onNightStarted()` continua sendo um evento de início de noite. Encontros normais agora podem gerar vários grupos entre 18:00 e 05:00; use `onMonsterSpawned` para observar cada criação. Pausa e velocidade usam o mesmo relógio da simulação, e os intervalos persistem no save beta v13.
 
 ### Guardian patrol example
 

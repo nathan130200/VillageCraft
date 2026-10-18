@@ -8,7 +8,7 @@ Referenced sound files join textures in executable-relative `UserData/cache.zip`
 
 | Situation | Minecraft sounds |
 |---|---|
-| Goods converted to emeralds at 06:00 | Experience level-up, after a positive conversion |
+| Goods converted to emeralds at 06:00 and 18:00 | Experience level-up, after a positive conversion |
 | Boss wave starts | Totem of Undying, once per wave event |
 | Houses | Wooden door open/close on resident departure/arrival; nearby villager voices |
 | Farms | Crop planting and grass/dirt digging during productive work |

@@ -135,7 +135,7 @@ public class Catalog
         foreach(ResourceType id in new[]{ResourceType.Emeralds,ResourceType.Food,ResourceType.Wood,ResourceType.Stone,ResourceType.Iron,ResourceType.Tools,ResourceType.Wool,ResourceType.Eggs})Require(resourceIds.Contains(id),"missing resource "+id);
         foreach(var p in data.Professions.Values)
         {
-            Require(data.Models.ContainsKey(p.Model)&&float.IsFinite(p.Efficiency)&&p.Efficiency>0&&p.Efficiency<=2,"invalid profession "+p.Id);
+            Require(data.Models.ContainsKey(p.Model)&&float.IsFinite(p.Efficiency)&&p.Efficiency>0&&p.Efficiency<=2&&float.IsFinite(p.BaseHealth)&&p.BaseHealth>=1&&p.BaseHealth<=10000,"invalid profession "+p.Id);
             Require(p.TrainingCost.Concat(p.ResourceBonus).All(e=>resourceIds.Contains(e.Key)&&float.IsFinite(e.Value)&&e.Value>=0),"invalid profession recipe");
         }
         Require(data.Professions.TryGetValue("citizen",out var citizen)&&citizen.Efficiency==.5f,"citizens must have 50% efficiency");
@@ -184,6 +184,7 @@ public class ResourcePlan
 }
 public class ProfessionPlan
 {
+    public float BaseHealth {get;set;}=50;
     public string Id {get;set;}=string.Empty;
     public string Name {get;set;}=string.Empty;
     public string Model {get;set;}="villager";

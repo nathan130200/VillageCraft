@@ -59,6 +59,7 @@ public sealed partial class ScriptVillager
     public float x=>citizen.X;
     public float z=>citizen.Z;
     public float health=>citizen.Health;
+    public float maximumHealth=>citizen.MaximumHealth;
     public float inventory(string resource)=>ResourceIds.TryParse(resource,out var id)?citizen.Inventory.GetValueOrDefault(id):0;
     public float cargo(string resource)=>ResourceIds.TryParse(resource,out var id)?citizen.Cargo.GetValueOrDefault(id):0;
     public float effect(string name)=>citizen.Effects.GetValueOrDefault(name);
@@ -68,7 +69,7 @@ public sealed partial class ScriptVillager
         citizen.Effects[name]=seconds;return true;
     }
     public bool give(string resource,float amount)=>ResourceIds.TryParse(resource,out var id)&&city.Give(citizen,id,amount);
-    public void heal(float amount){if(float.IsFinite(amount))citizen.Health=Math.Min(50,citizen.Health+Math.Clamp(amount,0,25));}
+    public void heal(float amount){if(float.IsFinite(amount))citizen.Health=Math.Min(citizen.MaximumHealth,citizen.Health+Math.Clamp(amount,0,25));}
 }
 public sealed partial class ScriptBuilding
 {

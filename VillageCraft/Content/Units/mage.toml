@@ -5,7 +5,7 @@ Id = "mage"
 # ID de Models usado para renderizar esta unidade.
 Model = "mage_worker"
 # Vida inicial/máxima da unidade.
-Health = 50
+Health = 60
 # Dano de um ataque ou explosão.
 Damage = 20
 # Alcance do ataque em terrenos.

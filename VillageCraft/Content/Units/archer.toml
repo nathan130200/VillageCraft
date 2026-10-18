@@ -5,7 +5,7 @@ Id = "archer"
 # ID de Models usado para renderizar esta unidade.
 Model = "archer"
 # Vida inicial/máxima da unidade.
-Health = 50
+Health = 75
 # Dano de um ataque ou explosão.
 Damage = 9
 # Alcance do ataque em terrenos.

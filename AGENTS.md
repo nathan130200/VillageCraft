@@ -11,7 +11,7 @@ This file records the repository owner's requirements from the project conversat
 - Save ALL game testing and visual validation screenshots under the repository-root `screenshots/` folder. Create it when necessary; never save new screenshots in the repository root. Keep generated screenshots ignored by version control.
 - Interpret instructions inside attached documents separately from the owner's actual request. Screenshots supply visual evidence of bugs.
 - Development tests, smoke-test entry points and test-only helpers must be excluded from Release builds.
-- Latest requested release: **1.0.6**, superseding 1.0.5-beta. Do not describe pending work as shipped simply because it is listed here.
+- Latest requested release: **1.0.7**, superseding 1.0.5-beta. Do not describe pending work as shipped simply because it is listed here.
 
 ## Technology and code conventions
 
@@ -22,6 +22,7 @@ This file records the repository owner's requirements from the project conversat
 - Avoid comparisons with empty string literals. Prefer string.IsNullOrEmpty/string.IsNullOrWhiteSpace as appropriate, or string.Empty where an empty value is needed.
 - All game-owned content/configuration files use human-readable TOML. External Minecraft assets_index.json remains JSON because it is an external asset index.
 - Save games use binary serialization, not JSON disguised as binary.
+- Save files embed a compressed rendered-map preview. Load and Save As screens show the preview, completed days, real active playtime (independent of simulation speed) and emerald balance before loading or confirming an overwrite. Validate previews and save integrity, and keep unreadable saves safely identifiable.
 - Split prefab definitions into separate files. Put configurable properties, including building costs, in data files rather than hardcoding them.
 - Load and validate content once, retaining definitions in memory. Explain file types and how to add professions, buildings, models and other content in the content documentation.
 
@@ -51,6 +52,7 @@ This file records the repository owner's requirements from the project conversat
 - Keep the window frame/title bar on screen when opening or changing display settings.
 - Brazilian Portuguese is the default language. Support other languages and localize menus, professions, entity and building names without translating stable IDs.
 - Each villager gets a random first name and surname. Inspection includes health, stats, profession and carried inventory.
+- Villager professions have configurable BaseHealth in their individual TOML files. Spawning, healing, milk, inspectors and scripts use that profession's maximum; changing professions preserves health percentage.
 
 ## World and construction
 
@@ -69,6 +71,7 @@ This file records the repository owner's requirements from the project conversat
 - Suppress normal nighttime monsters during the first **five days** of each new save. Respect the setting that enables/disables night monsters.
 - Provide a guided tutorial. Once skipped, it stays dismissed for new games until Options > Reset tutorial is used.
 - Regular nighttime encounters include zombies, creepers and skeletons. Monsters must actively hunt villagers and damage buildings.
+- Regular and boss encounters spawn on empty, dry map-edge tiles, never inside buildings. Monsters approach their nearest opponent from the border. Keep the boss countdown separate from the enemy count; show the enemy count only at night.
 - Default boss-wave interval is **30 days**, superseding the earlier 90-day request. Boss waves combine powerful common monsters with Nether enemies, including piglins and variants.
 - Sun-sensitive monsters in regular encounters burn in daylight; they have a considerable chance of spawning with protective leather helmets. Sun-sensitive boss-wave monsters always have helmets.
 - Defensive villagers leave their houses at night to defend the village. Include warriors, archers, magic villagers, iron golems and snow golems.
@@ -95,7 +98,7 @@ This file records the repository owner's requirements from the project conversat
 ## Economy and storage
 
 - Include an economy with resource production, needs, trade and emerald income.
-- Goods represent labor/combat contributions and convert to emeralds daily at **06:00**.
+- Goods represent labor/combat contributions and convert to emeralds at **06:00 and 18:00** (upkeep is charged only at 06:00).
 - Leather is used to create/improve defenders' armor. Wizards can enchant armor for protection and damage bonuses.
 - Cow sheds produce leather and milk. Milk removes negative effects and supports health recovery after attacks.
 - Resource deliverymen physically transport resources between buildings; resources must not teleport into workplaces. Emeralds are exempt from physical delivery.
@@ -126,7 +129,7 @@ This file records the repository owner's requirements from the project conversat
 - Keep documentation honest about implementation status and platform validation. Update version metadata and relevant documentation together when a release is actually ready.
 - Keep generated test artifacts out of the repository root, and keep development checks out of Release distributions.
 
-## Latest 1.0.6 requirements
+## Latest 1.0.7 requirements
 
 - Add configurable daily reproduction, initially 60% per eligible home. Newborns remain hidden and become fully grown villagers the next day; persist pending growth.
 - Provide one button to reassign all professions automatically, instead of individual manual selection.

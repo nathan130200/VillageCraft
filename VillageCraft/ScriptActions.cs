@@ -41,7 +41,7 @@ public partial class City
     {
         using var profile=Profiler.Measure(ProfileArea.ManagedActions);
         if(v.Inventory.GetValueOrDefault(ResourceType.Milk)<1)return false;
-        v.Inventory[ResourceType.Milk]--;v.Effects.Clear();v.Health=Math.Min(50,v.Health+Catalog.Data.Economy.MilkHealing);return true;
+        v.Inventory[ResourceType.Milk]--;v.Effects.Clear();v.Health=Math.Min(v.MaximumHealth,v.Health+Catalog.Data.Economy.MilkHealing);return true;
     }
     internal bool ScriptPickup(Citizen v,Building from,Building to,ResourceType resource)
     {
@@ -126,7 +126,7 @@ public sealed partial class ScriptVillager
     public bool setProfession(string profession)
     {
         if(!Active||!Catalog.Data.Professions.ContainsKey(profession)||citizen.Profession==profession)return false;
-        citizen.Profession=profession;citizen.WorkTime=0;city.Notify(new("onVillagerProfessionChanged",citizen));return true;
+        citizen.ChangeProfession(profession);citizen.WorkTime=0;city.Notify(new("onVillagerProfessionChanged",citizen));return true;
     }
     public bool hasWorked {get=>citizen.HasWorked;set{if(Active)citizen.HasWorked=value;}}
     public string task {get=>citizen.Task.ToString();set{if(Active&&Enum.TryParse<TaskId>(value,out var id)&&Enum.IsDefined(id))citizen.Task=id;}}

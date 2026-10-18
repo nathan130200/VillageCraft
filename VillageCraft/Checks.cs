@@ -126,7 +126,7 @@ static class Checks
         Check(Vector2.Distance(initial,hunter.Position)>5,"monster moves over many real-time frames");
         var chase=Worker("citizen");chase.Rules.NightMonsters=false;chase.Rules.DayLength=600;
         var prey=chase.Citizens[0];var pursuer=new Creature{Type="zombie",X=prey.X-5,Z=prey.Z,Health=55};chase.Enemies.Add(pursuer);
-        Advance(chase,10);Check(prey.Health<50,"monster hunts and attacks a distant villager");
+        Advance(chase,10);Check(prey.Health<prey.MaximumHealth,"monster hunts and attacks a distant villager");
         var siege=Rich();siege.Citizens.Clear();siege.Rules.NightMonsters=false;
         var siegeVictim=siege.Buildings.Where(b=>!b.Plan.Path).OrderBy(b=>b.X).First();
         siege.Enemies.Add(new(){Type="zombie",X=siegeVictim.X-3,Z=siegeVictim.Z,Health=55});
@@ -219,7 +219,7 @@ static class Checks
             var customHunt=Rich();var chosenPerson=customHunt.Citizens[0];customHunt.Citizens.RemoveAll(v=>v!=chosenPerson);customHunt.Rules.NightMonsters=false;
             var customMob=new Creature{Type="zombie",X=chosenPerson.X-2,Z=chosenPerson.Z,Health=55};customHunt.Enemies.Add(customMob);
             Catalog.Data.Units["zombie"].Behavior="customhunter";Advance(customHunt,5);
-            Check(chosenPerson.Health<50&&customMob.X>chosenPerson.X-2,"JS selects and pursues its own live target");
+            Check(chosenPerson.Health<chosenPerson.MaximumHealth&&customMob.X>chosenPerson.X-2,"JS selects and pursues its own live target");
             var bound=Rich();var boundPerson=bound.Citizens[0];boundPerson.Health=30;var boundBuilding=bound.Buildings.First(b=>!b.Plan.Path);boundBuilding.Health=50;float gold=bound.Stock[ResourceType.Gold];
             var boundStore=bound.Buildings.First(b=>b.Plan.Warehouse);boundPerson.Position=new(boundStore.X,boundStore.Z);
             boundBuilding.Behavior="binding";bound.Scripting.BuildingWork(boundBuilding,boundPerson);bound.Scripting.Flush();
@@ -247,7 +247,9 @@ static class Checks
         AssetCacheChecks.Run();
         LocalizationChecks.Run();
         NightChecks.Run();
+        SavePreviewChecks.Run();
+        VillagerHealthChecks.Run();
         LoggingChecks.Run();
-        Assets.Dispose();Console.WriteLine($"PASS: pt-BR/en-US, direct JS bindings, villager names/inventory/inspection, beta v11 saves, seeded terrain, forestry and tutorial and lifecycle/events/queries/queues, split TOML/cache, 256 maps/A* ({timer.ElapsedMilliseconds} ms), facing, citizen 50%, growth, training, cave loot, equipment, simulation and binary save integrity.");
+        Assets.Dispose();Console.WriteLine($"PASS: pt-BR/en-US, direct JS bindings, villager names/inventory/inspection, beta v13 saves, seeded terrain, forestry and tutorial and lifecycle/events/queries/queues, split TOML/cache, 256 maps/A* ({timer.ElapsedMilliseconds} ms), facing, citizen 50%, growth, training, cave loot, equipment, simulation and binary save integrity.");
     }
 }

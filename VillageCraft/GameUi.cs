@@ -40,7 +40,11 @@ partial class GameUi
         }
         Scene.World=previousWorld;Scene.Daylight=previousLight;RefreshThumbnails=false;
     }
-    public void Dispose(){foreach(var t in thumbnails.Values)Raylib.UnloadRenderTexture(t);}
+    public void Dispose(){foreach(var t in thumbnails.Values)Raylib.UnloadRenderTexture(t);ClearSavePreview();
+#if DEBUG
+        if(previewSmokeName!=null)SaveStore.Delete(previewSmokeName);
+#endif
+    }
     public bool OverUi(Vector2 p)=>MenuOpen||rects.Any(r=>r.Contains(p/frameScale));
     public void Escape(){MenuOpen=!MenuOpen;MenuPage="Main";menuError=string.Empty;overwrite=false;}
     public void SetSpeed(int key){Speed=key switch{1=>1,2=>2,3=>4,4=>16,_=>1};Paused=false;}
@@ -163,7 +167,7 @@ partial class GameUi
     void VillagerInspector(City city,Citizen v,int w,int h)
     {
         ImGui.TextUnformatted(L.Name(Catalog.Data.Professions[v.Profession]));
-        ImGui.TextUnformatted(L.F("villager.health", v.Health));ImGui.ProgressBar(v.Health/50,new(-1,10),string.Empty);
+        ImGui.TextUnformatted(L.F("building.health",v.Health,v.MaximumHealth));ImGui.ProgressBar(v.Health/v.MaximumHealth,new(-1,10),string.Empty);
         Hint(L.Task(v.Task));ImGui.TextUnformatted(L.F("ui.efficiency", city.Efficiency(v)*100));
         ImGui.TextUnformatted(L.F("ui.work_progress_s", v.WorkTime, city.Rules.ProductionCycle));
         ImGui.TextUnformatted(L.F("ui.damage_reduction_work_rate_x", city.ArmorReduction*100, city.ToolEfficiency));
@@ -198,7 +202,7 @@ partial class GameUi
         if(!b.Plan.Indestructible&&Button(L.T("ui.demolish_half_emerald_refund"),new(-1,26))){city.Remove(b);if(!city.Buildings.Contains(b))Inspected=-1;}
     }
     void Save(City city,string name)
-    {city.Save(SaveStore.PathFor(name));currentSave=Path.GetFileNameWithoutExtension(SaveStore.PathFor(name));city.Log(L.F("ui.saved_as",currentSave));MenuOpen=false;ImGui.CloseCurrentPopup();}
+    {city.SavePreviewPng=SavePreview.Capture();city.Save(SaveStore.PathFor(name));currentSave=Path.GetFileNameWithoutExtension(SaveStore.PathFor(name));city.Log(L.F("ui.saved_as",currentSave));ClearSavePreview();MenuOpen=false;ImGui.CloseCurrentPopup();}
     void DrawMenu(ref City city,int w,int h)
     {
         if(MenuOpen&&!ImGui.IsPopupOpen(L.T("menu.title")+"###GameMenu"))ImGui.OpenPopup(L.T("menu.title")+"###GameMenu");
@@ -214,10 +218,10 @@ partial class GameUi
                 {
                     if(Button(L.T("menu.resume"),new(-1,26))){MenuOpen=false;ImGui.CloseCurrentPopup();}
                     if(Button(L.T("ui.new_game"),new(-1,26)))MenuPage="New Game";
-                    if(Button(L.T("ui.load_game"),new(-1,26))){saves=SaveStore.List();MenuPage="Load Game";loadName=saves.FirstOrDefault()??string.Empty;menuError=string.Empty;}
+                    if(Button(L.T("ui.load_game"),new(-1,26))){RefreshSaves();MenuPage="Load Game";loadName=saves.FirstOrDefault()??string.Empty;menuError=string.Empty;}
                     ImGui.BeginDisabled(city.GameOver);
-                    if(Button(L.T("ui.save_game"),new(-1,26))){if(string.IsNullOrEmpty(currentSave))MenuPage="Save Game As";else Save(city,currentSave);}
-                    if(Button(L.T("ui.save_game_as"),new(-1,26))){MenuPage="Save Game As";saveName=string.IsNullOrEmpty(currentSave)?L.T("save.default_name"):currentSave;overwrite=false;}
+                    if(Button(L.T("ui.save_game"),new(-1,26))){if(string.IsNullOrEmpty(currentSave)){RefreshSaves();MenuPage="Save Game As";}else Save(city,currentSave);}
+                    if(Button(L.T("ui.save_game_as"),new(-1,26))){RefreshSaves();MenuPage="Save Game As";saveName=string.IsNullOrEmpty(currentSave)?L.T("save.default_name"):currentSave;overwrite=false;}
                     ImGui.EndDisabled();
                     if(Button(L.T("ui.options"),new(-1,26)))MenuPage="Options";
                     if(Button(L.T("menu.exit"),new(-1,26)))ExitRequested=true;
@@ -228,15 +232,19 @@ partial class GameUi
                     if(Button(L.T("ui.back"))){MenuPage="Main";menuError=string.Empty;}ImGui.Separator();
                     if(MenuPage=="Load Game")
                     {
-                        Hint("ui.saves_in_executable_userdata");ImGui.BeginChild("Save list",new(0,300),ImGuiChildFlags.Borders);
-                        foreach(string name in saves)if(ImGui.Selectable(name,loadName==name))loadName=name;
-                        if(saves.Length==0)Wrapped(L.T("ui.no_saved_villages_yet"));ImGui.EndChild();
+                        Hint("ui.saves_in_executable_userdata");SaveList(false);SelectedSaveDetails(loadName);
+                        ImGui.BeginDisabled(!saveDetails.TryGetValue(loadName,out var selectedSave)||selectedSave.Summary==null);
+                        try{
                         if(!string.IsNullOrEmpty(loadName)&&Button(L.T("ui.load_selected_village"),new(-1,28))){var loaded=City.Load(SaveStore.LoadPathFor(loadName));city=loaded;currentSave=loadName;ResetPanels();Paused=false;MenuOpen=false;ImGui.CloseCurrentPopup();city.Log(L.F("ui.loaded",currentSave));}
+                        }finally{ImGui.EndDisabled();}
                     }
                     if(MenuPage=="Save Game As")
                     {
                         ImGui.TextUnformatted(L.T("ui.village_save_name"));ImGui.SetNextItemWidth(-1);if(ImGui.InputText("##saveName",ref saveName,70))overwrite=false;
                         Hint("ui.stored_as_userdata_name_vcs_binary");
+                        SaveList(true);
+                        if(saveDetails.ContainsKey(SaveKey(saveName))){Wrapped(L.T("save.existing"));SelectedSaveDetails(saveName);}
+                        else SaveStats(new(city.Day,city.PlaySeconds,city.Stock[ResourceType.Emeralds],[]));
                         if(Button(overwrite?L.T("ui.confirm_overwrite"):L.T("ui.save_village"),new(-1,28)))
                         {string path=SaveStore.PathFor(saveName);if(File.Exists(path)&&!overwrite){overwrite=true;menuError=L.T("ui.a_save_with_this_name_exists_confirm_overwrite");}else Save(city,saveName);}
                     }

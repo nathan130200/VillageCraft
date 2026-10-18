@@ -5,7 +5,7 @@ Id = "warrior"
 # ID de Models usado para renderizar esta unidade.
 Model = "warrior"
 # Vida inicial/máxima da unidade.
-Health = 50
+Health = 100
 # Dano de um ataque ou explosão.
 Damage = 14
 # Alcance do ataque em terrenos.

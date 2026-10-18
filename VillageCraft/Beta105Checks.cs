@@ -71,7 +71,7 @@ static class Beta105Checks
             c.Rules.NightMonsters=false;c.Rules.RaidsEnabled=false;int deliveries=0,settlements=0;
             c.Changed+=evt=>{if(evt.Name=="onDeliveryCompleted")deliveries++;if(evt.Name=="onGoodsConverted")settlements++;};
             Advance(c,600);c.ValidateLogistics();
-            Check(deliveries>3&&settlements==1&&c.Citizens.All(v=>v.Health>0),"starter village operates with physical supplies through its first dawn: "+deliveries+" / "+settlements+" "+string.Join("; ",c.Citizens.Select(v=>v.Profession+":"+v.Task+" cargo="+v.Cargo.Values.Sum()+" pos="+v.Position)));
+            Check(deliveries>3&&settlements==2&&c.Citizens.All(v=>v.Health>0),"starter village operates with physical supplies through dusk and dawn: "+deliveries+" / "+settlements+" "+string.Join("; ",c.Citizens.Select(v=>v.Profession+":"+v.Task+" cargo="+v.Cargo.Values.Sum()+" pos="+v.Position)));
         }
         using(var c=Empty())
         {

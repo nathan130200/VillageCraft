@@ -139,7 +139,8 @@ partial class GameUi
         Stat("people",$"{city.Citizens.Count}/{city.Capacity}",L.T("ui.residents"));
         Stat("happy",$"{city.Happiness:0}%",L.T("ui.happiness"));
         Stat("water",$"{city.Water}/{city.Citizens.Count}",L.T("ui.water"));
-        Stat("raid",city.Enemies.Count>0?city.Enemies.Count.ToString():city.RaidIn<0?"-":city.RaidIn.ToString(),city.Enemies.Count>0?L.T("ui.hostiles_3"):L.T("ui.days_until_raid")+(city.Day<=city.PeaceDays?"\n"+L.F("hud.peaceful_nights",city.PeaceDays+1):string.Empty));
+        Stat("raid",city.RaidIn<0?"-":city.RaidIn.ToString(),L.T("ui.days_until_raid")+(city.Day<=city.PeaceDays?"\n"+L.F("hud.peaceful_nights",city.PeaceDays+1):string.Empty));
+        if(city.IsNight)Stat("shield",city.Enemies.Count.ToString(),L.T("ui.hostiles_3"));
         Stat("map",$"{city.Width}x{city.Height}",L.T("ui.map_size"));
         ImGui.SetCursorScreenPos(new(w-204,32+(rows-1)*22+(separateMenus?26:0)));
         foreach(var (tab,icon) in new[]{("People","people"),("Economy","economy"),("Defense","shield"),("Journal","book")})

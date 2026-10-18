@@ -15,6 +15,8 @@ interface TaggedEntity extends Point {
     remove(): boolean;
 }
 interface ScriptVillager extends TaggedEntity {
+    /** BaseHealth of this villager's current profession. */
+    readonly maximumHealth: number;
     readonly name: string;
     readonly profession: string;
     readonly home: ScriptBuilding | null;
@@ -50,7 +52,7 @@ interface ScriptVillager extends TaggedEntity {
     attackMonster(id: number): boolean;
     /** Uses carried repair materials and work time; does not spend remote treasury resources. */
     repair(building: ScriptBuilding, dt: number): boolean;
-    /** Changes profession without automatically reassigning jobs; intended for employment policies. */
+    /** Changes profession, preserving health percentage; does not automatically reassign jobs. */
     setProfession(profession: string): boolean;
 }
 interface ScriptBuilding extends TaggedEntity {

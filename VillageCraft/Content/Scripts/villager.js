@@ -45,7 +45,7 @@ function patrol(v, dt) {
 
 /** @param {ScriptVillager} v @param {number} dt */
 function personalSupplies(v, dt) {
-    if (v.health < 50 || v.hasEffects) {
+    if (v.health < v.maximumHealth || v.hasEffects) {
         if (!v.drinkMilk()) {
             const milk = ai.supply(v, resources.Milk);
             if (milk) { v.task = tasks.CollectingMilk; v.collect(milk, resources.Milk, 1, dt); return true; }

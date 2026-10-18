@@ -7,6 +7,8 @@ using VillageCraft;
 GameLog.Initialize();
 try{Catalog.Load();}catch(Exception e){GameLog.Write(GameLogLevel.Critical,"Cannot load TOML content: "+e);Environment.ExitCode=1;return;}
 #if DEBUG
+if(args.Contains("--health-test")){try{VillagerHealthChecks.Run();}catch(Exception e){Console.Error.WriteLine(e);Environment.ExitCode=1;}return;}
+if(args.Contains("--save-preview-test")){try{SavePreviewChecks.Run();LocalizationChecks.Run();}catch(Exception e){Console.Error.WriteLine(e);Environment.ExitCode=1;}return;}
 if(args.Contains("--audio-test")){try{AudioChecks.Run();}catch(Exception e){Console.Error.WriteLine(e);Environment.ExitCode=1;}finally{Assets.Dispose();}return;}
 if(args.Contains("--village-improvements-test")){try{VillageImprovementsChecks.Run();}catch(Exception e){Console.Error.WriteLine(e);Environment.ExitCode=1;}return;}
 if(args.Contains("--profile-test")){try{ProfilerChecks.Run();}catch(Exception e){Console.Error.WriteLine(e);Environment.ExitCode=1;}return;}
@@ -17,6 +19,7 @@ if(args.Contains("--population-test")){try{PopulationChecks.Run();}catch(Excepti
 if(args.Contains("--logistics-test")){try{LogisticsChecks.Run();}catch(Exception e){Console.Error.WriteLine(e);Environment.ExitCode=1;}return;}
 if(args.Contains("--self-test")){try{Checks.Run();}catch(Exception e){Console.Error.WriteLine(e);Environment.ExitCode=1;}return;}
 bool smoke=args.Contains("--smoke-test"),raidSmoke=args.Contains("--raid-smoke");
+bool savePreviewSmoke=args.Contains("--save-preview-smoke");if(savePreviewSmoke)smoke=true;
 bool audioSmoke=args.Contains("--audio-smoke");if(audioSmoke)smoke=true;
 bool problemsSmoke=args.Contains("--problems-smoke");if(problemsSmoke)smoke=true;
 bool profileSmoke=args.Contains("--profile-smoke")||args.Contains("--profile-callbacks-smoke");if(profileSmoke)smoke=true;
@@ -47,7 +50,7 @@ GraphicsOptions.Load();Assets.Prepare();
 #endif
 GameLog.CaptureRenderer();
 Raylib.SetConfigFlags(ConfigFlags.ResizableWindow|ConfigFlags.Msaa4xHint);
-Raylib.InitWindow(1024,640,"VillageCraft 1.0.6 | The Living Overworld");DisplaySettings.Apply(false);Raylib.SetTargetFPS(GraphicsOptions.Current.Fps);Raylib.SetExitKey(KeyboardKey.Null);
+Raylib.InitWindow(1024,640,"VillageCraft 1.0.7 | The Living Overworld");DisplaySettings.Apply(false);Raylib.SetTargetFPS(GraphicsOptions.Current.Fps);Raylib.SetExitKey(KeyboardKey.Null);
 #if DEBUG
 if(smoke||uiSmoke)Raylib.TraceLog(TraceLogLevel.Warning,"Visual check renderer logging is active.");
 #endif
@@ -131,7 +134,7 @@ try
         if(audioSmoke&&frames==36)city.SpawnWave();
 #endif
         using(Profiler.Measure(ProfileArea.Update))
-        if(!ui.Paused&&!ui.MenuOpen)city.Update(dt*ui.Speed);
+        if(!ui.Paused&&!ui.MenuOpen&&!city.GameOver){city.PlaySeconds+=Raylib.GetFrameTime();city.Update(dt*ui.Speed);}
         mouse=Raylib.GetMousePosition();capture=city.GameOver||ui.OverUi(mouse)||ImGui.GetIO().WantCaptureMouse;
         if(!city.GameOver&&!ImGui.GetIO().WantCaptureKeyboard&&!ui.MenuOpen)
         {
@@ -196,6 +199,8 @@ try
         {
         ui.BeginFrame();
 #if DEBUG
+        if(savePreviewSmoke&&frames==5)ui.SavePreviewSmoke(city);
+        if(savePreviewSmoke&&frames==35)ui.SavePreviewSmokeOverwrite();
         if(args.Contains("--scale-smoke")&&Math.Abs(ImGui.GetFont().FontSize-16*GraphicsOptions.Current.UiScale)>.01f)
             throw new InvalidOperationException("Font atlas resolution does not match HUD scale.");
         if(args.Contains("--scale-smoke")&&frames==10&&Vector2.Distance(ImGui.GetIO().MousePos,Raylib.GetMousePosition()/GraphicsOptions.Current.UiScale)>2)
@@ -218,6 +223,8 @@ try
         if(clockSmoke&&frames==33)VisualChecks.Capture("clock-noon.png");
         if(clockSmoke&&frames==1)VisualChecks.Capture("clock-first.png");
         if(uiSmoke&&frames==29)VisualChecks.Capture("ui-near-smoke.png");
+        if(savePreviewSmoke&&frames==30)VisualChecks.Capture("save-browser.png");
+        if(savePreviewSmoke&&frames==55)VisualChecks.Capture("save-overwrite.png");
         if((smoke||raidSmoke||menuSmoke||optionsSmoke||uiSmoke||caveSmoke||newMapSmoke)&&++frames>=60)
         {
             VisualChecks.Capture(audioSmoke?"audio-smoke.png":problemsSmoke?"city-problems.png":profileSmoke?(args.Contains("--profile-callbacks-smoke")?"profiler-callbacks.png":"profiler-smoke.png"):nightSmoke?"night-village.png":peopleSmoke?"people-beta106.png":gameOverSmoke?"gameover-smoke.png":beta105Smoke?"beta105-smoke.png":raidSmoke?"raid-smoke.png":menuSmoke?"menu-smoke.png":optionsSmoke?"options-smoke.png":uiSmoke?"ui-smoke.png":caveSmoke?"cave-smoke.png":newMapSmoke?"newmap-smoke.png":citizenSmoke?"citizen-smoke.png":panelsSmoke?"panels-smoke.png":clockSmoke?"clock-smoke.png":compactSmoke?"compact-smoke.png":terrainSmoke?"terrain-smoke.png":englishSmoke?"english-smoke.png":"smoke-test.png");

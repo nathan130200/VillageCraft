@@ -5,7 +5,7 @@ Id = "iron_golem"
 # ID de Models usado para renderizar esta unidade.
 Model = "iron_golem"
 # Vida inicial/máxima da unidade.
-Health = 250
+Health = 300
 # Dano de um ataque ou explosão.
 Damage = 30
 # Alcance do ataque em terrenos.

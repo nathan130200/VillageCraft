@@ -7,6 +7,8 @@ Name = "Herbalist"
 Model = "farmer"
 # Atividade interna do prefab; não traduza.
 Jobs = ["Farming"]
+# Vida máxima/base desta profissão (1 a 10000).
+BaseHealth = 50
 # Velocidade de trabalho (cidadão usa 0.5).
 Efficiency = 1.1
 # Retirado do estoque ao treinar.

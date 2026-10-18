@@ -22,6 +22,7 @@ public partial class City
 {
     public bool StorageInitialized {get;set;}
     public int LastSettlementDay {get;set;}=1;
+    public int LastEveningSettlementDay {get;set;}
     public bool EnchantedArmor {get;set;}
     public static bool Currency(ResourceType resource)=>resource is ResourceType.Emeralds or ResourceType.Goods;
     static float Stored(Building b,ResourceType resource)=>b.Storage.GetValueOrDefault(resource);
@@ -134,18 +135,21 @@ public partial class City
     }
     void SettleAtDawn()
     {
-        if(LastSettlementDay>=Day||DayPhase<.25f)return;
-        LastSettlementDay=Day;
+        bool dawn=LastSettlementDay<Day&&DayPhase>=.25f;
+        bool evening=LastEveningSettlementDay<Day&&DayPhase>=.75f;
+        if(!dawn&&!evening)return;
+        if(dawn)LastSettlementDay=Day;
+        if(evening)LastEveningSettlementDay=Day;
         float earned=Stock[ResourceType.Goods]*Catalog.Data.Economy.EmeraldsPerGood;
-        Stock[ResourceType.Goods]=0;float upkeep=Buildings.Sum(b=>b.Plan.Upkeep);
+        Stock[ResourceType.Goods]=0;float upkeep=dawn?Buildings.Sum(b=>b.Plan.Upkeep):0;
         Stock[ResourceType.Emeralds]+=earned-upkeep;Balance=earned-upkeep;Statistics.EmeraldsFromGoods+=earned;
-        Emit(new("onGoodsConverted",Amount:earned));Emit(new("onDawn"));
-        Log(L.F("message.goods_settlement",earned,upkeep));
+        Emit(new("onGoodsConverted",Amount:earned));if(dawn)Emit(new("onDawn"));
+        Log(L.F("message.goods_settlement",earned,upkeep,evening?"18:00":"06:00"));
     }
     public void ValidateLogistics()
     {
         bool ValidMap(Dictionary<ResourceType,float>? map)=>map!=null&&map.Count<=64&&map.All(e=>Catalog.Resources.Contains(e.Key)&&!Currency(e.Key)&&float.IsFinite(e.Value)&&e.Value>=0&&e.Value<=1000000000);
-        if(LastSettlementDay<0||LastSettlementDay>Day||Buildings.Any(b=>!ValidMap(b.Storage)||b.RequestedResource!=ResourceType.None&&(!Catalog.Resources.Contains(b.RequestedResource)||Currency(b.RequestedResource)))||
+        if(LastSettlementDay<0||LastSettlementDay>Day||LastEveningSettlementDay<0||LastEveningSettlementDay>Day||Buildings.Any(b=>!ValidMap(b.Storage)||b.RequestedResource!=ResourceType.None&&(!Catalog.Resources.Contains(b.RequestedResource)||Currency(b.RequestedResource)))||
             Citizens.Any(v=>!ValidMap(v.Cargo)||v.Inventory.Values.Sum()+v.Cargo.Values.Sum()>32.001f||v.Effects==null||v.Effects.Count>16||v.Effects.Any(e=>!(e.Key is "Burning" or "Poison" or "Slowness" or "Weakness")||!float.IsFinite(e.Value)||e.Value<0||e.Value>3600)||v.DeliveryResource!=ResourceType.None&&(!Catalog.Resources.Contains(v.DeliveryResource)||Currency(v.DeliveryResource))))
             throw new InvalidDataException("Invalid storage, delivery or effects data.");
         EnsureStorage();

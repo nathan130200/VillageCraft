@@ -48,13 +48,30 @@ Os arquivos são carregados uma única vez na inicialização. Reinicie o jogo a
 
 4. Jobs contém **atividades**, não IDs de construções. Jobs = ["Farming"] permite trabalhar nos prefabs cujo Job = "Farming". Outra opção é incluir "herbalist" no array Professions do prefab.
 
-5. Ajuste Efficiency, TrainingCost e ResourceBonus. As chaves dos recursos devem existir em resources.toml.
+5. Ajuste BaseHealth (vida base/máxima, de 1 a 10000; padrão 50), Efficiency, TrainingCost e ResourceBonus. As chaves dos recursos devem existir em resources.toml. Cada profissão tem sua própria vida; mudanças de profissão preservam a porcentagem de vida atual. Cura, leite e o inspetor respeitam esse máximo. Reinicie o jogo após editar os arquivos; saves mantêm ferimentos e são limitados ao novo máximo se a configuração diminuir.
 
 6. Adicione "profession.herbalist" em [Text] de Locales/pt-BR.toml e en-US.toml. Sem tradução, o jogo usa Name.
 
 7. Reinicie. A nova profissão aparece no seletor em Moradores e pode ser treinada.
 
 8. Para permitir imigrantes dessa profissão, adicione "herbalist" em ImmigrationProfessions de game.toml.
+
+### Vida base — equilíbrio 1.0.7
+
+| Profissão/unidade | Vida |
+|---|---:|
+| Cidadão, comerciante | 50 |
+| Fazendeiro, cuidador de animais | 55 |
+| Entregador, mago | 60 |
+| Lenhador | 65 |
+| Mineiro, ferreiro | 70 |
+| Arqueiro | 75 |
+| Explorador | 80 |
+| Guerreiro | 100 |
+| Golem de neve | 80 |
+| Golem de ferro | 300 |
+
+Trabalhadores expostos têm mais resistência; guerreiros seguram a linha de frente, arqueiros e magos dependem de distância, e o golem de ferro é o tanque. Sem armadura ou cura, um zumbi de 6 de dano precisa de 9 golpes para derrubar um cidadão, 17 para um guerreiro e 50 para um golem de ferro. Dano, cura e bônus de armadura não foram alterados nesta revisão. Golems usam Health em Units/*.toml; aldeões usam BaseHealth em Professions/*.toml. Saves preservam a vida atual, sem curar automaticamente unidades existentes.
 
 
 
@@ -134,7 +151,7 @@ Model parts support `Shape = "cube"` (default) or `Shape = "cross"`. Cross draws
 
 
 
-`economy.toml` defines Goods rewards, the Goods-to-emerald exchange rate, delivery load size, workplace input buffer size, milk healing and armor enchantment costs/effects. Work and combat earn Goods; the city converts the balance at 06:00, then pays upkeep. Emeralds and Goods are treasury values and are never carried or stored in buildings.
+`economy.toml` defines Goods rewards, the Goods-to-emerald exchange rate, delivery load size, workplace input buffer size, milk healing and armor enchantment costs/effects. Work and combat earn Goods; the city converts the balance at 06:00 and 18:00; upkeep is paid only at 06:00. Emeralds and Goods are treasury values and are never carried or stored in buildings.
 
 
 
@@ -192,9 +209,9 @@ As chaves de recursos nos TOMLs são nomes de `ResourceType`: são convertidas u
 
 
 
-## Beta 1.0.6
+## Beta 1.0.7
 
-Tochas, oficina e conversão de tochas foram removidas. O formato de save atual é binário v11 e rejeita versões beta anteriores sem sobrescrever os arquivos. BirthChance em game.toml/Rules define a chance diária por casa elegível (0.6 por padrão); a interface permite alterar por vila. O botão de redistribuição de profissões fica em Moradores. Reparos automáticos usam materiais físicos e os parâmetros RepairWorkSeconds, RepairAmount e RepairCost em economy.toml. game.d.ts e jsconfig.json fornecem tipos e autocomplete para os scripts.
+Tochas, oficina e conversão de tochas foram removidas. O formato de save atual é binário v13 e rejeita versões beta anteriores sem sobrescrever os arquivos. Cada save inclui uma prévia PNG de 320×180 do mapa renderizado, sem HUD, e um resumo com dias completos, tempo real de jogo ativo e esmeraldas. Pausa e menus não contam no tempo de jogo; a velocidade da simulação não o multiplica. O navegador valida o checksum sem iniciar scripts e mostra os dados antes de carregar ou confirmar uma substituição. Saves criados sem renderizador podem não ter prévia. BirthChance em game.toml/Rules define a chance diária por casa elegível (0.6 por padrão); a interface permite alterar por vila. O botão de redistribuição de profissões fica em Moradores. Reparos automáticos usam materiais físicos e os parâmetros RepairWorkSeconds, RepairAmount e RepairCost em economy.toml. game.d.ts e jsconfig.json fornecem tipos e autocomplete para os scripts.
 
 
 ## Traduções, encontros e logs

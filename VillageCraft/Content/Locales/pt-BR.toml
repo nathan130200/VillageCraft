@@ -4,6 +4,14 @@ Id = "pt-BR"
 Name = "Português (Brasil)"
 
 [Text]
+# Save browser summary: {0} completed days, {1} real active playtime HH:MM:SS, {2} emerald balance.
+"save.details" = "Dias: {0} | Tempo: {1} | Esmeraldas: {2:0.##}"
+# Save browser: unreadable, damaged or unsupported save.
+"save.unavailable" = "Informações do save indisponíveis"
+# Save browser: no screenshot was captured for this save.
+"save.no_preview" = "Prévia do mapa indisponível."
+# Save As: the following information belongs to the file that would be replaced.
+"save.existing" = "Save existente que será substituído:"
 
 # Workplace activity name and road profession-bonus label: archery.
 "activity.archery" = "Arqueria"
@@ -620,8 +628,8 @@ Name = "Português (Brasil)"
 # Guided tutorial heading for the water stage.
 "tutorial.water.title" = "Abasteça os moradores"
 
-# Village status or journal: 06:00: {0:0.##} emeralds earned from Goods; upkeep {1:0.##}.
-"message.goods_settlement" = "06:00: {0:0.##} esmeraldas recebidas por Bens; manutenção {1:0.##}."
+# Settlement journal: {0} emeralds earned, {1} dawn upkeep, {2} scheduled exchange time (06:00 or 18:00).
+"message.goods_settlement" = "{2}: {0:0.##} esmeraldas recebidas por Bens; manutenção {1:0.##}."
 
 # Interface label, help text or control: 1 game minute = {0:0.00}s at 1x
 "format.game_minute_seconds" = "1 minuto no jogo = {0:0.00}s em 1x"

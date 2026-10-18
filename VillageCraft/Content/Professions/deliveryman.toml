@@ -3,6 +3,8 @@ Id = "deliveryman"
 Name = "Resource deliveryman"
 Model = "deliveryman"
 Jobs = ["Delivery"]
+# Vida máxima/base desta profissão (1 a 10000).
+BaseHealth = 60
 Efficiency = 1.0
 TrainingCost = { Emeralds = 5 }
 ResourceBonus = {}

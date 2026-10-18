@@ -5,7 +5,7 @@ Id = "snow_golem"
 # ID de Models usado para renderizar esta unidade.
 Model = "snow_golem"
 # Vida inicial/máxima da unidade.
-Health = 65
+Health = 80
 # Dano de um ataque ou explosão.
 Damage = 5
 # Alcance do ataque em terrenos.
